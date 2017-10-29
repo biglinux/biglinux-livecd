@@ -1,0 +1,11 @@
+Package: biglinux-livecd
+Version: 1.0.3-1big6
+Depends: bigbashview, dialog, deepin-installer-reborn
+Architecture: all
+Maintainer: Bruno Goncalves <biglinux.com.br>
+Section: admin
+Priority: optional
+Installed-Size:180
+Description: Live CD boot options
+
+

@@ -1,0 +1,45 @@
+# Portuguese translations for biglinux-livecd package.
+# Copyright (C) 2017 THE biglinux-livecd'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the biglinux-livecd package.
+# Automatically generated, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: biglinux-livecd\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-22 00:21-0200\n"
+"PO-Revision-Date: 2017-10-22 00:07-0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid ""
+"Welcome, the BigLinux project supports this Linux remastering derived from "
+"the Deepin distribution, which is derived from the Debian distribution."
+msgstr ""
+
+msgid ""
+"I recommend you to install applications through Software Manager or Synaptic "
+"Package Manager, both accessible from the system menu. If you need any "
+"applications that are not available in the already metioned stores, you can "
+"install versions for BigLinux, Deepin or Debian."
+msgstr ""
+
+msgid "Choose between the interfaces:"
+msgstr ""
+
+msgid "Classical"
+msgstr ""
+
+msgid "Cinnamon"
+msgstr ""
+
+msgid "Modern"
+msgstr ""
+
+msgid "Deepin"
+msgstr ""

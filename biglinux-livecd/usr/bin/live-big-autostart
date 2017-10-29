@@ -1,0 +1,18 @@
+#!/bin/sh
+
+if [ -e "/lib/live/mount/rootfs/filesystem.squashfs" ]
+then
+  gsettings set com.deepin.dde.power sleep-lock false
+  gsettings set com.deepin.dde.power screen-black-lock false
+  gsettings set com.deepin.wrap.gnome.desktop.lockdown disable-lock-screen true
+  gsettings set org.cinnamon.desktop.lockdown disable-lock-screen true
+  gsettings set org.cinnamon.settings-daemon.plugins.power lock-on-suspend false
+  gsettings set org.cinnamon.desktop.screensaver lock-enabled false
+  gsettings set org.gnome.desktop.lockdown disable-lock-screen true
+  gsettings set org.gnome.desktop.screensaver lock-enabled false
+fi
+
+#if [ "$(grep abnt2 /proc/cmdline)" = "" ]; then
+#  setxkbmap us
+#  gsettings set com.deepin.dde.keyboard user-layout-list []
+#fi

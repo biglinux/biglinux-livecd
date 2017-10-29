@@ -1,0 +1,6 @@
+#!/bin/bash
+# Copyright (c) 2017 BigLinux
+# Use of this source is governed by General Public License that can be found
+# in the LICENSE file.
+
+sed -i "s|^ *\bGRUB_CMDLINE_LINUX_DEFAULT\b *=.*|GRUB_CMDLINE_LINUX_DEFAULT=\"splash quiet $(cat /proc/cmdline | sed 's|.*union=overlay ||g;s|quiet||g;s|splash||g;s|vga=791||g;s|initrd=/live/initrd.lz||g')\"|" /target/etc/default/grub

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo "$p_desktop" > /tmp/biglightdm
+
+cat << EOF
+<script>
+  window.onload = function () {
+     open(location, '_self').close();
+   };
+</script>
+
+EOF
+
+
+#loop até 5 usando while
