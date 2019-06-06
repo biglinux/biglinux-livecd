@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=XSession
+Exec=/usr/bin/startbiglive
+TryExec=/usr/bin/startkde
+DesktopNames=livecd
+Name=livecd

@@ -2,16 +2,7 @@
 
 if [ -e /lib/live/mount/rootfs ]
 then
-	mv /usr/sbin/lightdm-session /usr/sbin/lightdm-session2
-
-    echo '#!/bin/bash
-
-/usr/sbin/lightdm-session2 /usr/share/bigbashview/bcc/apps/boot-livecd/run.sh' > /usr/sbin/lightdm-session
-
-    chmod +x /usr/sbin/lightdm-session
-
-    sed -i 's|#session-cleanup-script=|session-cleanup-script=service lightdm restart|g' /etc/lightdm/lightdm.conf
-
+    echo '193.62.202.27 snapshot.debian.org' >> /etc/hosts
 fi
 
 

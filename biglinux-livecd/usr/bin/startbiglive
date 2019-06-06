@@ -1,0 +1,23 @@
+#!/bin/sh
+
+if [ "$(grep 'Autolock=false' ~/.config/kscreenlockerrc)" = "" ];
+then
+    sed -i '/\[Daemon\]/a\'$'\n''Autolock=false\nLockOnResume=false' ~/.config/kscreenlockerrc
+fi
+
+if [ "$(grep 'Enabled=false' ~/.config/kwalletrc)" = "" ];
+then
+    echo '[Wallet]
+Enabled=false' >> ~/.config/kwalletrc
+fi
+
+	
+
+/usr/bin/bigbashview -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') /usr/share/bigbashview/bcc/apps/boot-livecd/index.sh.htm
+chmod +x /tmp/biglightdm
+/tmp/biglightdm
+
+
+
+
+sudo service sddm restart

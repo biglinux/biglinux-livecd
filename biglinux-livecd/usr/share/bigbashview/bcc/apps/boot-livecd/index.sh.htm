@@ -4,6 +4,46 @@
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-livecd
 
+# Import BigControlCenter base modules / Importa os módulos básicos do BigControlCenter
+# That's include jquery and materialize / Isso inclui o jquery e o materialize
+# http://materializecss.com/
+. /usr/share/bigbashview/bcc/shell/base.sh
+
+theme_actual="$(cat /tmp/big_desktop_theme)"
+
+if [ "$theme_actual" = "" ]; then
+    biglinux-themes.sh --apply arc
+    checked_arc="checked"
+fi
+
+if [ "$theme_actual" = "arc" ]; then
+    checked_arc="checked"
+fi
+
+if [ "$theme_actual" = "adapta" ]; then
+    checked_adapta="checked"
+fi
+
+if [ "$theme_actual" = "dark" ]; then
+    checked_dark="checked"
+fi
+
+
+
+  echo '
+  <body>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/usr/share/bigbashview/bcc/css/base.css">
+    <link rel="stylesheet" type="text/css" href="/usr/share/bigbashview/bcc/materialize/css/materialize.css">
+    <script src="/usr/share/bigbashview/bcc/materialize/js/jquery.js"></script>
+    <script src="/usr/share/bigbashview/bcc/materialize/js/materialize.js"></script>
+    <script src="/usr/share/bigbashview/bcc/js/big.js"></script>
+  </head>'
+
+
+
+
 setxkbmap $(grep XKBLAYOUT /etc/default/keyboard | sed 's|.*="||g;s|"||g')
 
 echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
@@ -12,7 +52,7 @@ cat << EOF
 <style>
 
 body {
-			background-image: url(/usr/share/wallpapers/BigLinux/BigLinux10.jpg) ;
+			background-image: url(/usr/share/wallpapers/BigBrasil.jpg) ;
 			background-position: center center;
 			background-repeat:  no-repeat;
 			background-attachment: fixed;
@@ -32,15 +72,15 @@ font-family: 'Droid Sans';
 }
 
 .bar:before {
-  background: url(/usr/share/wallpapers/BigLinux/BigLinux10.jpg);
+  background: url(/usr/share/wallpapers/BigLinux/BigBrasil.jpg);
 	background-attachment: fixed;
 }
 
 
 
 #page2 {
-	margin-right: 15%;
-	margin-left: 15%;
+	margin-right: 18%;
+	margin-left: 18%;
 	height: 100%;
 }
 
@@ -52,7 +92,7 @@ width: 100%;
 padding-left: 8%;
 padding-right: 8%;
 padding-bottom: 15px;
-padding-top: 20%;
+padding-top: 15%;
 font-size: 20px;
 display: block;
 box-sizing: border-box;
@@ -68,7 +108,7 @@ height: 100%;
 
 .bar {
   position: relative;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.65);
   box-shadow: 0px 0px 95px 0px rgba(0,0,0,1);
 	height: 100%;
 }
@@ -84,10 +124,20 @@ height: 100%;
 	height: 100%;
 }
 
+.material-tooltip {font-family:ubuntu;
+font-weight:400;font-size:18px;
+line-height: 120%;}
 
-h1 {text-align:center;font-family:comfortaa;font-weight:400;font-size:20px;color:#fff;text-shadow:0em 0.05em 0 rgba(0,0,0,0.35)}
+.with-gap {color: #ffffff !important;
+font-size:20px !important;
+margin-left:20px;
+margin-right:20px;
+margin-top:10%;
+}
+
+h1 {text-align:center;font-family:ubuntu;font-weight:400;font-size:20px;color:#fff;text-shadow:0em 0.05em 0 rgba(0,0,0,0.35)}
 button {color:#454545;background:transparent;border-width:2px;border-style: solid;border-color: #454545;position:relative;margin:1em;display:inline-block;padding:0.5em 1em;transition:all 0.3s ease-in-out;text-align:center;
-font-family:comfortaa;font-weight:bold}
+font-family:ubuntu;font-weight:bold;font-size:18px}
 button:before, button:after {content:'';display:block;position:absolute;border-color:#454545;box-sizing:border-box;border-style:solid;width:1em;height:1em;transition:all 0.3s ease-in-out}
 button:before {top:-6px;left:-6px;border-width:2px 0 0 2px;z-index:5;}
 button:after {bottom:-6px;right:-6px;border-width:0 2px 2px 0;}
@@ -127,24 +177,60 @@ box-shadow:0 1px 3px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.1) inset
 
 
 </style>
+
+
+<script>
+$('.tooltipped').tooltip({
+ html: "<img src='/usr/share/wallpapers/BigLinux/BigBrasil.jpg'>"
+});
+</script>
+
+
 EOF
 
 echo '<div id=page2>'
 echo '<div id="middle" class="bar"><h1>'
 
 
-  echo $"Welcome, the BigLinux project supports this Linux remastering derived from the Deepin distribution, which is derived from the Debian distribution." '<p>'
+  echo $"Esta é a distribução BigLinux, uma remasterização da distribuição Debian, mantendo total compatibilidade e trazendo recursos avançados configurados de forma automática." '<p>'
 
-  echo $"I recommend you to install applications through Software Manager or Synaptic Package Manager, both accessible from the system menu. If you need any applications that are not available in the already metioned stores, you can install versions for BigLinux, Deepin or Debian." '<p>'
+  echo $"Passe o mouse sobre as opções a baixo e faça sua escolha:" '<p>'
 
-echo $"Choose between the interfaces:" '<p>'
 
 
 echo '<div class="panel bw">'
-echo '<a href="make.sh.htm?desktop=cinnamon-session-cinnamon" class="css_btn_class"><button>' $"Classical" '<br>' $"Cinnamon" '</button>'
-echo '<a href="make.sh.htm?desktop=startdde" class="css_btn_class"><button>' $"Modern" '<br>' $"Deepin" '</button>'
-echo '</h1></div>''
+echo '<a href="make.sh.htm?desktop=startkde-classic" class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="Desktop KDE configurado com a barra de tarefas<br>em modo clássico, com a exibição dos nomes dos programas<br>em execução e menu de aplicativos compacto."><button>' $"Desktop Clássico" '<br>' $"(KDE Plasma)" '</button></a>'
+
+echo '<a href="make.sh.htm?desktop=startkde-new" class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="Desktop KDE configurado com a barra de tarefas<br>em modo moderno, barra de tarefas baseada<br>em ícones e menu de aplicativos em tela cheia,<br>remetendo à usabilidade de smartphones."><button>' $"Desktop Moderno" '<br>' $"(KDE Plasma)" '</button></a>'
+
+echo '<a href="make.sh.htm?desktop=startlxqt" class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="Desktop LXQT, uma interface um pouco mais simples,<br>porém focada em desempenho, recomendada principalmente<br>para computadores com pouca quantidade de memória RAM."><button>' $"Desktop Leve" '<br>' $"(LXQT)" '</button></a>'
+
+
+cat << EOF
+<br><br><br>
+      <input onclick="location.href = 'arc-theme.run'" name="option" type="radio" id="arc" value="arc" $checked_arc />
+      <label for="arc" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<img src=arc.png>">
+EOF
+      echo $"Tema Arc"
+cat << EOF
+</label>
+      <input onclick="location.href = 'adapta-theme.run'" name="option" type="radio" id="adapta" value="adapta" $checked_adapta />
+      <label for="adapta" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<img src=adapta.png>">
+EOF
+echo $"Tema Adapta"
+cat << EOF
+</label>
+
+      <input onclick="location.href = 'dark-theme.run'" name="option" type="radio" id="dark" value="dark" $checked_dark />
+      <label for="dark" class="tooltipped with-gap tool03" data-position="top" data-delay="50" data-tooltip="<img src=dark.png>">
+EOF
+echo $"Tema Dark" '</label>'
 
 
 
+
+    
+
+
+echo '</h1></div>'
 echo '</div></div>'
