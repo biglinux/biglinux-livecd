@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 . .config/user-dirs.dirs
 
@@ -10,9 +10,6 @@ chmod +x "$XDG_DESKTOP_DIR/calamares.desktop"
 
 echo "$p_desktop" > /tmp/biglightdm
 
-echo '<a href="make.sh.htm?desktop=startkde-classic" class="css_btn_class"><button>' $"Classical" '<br>' $"KDE" '</button>'
-echo '<a href="make.sh.htm?desktop=startkde-new" class="css_btn_class"><button>' $"New" '<br>' $"KDE" '</button>'
-echo '<a href="make.sh.htm?desktop=startlxqt" class="css_btn_class"><button>' $"Light" '<br>' $"LXQT" '</button>'#Confere se a igualdade é verdadeira
 
 
 if [ "$p_desktop" = "startkde-classic" ]; then

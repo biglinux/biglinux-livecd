@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$(grep 'Autolock=false' ~/.config/kscreenlockerrc)" = "" ];
 then
@@ -11,7 +11,8 @@ then
 Enabled=false' >> ~/.config/kwalletrc
 fi
 
-	
+# Disable discover update in live
+sudo rm -Rf /usr/share/plasma/plasmoids/org.kde.discovernotifier
 
 /usr/bin/bigbashview -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') /usr/share/bigbashview/bcc/apps/boot-livecd/index.sh.htm
 chmod +x /tmp/biglightdm
