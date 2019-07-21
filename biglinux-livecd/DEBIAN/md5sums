@@ -5,9 +5,9 @@ f4fb2362dfb27f8e362f6fcf42d18c34  DEBIAN/es.po
 d41d8cd98f00b204e9800998ecf8427e  DEBIAN/md5sums
 bcb68ebf991f5324d78504270a3f1b0d  DEBIAN/pt.po
 ea0d8aad4fcad7c840388bc30f39519a  DEBIAN/pt_BR.po
-4e621abd99000eafd5b3eeff6f44e369  DEBIAN/control
+c34bba876532fa31b388fae2fb8a7265  DEBIAN/control
 01f08fa96c073c80a1878687c27814a1  usr/bin/isocheck.sh
-504a10004cdecada9802ae3e7262a4de  usr/bin/startbiglive
+c9bf8ca3db260f33827ea1ba4c5835f1  usr/bin/startbiglive
 479917776d712836b1da3685e00bb192  usr/share/bigbashview/bcc/apps/boot-livecd/index.sh.htm
 1807af81684d85f5148ac0bc12182eeb  usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm
 dde73c9df38282775be8d3fe1ba943bf  usr/share/bigbashview/bcc/apps/boot-livecd/run.sh
