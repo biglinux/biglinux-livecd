@@ -14,7 +14,9 @@ fi
 # Disable discover update in live
 sudo rm -Rf /usr/share/plasma/plasmoids/org.kde.discovernotifier
 
-/usr/bin/bigbashview -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') /usr/share/bigbashview/bcc/apps/boot-livecd/index.sh.htm
+cd /usr/share/bigbashview/bcc/apps/boot-livecd/
+
+/usr/bin/bigbashview -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.sh.htm
 chmod +x /tmp/biglightdm
 /tmp/biglightdm
 

@@ -4,9 +4,9 @@ d3d5646d32477e9f52d638263c447a95  DEBIAN/pt.po
 43c94bebd7efa9a27c4137f58603c316  DEBIAN/biglinux-livecd.pot
 5389f929cdb24068871dcd9e4a381179  DEBIAN/en.po
 ab65bae36bdebd798bb64e9bd3178c2b  DEBIAN/es.po
-1c8ef000181bc73034c500bcf7f17141  DEBIAN/control
+8a2afae278b53593c0cd8357c98fbf12  DEBIAN/control
 01f08fa96c073c80a1878687c27814a1  usr/bin/isocheck.sh
-c9bf8ca3db260f33827ea1ba4c5835f1  usr/bin/startbiglive
+1b9c20bfa23f48fb745c5d2f21ec2baf  usr/bin/startbiglive
 1807af81684d85f5148ac0bc12182eeb  usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm
 dde73c9df38282775be8d3fe1ba943bf  usr/share/bigbashview/bcc/apps/boot-livecd/run.sh
 0c1f3587437777fc1074de31727c2c5b  usr/share/bigbashview/bcc/apps/boot-livecd/adapta.png
@@ -15,7 +15,7 @@ c798a2943b573aad0faf8fdcc3535715  usr/share/bigbashview/bcc/apps/boot-livecd/arc
 c89de935f5362e183a5a763b7597361f  usr/share/bigbashview/bcc/apps/boot-livecd/adapta-theme.run
 bcc5c53645e815d95bca2af7ddad53fa  usr/share/bigbashview/bcc/apps/boot-livecd/arc-theme.run
 82b2a71598ae13d3cf50770b5174ac8e  usr/share/bigbashview/bcc/apps/boot-livecd/dark-theme.run
-b0c07b9a11329edf4f33fa601eeae251  usr/share/bigbashview/bcc/apps/boot-livecd/index.sh.htm
+2b239b787d58b8d0a1e6d0536a7103ae  usr/share/bigbashview/bcc/apps/boot-livecd/index.sh.htm
 f9155cd9000a171510118d2a0c1d31d5  usr/share/locale/es/LC_MESSAGES/biglinux-livecd.mo
 22cd6354fe396f8d928e65f901a38467  usr/share/locale/pt/LC_MESSAGES/biglinux-livecd.mo
 38f44a161800c4d221d04f71daa75fee  usr/share/locale/pt_BR/LC_MESSAGES/biglinux-livecd.mo
