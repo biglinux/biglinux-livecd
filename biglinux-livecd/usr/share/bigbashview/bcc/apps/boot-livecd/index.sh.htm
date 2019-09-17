@@ -4,6 +4,7 @@
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-livecd
 
+
 # Import BigControlCenter base modules / Importa os módulos básicos do BigControlCenter
 # That's include jquery and materialize / Isso inclui o jquery e o materialize
 # http://materializecss.com/
@@ -27,6 +28,7 @@ fi
 if [ "$theme_actual" = "dark" ]; then
     checked_dark="checked"
 fi
+
 
 
 
@@ -198,30 +200,30 @@ echo '<div id="middle" class="bar"><h1>'
 
 
 echo '<div class="panel bw">'
-echo "<a onclick=\"_run('./make.sh.htm?desktop=startkde-classic')\" "' class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="' $"Desktop KDE configurado com a barra de tarefas<br>em modo clássico, com a exibição dos nomes dos programas<br>em execução e menu de aplicativos compacto." '"><button>' $"Desktop Clássico" '<br>' $"(KDE Plasma)" '</button></a>'
+echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-classic" class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="' $"Desktop KDE configurado com a barra de tarefas<br>em modo clássico, com a exibição dos nomes dos programas<br>em execução e menu de aplicativos compacto." '"><button>' $"Desktop Clássico" '<br>' $"(KDE Plasma)" '</button></a>'
 
-echo "<a onclick=\"_run('./make.sh.htm?desktop=startkde-new')\" "' class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="' $"Desktop KDE configurado com a barra de tarefas<br>em modo moderno, barra de tarefas baseada<br>em ícones e menu de aplicativos em tela cheia,<br>remetendo à usabilidade de smartphones." '"><button>' $"Desktop Moderno" '<br>' $"(KDE Plasma)" '</button></a>'
+echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-new" class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="' $"Desktop KDE configurado com a barra de tarefas<br>em modo moderno, barra de tarefas baseada<br>em ícones e menu de aplicativos em tela cheia,<br>remetendo à usabilidade de smartphones." '"><button>' $"Desktop Moderno" '<br>' $"(KDE Plasma)" '</button></a>'
 
-echo "<a onclick=\"_run('./make.sh.htm?desktop=startlxqt')\" "' class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="' $"Desktop LXQT, uma interface um pouco mais simples,<br>porém focada em desempenho, recomendada principalmente<br>para computadores com pouca quantidade de memória RAM." '"><button>' $"Desktop Leve" '<br>' $"(LXQT)" '</button></a>'
+echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startlxqt" class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="' $"Desktop LXQT, uma interface um pouco mais simples,<br>porém focada em desempenho, recomendada principalmente<br>para computadores com pouca quantidade de memória RAM." '"><button>' $"Desktop Leve" '<br>' $"(LXQT)" '</button></a>'
 
 
 
 cat << EOF
 <br><br><br>
-      <input onclick="_run('./arc-theme.run')" name="option" type="radio" id="arc" value="arc" $checked_arc />
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/arc-theme.run')" name="option" type="radio" id="arc" value="arc" $checked_arc />
       <label for="arc" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<img src=arc.png>">
 EOF
       echo $"Tema Arc"
 cat << EOF
 </label>
-      <input onclick="_run('./adapta-theme.run')" name="option" type="radio" id="adapta" value="adapta" $checked_adapta />
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/adapta-theme.run')" name="option" type="radio" id="adapta" value="adapta" $checked_adapta />
       <label for="adapta" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<img src=adapta.png>">
 EOF
 echo $"Tema Adapta"
 cat << EOF
 </label>
 
-      <input onclick="_run('./dark-theme.run')" name="option" type="radio" id="dark" value="dark" $checked_dark />
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/dark-theme.run')" name="option" type="radio" id="dark" value="dark" $checked_dark />
       <label for="dark" class="tooltipped with-gap tool03" data-position="top" data-delay="50" data-tooltip="<img src=dark.png>">
 EOF
 echo $"Tema Dark" '</label>'

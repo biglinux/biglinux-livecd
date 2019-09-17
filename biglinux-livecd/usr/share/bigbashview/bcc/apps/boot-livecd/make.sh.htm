@@ -26,14 +26,9 @@ fi
 
 
 
-cat << EOF
-<script>
-  window.onload = function () {
-     open(location, '_self').close();
-   };
-</script>
-
-EOF
+echo '
+<body onload=window.location="/usr/share/bigbashview/close.sh">
+'
 
 
 #loop até 5 usando while
