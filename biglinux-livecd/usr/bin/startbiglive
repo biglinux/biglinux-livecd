@@ -18,6 +18,7 @@ cd /usr/share/bigbashview/bcc/apps/boot-livecd/
 
 /usr/bin/bigbashview -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.sh.htm
 chmod +x /tmp/biglightdm
+cd ~
 /tmp/biglightdm
 
 
