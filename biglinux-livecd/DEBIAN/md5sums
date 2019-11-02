@@ -4,9 +4,9 @@ d3d5646d32477e9f52d638263c447a95  DEBIAN/pt.po
 43c94bebd7efa9a27c4137f58603c316  DEBIAN/biglinux-livecd.pot
 5389f929cdb24068871dcd9e4a381179  DEBIAN/en.po
 ab65bae36bdebd798bb64e9bd3178c2b  DEBIAN/es.po
-e1eb5c72ecfc0e6c919823c0bc3667f5  DEBIAN/control
+80c11556ea0b4a6245076dc019d2a5b6  DEBIAN/control
 01f08fa96c073c80a1878687c27814a1  usr/bin/isocheck.sh
-1b9c20bfa23f48fb745c5d2f21ec2baf  usr/bin/startbiglive
+f28ed27cd4c246e5c53bfe28967f47f2  usr/bin/startbiglive
 c89de935f5362e183a5a763b7597361f  usr/share/bigbashview/bcc/apps/boot-livecd/adapta-theme.run
 0c1f3587437777fc1074de31727c2c5b  usr/share/bigbashview/bcc/apps/boot-livecd/adapta.png
 bcc5c53645e815d95bca2af7ddad53fa  usr/share/bigbashview/bcc/apps/boot-livecd/arc-theme.run
