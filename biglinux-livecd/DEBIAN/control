@@ -1,5 +1,5 @@
 Package: biglinux-livecd
-Version: 7.0.2-1big2
+Version: 7.0.2-1big3
 Depends: bigbashview, dialog
 Architecture: all
 Maintainer: Bruno Goncalves <biglinux.com.br>
