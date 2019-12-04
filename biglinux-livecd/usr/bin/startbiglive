@@ -16,7 +16,7 @@ sudo rm -Rf /usr/share/plasma/plasmoids/org.kde.discovernotifier
 
 cd /usr/share/bigbashview/bcc/apps/boot-livecd/
 
-/usr/bin/bigbashview -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.sh.htm
+/usr/bin/bigbashview -b 0x0x0x0 -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.sh.htm
 chmod +x /tmp/biglightdm
 cd ~
 /tmp/biglightdm
