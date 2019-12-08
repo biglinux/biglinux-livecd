@@ -13,6 +13,8 @@ fi
 
 # Disable discover update in live
 sudo rm -Rf /usr/share/plasma/plasmoids/org.kde.discovernotifier
+sudo rm -f /etc/xdg/autostart/org.kde.discover.notifier.desktop
+sudo rm -f /usr/lib/x86_64-linux-gnu/libexec/DiscoverNotifier
 
 cd /usr/share/bigbashview/bcc/apps/boot-livecd/
 

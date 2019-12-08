@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+package_name=biglinux-livecd
+case "$1" in
+  remove)
+    dpkg-divert --package "$package_name" --rename --remove "/usr/share/initramfs-tools/scripts/casper-bottom/33enable_apport_crashes"
+    dpkg-divert --package "$package_name" --rename --remove "/usr/share/initramfs-tools/scripts/casper-bottom/53disable_unattended_upgrades"
+    dpkg-divert --package "$package_name" --rename --remove "/usr/share/initramfs-tools/scripts/casper-bottom/31disable_update_notifier"
+    ;;
+  purge)
+    dpkg-divert --package "$package_name" --rename --remove "/usr/share/initramfs-tools/scripts/casper-bottom/33enable_apport_crashes"
+    dpkg-divert --package "$package_name" --rename --remove "/usr/share/initramfs-tools/scripts/casper-bottom/53disable_unattended_upgrades"
+    dpkg-divert --package "$package_name" --rename --remove "/usr/share/initramfs-tools/scripts/casper-bottom/31disable_update_notifier"
+;;
+esac
+exit 0
