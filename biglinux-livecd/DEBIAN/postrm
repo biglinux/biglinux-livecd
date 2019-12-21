@@ -6,11 +6,13 @@ case "$1" in
     dpkg-divert --package "$package_name" --rename --remove "/usr/share/initramfs-tools/scripts/casper-bottom/33enable_apport_crashes"
     dpkg-divert --package "$package_name" --rename --remove "/usr/share/initramfs-tools/scripts/casper-bottom/53disable_unattended_upgrades"
     dpkg-divert --package "$package_name" --rename --remove "/usr/share/initramfs-tools/scripts/casper-bottom/31disable_update_notifier"
+    dpkg-divert --package "$package_name" --rename --remove "/etc/casper.conf"
     ;;
   purge)
     dpkg-divert --package "$package_name" --rename --remove "/usr/share/initramfs-tools/scripts/casper-bottom/33enable_apport_crashes"
     dpkg-divert --package "$package_name" --rename --remove "/usr/share/initramfs-tools/scripts/casper-bottom/53disable_unattended_upgrades"
     dpkg-divert --package "$package_name" --rename --remove "/usr/share/initramfs-tools/scripts/casper-bottom/31disable_update_notifier"
+    dpkg-divert --package "$package_name" --rename --remove "/etc/casper.conf"
 ;;
 esac
 exit 0
