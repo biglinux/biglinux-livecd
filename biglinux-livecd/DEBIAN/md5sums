@@ -7,11 +7,11 @@ d3d5646d32477e9f52d638263c447a95  DEBIAN/pt.po
 02e040b1deef32cfb19f91382b37ef85  DEBIAN/dpkg-divert
 cae795e79fbf0c2b40e11b294e0d4d9b  DEBIAN/preinst
 5691912eff06db5330c218a252a24b16  DEBIAN/postrm
-ff7c6cc8edcf1a68a7b8cccda13d59d9  DEBIAN/control
+9899f384ea34a5f7000c3058aa643926  DEBIAN/control
 9b0b56ae3e9bd71237dbd34c0dcc8b49  etc/sddm.conf.d/relogin.conf
 6810934055b553d94e7c774fcb37de4f  etc/casper.conf
 01f08fa96c073c80a1878687c27814a1  usr/bin/isocheck.sh
-283819c09d52eff178f2c6fe7d012696  usr/bin/startbiglive
+16f4745a2d8be93b463998468a0a54bf  usr/bin/startbiglive
 c89de935f5362e183a5a763b7597361f  usr/share/bigbashview/bcc/apps/boot-livecd/adapta-theme.run
 0c1f3587437777fc1074de31727c2c5b  usr/share/bigbashview/bcc/apps/boot-livecd/adapta.png
 bcc5c53645e815d95bca2af7ddad53fa  usr/share/bigbashview/bcc/apps/boot-livecd/arc-theme.run
@@ -23,6 +23,7 @@ dde73c9df38282775be8d3fe1ba943bf  usr/share/bigbashview/bcc/apps/boot-livecd/run
 5e2c48c611d184f38e1c29043417fcbb  usr/share/bigbashview/bcc/apps/boot-livecd/index.sh.htm
 bb0a16d231954af7c193d68e6359cfaa  usr/share/bigbashview/bcc/apps/boot-livecd/bg.txt
 839f9fe23a7001786093ee6812fdf27c  usr/share/bigbashview/bcc/apps/boot-livecd/bg.mp4
+907ba8e7811a479b3fab350e5f366eeb  usr/share/bigbashview/bcc/apps/boot-livecd.tar.gz
 fce423c895ae1903ac3e9842006db248  usr/share/initramfs-tools/scripts/casper-bottom/16autologin-fix
 79cdba753ab8359c19dcbda500b505d7  usr/share/locale/en/LC_MESSAGES/biglinux-livecd.mo
 f9155cd9000a171510118d2a0c1d31d5  usr/share/locale/es/LC_MESSAGES/biglinux-livecd.mo
