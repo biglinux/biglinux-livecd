@@ -1,4 +1,5 @@
 /usr/share/initramfs-tools/scripts/casper-bottom/33enable_apport_crashes
 /usr/share/initramfs-tools/scripts/casper-bottom/53disable_unattended_upgrades
 /usr/share/initramfs-tools/scripts/casper-bottom/31disable_update_notifier
+/usr/share/initramfs-tools/scripts/casper-bottom/01integrity_check
 /etc/casper.conf

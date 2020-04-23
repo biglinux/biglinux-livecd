@@ -29,6 +29,69 @@ if [ "$theme_actual" = "dark" ]; then
     checked_dark="checked"
 fi
 
+if [ "$theme_actual" = "breeze" ]; then
+    checked_breeze="checked"
+fi
+
+
+performance_actual="$(cat "$HOME/.big_performance")"
+
+if [ "$performance_actual" = "" ] || [ "$performance_actual" = "0" ]; then
+    checked_normal="checked"
+fi
+
+if [ "$performance_actual" = "1" ]; then
+    checked_optimized="checked"
+fi
+
+if [ "$performance_actual" = "2" ]; then
+    checked_performance="checked"
+fi
+
+MEMORY="$(($(grep MemTotal /proc/meminfo | awk '{print $2}') /1024))"
+
+if [ "$performance_actual" = "" ] && [ "$MEMORY" < "2200" ]; then
+    checked_normal=""
+    checked_performance="checked"
+    /usr/share/bigbashview/bcc/apps/boot-livecd/performance.run
+fi
+
+if [ "$performance_actual" = "" ] && [ "$MEMORY" < "5000" ]; then
+    checked_normal=""
+    checked_optimized="checked"
+    /usr/share/bigbashview/bcc/apps/boot-livecd/optimized.run
+fi
+
+NORMAL=$"Essa deve ser a melhor opção de desempenho<br>
+    para esse computador, mas você pode alternar<br>
+    entre os modos e escolher a sua preferência.<br><br>
+    As opções Otimizado e Performance, são dedicadas<br>
+    a computadores de baixo desempenho e não melhoram o<br>
+    desempenho em computadores de maior capacidade."
+    
+TOOLTIP_OTIMIZADO=$"Reduz o uso de memória e da placa de vídeo,
+      <br>com pequena redução dos recursos do sistema.<br><br>
+      Explicação avançada:<br>Utiliza a renderização QML via software, isso desativa<br>
+      a previsão de janelas ao passar o mouse na barra de tarefas,<br>
+      também impede o uso de alguns widgets do desktop que gerem<br>
+      gráficos em tempo real, por exemplo, o uso do monitor de<br>
+      processamento."
+      
+TOOLTIP_PERFORMANCE=$"Essa é a opção recomendada para computadores antigos.<br><br>Aplica as configurações do modo Otimizado<br>
+      e adiciona o uso do XRender no gerênciador de janelas,<br>
+      economizando mais recursos do computador.<br>
+      Removendo a maior parte dos efeitos das janelas."
+
+
+if [ "$MEMORY" -le "3800" ] && [ "$(nproc)" -gt "1" ]; then
+    NORMAL=$"Esse computador deve funcionar consideravelmente<br>
+    melhor utilizando o modo Otimizado ou Performance."
+fi
+
+if [ [ "$(grep -i "virtualbox" /sys/devices/virtual/dmi/id/product_name)" != "" ]; then
+    NORMAL=$"O sistema está funcionando dentro do VirtualBox,<br>
+    Recomendo que utilize o modo Otimizado ou Performance."
+fi
 
 
 
@@ -109,7 +172,7 @@ width: 100%;
 padding-left: 8%;
 padding-right: 8%;
 padding-bottom: 15px;
-padding-top: 15%;
+padding-top: 10%;
 font-size: 20px;
 display: block;
 box-sizing: border-box;
@@ -193,6 +256,114 @@ box-shadow:0 1px 3px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.1) inset
 .blue .panel {max-width:960px;text-align:center;position:relative;margin:auto;}
 
 
+[type="radio"]:not(:checked) + label, [type="radio"]:checked + label {
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    font-size: 1rem;
+    margin-top: 0px;
+    transition: .28s ease;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+div#contentbig {
+    display: inline-flex;
+}
+
+div#theme {
+    display: grid;
+    justify-items: flex-start;
+    border: 2px solid #ffffff61;
+    margin-right: 26px;
+    margin-left: 26px;
+    padding-right: 0px;
+    padding-bottom: 28px;
+    border-radius: 11px;
+    padding-left: 2px;
+    padding-top: 24px;
+    min-width: 238px;
+}
+
+div#theme2 {
+display: inherit;
+    border: 2px solid #ffffff61;
+    margin-right: 26px;
+    margin-left: 26px;
+    padding-right: 0px;
+    padding-bottom: 28px;
+    border-radius: 11px;
+    padding-left: 2px;
+    padding-top: 24px;
+    min-width: 238px;
+}
+
+h2 {
+    margin-top: -38px;
+    margin-bottom: -7px;
+    margin-left: 10px;
+    height: 22px;
+    font-size: 22px;
+    text-shadow: 1px 1px 4px rgb(0, 0, 0), 1px 1px 4px rgb(0, 0, 0);
+}
+
+h3 {
+    margin-top: -38px;
+    margin-bottom: -7px;
+    margin-left: 10px;
+    height: 22px;
+    font-size: 22px;
+    text-shadow: 1px 1px 4px rgb(0, 0, 0), 1px 1px 4px rgb(0, 0, 0);
+}
+
+
+div#performance {
+    display: grid;
+    justify-items: flex-start;
+    border: 2px solid #ffffff61;
+    margin-right: 26px;
+    margin-left: 26px;
+    padding-right: 0px;
+    padding-bottom: 28px;
+    border-radius: 11px;
+    padding-left: 2px;
+    padding-top: 24px;
+    min-width: 238px;
+}
+
+
+
+div#contentbig {
+    margin-top: 50px;
+}
+
+label.tooltipped.with-gap {
+    margin-top: 14px;
+    margin-left: 21px;
+    margin-right: 50px;
+}
+
+div#theme2-2 {
+    margin-top: 30px;
+}
+
+.backdrop {
+background-color: rgba(101, 101, 101, 1);
+}
+
+.material-tooltip {font-family:ubuntu;
+font-weight:400;font-size:16px;
+border-radius: 15px;
+padding: 15px;
+box-shadow: 2px 3px 3px 0px rgba(0,0,0,0.75);
+line-height: 120%;}
+
 </style>
 
 
@@ -216,27 +387,58 @@ echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=s
 echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux new" class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="' $"Desktop KDE configurado com a barra de tarefas<br>em modo moderno, barra de tarefas baseada<br>em ícones e menu de aplicativos em tela cheia,<br>remetendo à usabilidade de smartphones." '"><button>' $"Desktop Moderno" '<br>' $"(KDE Plasma)" '</button></a>'
 
 cat << EOF
-<br><br><br>
+<div id=contentbig>
+<div id=theme>
+<h2>Tema</h2>
       <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/arc-theme.run')" name="option" type="radio" id="arc" value="arc" $checked_arc />
       <label for="arc" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<img src=arc.png>">
 EOF
-      echo $"Tema Arc"
+      echo $"Arc"
 cat << EOF
 </label>
       <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/adapta-theme.run')" name="option" type="radio" id="adapta" value="adapta" $checked_adapta />
       <label for="adapta" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<img src=adapta.png>">
 EOF
-echo $"Tema Adapta"
+echo $"Adapta"
 cat << EOF
 </label>
 
       <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/dark-theme.run')" name="option" type="radio" id="dark" value="dark" $checked_dark />
       <label for="dark" class="tooltipped with-gap tool03" data-position="top" data-delay="50" data-tooltip="<img src=dark.png>">
 EOF
-echo $"Tema Dark" '</label>'
+echo $"Dark"
+
+cat << EOF
+</label>
+
+      <input onclick="_run('./breeze-theme.run')" name="option" type="radio" id="breeze" value="breeze" $checked_breeze />
+      <label for="breeze" class="tooltipped with-gap tool03" data-position="top" data-delay="50" data-tooltip="<img src=breeze.png>">
+EOF
+echo $"Breeze" '</label>'
 
 
+cat << EOF
+</div>
+<div id=performance>
+<h2>Desempenho</h2>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/normal.run quiet')" name="option2" type="radio" id="normal" value="normal" $checked_normal>
+      <label for="normal" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$NORMAL<br><br>">
+EOF
+      echo $"Normal"
+cat << EOF
+</label>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/optimized.run quiet')" name="option2" type="radio" id="optimized" value="optimized" $checked_optimized>
+      <label for="optimized" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$TOOLTIP_OTIMIZADO<br><br>">
+EOF
+echo $"Otimizado"
+cat << EOF
+</label>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/performance.run quiet')" name="option2" type="radio" id="performance2" value="performance2" $checked_performance>
+      <label for="performance2" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$TOOLTIP_PERFORMANCE<br><br>">
+EOF
+echo $"Performance"
 
+echo "</div></div></div></div>"
 
     
 

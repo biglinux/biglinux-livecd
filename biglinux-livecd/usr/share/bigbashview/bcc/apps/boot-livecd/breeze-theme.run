@@ -1,0 +1,4 @@
+biglinux-themes.sh --apply breeze
+
+echo "breeze" > /tmp/big_desktop_theme
+
