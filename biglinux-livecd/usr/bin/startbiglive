@@ -1,5 +1,15 @@
 #!/bin/bash
 
+
+# Virtualization fix open
+if [ "$(xrandr --current | grep \* | grep 800x600)" != "" ] && [ "$(lspci | grep -i vga | grep -i vmware)" != "" ]; then
+    kwriteconfig5 --file ~/.config/kded5rc --group Module-kscreen --key autoload false
+    xrandr -s $(xrandr | grep 1280x | tail -n1 | awk '{ print $1 }')
+    xrandr --dpi 96
+fi
+# Virtualization fix close
+
+
 if [ "$(grep 'Autolock=false' ~/.config/kscreenlockerrc)" = "" ];
 then
     sed -i '/\[Daemon\]/a\'$'\n''Autolock=false\nLockOnResume=false' ~/.config/kscreenlockerrc
