@@ -8,11 +8,11 @@ c1d34b325091e886a3c1175b41da519c  DEBIAN/dpkg-divert
 cf4533d5625a89baf93fa5070454b31c  DEBIAN/biglinux-livecd.pot
 ca1aa41459f251fda56c0a6c65118157  DEBIAN/en.po
 b78bb8ffa6101e4eaa49528a5b61e47d  DEBIAN/en.mo
-8e739d679c7f45befa402cf7065c59ff  DEBIAN/control
+731c832f75223542b63d107fd806a454  DEBIAN/control
 9b0b56ae3e9bd71237dbd34c0dcc8b49  etc/sddm.conf.d/relogin.conf
 6810934055b553d94e7c774fcb37de4f  etc/casper.conf
 01f08fa96c073c80a1878687c27814a1  usr/bin/isocheck.sh
-10c0d46ab904567bf7eb01d0864f49a0  usr/bin/startbiglive
+08075c7a50c4a24447cc301d8cdf2847  usr/bin/startbiglive
 c89de935f5362e183a5a763b7597361f  usr/share/bigbashview/bcc/apps/boot-livecd/adapta-theme.run
 0c1f3587437777fc1074de31727c2c5b  usr/share/bigbashview/bcc/apps/boot-livecd/adapta.png
 bcc5c53645e815d95bca2af7ddad53fa  usr/share/bigbashview/bcc/apps/boot-livecd/arc-theme.run
