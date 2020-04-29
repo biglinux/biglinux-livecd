@@ -11,13 +11,10 @@ export TEXTDOMAIN=biglinux-livecd
 . /usr/share/bigbashview/bcc/shell/base.sh
 
 # Virtualization fix open
-
 if [ "$(xrandr --current | grep \* | grep 800x600)" != "" ] && [ "$(lspci | grep -i vga | grep -i vmware)" != "" ]; then
-    xrandr -s 1280x720
     kwriteconfig5 --file ~/.config/kded5rc --group Module-kscreen --key autoload false
+    xrandr -s $(xrandr | grep 1280x | tail -n1 | awk '{ print $1 }')
 fi
-
-
 # Virtualization fix close
 
 theme_actual="$(cat /tmp/big_desktop_theme)"
