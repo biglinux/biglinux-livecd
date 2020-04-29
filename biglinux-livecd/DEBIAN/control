@@ -1,11 +1,11 @@
 Package: biglinux-livecd
-Version: 7.0.4-1big
+Version: 7.0.4-1big8
 Depends: bigbashview, dialog, casper
 Architecture: all
 Maintainer: Bruno Goncalves <biglinux.com.br>
 Section: admin
 Priority: optional
-Installed-Size:3952
+Installed-Size:3956
 Description: Live CD boot options
 
 
