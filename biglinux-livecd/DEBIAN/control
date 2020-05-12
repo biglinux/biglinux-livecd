@@ -5,7 +5,7 @@ Architecture: all
 Maintainer: Bruno Goncalves <biglinux.com.br>
 Section: admin
 Priority: optional
-Installed-Size:3956
+Installed-Size:3960
 Description: Live CD boot options
 
 
