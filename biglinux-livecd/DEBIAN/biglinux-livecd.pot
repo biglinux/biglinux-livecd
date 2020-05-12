@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: biglinux-livecd\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2020-04-23 05:05-0300\n"
+        "POT-Creation-Date: 2020-05-12 05:01-0300\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,6 +76,15 @@ msgid   "Desktop KDE configurado com a barra de tarefas<br>em modo moderno, "
 msgstr  ""
 
 msgid   "Desktop Moderno"
+msgstr  ""
+
+msgid   "Desktop KDE configurado com duas barras, a superior<br>com o relógio "
+        "e funções gerais, a inferior com ícones<br>e o menu de aplicativos "
+        "em tela cheia.<br><br>A interface completa remete à usabilidade do "
+        "desktop Gnome."
+msgstr  ""
+
+msgid   "Desktop Alternativo"
 msgstr  ""
 
 msgid   "Arc"

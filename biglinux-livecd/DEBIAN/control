@@ -1,5 +1,5 @@
 Package: biglinux-livecd
-Version: 7.0.4-2big6
+Version: 7.0.4-2big8
 Depends: bigbashview, dialog, casper
 Architecture: all
 Maintainer: Bruno Goncalves <biglinux.com.br>

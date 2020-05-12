@@ -21,7 +21,9 @@ if [ "$p_desktop" = "startkde-biglinux new" ]; then
     echo "/usr/share/xsessions/plasma-new.desktop" > /tmp/big_desktop_changed
 fi
 
-
+if [ "$p_desktop" = "startkde-biglinux topbar" ]; then
+    echo "/usr/share/xsessions/plasma-topbar.desktop" > /tmp/big_desktop_changed
+fi
 
 
 echo '
