@@ -1,6 +1,4 @@
 c1d34b325091e886a3c1175b41da519c  DEBIAN/dpkg-divert
-b78bb8ffa6101e4eaa49528a5b61e47d  DEBIAN/en.mo
-4ec606922aa417550ed13ac866216726  DEBIAN/en.po
 7506798c2919ec0ca458c868b77e4e00  DEBIAN/es.po
 4edec0c5a7f36ef8cb6def0193915f0f  DEBIAN/languages
 d41d8cd98f00b204e9800998ecf8427e  DEBIAN/md5sums
@@ -8,11 +6,13 @@ d41d8cd98f00b204e9800998ecf8427e  DEBIAN/md5sums
 1c8c553ee949385fa6283047d228ff5f  DEBIAN/preinst
 2e72458e33cdc85539553dd7711786e7  DEBIAN/pt.po
 bf38809f39fb9e57584f7cebb7288d62  DEBIAN/biglinux-livecd.pot
-935701d0c9a5b4c3f0ca07c9f607fcd0  DEBIAN/control
+a7351f04c0ceb9adc58bdd7aea7f06a1  DEBIAN/en.po
+611cfe1c99e98150b5c0f40fce6fcc6d  DEBIAN/en.mo
+76da9f1e8fe6fac26b0b457575989e2f  DEBIAN/control
 9b0b56ae3e9bd71237dbd34c0dcc8b49  etc/sddm.conf.d/relogin.conf
 6810934055b553d94e7c774fcb37de4f  etc/casper.conf
 01f08fa96c073c80a1878687c27814a1  usr/bin/isocheck.sh
-08075c7a50c4a24447cc301d8cdf2847  usr/bin/startbiglive
+a0eae647268fd38f4e008700502fad96  usr/bin/startbiglive
 c89de935f5362e183a5a763b7597361f  usr/share/bigbashview/bcc/apps/boot-livecd/adapta-theme.run
 0c1f3587437777fc1074de31727c2c5b  usr/share/bigbashview/bcc/apps/boot-livecd/adapta.png
 bcc5c53645e815d95bca2af7ddad53fa  usr/share/bigbashview/bcc/apps/boot-livecd/arc-theme.run
@@ -28,7 +28,7 @@ a28fce1c921a9963ee207371f60d5b08  usr/share/bigbashview/bcc/apps/boot-livecd/mak
 b1ccb70c18b7d15a93372369ffeadbbf  usr/share/bigbashview/bcc/apps/boot-livecd/index.sh.htm
 fce423c895ae1903ac3e9842006db248  usr/share/initramfs-tools/scripts/casper-bottom/16autologin-fix
 0655a35df83256be9fc3aad9ab3345d4  usr/share/initramfs-tools/scripts/casper-bottom/01integrity_check
-7e373a5c69f76c6ab380143dee6981c2  usr/share/locale/en/LC_MESSAGES/biglinux-livecd.mo
+611cfe1c99e98150b5c0f40fce6fcc6d  usr/share/locale/en/LC_MESSAGES/biglinux-livecd.mo
 1cf56aaba5ad01ae00f95fa71b0dd66b  usr/share/locale/es/LC_MESSAGES/biglinux-livecd.mo
 22cd6354fe396f8d928e65f901a38467  usr/share/locale/pt/LC_MESSAGES/biglinux-livecd.mo
 38f44a161800c4d221d04f71daa75fee  usr/share/locale/pt_BR/LC_MESSAGES/biglinux-livecd.mo
