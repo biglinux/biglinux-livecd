@@ -12,7 +12,7 @@ a7351f04c0ceb9adc58bdd7aea7f06a1  DEBIAN/en.po
 9b0b56ae3e9bd71237dbd34c0dcc8b49  etc/sddm.conf.d/relogin.conf
 6810934055b553d94e7c774fcb37de4f  etc/casper.conf
 01f08fa96c073c80a1878687c27814a1  usr/bin/isocheck.sh
-a0eae647268fd38f4e008700502fad96  usr/bin/startbiglive
+43cb4192beffe130c6951c6fd1a522da  usr/bin/startbiglive
 c89de935f5362e183a5a763b7597361f  usr/share/bigbashview/bcc/apps/boot-livecd/adapta-theme.run
 0c1f3587437777fc1074de31727c2c5b  usr/share/bigbashview/bcc/apps/boot-livecd/adapta.png
 bcc5c53645e815d95bca2af7ddad53fa  usr/share/bigbashview/bcc/apps/boot-livecd/arc-theme.run

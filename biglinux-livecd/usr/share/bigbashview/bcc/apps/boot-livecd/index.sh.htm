@@ -51,17 +51,20 @@ fi
 
 MEMORY="$(($(grep MemTotal /proc/meminfo | awk '{print $2}') /1024))"
 
+if [ "$performance_actual" = "" ] && [ "$MEMORY" < "5000" ]; then
+    checked_normal=""
+    checked_performance=""
+    checked_optimized="checked"
+    /usr/share/bigbashview/bcc/apps/boot-livecd/optimized.run
+fi
+
 if [ "$performance_actual" = "" ] && [ "$MEMORY" < "2200" ]; then
     checked_normal=""
+    checked_optimized=""
     checked_performance="checked"
     /usr/share/bigbashview/bcc/apps/boot-livecd/performance.run
 fi
 
-if [ "$performance_actual" = "" ] && [ "$MEMORY" < "5000" ]; then
-    checked_normal=""
-    checked_optimized="checked"
-    /usr/share/bigbashview/bcc/apps/boot-livecd/optimized.run
-fi
 
 NORMAL=$"Essa deve ser a melhor opção de desempenho<br>
     para esse computador, mas você pode alternar<br>
