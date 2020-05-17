@@ -13,6 +13,9 @@ export TEXTDOMAIN=biglinux-livecd
 
 theme_actual="$(cat /tmp/big_desktop_theme)"
 
+Desempenho_translate=$"Desempenho"
+Tema_translate=$"Tema"
+
 if [ "$theme_actual" = "" ]; then
     biglinux-themes.sh --apply arc
     checked_arc="checked"
@@ -51,14 +54,14 @@ fi
 
 MEMORY="$(($(grep MemTotal /proc/meminfo | awk '{print $2}') /1024))"
 
-if [ "$performance_actual" = "" ] && [ "$MEMORY" < "5000" ]; then
+if [ "$performance_actual" = "" ] && [ "$MEMORY" -lt "5000" ]; then
     checked_normal=""
     checked_performance=""
     checked_optimized="checked"
     /usr/share/bigbashview/bcc/apps/boot-livecd/optimized.run
 fi
 
-if [ "$performance_actual" = "" ] && [ "$MEMORY" < "2200" ]; then
+if [ "$performance_actual" = "" ] && [ "$MEMORY" -lt "2200" ]; then
     checked_normal=""
     checked_optimized=""
     checked_performance="checked"
@@ -395,7 +398,7 @@ echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=s
 cat << EOF
 <div id=contentbig>
 <div id=theme>
-<h2>Tema</h2>
+<h2>$Tema_translate</h2>
       <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/arc-theme.run')" name="option" type="radio" id="arc" value="arc" $checked_arc />
       <label for="arc" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<img src=arc.png>">
 EOF
@@ -426,7 +429,7 @@ echo $"Breeze" '</label>'
 cat << EOF
 </div>
 <div id=performance>
-<h2>Desempenho</h2>
+<h2>$Desempenho_translate</h2>
       <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/normal.run quiet')" name="option2" type="radio" id="normal" value="normal" $checked_normal>
       <label for="normal" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$NORMAL<br><br>">
 EOF
