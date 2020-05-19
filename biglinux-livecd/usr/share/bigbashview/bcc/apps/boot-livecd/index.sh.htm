@@ -58,14 +58,14 @@ if [ "$performance_actual" = "" ] && [ "$MEMORY" -lt "5000" ]; then
     checked_normal=""
     checked_performance=""
     checked_optimized="checked"
-    /usr/share/bigbashview/bcc/apps/boot-livecd/optimized.run
+    /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/optimized.run quiet
 fi
 
 if [ "$performance_actual" = "" ] && [ "$MEMORY" -lt "2200" ]; then
     checked_normal=""
     checked_optimized=""
     checked_performance="checked"
-    /usr/share/bigbashview/bcc/apps/boot-livecd/performance.run
+    /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/performance.run quiet
 fi
 
 
