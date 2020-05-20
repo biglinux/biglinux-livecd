@@ -125,7 +125,6 @@ msgstr ""
 msgid "Desktop Moderno"
 msgstr "Escritorio moderno"
 
-#, fuzzy
 msgid ""
 "Desktop KDE configurado com duas barras, a superior<br>com o relógio e "
 "funções gerais, a inferior com ícones<br>e o menu de aplicativos em tela "
@@ -137,7 +136,7 @@ msgstr ""
 
 #, fuzzy
 msgid "Desktop Alternativo"
-msgstr "Escritorio moderno"
+msgstr "Escritorio Alternativo"
 
 msgid "Arc"
 msgstr "Arc"
@@ -146,7 +145,7 @@ msgid "Adapta"
 msgstr "Adapta"
 
 msgid "Dark"
-msgstr "Tema oscuro"
+msgstr "Oscuro"
 
 msgid "Breeze"
 msgstr "Breeze"
