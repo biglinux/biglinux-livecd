@@ -15,6 +15,26 @@ theme_actual="$(cat /tmp/big_desktop_theme)"
 
 Desempenho_translate=$"Desempenho"
 Tema_translate=$"Tema"
+CHROMIUM_TITLE=$"Navegador Chromium"
+CLOSE=$"Fechar"
+
+
+chromium_actual="$(cat "$HOME/.config/chromium-optimize")"
+
+
+if [ "$chromium_actual" = "" ]; then
+    checked_chromium_auto="checked"
+fi
+
+if [ "$chromium_actual" = "performance" ]; then
+    checked_chromium_yes="checked"
+fi
+
+if [ "$chromium_actual" = "optimize" ]; then
+    checked_chromium_no="checked"
+fi
+
+
 
 if [ "$theme_actual" = "" ]; then
     biglinux-themes.sh --apply arc
@@ -371,13 +391,85 @@ padding: 15px;
 box-shadow: 2px 3px 3px 0px rgba(0,0,0,0.75);
 line-height: 120%;}
 
+.chromium.col-md-2.waves-effect.waves-light.box {
+    justify-self: center;
+    margin-top: -6px;
+    margin-bottom: -22px;
+}
+
+.chromium.col-md-2.waves-effect.waves-light.box a {
+    color: #00b8ff !important;
+}
+
+
+.modal {
+    top: 50% !important;
+    transform: translate(0%, -50%) !important;
+    position: fixed;
+    left: 0;
+    background: url(01.jpg);
+    background-attachment: fixed;
+    right: 0;
+    color: white;
+    padding: 0;
+    max-height: 90%;
+    margin: auto;
+    overflow-y: auto;
+    border-radius: 15px;
+    will-change: top, opacity;
+}
+
+#modal5, #modalAndroid {
+    width: 1000px;
+}
+
+.col-md-modal {
+    cursor: pointer;
+    padding: 0px;
+    margin: auto;
+    margin-top: 13px;
+    width: 400px;
+    background-color: #00000080;
+    border-radius: 19px;
+    padding-left: 24px;
+    box-shadow: 3px 2px 2px 0px rgba(0, 0, 0, 0.77);
+}
+
+.modal .modal-content {
+    padding: 24px;
+    background-color: #2a4090;
+}
+
+div#chromium2 {
+    margin-top: 21px;
+}
+
 </style>
 
 
-
-
-
+<script>
+$('.tooltipped').tooltip({
+ html: "<img src='/usr/share/wallpapers/BigLinux/plants.jpg'>"
+});
+</script>
 EOF
+
+
+echo "<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, options);
+  });
+
+  // Or with jQuery
+
+  \$(document).ready(function(){
+    \$('.modal').modal();
+  });
+       
+</script>"
+
+
 
 echo '<div id=page2>'
 echo '<div id="middle" class="bar"><h1>'
@@ -446,6 +538,90 @@ cat << EOF
       <label for="performance2" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$TOOLTIP_PERFORMANCE<br><br>">
 EOF
 echo $"Performance"
+echo '</label>'
+
+
+
+
+
+
+######################################
+#
+#   CHROMIUM
+#
+######################################
+
+
+    NAME=$"Otimizar o Chromium"
+    COMMENT=$"Clique aqui e veja as opções de otimização<br>
+    do navegador Chromium, o navegador que<br>
+    recomendado no BigLinux."
+
+cat << EOF
+
+    <div class="chromium col-md-2 waves-effect waves-light box $CATEGORY"><a  href="#modal2"  class="tooltipped with-gap modal-trigger" data-position="top" data-delay="50" data-tooltip="$COMMENT">
+    <p class="name">$NAME</p>
+    </center></a>
+    </div>
+
+  <!-- Modal Structure -->
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+
+EOF
+
+echo '<div id=top>'
+echo $"Recomendo que você experimente por algum tempo o navegador Chromium instalado no BigLinux, pois ele possui configurações otimizadas para o sistema e também é utilizado na maior parte dos nossos Web Apps.<br><br>
+Uma das otimizações é a aceleração de vídeo utilizando a placa de vídeo, isso deixa o sistema mais leve e eficiente,<br>
+porém, essa opção não é adequada para todas as placas de vídeo e a detecção automática pode não ser  a melhor opção.<br><br>
+Se o navegador ou algum Web App estiver em uso quando essa configuração for alterada, é necessário fechar todos<br>
+e abrir novamente para que a alteração seja aplicada.<br><br>
+Escolha se o navegador deve utilizar a aceleração utilizando a placa de vídeo:"
+echo '</div>'
+
+
+cat << EOF
+<div id=chromium>
+      <div id=chromium2>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/chromium-auto.run')" name="option3" type="radio" id="auto" value="auto" $checked_chromium_auto>
+      <label for="auto" class="with-gap">
+EOF
+      echo $"Detecção automática"
+cat << EOF
+</label>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/chromium-yes.run')" name="option3" type="radio" id="yes" value="yes" $checked_chromium_yes>
+      <label for="yes" class="with-gap">
+EOF
+echo $"Ativar"
+cat << EOF
+</label>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/chromium-no.run')" name="option3" type="radio" id="no" value="no" $checked_chromium_no>
+      <label for="no" class="with-gap">
+EOF
+echo $"Desativar"
+
+echo "</div></div>"
+
+    
+cat << EOF    
+    
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">$CLOSE</a>
+    </div>
+  </div>
+EOF
+
+
+######################################
+#
+#   CHROMIUM CLOSE
+#
+######################################
+
+
+
+
 
 echo "</div></div></div></div>"
 

@@ -42,7 +42,7 @@ sudo rm -f /usr/lib/x86_64-linux-gnu/libexec/DiscoverNotifier
 
 cd /usr/share/bigbashview/bcc/apps/boot-livecd/
 
-LANGUAGE=$BIGBASHVIEW_LANG QT_QUICK_BACKEND=software /usr/bin/bigbashview -t qt -b 0,0,0 -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.sh.htm
+LANGUAGE=$BIGBASHVIEW_LANG QT_QUICK_BACKEND=software /usr/bin/bigbashview -b -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.sh.htm
 chmod +x /tmp/biglightdm
 cd ~
 /tmp/biglightdm

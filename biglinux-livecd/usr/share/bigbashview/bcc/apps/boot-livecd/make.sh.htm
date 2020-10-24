@@ -2,7 +2,9 @@
 
 . .config/user-dirs.dirs
 
-sudo sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Instalar o sistema no HD|g' /usr/share/applications/calamares.desktop
+feh --bg-fill "/usr/share/sddm/themes/breeze/black.jpg" &
+
+sudo sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Instalar o sistema no HD|g;s| sudo | bigsudo |g' /usr/share/applications/calamares.desktop
 
 cp -f "/usr/share/applications/calamares.desktop" "$XDG_DESKTOP_DIR/calamares.desktop"
 
@@ -25,10 +27,17 @@ if [ "$p_desktop" = "startkde-biglinux topbar" ]; then
     echo "/usr/share/xsessions/topbar.desktop" > /tmp/big_desktop_changed
 fi
 
+if [ ! -e "/tmp/big_desktop_theme" ]; then
+    biglinux-themes.sh --apply arc
+    echo "arc" > /tmp/big_desktop_theme
+fi
+
+
+
+
 
 echo '
 <body onload=window.location="/usr/share/bigbashview/close.sh">
 '
 
-
-#loop até 5 usando while
+killall feh
