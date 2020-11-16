@@ -1,3 +1,3 @@
 biglinux-themes.sh --apply dark
 
-echo "dark" > /tmp/big_desktop_theme
+echo "dark" > /tmp/big_desktotheme

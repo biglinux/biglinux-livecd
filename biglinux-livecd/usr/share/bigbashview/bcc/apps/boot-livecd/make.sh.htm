@@ -10,26 +10,26 @@ cp -f "/usr/share/applications/calamares.desktop" "$XDG_DESKTOP_DIR/calamares.de
 
 chmod +x "$XDG_DESKTOP_DIR/calamares.desktop"
 
-echo "$p_desktop" > /tmp/biglightdm
+echo "$desktop" > /tmp/biglightdm
 
 cp -f "$HOME/.big_performance" /tmp/big_performance_changed
 
 
-if [ "$p_desktop" = "startkde-biglinux classic" ]; then
-    echo '/usr/share/xsessions/plasma.desktop' > /tmp/big_desktop_changed
+if [ "$desktop" = "startkde-biglinux classic" ]; then
+    echo '/usr/share/xsessions/plasma.desktop' > /tmp/big_desktochanged
 fi
 
-if [ "$p_desktop" = "startkde-biglinux new" ]; then
-    echo "/usr/share/xsessions/plasma-new.desktop" > /tmp/big_desktop_changed
+if [ "$desktop" = "startkde-biglinux new" ]; then
+    echo "/usr/share/xsessions/plasma-new.desktop" > /tmp/big_desktochanged
 fi
 
-if [ "$p_desktop" = "startkde-biglinux topbar" ]; then
-    echo "/usr/share/xsessions/topbar.desktop" > /tmp/big_desktop_changed
+if [ "$desktop" = "startkde-biglinux topbar" ]; then
+    echo "/usr/share/xsessions/topbar.desktop" > /tmp/big_desktochanged
 fi
 
-if [ ! -e "/tmp/big_desktop_theme" ]; then
+if [ ! -e "/tmp/big_desktotheme" ]; then
     biglinux-themes.sh --apply arc
-    echo "arc" > /tmp/big_desktop_theme
+    echo "arc" > /tmp/big_desktotheme
 fi
 
 
