@@ -1,9 +1,15 @@
 #!/bin/bash
 
+
 #Translation
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-livecd
 
+# enable swap on disk
+for diskswap in $(sudo blkid | grep 'TYPE="swap"' | grep -v zram | cut -f1 -d:)
+do
+    sudo swapon $diskswap  </dev/null &>/dev/null &
+done
 
 # Import BigControlCenter base modules / Importa os módulos básicos do BigControlCenter
 # That's include jquery and materialize / Isso inclui o jquery e o materialize
@@ -11,50 +17,87 @@ export TEXTDOMAIN=biglinux-livecd
 . /usr/share/bigbashview/bcc/shell/base.sh
 
 
-theme_actual="$(cat /tmp/big_desktotheme)"
+if [ -e "/tmp/big_keyboard" ]; then
+    setxkbmap $(cat /tmp/big_keyboard)  </dev/null &>/dev/null &
+    #localectl set-x11-keymap $(cat /tmp/big_keyboard)
+fi
 
-Desempenho_translate=$"Desempenho"
+
+theme_actual="$(cat /tmp/big_desktop_theme)"
+
+
+Desempenho_translate=$"Desempenho do desktop"
+Browser_translate=$"Aceleração do navegador"
 Tema_translate=$"Tema"
-CHROMIUM_TITLE=$"Navegador Chromium"
 CLOSE=$"Fechar"
+orchis=$"Bordas arredondadas."
+lightly=$"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em computadores<br>antigos ou ambientes virtualizados."
+
+browser="$(cat "$HOME/.config/browser-optimize")"
 
 
-chromium_actual="$(cat "$HOME/.config/chromium-optimize")"
-
-
-if [ "$chromium_actual" = "" ]; then
-    checked_chromium_auto="checked"
+if [ "$browser" = "" ]; then
+    checked_browser_auto="checked"
 fi
 
-if [ "$chromium_actual" = "performance" ]; then
-    checked_chromium_yes="checked"
+if [ "$browser" = "performance" ]; then
+    checked_browser_yes="checked"
 fi
 
-if [ "$chromium_actual" = "optimize" ]; then
-    checked_chromium_no="checked"
+if [ "$browser" = "optimize" ]; then
+    checked_browser_no="checked"
 fi
 
 
 
 if [ "$theme_actual" = "" ]; then
-    biglinux-themes.sh --apply arc
-    checked_arc="checked"
+    biglinux-themes.sh --apply breeze
+    echo "breeze" > /tmp/big_desktop_theme
+    checked_breeze="checked"
 fi
 
-if [ "$theme_actual" = "arc" ]; then
-    checked_arc="checked"
-fi
-
-if [ "$theme_actual" = "adapta" ]; then
-    checked_adapta="checked"
-fi
-
-if [ "$theme_actual" = "dark" ]; then
-    checked_dark="checked"
-fi
+# if [ "$theme_actual" = "arc" ]; then
+#     checked_arc="checked"
+# fi
+# 
+# if [ "$theme_actual" = "adapta" ]; then
+#     checked_adapta="checked"
+# fi
+# 
+# if [ "$theme_actual" = "dark" ]; then
+#     checked_dark="checked"
+# fi
 
 if [ "$theme_actual" = "breeze" ]; then
     checked_breeze="checked"
+fi
+
+if [ "$theme_actual" = "breeze-dark" ]; then
+    checked_breeze_dark="checked"
+fi
+
+if [ "$theme_actual" = "lightly" ]; then
+    checked_lightly="checked"
+fi
+
+if [ "$theme_actual" = "lightly-dark" ]; then
+    checked_lightly_dark="checked"
+fi
+
+if [ "$theme_actual" = "orchis" ]; then
+    checked_orchis="checked"
+fi
+
+if [ "$theme_actual" = "orchis-dark" ]; then
+    checked_orchis_dark="checked"
+fi
+
+if [ "$theme_actual" = "materia" ]; then
+    checked_materia="checked"
+fi
+
+if [ "$theme_actual" = "materia-dark" ]; then
+    checked_materia_dark="checked"
 fi
 
 
@@ -104,10 +147,21 @@ TOOLTIP_OTIMIZADO=$"Reduz o uso de memória e da placa de vídeo,
       gráficos em tempo real, por exemplo, o uso do monitor de<br>
       processamento."
       
-TOOLTIP_PERFORMANCE=$"Essa é a opção recomendada para computadores antigos.<br><br>Aplica as configurações do modo Otimizado<br>
+TOOLTIP_PERFORMANCE=$"Essa é a opção recomendada para computadores antigos.<br><br>
+      Aplica as configurações do modo Otimizado<br>
       e adiciona o uso do XRender no gerênciador de janelas,<br>
       economizando mais recursos do computador.<br>
       Removendo a maior parte dos efeitos das janelas."
+      
+BROWSER_AUTO=$"O sistema irá definir se utiliza ou não a aceleração<br>
+utilizando a placa de vídeo nos navegadores."
+
+BROWSER_YES=$"Utilizar a aceleração de vídeo<br>
+nos navegadores. Em alguns computadores<br>
+essa opção pode gerar vídeos distorcidos."
+
+BROWSER_NO=$"Não utilizar a aceleração de vídeo<br>
+nos navegadores."
 
 
 if [ "$MEMORY" -le "3800" ] && [ "$(nproc)" -gt "1" ]; then
@@ -127,39 +181,18 @@ fi
   <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/usr/share/bigbashview/bcc/materialize/css/materialize.css">
+    <link rel="stylesheet" type="text/css" href="theme.css">
     <script src="/usr/share/bigbashview/bcc/materialize/js/jquery.js"></script>
     <script src="/usr/share/bigbashview/bcc/materialize/js/materialize.js"></script>
     <script src="/usr/share/bigbashview/bcc/js/big.js"></script>
   </head>
-  
-  <video autoplay muted loop class="bg_video">
-  <source src="bg.mp4" type="video/mp4">
-</video>
-
-  
   '
-
-
-
-
-setxkbmap $(grep XKBLAYOUT /etc/default/keyboard | sed 's|.*="||g;s|"||g')
 
 echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
 
 cat << EOF
 <style>
 
-.bg_video{
-	position: fixed; 
-	right: 0; 
-	bottom: 0;
-	min-width: 100%; 
-	min-height: 100%;
-	width: auto; 
-	height: auto; 
-	z-index: -1000;
-	background-size: cover; 
-}
 
 body {
 #			background-image: url(/usr/share/wallpapers/praia9.jpg) ;
@@ -182,69 +215,23 @@ font-family: 'Droid Sans';
 }
 
 
-
-
-
-#page2 {
-	margin-right: 18%;
-	margin-left: 18%;
-	height: 100%;
-}
-
-
-#middle {
-	display: table-cell;
-vertical-align: middle;
-width: 100%;
-padding-left: 8%;
-padding-right: 8%;
-padding-bottom: 15px;
-padding-top: 10%;
-font-size: 20px;
-display: block;
-box-sizing: border-box;
-text-align: center;
-border: 1px solid #ccc;
-border-top: 0px;
-border-bottom: 0px;
-argin-bottom:0px;
-height: 100%;
-	top: 0%;
-}
-
-
-.bar {
-  position: relative;
-  background: rgba(0,0,0,0.65);
-  box-shadow: 0px 0px 95px 0px rgba(0,0,0,1);
-	height: 100%;
-}
-
-.bar:before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  height: 100%;
-  top: 0; right: 0; left: 0;
-  filter: blur(15px);
-  -webkit-filter: blur(15px);
-	height: 100%;
-}
-
 .material-tooltip {font-family:ubuntu;
-font-weight:400;font-size:18px;
+font-weight:400;font-size:17px;
 line-height: 120%;}
 
 .with-gap {color: #ffffff !important;
-font-size:20px !important;
+font-size:17px !important;
 margin-left:20px;
 margin-right:20px;
 margin-top:10%;
 }
 
-h1 {text-align:center;font-family:ubuntu;font-weight:400;font-size:20px;color:#fff;text-shadow:0em 0.05em 0 rgba(0,0,0,0.35)}
+h1 {margin: 0px;
+margin-right: 7px;
+margin-left: 7px;
+text-align:center;font-family:ubuntu;font-weight:400;font-size:17px;color:#fff;text-shadow:0em 0.05em 0 rgba(0,0,0,0.35)}
 button {color:#454545;background:transparent;border-width:2px;border-style: solid;border-color: #454545;position:relative;margin:1em;display:inline-block;padding:0.5em 1em;transition:all 0.3s ease-in-out;text-align:center;
-font-family:ubuntu;font-weight:bold;font-size:18px}
+font-family:ubuntu;font-weight:bold;font-size:17px}
 button:before, button:after {content:'';display:block;position:absolute;border-color:#454545;box-sizing:border-box;border-style:solid;width:1em;height:1em;transition:all 0.3s ease-in-out}
 button:before {top:-6px;left:-6px;border-width:2px 0 0 2px;z-index:5;}
 button:after {bottom:-6px;right:-6px;border-width:0 2px 2px 0;}
@@ -305,6 +292,7 @@ div#contentbig {
 }
 
 div#theme {
+    margin-top: 20px;
     display: grid;
     justify-items: flex-start;
     border: 2px solid #ffffff61;
@@ -315,7 +303,7 @@ div#theme {
     border-radius: 11px;
     padding-left: 2px;
     padding-top: 24px;
-    min-width: 238px;
+    min-width: 330px;
 }
 
 div#theme2 {
@@ -336,7 +324,7 @@ h2 {
     margin-bottom: -7px;
     margin-left: 10px;
     height: 22px;
-    font-size: 22px;
+    font-size: 20px;
     text-shadow: 1px 1px 4px rgb(0, 0, 0), 1px 1px 4px rgb(0, 0, 0);
 }
 
@@ -345,33 +333,34 @@ h3 {
     margin-bottom: -7px;
     margin-left: 10px;
     height: 22px;
-    font-size: 22px;
+    font-size: 20px;
     text-shadow: 1px 1px 4px rgb(0, 0, 0), 1px 1px 4px rgb(0, 0, 0);
 }
 
 
 div#performance {
+    margin-top: 20px;
     display: grid;
     justify-items: flex-start;
     border: 2px solid #ffffff61;
     margin-right: 26px;
-    margin-left: 26px;
+    margin-left: 67px;
     padding-right: 0px;
-    padding-bottom: 28px;
+    padding-bottom: 20px;
     border-radius: 11px;
     padding-left: 2px;
     padding-top: 24px;
-    min-width: 238px;
+    min-width: 327px;
 }
 
 
 
 div#contentbig {
-    margin-top: 50px;
+    margin-top: 16px;
 }
 
 label.tooltipped.with-gap {
-    margin-top: 14px;
+    margin-top: 5px;
     margin-left: 21px;
     margin-right: 50px;
 }
@@ -391,17 +380,6 @@ padding: 15px;
 box-shadow: 2px 3px 3px 0px rgba(0,0,0,0.75);
 line-height: 120%;}
 
-.chromium.col-md-2.waves-effect.waves-light.box {
-    justify-self: center;
-    margin-top: -6px;
-    margin-bottom: -22px;
-}
-
-.chromium.col-md-2.waves-effect.waves-light.box a {
-    color: #00b8ff !important;
-}
-
-
 .modal {
     top: 50% !important;
     transform: translate(0%, -50%) !important;
@@ -412,11 +390,12 @@ line-height: 120%;}
     right: 0;
     color: white;
     padding: 0;
-    max-height: 90%;
+    max-height: 150%;
     margin: auto;
     overflow-y: auto;
     border-radius: 15px;
     will-change: top, opacity;
+    width: 780px;
 }
 
 #modal5, #modalAndroid {
@@ -438,10 +417,154 @@ line-height: 120%;}
 .modal .modal-content {
     padding: 24px;
     background-color: #2a4090;
+    background-color: #32352e;
+    color: #f1f1f1;
+    min-height: 370px;
 }
 
-div#chromium2 {
-    margin-top: 21px;
+.modal .modal-footer {
+    border-radius: 0 0 2px 2px;
+    background-color: #4a4e4e;
+    padding: 4px 6px;
+    height: 56px;
+    width: 100%;
+
+}
+
+.modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-flat {
+    color: white;
+}
+
+
+.btn, .btn-large {
+    background-color: #a5a5a559;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-top: 10px;
+    height: 43px;
+    line-height: 42px;
+    place-self: center;
+}
+
+.btn-large:hover {
+    background-color: #ffffffd9;
+    color: #000000;
+}
+
+
+
+
+.collection a.collection-item {
+    display: block;
+    transition: .25s;
+    color: #ffffff;
+    height: 45px;
+    font-size: 16px;
+}
+
+.collection .collection-item {
+    background-color: #04040400;
+    line-height: 1.5rem;
+    padding: 10px 20px;
+    margin: 0;
+    /* border-bottom: 1px solid #e0e0e0; */
+    border: none;
+}
+
+.collection a.collection-item:not(.active):hover {
+    background-color: #00709a94;
+}
+
+.collection {
+    /* margin: 0.5rem 0 1rem 0; */
+    /* border: 1px solid #e0e0e0; */
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    /* max-width: 1000; */
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 18px;
+    border: none;
+    background-color: #9a9a9a40;
+}
+
+body {
+    background-image: url(/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/bg.jpg);
+    margin-top: 6px;
+    background-attachment: fixed;
+    background-size: cover;
+    color: white;
+    font-size: 20px;
+    text-align-last: center;
+    margin: 0;
+}
+
+div#centered {
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1003;
+}
+
+#page2 {
+    margin-right: 7%;
+    margin-left: 7%;
+    height: 100%;
+}
+
+
+#middle {
+    vertical-align: middle;
+    width: 100%;
+    max-width: 1100px;
+    padding-bottom: 15px;
+    padding-top: 1%;
+    font-size: 17px;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-top: 0px;
+    margin: auto;
+    border-bottom: 0px;
+    margin-bottom: 0px;
+    height: 100%;
+    top: 0%;
+    display: inline-table;
+}
+
+
+.bar {
+  position: relative;
+  background: rgba(0,0,0,0.65);
+  box-shadow: 0px 0px 95px 0px rgba(0,0,0,1);
+	height: 100%;
+}
+
+
+
+div#brave {
+    justify-self: center;
+}
+
+a.waves-effect.waves-light.btn.modal-trigger {
+    font-weight: 600;
+}
+
+.switch label {
+    cursor: pointer;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+div#preload-itens {
+    /* margin: auto; */
+    display: inline-grid;
+    text-align-last: left;
+    line-height: 1.7;
 }
 
 </style>
@@ -472,15 +595,17 @@ echo "<script>
 
 
 echo '<div id=page2>'
-echo '<div id="middle" class="bar"><h1>'
+echo '<div id="middle" class="bar">'
+echo '<div id="centered"><h1>'
+echo '<div id="top-text">'
 
 
-  echo $"Esta é a distribução BigLinux, uma remasterização da distribuição Ubuntu, mantendo total compatibilidade e trazendo recursos avançados configurados de forma automática." '<p>'
+  echo $"Obrigado por escolher a distribução BigLinux, uma remasterização da distribuição Manjaro, mantendo total compatibilidade e trazendo recursos avançados configurados de forma automática." '<p>'
 
   echo $"Passe o mouse sobre as opções abaixo e faça sua escolha:" '<p>'
+  
 
-
-echo '<div class="panel bw">'
+echo '</div><div class="panel bw">'
 echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux classic" class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="' $"Desktop KDE configurado com a barra de tarefas<br>em modo clássico, com a exibição dos nomes dos programas<br>em execução e menu de aplicativos compacto." '"><button>' $"Desktop Clássico" '<br>' $"(KDE Plasma)" '</button></a>'
 
 echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux new" class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="' $"Desktop KDE configurado com a barra de tarefas<br>em modo moderno, barra de tarefas baseada<br>em ícones e menu de aplicativos em tela cheia,<br>remetendo à usabilidade de smartphones." '"><button>' $"Desktop Moderno" '<br>' $"(KDE Plasma)" '</button></a>'
@@ -491,35 +616,62 @@ cat << EOF
 <div id=contentbig>
 <div id=theme>
 <h2>$Tema_translate</h2>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/arc-theme.run')" name="option" type="radio" id="arc" value="arc" $checked_arc />
-      <label for="arc" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<img src=arc.png>">
 EOF
-      echo $"Arc"
 cat << EOF
 </label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/adapta-theme.run')" name="option" type="radio" id="adapta" value="adapta" $checked_adapta />
-      <label for="adapta" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<img src=adapta.png>">
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/breeze-theme.run')" name="option" type="radio" id="breeze" value="breeze" $checked_breeze />
+      <label for="breeze" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=breeze.png>">
 EOF
-echo $"Adapta"
+echo $"Breeze"
 cat << EOF
 </label>
-
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/dark-theme.run')" name="option" type="radio" id="dark" value="dark" $checked_dark />
-      <label for="dark" class="tooltipped with-gap tool03" data-position="top" data-delay="50" data-tooltip="<img src=dark.png>">
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/breeze-dark-theme.run')" name="option" type="radio" id="breeze-dark" value="breeze-dark" $checked_breeze_dark />
+      <label for="breeze-dark" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=breeze-dark.png>">
 EOF
-echo $"Dark"
+echo $"Breeze Dark"
+cat << EOF
+</label>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/lightly-theme.run')" name="option" type="radio" id="lightly" value="lightly" $checked_lightly />
+      <label for="lightly" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="$lightly<br><br><img src=lightly.png>">
+EOF
+echo $"Lightly"
+cat << EOF
+</label>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/lightly-dark-theme.run')" name="option" type="radio" id="lightly-dark" value="lightly-dark" $checked_lightly_dark />
+      <label for="lightly-dark" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="$lightly<br><br><img src=lightly-dark.png>">
+EOF
+echo $"Lightly Dark"
 
 cat << EOF
 </label>
-
-      <input onclick="_run('./breeze-theme.run')" name="option" type="radio" id="breeze" value="breeze" $checked_breeze />
-      <label for="breeze" class="tooltipped with-gap tool03" data-position="top" data-delay="50" data-tooltip="<img src=breeze.png>">
+      <input onclick="_run('./materia-theme.run')" name="option" type="radio" id="materia" value="materia" $checked_materia />
+      <label for="materia" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=materia.png>">
 EOF
-echo $"Breeze" '</label>'
+echo $"Materia"
+cat << EOF
+</label>
+      <input onclick="_run('./materia-dark-theme.run')" name="option" type="radio" id="materia-dark" value="materia-dark" $checked_materia_dark />
+      <label for="materia-dark" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=materia-dark.png>">
+EOF
+echo $"Materia Dark"
+cat << EOF
+</label>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/orchis-theme.run')" name="option" type="radio" id="orchis" value="orchis" $checked_orchis />
+      <label for="orchis" class="tooltipped with-gap" data-position="right" data-delay="50" data-tooltip="$orchis<br><br><img src=orchis.png>">
+EOF
+      echo $"Orchis"
+cat << EOF
+</label>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/orchis-dark-theme.run')" name="option" type="radio" id="orchis-dark" value="orchis-dark" $checked_orchis_dark />
+      <label for="orchis-dark" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="$orchis<br><br><img src=orchis-dark.png>">
+EOF
+echo $"Orchis Dark" '</label>'
+
+
 
 
 cat << EOF
-</div>
+</div><div id=performancebase>
 <div id=performance>
 <h2>$Desempenho_translate</h2>
       <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/normal.run quiet')" name="option2" type="radio" id="normal" value="normal" $checked_normal>
@@ -545,85 +697,102 @@ echo '</label>'
 
 
 
-######################################
-#
-#   CHROMIUM
-#
-######################################
-
-
-    NAME=$"Otimizar o Chromium"
-    COMMENT=$"Clique aqui e veja as opções de otimização<br>
-    do navegador Chromium, o navegador que<br>
-    recomendado no BigLinux."
 
 cat << EOF
-
-    <div class="chromium col-md-2 waves-effect waves-light box $CATEGORY"><a  href="#modal2"  class="tooltipped with-gap modal-trigger" data-position="top" data-delay="50" data-tooltip="$COMMENT">
-    <p class="name">$NAME</p>
-    </center></a>
-    </div>
-
-  <!-- Modal Structure -->
-  <div id="modal2" class="modal">
-    <div class="modal-content">
-
+</div>
+<div id=performance>
+<h2>$Browser_translate</h2>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/browser-auto.run quiet')" name="browser" type="radio" id="browser_auto" value="browser_auto" $checked_browser_auto>
+      <label for="browser_auto" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$BROWSER_AUTO<br><br>">
 EOF
-
-echo '<div id=top>'
-echo $"Recomendo que você experimente por algum tempo o navegador Chromium instalado no BigLinux, pois ele possui configurações otimizadas para o sistema e também é utilizado na maior parte dos nossos Web Apps.<br><br>
-Uma das otimizações é a aceleração de vídeo utilizando a placa de vídeo, isso deixa o sistema mais leve e eficiente,<br>
-porém, essa opção não é adequada para todas as placas de vídeo e a detecção automática pode não ser  a melhor opção.<br><br>
-Se o navegador ou algum Web App estiver em uso quando essa configuração for alterada, é necessário fechar todos<br>
-e abrir novamente para que a alteração seja aplicada.<br><br>
-Escolha se o navegador deve utilizar a aceleração utilizando a placa de vídeo:"
-echo '</div>'
-
-
-cat << EOF
-<div id=chromium>
-      <div id=chromium2>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/chromium-auto.run')" name="option3" type="radio" id="auto" value="auto" $checked_chromium_auto>
-      <label for="auto" class="with-gap">
-EOF
-      echo $"Detecção automática"
+      echo $"Automática"
 cat << EOF
 </label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/chromium-yes.run')" name="option3" type="radio" id="yes" value="yes" $checked_chromium_yes>
-      <label for="yes" class="with-gap">
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/browser-yes.run quiet')" name="browser" type="radio" id="browser_yes" value="browser_yes" $checked_browser_yes>
+      <label for="browser_yes" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$BROWSER_YES<br><br>">
 EOF
 echo $"Ativar"
 cat << EOF
 </label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/chromium-no.run')" name="option3" type="radio" id="no" value="no" $checked_chromium_no>
-      <label for="no" class="with-gap">
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/browser-no.run quiet')" name="browser" type="radio" id="browser_no" value="browser_no" $checked_browser_no>
+      <label for="browser_no" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$BROWSER_NO<br><br>">
 EOF
 echo $"Desativar"
+echo '</label>'
+
+echo '<div id=brave>' '<a class="waves-effect waves-light btn modal-trigger" href="#modal1">' $"Configurações do Brave" '</a>' '</div>'
+
+echo '  <!-- Modal Trigger -->
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">'
+      
+echo $"Remover propagandas:" '<p>'
+
+if [ -e "$HOME/.config/browser-brave-disable-ad" ]; then
+    checked_braveblock_no="checked"
+else
+    checked_braveblock_yes="checked"
+fi
+
+BRAVE_BLOCK_YES=$"Utilizar o bloqueio de propagandas faz alguns sites não funcionarem corretamente."
+
+BRAVE_BLOCK_NO=$"Deixe o bloqueio desativado para que o navegador seja compatível com mais sites."
+
+
+cat << EOF
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/braveblock-yes.run quiet')" name="braveblock" type="radio" id="braveblock_yes" value="braveblock_yes" $checked_braveblock_yes>
+      <label for="braveblock_yes" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$BRAVE_BLOCK_YES<br><br>">
+EOF
+echo $"Sim"
+cat << EOF
+</label>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/braveblock-no.run quiet')" name="braveblock" type="radio" id="braveblock_no" value="braveblock_no" $checked_braveblock_no>
+      <label for="braveblock_no" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$BRAVE_BLOCK_NO<br><br>">
+EOF
+echo $"Não"
+echo '</label><br><br><br><br><br>'
+
+
+
+if [ -e "$HOME/.config/browser-brave-disable-crypto" ]; then
+    checked_bravecrypto_no="checked"
+else
+    checked_bravecrypto_yes="checked"
+fi
+
+BRAVE_CRYPTO_YES=$"O navegador Brave tem supore a criptomoedas, esse pode ser um recurso útil."
+
+BRAVE_CRYPTO_NO=$"Desativar o suporte a criptomoedas economiza um pouco de memória RAM."
+
+
+
+echo $"Suportar criptomoedas:" '<p>'
+      
+cat << EOF
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/bravecrypto-yes.run quiet')" name="bravecrypto" type="radio" id="bravecrypto_yes" value="bravecrypto_yes" $checked_bravecrypto_yes>
+      <label for="bravecrypto_yes" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$BRAVE_CRYPTO_YES<br><br>">
+EOF
+echo $"Sim"
+cat << EOF
+</label>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/bravecrypto-no.run quiet')" name="bravecrypto" type="radio" id="bravecrypto_no" value="bravecrypto_no" $checked_bravecrypto_no>
+      <label for="bravecrypto_no" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$BRAVE_CRYPTO_NO<br><br>">
+EOF
+echo $"Não"
+echo '</label><br>'
+
+
+
+      
+echo '</div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">' $"Fechar" '</a>
+    </div>
+  </div>'
 
 echo "</div></div>"
-
-    
-cat << EOF    
-    
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">$CLOSE</a>
-    </div>
-  </div>
-EOF
-
-
-######################################
-#
-#   CHROMIUM CLOSE
-#
-######################################
-
-
-
-
-
-echo "</div></div></div></div>"
+echo "</div></div>"
 
     
 

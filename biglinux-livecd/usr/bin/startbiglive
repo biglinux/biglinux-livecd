@@ -1,26 +1,25 @@
 #!/bin/bash
 
 
-if [ "${LANG:0:2}" = "pt" ]
-then
-    BIGBASHVIEW_LANG="pt"
-    sudo timedatectl set-timezone America/Sao_Paulo
-    
-elif [ "${LANG:0:2}" = "es" ]
-then
-    BIGBASHVIEW_LANG="es"
-    
-else
-    BIGBASHVIEW_LANG="en"
-fi
-
+# if [ "${LANG:0:2}" = "pt" ]
+# then
+#     BIGBASHVIEW_LANG="pt"
+#     sudo timedatectl set-timezone America/Sao_Paulo
+#     
+# elif [ "${LANG:0:2}" = "es" ]
+# then
+#     BIGBASHVIEW_LANG="es"
+#     
+# else
+#     BIGBASHVIEW_LANG="en"
+# fi
 
 
 
 # Virtualization fix open
-if [ "$(lspci | grep -i vga | grep -i vmware)" != "" ]; then
-    kwriteconfig5 --file ~/.config/kded5rc --group Module-kscreen --key autoload false
-fi
+# if [ "$(lspci | grep -i vga | grep -i vmware)" != "" ]; then
+#     kwriteconfig5 --file ~/.config/kded5rc --group Module-kscreen --key autoload false
+# fi
 # Virtualization fix close
 
 
@@ -36,13 +35,29 @@ Enabled=false' >> ~/.config/kwalletrc
 fi
 
 # Disable discover update in live
-sudo rm -Rf /usr/share/plasma/plasmoids/org.kde.discovernotifier
-sudo rm -f /etc/xdg/autostart/org.kde.discover.notifier.desktop
-sudo rm -f /usr/lib/x86_64-linux-gnu/libexec/DiscoverNotifier
+# sudo rm -Rf /usr/share/plasma/plasmoids/org.kde.discovernotifier
+# sudo rm -f /etc/xdg/autostart/org.kde.discover.notifier.desktop
+# sudo rm -f /usr/lib/x86_64-linux-gnu/libexec/DiscoverNotifier
 
 cd /usr/share/bigbashview/bcc/apps/boot-livecd/
 
-LANGUAGE=$BIGBASHVIEW_LANG QT_QUICK_BACKEND=software /usr/bin/bigbashview -b -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.sh.htm
+
+
+if [ -e "/tmp/big_desktop_theme" ]; then
+    QT_QUICK_BACKEND=software /usr/bin/bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.sh.htm
+else
+    QT_QUICK_BACKEND=software /usr/bin/bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.html
+fi
+
+export LANGUAGE=$(cat /tmp/big_language).UTF-8
+export LANG=$(cat /tmp/big_language).UTF-8
+
+echo "[Formats]
+LANG=$(cat /tmp/big_language).UTF-8" > $HOME/.config/plasma-localerc
+
+echo "$(cat /tmp/big_language)" > $HOME/.config/user-dirs.locale
+
+
 chmod +x /tmp/biglightdm
 cd ~
 /tmp/biglightdm
@@ -50,4 +65,4 @@ cd ~
 
 
 
-sudo service sddm restart
+sudo systemctl restart sddm

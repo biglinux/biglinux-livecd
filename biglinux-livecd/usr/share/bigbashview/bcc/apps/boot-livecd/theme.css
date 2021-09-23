@@ -1,0 +1,101 @@
+
+.collection a.collection-item {
+    display: block;
+    transition: .25s;
+    color: #ffffff;
+    height: 45px;
+    font-size: 16px;
+}
+
+.collection .collection-item {
+    background-color: #04040400;
+    line-height: 1.5rem;
+    padding: 10px 20px;
+    margin: 0;
+    /* border-bottom: 1px solid #e0e0e0; */
+    border: none;
+}
+
+.collection a.collection-item:not(.active):hover {
+    background-color: #00709a94;
+}
+
+.collection {
+    /* margin: 0.5rem 0 1rem 0; */
+    /* border: 1px solid #e0e0e0; */
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    /* max-width: 1000; */
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 18px;
+    border: none;
+    background-color: #9a9a9a40;
+}
+
+body {
+    background-image: url(/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/bg.jpg);
+    margin-top: 6px;
+    background-attachment: fixed;
+    background-size: cover;
+    color: white;
+    font-size: 20px;
+    text-align-last: center;
+    margin: 0;
+}
+
+div#centered {
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+#page2 {
+    margin-right: 7%;
+    margin-left: 7%;
+    height: 100%;
+}
+
+
+#middle {
+    vertical-align: middle;
+    width: 100%;
+    max-width: 1100px;
+    padding-bottom: 15px;
+    padding-top: 1%;
+    font-size: 18px;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-top: 0px;
+    margin: auto;
+    border-bottom: 0px;
+    margin-bottom: 0px;
+    height: 100%;
+    top: 0%;
+    display: inline-table;
+}
+
+
+.bar {
+  position: relative;
+  background: rgba(0,0,0,0.65);
+  box-shadow: 0px 0px 95px 0px rgba(0,0,0,1);
+	height: 100%;
+}
+
+.bar:before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  height: 100%;
+  top: 0; right: 0; left: 0;
+  filter: blur(15px);
+  -webkit-filter: blur(15px);
+	height: 100%;
+}

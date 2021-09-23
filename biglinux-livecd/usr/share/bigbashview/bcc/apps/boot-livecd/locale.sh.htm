@@ -1,0 +1,314 @@
+#!/bin/bash
+
+
+#Change language system
+export LANGUAGE=${language}.UTF-8
+export LANG=${language}.UTF-8
+echo "$language" > /tmp/big_language
+echo "$keyboard" > /tmp/big_keyboard
+
+#Translation
+export TEXTDOMAINDIR="/usr/share/locale"
+export TEXTDOMAIN=biglinux-livecd
+
+timedatectl set-timezone $timezone </dev/null &>/dev/null &
+localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null &
+
+if [ "$keyboard" = "us" ]; then
+    setxkbmap $keyboard &
+    echo '<body onload=window.location="/usr/share/bigbashview/bcc/apps/boot-livecd/index.sh.htm">'
+    exit
+fi
+  
+
+
+  
+# Import BigControlCenter base modules / Importa os módulos básicos do BigControlCenter
+# That's include jquery and materialize / Isso inclui o jquery e o materialize
+# http://materializecss.com/
+. /usr/share/bigbashview/bcc/shell/base.sh
+
+
+
+  echo '
+  <body>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/usr/share/bigbashview/bcc/materialize/css/materialize.css">
+    <link rel="stylesheet" type="text/css" href="theme.css">
+    <script src="/usr/share/bigbashview/bcc/materialize/js/jquery.js"></script>
+    <script src="/usr/share/bigbashview/bcc/materialize/js/materialize.js"></script>
+    <script src="/usr/share/bigbashview/bcc/js/big.js"></script>
+  </head>
+  '
+
+
+echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
+
+cat << EOF
+<style>
+
+
+body {
+margin-top: 0px;
+margin-left: 0px;
+margin-right: 0px;
+margin-bottom: 0px;
+padding: 0px;
+text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+font-weight: 250;
+color: rgba(255, 255, 255, 1);
+font-family: 'Droid Sans';
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+
+.material-tooltip {font-family:ubuntu;
+font-weight:400;font-size:18px;
+line-height: 120%;}
+
+.with-gap {color: #ffffff !important;
+font-size:18px !important;
+margin-left:20px;
+margin-right:20px;
+margin-top:10%;
+}
+
+h1 {text-align:center;font-family:ubuntu;font-weight:400;font-size:18px;color:#fff;text-shadow:0em 0.05em 0 rgba(0,0,0,0.35)}
+button {color:#454545;background:transparent;border-width:2px;border-style: solid;border-color: #454545;position:relative;margin:1em;display:inline-block;padding:0.5em 1em;transition:all 0.3s ease-in-out;text-align:center;
+font-family:ubuntu;font-weight:bold;font-size:18px}
+button:before, button:after {content:'';display:block;position:absolute;border-color:#454545;box-sizing:border-box;border-style:solid;width:1em;height:1em;transition:all 0.3s ease-in-out}
+button:before {top:-6px;left:-6px;border-width:2px 0 0 2px;z-index:5;}
+button:after {bottom:-6px;right:-6px;border-width:0 2px 2px 0;}
+button:hover:before, button:hover:after {width:calc(100% + 12px);
+  height:calc(100% + 12px);border-color:#fff}
+button:hover {color:#353535;background-color:#fff;border-color:#fff}
+.panel {max-width:960px;text-align:center;position:relative;margin:auto;}
+
+
+.pink button {color:#eb1777;border-color:#eb1777}
+.pink button:before, .pink button:after  {border-color:#eb1777}
+.pink button:hover:before, .pink button:hover:after {border-color:#eb1777;}
+.pink button:hover {color:#fff;background-color:#eb1777;border-color:#eb1777;}
+.pink .panel {max-width:960px;text-align:center;position:relative;margin:auto;}
+
+
+.blue button {color:#3bb4e5;border-color:#3bb4e5}
+.blue button:before, .blue button:after  {border-color:#3bb4e5}
+.blue button:hover:before, .blue button:hover:after {width:calc(100% + 12px);
+  height:calc(100% + 12px);border-color:#3bb4e5;transform:rotateY(180deg)}
+.blue button:hover {color:#3bb4e5;background-color:transparent;border-color:#3bb4e5}
+.blue .panel {max-width:960px;text-align:center;position:relative;margin:auto;}
+
+.borderless button {border-color:rgba(0,0,0,0);color:#999}
+.borderless button:hover {border-color:#353535;background-color:transparent;color:#353535}
+.borderless button:before, .borderless button:after {border-color:transparent;}
+.borderless button:hover:before, .borderless button:hover:after {width:calc(100% + 12px); height:calc(100% + 12px);border-color:#353535}
+
+.bw button {color:#fff;border-color:#fff;text-shadow:0 1px 1px rgba(0,0,0,0.1);
+box-shadow:0 1px 3px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.1) inset
+}
+.bw button:before, .bw button:after  {border-color:#fff}
+.bw button:hover:before, .bw button:hover:after {width:calc(100% + 12px);
+  height:calc(100% + 12px);border-color:#353535;}
+.bw button:hover {color:#fff;background-color:#353535;border-color:#353535}
+.blue .panel {max-width:960px;text-align:center;position:relative;margin:auto;}
+
+
+[type="radio"]:not(:checked) + label, [type="radio"]:checked + label {
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    font-size: 1rem;
+    margin-top: 0px;
+    transition: .28s ease;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+div#contentbig {
+    display: inline-flex;
+}
+
+div#theme {
+    margin-top: 20px;
+    display: grid;
+    justify-items: flex-start;
+    border: 2px solid #ffffff61;
+    margin-right: 26px;
+    margin-left: 26px;
+    padding-right: 0px;
+    padding-bottom: 28px;
+    border-radius: 11px;
+    padding-left: 2px;
+    padding-top: 24px;
+    min-width: 238px;
+}
+
+div#theme2 {
+display: inherit;
+    border: 2px solid #ffffff61;
+    margin-right: 26px;
+    margin-left: 26px;
+    padding-right: 0px;
+    padding-bottom: 28px;
+    border-radius: 11px;
+    padding-left: 2px;
+    padding-top: 24px;
+    min-width: 238px;
+}
+
+h2 {
+    margin-top: -38px;
+    margin-bottom: -7px;
+    margin-left: 10px;
+    height: 22px;
+    font-size: 20px;
+    text-shadow: 1px 1px 4px rgb(0, 0, 0), 1px 1px 4px rgb(0, 0, 0);
+}
+
+h3 {
+    margin-top: -38px;
+    margin-bottom: -7px;
+    margin-left: 10px;
+    height: 22px;
+    font-size: 20px;
+    text-shadow: 1px 1px 4px rgb(0, 0, 0), 1px 1px 4px rgb(0, 0, 0);
+}
+
+
+div#performance {
+    margin-top: 20px;
+    display: grid;
+    justify-items: flex-start;
+    border: 2px solid #ffffff61;
+    margin-right: 26px;
+    margin-left: 67px;
+    padding-right: 0px;
+    padding-bottom: 28px;
+    border-radius: 11px;
+    padding-left: 2px;
+    padding-top: 24px;
+    min-width: 327px;
+}
+
+
+
+div#contentbig {
+    margin-top: 16px;
+}
+
+label.tooltipped.with-gap {
+    margin-top: 14px;
+    margin-left: 21px;
+    margin-right: 50px;
+}
+
+div#theme2-2 {
+    margin-top: 30px;
+}
+
+.backdrop {
+background-color: rgba(101, 101, 101, 1);
+}
+
+.material-tooltip {font-family:ubuntu;
+font-weight:400;font-size:16px;
+border-radius: 15px;
+padding: 15px;
+box-shadow: 2px 3px 3px 0px rgba(0,0,0,0.75);
+line-height: 120%;}
+
+.chromium.col-md-2.waves-effect.waves-light.box {
+    justify-self: center;
+    margin-top: -6px;
+    margin-bottom: -22px;
+}
+
+.chromium.col-md-2.waves-effect.waves-light.box a {
+    color: #00b8ff !important;
+}
+
+
+.modal {
+    top: 50% !important;
+    transform: translate(0%, -50%) !important;
+    position: fixed;
+    left: 0;
+    background: url(01.jpg);
+    background-attachment: fixed;
+    right: 0;
+    color: white;
+    padding: 0;
+    max-height: 90%;
+    margin: auto;
+    overflow-y: auto;
+    border-radius: 15px;
+    will-change: top, opacity;
+}
+
+#modal5, #modalAndroid {
+    width: 1000px;
+}
+
+.col-md-modal {
+    cursor: pointer;
+    padding: 0px;
+    margin: auto;
+    margin-top: 13px;
+    width: 400px;
+    background-color: #00000080;
+    border-radius: 19px;
+    padding-left: 24px;
+    box-shadow: 3px 2px 2px 0px rgba(0, 0, 0, 0.77);
+}
+
+.modal .modal-content {
+    padding: 24px;
+    background-color: #2a4090;
+}
+
+div#chromium2 {
+    margin-top: 21px;
+}
+
+</style>
+
+
+
+EOF
+
+
+
+echo '<div id=page2>'
+echo '<div id="middle" class="bar">'
+echo '<div id="centered"><h1>'
+echo '<div id="top-text">'
+
+
+echo '<img src="keyboard.png" width="64" height="64"><br>'
+echo "Choose your keyboard model:" "$language" '<p>'
+
+
+echo '</div><div class="panel bw">'
+echo "<a href=\"/usr/share/bigbashview/bcc/apps/boot-livecd/index.sh.htm?keyboard=$keyboard\" class=\"css_btn_class black-text\"><button>" "${keyboard^^}" '</button></a>'
+
+echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/index.sh.htm?keyboard=us" class="css_btn_class black-text"><button>' "US" '</button></a>'
+
+
+
+echo "</div></div>"
+echo "</div></div>"
+
+    
+
+
+echo '</h1></div>'
+echo '</div></div>'

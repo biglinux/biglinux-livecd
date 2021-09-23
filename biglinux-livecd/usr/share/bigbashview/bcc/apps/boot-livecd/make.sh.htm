@@ -1,14 +1,14 @@
 #!/bin/bash
 
-. .config/user-dirs.dirs
+. ~/.config/user-dirs.dirs
 
 feh --bg-fill "/usr/share/sddm/themes/breeze/black.jpg" &
 
-sudo sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Instalar o sistema no HD|g;s| sudo | bigsudo |g' /usr/share/applications/calamares.desktop
+# sudo sed -i 's|Name\[pt_BR\]=.*|Name[pt_BR]=Instalar o sistema no HD|g;s| sudo | bigsudo |g' /usr/share/applications/calamares-biglinux.desktop
 
-cp -f "/usr/share/applications/calamares.desktop" "$XDG_DESKTOP_DIR/calamares.desktop"
+cp -f "/usr/share/applications/calamares-biglinux.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 
-chmod +x "$XDG_DESKTOP_DIR/calamares.desktop"
+chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 
 echo "$desktop" > /tmp/biglightdm
 
@@ -16,24 +16,33 @@ cp -f "$HOME/.big_performance" /tmp/big_performance_changed
 
 
 if [ "$desktop" = "startkde-biglinux classic" ]; then
-    echo '/usr/share/xsessions/plasma.desktop' > /tmp/big_desktochanged
+    echo '/usr/share/xsessions/plasma-classic.desktop' > /tmp/big_desktop_changed
+    echo '[Last]
+Session=/usr/share/xsessions/plasma-classic.desktop' > /tmp/big_desktop_changed-calamares
 fi
 
 if [ "$desktop" = "startkde-biglinux new" ]; then
-    echo "/usr/share/xsessions/plasma-new.desktop" > /tmp/big_desktochanged
+    echo "/usr/share/xsessions/plasma-new.desktop" > /tmp/big_desktop_changed
+    echo '[Last]
+Session=/usr/share/xsessions/plasma-new.desktop' > /tmp/big_desktop_changed-calamares
 fi
 
 if [ "$desktop" = "startkde-biglinux topbar" ]; then
-    echo "/usr/share/xsessions/topbar.desktop" > /tmp/big_desktochanged
+    echo "/usr/share/xsessions/plasma-topbar.desktop" > /tmp/big_desktop_changed
+    echo '[Last]
+Session=/usr/share/xsessions/plasma-topbar.desktop' > /tmp/big_desktop_changed-calamares
 fi
 
-if [ ! -e "/tmp/big_desktotheme" ]; then
-    biglinux-themes.sh --apply arc
-    echo "arc" > /tmp/big_desktotheme
-fi
+# if [ ! -e "/tmp/big_desktop_theme" ]; then
+#     biglinux-themes.sh --apply orchis
+#     echo "orchis" > /tmp/big_desktop_theme
+# fi
 
 
-
+#Fix to use in calamares
+sudo cp -f /tmp/big_desktop_changed-calamares /var/lib/sddm/state.conf
+sudo cp -f /tmp/big_desktop_theme /etc/default-theme-biglinux
+sudo cp -f /tmp/big_performance_changed /etc/default-performance-biglinux
 
 
 echo '
