@@ -1,0 +1,205 @@
+# Portuguese translations for  package.
+# Copyright (C) 2021 THE 'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the  package.
+# Automatically generated, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-23 12:20-0300\n"
+"PO-Revision-Date: 2021-09-23 12:20-0300\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Desempenho do desktop"
+msgstr ""
+
+msgid "Aceleração do navegador"
+msgstr ""
+
+msgid "Tema"
+msgstr ""
+
+msgid "Fechar"
+msgstr ""
+
+msgid "Bordas arredondadas."
+msgstr ""
+
+msgid ""
+"Esse tema possui transparências com efeitos que<br>podem tornar o sistema "
+"lento em computadores<br>antigos ou ambientes virtualizados."
+msgstr ""
+
+msgid ""
+"Essa deve ser a melhor opção de desempenho<br>\n"
+"    para esse computador, mas você pode alternar<br>\n"
+"    entre os modos e escolher a sua preferência.<br><br>\n"
+"    As opções Otimizado e Performance, são dedicadas<br>\n"
+"    a computadores de baixo desempenho e não melhoram o<br>\n"
+"    desempenho em computadores de maior capacidade."
+msgstr ""
+
+msgid ""
+"Reduz o uso de memória e da placa de vídeo,\n"
+"      <br>com pequena redução dos recursos do sistema.<br><br>\n"
+"      Explicação avançada:<br>Utiliza a renderização QML via software, isso "
+"desativa<br>\n"
+"      a previsão de janelas ao passar o mouse na barra de tarefas,<br>\n"
+"      também impede o uso de alguns widgets do desktop que gerem<br>\n"
+"      gráficos em tempo real, por exemplo, o uso do monitor de<br>\n"
+"      processamento."
+msgstr ""
+
+msgid ""
+"Essa é a opção recomendada para computadores antigos.<br><br>\n"
+"      Aplica as configurações do modo Otimizado<br>\n"
+"      e adiciona o uso do XRender no gerênciador de janelas,<br>\n"
+"      economizando mais recursos do computador.<br>\n"
+"      Removendo a maior parte dos efeitos das janelas."
+msgstr ""
+
+msgid ""
+"O sistema irá definir se utiliza ou não a aceleração<br>\n"
+"utilizando a placa de vídeo nos navegadores."
+msgstr ""
+
+msgid ""
+"Utilizar a aceleração de vídeo<br>\n"
+"nos navegadores. Em alguns computadores<br>\n"
+"essa opção pode gerar vídeos distorcidos."
+msgstr ""
+
+msgid ""
+"Não utilizar a aceleração de vídeo<br>\n"
+"nos navegadores."
+msgstr ""
+
+msgid ""
+"Esse computador deve funcionar consideravelmente<br>\n"
+"    melhor utilizando o modo Otimizado ou Performance."
+msgstr ""
+
+msgid ""
+"O sistema está funcionando dentro do VirtualBox,<br>\n"
+"    Recomendo que utilize o modo Otimizado ou Performance."
+msgstr ""
+
+msgid ""
+"Obrigado por escolher a distribução BigLinux, uma remasterização da "
+"distribuição Manjaro, mantendo total compatibilidade e trazendo recursos "
+"avançados configurados de forma automática."
+msgstr ""
+
+msgid "Passe o mouse sobre as opções abaixo e faça sua escolha:"
+msgstr ""
+
+msgid ""
+"Desktop KDE configurado com a barra de tarefas<br>em modo clássico, com a "
+"exibição dos nomes dos programas<br>em execução e menu de aplicativos "
+"compacto."
+msgstr ""
+
+msgid "Desktop Clássico"
+msgstr ""
+
+msgid "(KDE Plasma)"
+msgstr ""
+
+msgid ""
+"Desktop KDE configurado com a barra de tarefas<br>em modo moderno, barra de "
+"tarefas baseada<br>em ícones e menu de aplicativos em tela cheia,"
+"<br>remetendo à usabilidade de smartphones."
+msgstr ""
+
+msgid "Desktop Moderno"
+msgstr ""
+
+msgid ""
+"Desktop KDE configurado com duas barras, a superior<br>com o relógio e "
+"funções gerais, a inferior com ícones<br>e o menu de aplicativos em tela "
+"cheia.<br><br>A interface completa remete à usabilidade do desktop Gnome."
+msgstr ""
+
+msgid "Desktop Alternativo"
+msgstr ""
+
+msgid "Breeze"
+msgstr ""
+
+msgid "Breeze Dark"
+msgstr ""
+
+msgid "Lightly"
+msgstr ""
+
+msgid "Lightly Dark"
+msgstr ""
+
+msgid "Materia"
+msgstr ""
+
+msgid "Materia Dark"
+msgstr ""
+
+msgid "Orchis"
+msgstr ""
+
+msgid "Orchis Dark"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "Otimizado"
+msgstr ""
+
+msgid "Performance"
+msgstr ""
+
+msgid "Automática"
+msgstr ""
+
+msgid "Ativar"
+msgstr ""
+
+msgid "Desativar"
+msgstr ""
+
+msgid "Configurações do Brave"
+msgstr ""
+
+msgid "Remover propagandas:"
+msgstr ""
+
+msgid ""
+"Utilizar o bloqueio de propagandas faz alguns sites não funcionarem "
+"corretamente."
+msgstr ""
+
+msgid ""
+"Deixe o bloqueio desativado para que o navegador seja compatível com mais "
+"sites."
+msgstr ""
+
+msgid "Sim"
+msgstr ""
+
+msgid "Não"
+msgstr ""
+
+msgid ""
+"O navegador Brave tem supore a criptomoedas, esse pode ser um recurso útil."
+msgstr ""
+
+msgid "Desativar o suporte a criptomoedas economiza um pouco de memória RAM."
+msgstr ""
+
+msgid "Suportar criptomoedas:"
+msgstr ""
