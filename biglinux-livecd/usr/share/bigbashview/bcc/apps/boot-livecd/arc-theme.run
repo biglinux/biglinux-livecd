@@ -1,3 +1,0 @@
-biglinux-themes.sh --apply arc
-
-echo "arc" > "/tmp/big_desktop_theme"

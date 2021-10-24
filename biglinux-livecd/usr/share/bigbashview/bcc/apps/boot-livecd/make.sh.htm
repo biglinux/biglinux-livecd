@@ -12,26 +12,12 @@ chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 
 echo "$desktop" > /tmp/biglightdm
 
+#Legacy support
+echo "$desktop" > /tmp/big_desktop_changed-calamares
+echo "$desktop" > /tmp/big_desktop_changed
+
 cp -f "$HOME/.big_performance" /tmp/big_performance_changed
 
-
-if [ "$desktop" = "startkde-biglinux classic" ]; then
-    echo '/usr/share/xsessions/plasma-classic.desktop' > /tmp/big_desktop_changed
-    echo '[Last]
-Session=/usr/share/xsessions/plasma-classic.desktop' > /tmp/big_desktop_changed-calamares
-fi
-
-if [ "$desktop" = "startkde-biglinux new" ]; then
-    echo "/usr/share/xsessions/plasma-new.desktop" > /tmp/big_desktop_changed
-    echo '[Last]
-Session=/usr/share/xsessions/plasma-new.desktop' > /tmp/big_desktop_changed-calamares
-fi
-
-if [ "$desktop" = "startkde-biglinux topbar" ]; then
-    echo "/usr/share/xsessions/plasma-topbar.desktop" > /tmp/big_desktop_changed
-    echo '[Last]
-Session=/usr/share/xsessions/plasma-topbar.desktop' > /tmp/big_desktop_changed-calamares
-fi
 
 # if [ ! -e "/tmp/big_desktop_theme" ]; then
 #     biglinux-themes.sh --apply orchis
@@ -40,9 +26,10 @@ fi
 
 
 #Fix to use in calamares
-sudo cp -f /tmp/big_desktop_changed-calamares /var/lib/sddm/state.conf
+#sudo cp -f /tmp/big_desktop_changed-calamares /var/lib/sddm/state.conf
 sudo cp -f /tmp/big_desktop_theme /etc/default-theme-biglinux
 sudo cp -f /tmp/big_performance_changed /etc/default-performance-biglinux
+sudo cp -f /tmp/big_desktop_changed /etc/big_desktop_changed
 
 
 echo '

@@ -30,8 +30,7 @@ Desempenho_translate=$"Desempenho do desktop"
 Browser_translate=$"Aceleração do navegador"
 Tema_translate=$"Tema"
 CLOSE=$"Fechar"
-orchis=$"Bordas arredondadas."
-lightly=$"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em computadores<br>antigos ou ambientes virtualizados."
+fluent=$"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em computadores<br>antigos ou ambientes virtualizados."
 
 browser="$(cat "$HOME/.config/browser-optimize")"
 
@@ -76,20 +75,20 @@ if [ "$theme_actual" = "breeze-dark" ]; then
     checked_breeze_dark="checked"
 fi
 
-if [ "$theme_actual" = "lightly" ]; then
-    checked_lightly="checked"
+if [ "$theme_actual" = "fluent" ]; then
+    checked_fluent="checked"
 fi
 
-if [ "$theme_actual" = "lightly-dark" ]; then
-    checked_lightly_dark="checked"
+if [ "$theme_actual" = "fluent-dark" ]; then
+    checked_fluent_dark="checked"
 fi
 
-if [ "$theme_actual" = "orchis" ]; then
-    checked_orchis="checked"
+if [ "$theme_actual" = "fluent-opaque" ]; then
+    checked_fluent_opaque="checked"
 fi
 
-if [ "$theme_actual" = "orchis-dark" ]; then
-    checked_orchis_dark="checked"
+if [ "$theme_actual" = "fluent-opaque-dark" ]; then
+    checked_fluent_opaque_dark="checked"
 fi
 
 if [ "$theme_actual" = "materia" ]; then
@@ -606,11 +605,13 @@ echo '<div id="top-text">'
   
 
 echo '</div><div class="panel bw">'
-echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux classic" class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="' $"Desktop KDE configurado com a barra de tarefas<br>em modo clássico, com a exibição dos nomes dos programas<br>em execução e menu de aplicativos compacto." '"><button>' $"Desktop Clássico" '<br>' $"(KDE Plasma)" '</button></a>'
+echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux classic" class="css_btn_class black-text tooltipped" data-position="bottom" data-delay="150" data-tooltip="' $"Desktop KDE configurado com a barra de tarefas<br>em modo clássico, com a exibição dos nomes dos programas<br>em execução e menu de aplicativos compacto." "<br><img src=desktop_classic.jpg width=500>" '"><button>' $"Desktop Clássico" '<br>' $"(KDE Plasma)" '</button></a>'
 
-echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux new" class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="' $"Desktop KDE configurado com a barra de tarefas<br>em modo moderno, barra de tarefas baseada<br>em ícones e menu de aplicativos em tela cheia,<br>remetendo à usabilidade de smartphones." '"><button>' $"Desktop Moderno" '<br>' $"(KDE Plasma)" '</button></a>'
+echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux new" class="css_btn_class black-text tooltipped" data-position="bottom" data-delay="150" data-tooltip="' $"Desktop KDE configurado com a barra de tarefas<br>em modo moderno, barra de tarefas baseada<br>em ícones e menu de aplicativos com ícones grandes,<br>remetendo à usabilidade de smartphones." "<br><img src=desktop_new.jpg width=500>" '"><button>' $"Desktop Moderno" '<br>' $"(KDE Plasma)" '</button></a>'
 
-echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux topbar" class="css_btn_class black-text tooltipped" data-position="top" data-delay="150" data-tooltip="' $"Desktop KDE configurado com duas barras, a superior<br>com o relógio e funções gerais, a inferior com ícones<br>e o menu de aplicativos em tela cheia.<br><br>A interface completa remete à usabilidade do desktop Gnome." '"><button>' $"Desktop Alternativo" '<br>' $"(KDE Plasma)" '</button></a>'
+echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux kunity" class="css_btn_class black-text tooltipped" data-position="bottom" data-delay="150" data-tooltip="' $"Desktop KDE configurado com barra de ferramentas lateral e superior.<br><br>A interface completa remete à usabilidade do desktop Unity." "<br><img src=desktop_kunity.jpg width=500>" '"><button>' $"Desktop K-Unity" '<br>' $"(KDE Plasma)" '</button></a>'
+
+echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux nextg" class="css_btn_class black-text tooltipped" data-position="bottom" data-delay="150" data-tooltip="' $"Desktop KDE configurado com duas barras, a superior<br>com o relógio e funções gerais, a inferior com ícones e o menu<br><br>A interface completa remete à usabilidade do desktop Gnome." "<br><img src=desktop_nextg.jpg width=500>" '"><button>' $"Desktop Next-G" '<br>' $"(KDE Plasma)" '</button></a>'
 
 cat << EOF
 <div id=contentbig>
@@ -620,52 +621,54 @@ EOF
 cat << EOF
 </label>
       <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/breeze-theme.run')" name="option" type="radio" id="breeze" value="breeze" $checked_breeze />
-      <label for="breeze" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=breeze.png>">
+      <label for="breeze" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=breeze.jpg>">
 EOF
 echo $"Breeze"
 cat << EOF
 </label>
       <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/breeze-dark-theme.run')" name="option" type="radio" id="breeze-dark" value="breeze-dark" $checked_breeze_dark />
-      <label for="breeze-dark" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=breeze-dark.png>">
+      <label for="breeze-dark" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=breeze-dark.jpg>">
 EOF
 echo $"Breeze Dark"
 cat << EOF
 </label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/lightly-theme.run')" name="option" type="radio" id="lightly" value="lightly" $checked_lightly />
-      <label for="lightly" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="$lightly<br><br><img src=lightly.png>">
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/Fluent-theme.run')" name="option" type="radio" id="fluent" value="fluent" $checked_fluent />
+      <label for="fluent" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="$fluent<br><br><img src=fluent.jpg>">
 EOF
-echo $"Lightly"
+echo $"Fluent"
 cat << EOF
 </label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/lightly-dark-theme.run')" name="option" type="radio" id="lightly-dark" value="lightly-dark" $checked_lightly_dark />
-      <label for="lightly-dark" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="$lightly<br><br><img src=lightly-dark.png>">
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/fluent-dark-theme.run')" name="option" type="radio" id="fluent-dark" value="fluent-dark" $checked_fluent_dark />
+      <label for="fluent-dark" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="$fluent<br><br><img src=fluent-dark.jpg>">
 EOF
-echo $"Lightly Dark"
+echo $"Fluent Dark"
+
+cat << EOF
+</label>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/fluent-opaque-theme.run')" name="option" type="radio" id="fluent-opaque" value="fluent-opaque" $checked_fluent_opaque />
+      <label for="fluent-opaque" class="tooltipped with-gap" data-position="right" data-delay="50" data-tooltip="<img src=fluent-opaque.jpg>">
+EOF
+      echo $"Fluent Opaque"
+cat << EOF
+</label>
+      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/fluent-dark-opaque-theme.run')" name="option" type="radio" id="fluent-dark-opaque" value="fluent-dark-opaque" $checked_fluent_opaque_dark />
+      <label for="fluent-dark-opaque" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=fluent-dark-opaque.jpg>">
+EOF
+echo $"Fluent Dark Opaque"
 
 cat << EOF
 </label>
       <input onclick="_run('./materia-theme.run')" name="option" type="radio" id="materia" value="materia" $checked_materia />
-      <label for="materia" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=materia.png>">
+      <label for="materia" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=materia.jpg>">
 EOF
 echo $"Materia"
 cat << EOF
 </label>
       <input onclick="_run('./materia-dark-theme.run')" name="option" type="radio" id="materia-dark" value="materia-dark" $checked_materia_dark />
-      <label for="materia-dark" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=materia-dark.png>">
+      <label for="materia-dark" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=materia-dark.jpg>">
 EOF
-echo $"Materia Dark"
-cat << EOF
-</label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/orchis-theme.run')" name="option" type="radio" id="orchis" value="orchis" $checked_orchis />
-      <label for="orchis" class="tooltipped with-gap" data-position="right" data-delay="50" data-tooltip="$orchis<br><br><img src=orchis.png>">
-EOF
-      echo $"Orchis"
-cat << EOF
-</label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/orchis-dark-theme.run')" name="option" type="radio" id="orchis-dark" value="orchis-dark" $checked_orchis_dark />
-      <label for="orchis-dark" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="$orchis<br><br><img src=orchis-dark.png>">
-EOF
-echo $"Orchis Dark" '</label>'
+echo $"Materia Dark" '</label>'
+
 
 
 

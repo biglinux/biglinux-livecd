@@ -1,5 +1,0 @@
-#!/bin/bash
-
-biglinux-themes.sh --apply orchis-dark
-
-echo "orchis-dark" > "/tmp/big_desktop_theme"

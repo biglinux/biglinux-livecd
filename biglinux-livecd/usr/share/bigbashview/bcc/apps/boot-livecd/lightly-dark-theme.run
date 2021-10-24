@@ -1,5 +1,0 @@
-#!/bin/bash
-
-biglinux-themes.sh --apply lightly-dark
-
-echo "lightly-dark" > "/tmp/big_desktop_theme"

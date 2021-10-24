@@ -1,0 +1,5 @@
+#!/bin/bash
+
+biglinux-themes.sh --apply fluent-opaque
+
+echo "fluent-opaque" > "/tmp/big_desktop_theme"
