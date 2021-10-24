@@ -58,7 +58,7 @@ LANG=$(cat /tmp/big_language).UTF-8" > $HOME/.config/plasma-localerc
 echo "$(cat /tmp/big_language)" > $HOME/.config/user-dirs.locale
 
 #Apply desktop configuration
-change-plasma-theme --apply $(cut -f2 -d" " /etc/default-theme-biglinux) cleanquiet
+change-plasma-theme --apply $(cut -f2 -d" " /etc/big_desktop_changed) cleanquiet
 
 chmod +x /tmp/biglightdm
 cd ~
