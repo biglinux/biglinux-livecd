@@ -16,9 +16,6 @@ BROWSER_GPU=$"Utilizar GPU nos navegadores<br><small>(Desative no caso de distor
 DESKTOP=$"Escolha o desktop:"
 
 
-theme_actual="$(cat /tmp/big_desktop_theme)"
-
-
 ######
 # Browser
 ######
@@ -43,10 +40,13 @@ fi
 
 
 
-if [ "$theme_actual" = "" ]; then
+if [ "$theme" = "" ]; then
     biglinux-themes.sh --apply breeze
     echo "breeze" > /tmp/big_desktop_theme
     checked_breeze="checked"
+else
+    biglinux-themes.sh --apply $theme
+    echo "$theme" > /tmp/big_desktop_theme
 fi
 
 
