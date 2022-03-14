@@ -1,80 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Language BigLinux</title>
+  <link rel="stylesheet" href="./style-language.css">
 
-  <body>
-  <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/usr/share/bigbashview/bcc/materialize/css/materialize.css">
-    <link rel="stylesheet" type="text/css" href="theme.css">
-    <script src="/usr/share/bigbashview/bcc/materialize/js/jquery.js"></script>
-    <script src="/usr/share/bigbashview/bcc/materialize/js/materialize.js"></script>
-    <script src="/usr/share/bigbashview/bcc/js/big.js"></script>
-  </head>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<html>
+<head>
+    <title>Install - BigLinux</title>
+</head>
 
-<div id=page2>
-<div id="middle" class="bar">
+<body>
+    <nav>
+      <span class="navbutton" title="Language">
+<svg viewBox="0 0 640 512"><path fill="currentColor" d="M152.1 236.2c-3.5-12.1-7.8-33.2-7.8-33.2h-.5s-4.3 21.1-7.8 33.2l-11.1 37.5H163zM616 96H336v320h280c13.3 0 24-10.7 24-24V120c0-13.3-10.7-24-24-24zm-24 120c0 6.6-5.4 12-12 12h-11.4c-6.9 23.6-21.7 47.4-42.7 69.9 8.4 6.4 17.1 12.5 26.1 18 5.5 3.4 7.3 10.5 4.1 16.2l-7.9 13.9c-3.4 5.9-10.9 7.8-16.7 4.3-12.6-7.8-24.5-16.1-35.4-24.9-10.9 8.7-22.7 17.1-35.4 24.9-5.8 3.5-13.3 1.6-16.7-4.3l-7.9-13.9c-3.2-5.6-1.4-12.8 4.2-16.2 9.3-5.7 18-11.7 26.1-18-7.9-8.4-14.9-17-21-25.7-4-5.7-2.2-13.6 3.7-17.1l6.5-3.9 7.3-4.3c5.4-3.2 12.4-1.7 16 3.4 5 7 10.8 14 17.4 20.9 13.5-14.2 23.8-28.9 30-43.2H412c-6.6 0-12-5.4-12-12v-16c0-6.6 5.4-12 12-12h64v-16c0-6.6 5.4-12 12-12h16c6.6 0 12 5.4 12 12v16h64c6.6 0 12 5.4 12 12zM0 120v272c0 13.3 10.7 24 24 24h280V96H24c-13.3 0-24 10.7-24 24zm58.9 216.1L116.4 167c1.7-4.9 6.2-8.1 11.4-8.1h32.5c5.1 0 9.7 3.3 11.4 8.1l57.5 169.1c2.6 7.8-3.1 15.9-11.4 15.9h-22.9a12 12 0 0 1-11.5-8.6l-9.4-31.9h-60.2l-9.1 31.8c-1.5 5.1-6.2 8.7-11.5 8.7H70.3c-8.2 0-14-8.1-11.4-15.9z"/></svg>
+      </span>
+      <span class="navbutton" title="Keyboard" style="margin-right: 35px;">
+<svg viewBox="0 0 576 512"><path fill="#333" d="M528 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM128 180v-40c0-6.627-5.373-12-12-12H76c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12H76c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm288 0v-40c0-6.627-5.373-12-12-12H172c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h232c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12z"/></svg>
+      </span>
 
-Choose your location
+      <span class="navbutton" title="BigLinux" slyte="width: 100px;">
+        <img id="biglinuxlogo"  src="icon-logo-biglinux.png">
+      </span>      
+      
+      <span class="navbutton" title="Theme" style="margin-left: 35px;">
+<svg viewBox="0 0 512 512"><path fill="#333" d="M204.3 5C104.9 24.4 24.8 104.3 5.2 203.4c-37 187 131.7 326.4 258.8 306.7 41.2-6.4 61.4-54.6 42.5-91.7-23.1-45.4 9.9-98.4 60.9-98.4h79.7c35.8 0 64.8-29.6 64.9-65.3C511.5 97.1 368.1-26.9 204.3 5zM96 320c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm32-128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128-64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/></svg>
+      </span>
+      <span class="navbutton" title="Desktop">
+<svg viewBox="0 0 576 512"><path  fill="#333" d="M528 0H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h192l-16 48h-72c-13.3 0-24 10.7-24 24s10.7 24 24 24h272c13.3 0 24-10.7 24-24s-10.7-24-24-24h-72l-16-48h192c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zm-16 352H64V64h448v288z"/></svg>
+      </span>      
+  </nav>
 
-<div class="collection">
-
-<a href="locale.sh.htm?language=pt_BR&lang=pt&keyboard=br&timezone=America/Sao_Paulo" class="collection-item">
-
-<div class=left>
-Portuguese - Brazil
-</div><div class=right>
-Português do Brasil
-- pt_BR
-</div></a>
-
-<a href="locale.sh.htm?language=en_US&lang=en&keyboard=us&timezone=America/New_York" class="collection-item">
-
-<div class=left>
-English - United States
-</div><div class=right>
-English
-- en_US
-</div></a>
-
-<a href="locale.sh.htm?language=es_ES&lang=es&keyboard=es&timezone=Europe/Madrid" class="collection-item">
-
-<div class=left>
-Spanish - Spain
-</div><div class=right>
-Español
-Castellano
-- es_ES
-</div></a>
-
-</div>
-
-
-Full list
-
-
-<div class="collection">
+  
+    <div style="height: 93%;" class="fc-card animated fadeIn panel" id="fc-main">
+        <div class="centretext">
+        <a href="locale.sh.htm?language=pt_BR&lang=pt&keyboard=br&timezone=America/Sao_Paulo" class="collection-item">
+          <button class="fc-btn calamares-big-button" id="BFin">
+            <span>  
+              <img src="https://www.biglinux.com.br/wp-content/uploads/2022/03/brazil.png"> Português - Brasil
+            </span>
+          </button>
+          </a>
+          <a href="locale.sh.htm?language=en_US&lang=en&keyboard=us&timezone=America/New_York" class="collection-item">
+          <button class="fc-btn calamares-big-button" id="BAca">
+            <span>  
+              <img src="https://www.biglinux.com.br/wp-content/uploads/2022/03/united-states-of-america.png"> English - United States
+            </span>
+          </button>
+          </a>
+          <a href="locale.sh.htm?language=es_ES&lang=es&keyboard=es&timezone=Europe/Madrid" class="collection-item">
+          <button class="fc-btn calamares-big-button" id="BInt">
+            <span>  
+              <img src="https://www.biglinux.com.br/wp-content/uploads/2022/03/spain.png"> Español - España
+            </span>
+          </button>
+          </a>
+        </div>
+        <br/>
+        <div class="centretext">
+<div id="page-list">
 <a href="locale.sh.htm?language=be_BY&lang=be&keyboard=by&timezone=Europe/Minsk" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 Belarusian - Belarus
-</div><div class=right>
+</div>
+<div class=right>
 беларуская мова
 - be_BY
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=bg_BG&lang=bg&keyboard=bg&timezone=Europe/Sofia" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 Bulgarian - Bulgaria
 </div><div class=right>
 български език
 - bg_BG
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=zh_CN&lang=zh&keyboard=us&timezone=Asia/Shanghai" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 Chinese - China
 </div><div class=right>
@@ -82,12 +90,10 @@ Chinese - China
 汉语
 漢語
 - zh_CN
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=zh_HK&lang=zh&keyboard=us&timezone=Asia/Hong_Kong" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 Chinese - Hong Kong SAR
 </div><div class=right>
@@ -95,12 +101,10 @@ Chinese - Hong Kong SAR
 汉语
 漢語
 - zh_HK
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=zh_SG&lang=zh&keyboard=us&timezone=Asia/Singapore" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 Chinese - Singapore
 </div><div class=right>
@@ -108,12 +112,10 @@ Chinese - Singapore
 汉语
 漢語
 - zh_SG
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=zh_TW&lang=zh&keyboard=us&timezone=Asia/Taipei" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 Chinese - Taiwan
 </div><div class=right>
@@ -121,184 +123,149 @@ Chinese - Taiwan
 汉语
 漢語
 - zh_TW
-</div></a>
-
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=hr_HR&lang=hr&keyboard=hr&timezone=Europe/Zagreb" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 Croatian - Croatia
 </div><div class=right>
 hrvatski jezik
 - hr_HR
-</div></a>
-
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=cs_CZ&lang=cs&keyboard=cz&timezone=Europe/Prague" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 Czech - Czech Republic
 </div><div class=right>
 čeština
 český jazyk
 - cs_CZ
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=da_DK&lang=da&keyboard=dk&timezone=Europe/Copenhagen" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 Danish - Denmark
 </div><div class=right>
 dansk
 - da_DK
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=nl_BE&lang=nl&keyboard=be&timezone=Europe/Brussels" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 Dutch - Belgium
 </div><div class=right>
 Nederlands
 Vlaams
 - nl_BE
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=nl_NL&lang=nl&keyboard=us&timezone=Europe/Amsterdam" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 Dutch - The Netherlands
 </div><div class=right>
 Nederlands
 Vlaams
 - nl_NL
-</div></a>
-
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=en_AU&lang=en&keyboard=us&timezone=Australia/Sydney" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 English - Australia
 </div><div class=right>
 English
 - en_AU
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=en_CA&lang=en&keyboard=us&timezone=America/Toronto" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 English - Canada
 </div><div class=right>
 English
 - en_CA
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=en_GB&lang=en&keyboard=gb&timezone=Europe/London" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 English - United Kingdom
 </div><div class=right>
 English
 - en_GB
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=en_IE&lang=en&keyboard=ie&timezone=Europe/Dublin" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 English - Ireland
 </div><div class=right>
 English
 - en_IE
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=en_NZ&lang=en&keyboard=us&timezone=Pacific/Auckland" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 English - New Zealand
 </div><div class=right>
 English
 - en_NZ
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=en_PH&lang=en&keyboard=us&timezone=Asia/Manila" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 English - Philippines
 </div><div class=right>
 English
 - en_PH
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=en_US&lang=en&keyboard=us&timezone=America/New_York" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 English - United States
 </div><div class=right>
 English
 - en_US
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=en_ZA&lang=en&keyboard=us&timezone=Africa/Johannesburg" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 English - South Africa
 </div><div class=right>
 English
 - en_ZA
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=en_ZW&lang=en&keyboard=us&timezone=Africa/Harare" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 English - Zimbabwe
 </div><div class=right>
 English
 - en_ZW
-</div></a>
-
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=et_EE&lang=et&keyboard=et&timezone=Europe/Tallinn" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 Estonian - Estonia
 </div><div class=right>
 eesti
 eesti keel
 - et_EE
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=fi_FI&lang=fi&keyboard=fi&timezone=Europe/Helsinki" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Finnish - Finland
@@ -306,23 +273,20 @@ Finnish - Finland
 suomi
 suomen kieli
 - fi_FI
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=fr_BE&lang=fr&keyboard=be&timezone=Europe/Brussels" class="collection-item">
-
+<button class="fc-btn collection">
 <div class=left>
 French - Belgium
 </div><div class=right>
 français
 langue française
 - fr_BE
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=fr_CA&lang=fr&keyboard=ca&timezone=America/Toronto" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 French - Canada
@@ -330,11 +294,10 @@ French - Canada
 français
 langue française
 - fr_CA
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=fr_CH&lang=fr&keyboard=ch&timezone=Europe/Zurich" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 French - Switzerland
@@ -342,11 +305,10 @@ French - Switzerland
 français
 langue française
 - fr_CH
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=fr_FR&lang=fr&keyboard=fr&timezone=Europe/Paris" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 French - France
@@ -354,11 +316,10 @@ French - France
 français
 langue française
 - fr_FR
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=fr_LU&lang=fr&keyboard=fr&timezone=Europe/Luxembourg" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 French - Luxembourg
@@ -366,143 +327,130 @@ French - Luxembourg
 français
 langue française
 - fr_LU
-</div></a>
-
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=de_DE&lang=de&keyboard=de&timezone=Europe/Berlin" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 German - Germany
 </div><div class=right>
 Deutsch
 - de_DE
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=de_AT&lang=de&keyboard=de&timezone=Europe/Vienna" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 German - Austria
 </div><div class=right>
 Deutsch
 - de_AT
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=de_CH&lang=de&keyboard=de_CH-latin1&timezone=Europe/Zurich" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 German - Switzerland
 </div><div class=right>
 Deutsch
 - de_CH
-</div></a>
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=de_LI&lang=de&keyboard=de&timezone=Europe/Vaduz" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 German - Liechtenstein
 </div><div class=right>
 Deutsch
 - de_LI
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=de_LU&lang=de&keyboard=de&timezone=Europe/Luxembourg" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 German - Luxembourg
 </div><div class=right>
 Deutsch
 - de_LU
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=el_GR&lang=el&keyboard=gr&timezone=Europe/Athens" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Greek - Greece
 </div><div class=right>
 ελληνικά
 - el_GR
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=he_IL&lang=he&keyboard=il&timezone=Asia/Jerusalem" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Hebrew - Israel
 </div><div class=right>
 עברית
 - he_IL
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=hu_HU&lang=hu&keyboard=hu&timezone=Europe/Budapest" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Hungarian - Hungary
 </div><div class=right>
 magyar
 - hu_HU
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=is_IS&lang=is&keyboard=is&timezone=Atlantic/Reykjavik" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Icelandic - Iceland
 </div><div class=right>
 Íslenska
 - is_IS
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=it_CH&lang=it&keyboard=it&timezone=Europe/Zurich" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Italian - Switzerland
 </div><div class=right>
 italiano
 - it_CH
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=it_IT&lang=it&keyboard=it&timezone=Europe/Rome" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Italian - Italy
 </div><div class=right>
 italiano
 - it_IT
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=ja_JP&lang=ja&keyboard=jp&timezone=Asia/Tokyo" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Japanese - Japan
 </div><div class=right>
 日本語 (にほんご)
 - ja_JP
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=ko_KR&lang=ko&keyboard=kr&timezone=Asia/Seoul" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Korean - Korea
@@ -510,34 +458,30 @@ Korean - Korea
 한국어
 조선어
 - ko_KR
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=nb_NO&lang=nb&keyboard=no&timezone=Europe/Oslo" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Norwegian (Bokmål) - Norway
 </div><div class=right>
 Norsk bokmål
 - nb_NO
-</div></a>
-
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=nn_NO&lang=nn&keyboard=no&timezone=Europe/Oslo" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Norwegian (Nynorsk) - Norway
 </div><div class=right>
 Norsk nynorsk
 - nn_NO
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=pl_PL&lang=pl&keyboard=pl&timezone=Europe/Warsaw" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Polish - Poland
@@ -545,55 +489,50 @@ Polish - Poland
 język polski
 polszczyzna
 - pl_PL
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=pt_BR&lang=pt&keyboard=br&timezone=America/Sao_Paulo" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Portuguese - Brazil
 </div><div class=right>
 Português do Brasil
 - pt_BR
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=pt_PT&lang=pt&keyboard=pt&timezone=Europe/Lisbon" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Portuguese - Portugal
 </div><div class=right>
 Português
 - pt_PT
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=ro_RO&lang=ro&keyboard=ro&timezone=Europe/Bucharest" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Romanian - Romania
 </div><div class=right>
 limba română
 - ro_RO
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=ru_RU&lang=ru&keyboard=ru&timezone=Europe/Moscow" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Russian - Russia
 </div><div class=right>
 русский язык
 - ru_RU
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=sk_SK&lang=sk&keyboard=sk&timezone=Europe/Bratislava" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Slovak - Slovakia
@@ -601,12 +540,10 @@ Slovak - Slovakia
 slovenčina
 slovenský jazyk
 - sk_SK
-</div></a>
-
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=sl_SI&lang=sl&keyboard=si&timezone=Europe/Ljubljana" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Slovenian - Slovenia
@@ -614,10 +551,10 @@ Slovenian - Slovenia
 slovenski jezik
 slovenščina
 - sl_SI
-</div></a>
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_AR&lang=es&keyboard=latam&timezone=America/Argentina/Buenos_Aires" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Argentina
@@ -625,11 +562,10 @@ Spanish - Argentina
 español
 castellano
 - es_AR
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_BO&lang=es&keyboard=latam&timezone=America/La_Paz" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Bolivia
@@ -637,11 +573,10 @@ Spanish - Bolivia
 español
 castellano
 - es_BO
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_CL&lang=es&keyboard=latam&timezone=America/Santiago" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Chile
@@ -649,11 +584,10 @@ Spanish - Chile
 español
 castellano
 - es_CL
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_CO&lang=es&keyboard=latam&timezone=America/Bogota" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Colombia
@@ -661,11 +595,10 @@ Spanish - Colombia
 español
 castellano
 - es_CO
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_CR&lang=es&keyboard=latam&timezone=America/Costa_Rica" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Costa Rica
@@ -673,11 +606,10 @@ Spanish - Costa Rica
 español
 castellano
 - es_CR
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_DO&lang=es&keyboard=latam&timezone=America/Santo_Domingo" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Dominican Republic
@@ -685,11 +617,10 @@ Spanish - Dominican Republic
 español
 castellano
 - es_DO
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_EC&lang=es&keyboard=latam&timezone=America/Guayaquil" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Ecuador
@@ -697,11 +628,10 @@ Spanish - Ecuador
 español
 castellano
 - es_EC
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_ES&lang=es&keyboard=es&timezone=Europe/Madrid" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Spain
@@ -709,11 +639,10 @@ Spanish - Spain
 español
 castellano
 - es_ES
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_GT&lang=es&keyboard=latam&timezone=America/Guatemala" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Guatemala
@@ -721,11 +650,10 @@ Spanish - Guatemala
 español
 castellano
 - es_GT
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_HN&lang=es&keyboard=latam&timezone=America/Tegucigalpa" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Honduras
@@ -733,11 +661,10 @@ Spanish - Honduras
 español
 castellano
 - es_HN
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_MX&lang=es&keyboard=latam&timezone=America/Mexico_City" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Mexico
@@ -745,11 +672,10 @@ Spanish - Mexico
 español
 castellano
 - es_MX
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_NI&lang=es&keyboard=latam&timezone=America/Managua" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Nicaragua
@@ -757,11 +683,10 @@ Spanish - Nicaragua
 español
 castellano
 - es_NI
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_PA&lang=es&keyboard=latam&timezone=America/Panama" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Panama
@@ -769,11 +694,10 @@ Spanish - Panama
 español
 castellano
 - es_PA
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_PE&lang=es&keyboard=latam&timezone=America/Lima" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Peru
@@ -781,11 +705,10 @@ Spanish - Peru
 español
 castellano
 - es_PE
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_PR&lang=es&keyboard=latam&timezone=America/Puerto_Rico" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Puerto Rico
@@ -793,11 +716,10 @@ Spanish - Puerto Rico
 español
 castellano
 - es_PR
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_PY&lang=es&keyboard=latam&timezone=America/Asuncion" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Paraguay
@@ -805,11 +727,10 @@ Spanish - Paraguay
 español
 castellano
 - es_PY
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_SV&lang=es&keyboard=latam&timezone=America/El_Salvador" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - El Salvador
@@ -817,11 +738,10 @@ Spanish - El Salvador
 español
 castellano
 - es_SV
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_UY&lang=es&keyboard=latam&timezone=America/Montevideo" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Uruguay
@@ -829,11 +749,10 @@ Spanish - Uruguay
 español
 castellano
 - es_UY
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=es_VE&lang=es&keyboard=latam&timezone=America/Caracas" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Spanish - Venezuela
@@ -841,53 +760,52 @@ Spanish - Venezuela
 español
 castellano
 - es_VE
-</div></a>
-
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=sv_FI&lang=sv&keyboard=se&timezone=Europe/Helsinki" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Swedish - Finland
 </div><div class=right>
 Svenska
 - sv_FI
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=sv_SE&lang=sv&keyboard=se&timezone=Europe/Stockholm" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Swedish - Sweden
 </div><div class=right>
 Svenska
 - sv_SE
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=tr_TR&lang=tr&keyboard=tr&timezone=Europe/Istanbul" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Turkish - Turkey
 </div><div class=right>
 Türkçe
 - tr_TR
-</div></a>
-
-
+</div></button></a>
 
 <a href="locale.sh.htm?language=uk_UA&lang=uk&keyboard=ua&timezone=Europe/Kiev" class="collection-item">
+<button class="fc-btn collection">
 
 <div class=left>
 Ukrainian - Ukraine
 </div><div class=right>
 українська мова
 - uk_UA
-</div></a>
-
-
-
 </div>
+</div></button></a>
+
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>

@@ -16,299 +16,243 @@ localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null &
 
 if [ "$keyboard" = "us" ]; then
     setxkbmap $keyboard &
-    echo '<body onload=window.location="/usr/share/bigbashview/bcc/apps/boot-livecd/index.sh.htm">'
+    echo '<body onload=window.location="/usr/share/bigbashview/bcc/apps/boot-livecd/theme.sh.htm">'
     exit
 fi
-  
 
-
-  
-# Import BigControlCenter base modules / Importa os módulos básicos do BigControlCenter
-# That's include jquery and materialize / Isso inclui o jquery e o materialize
-# http://materializecss.com/
-. /usr/share/bigbashview/bcc/shell/base.sh
-
-
-
-  echo '
-  <body>
-  <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/usr/share/bigbashview/bcc/materialize/css/materialize.css">
-    <link rel="stylesheet" type="text/css" href="theme.css">
-    <script src="/usr/share/bigbashview/bcc/materialize/js/jquery.js"></script>
-    <script src="/usr/share/bigbashview/bcc/materialize/js/materialize.js"></script>
-    <script src="/usr/share/bigbashview/bcc/js/big.js"></script>
-  </head>
-  '
-
-
-echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
+SELECT_KEYBOARD=$"Escolha o modelo do teclado:"
 
 cat << EOF
-<style>
 
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="keyboard-style.css">
 
-body {
-margin-top: 0px;
-margin-left: 0px;
-margin-right: 0px;
-margin-bottom: 0px;
-padding: 0px;
-text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
-font-weight: 250;
-color: rgba(255, 255, 255, 1);
-font-family: 'Droid Sans';
-  text-align: justify;
-  text-justify: inter-word;
-}
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<html>
+<head>
+</head>
 
+<body>
+    <nav>
+      <span class="navbutton" title="Language"><a class="top-link-active" href="index.html">
+<svg viewBox="0 0 640 512"><path fill="#aaa" d="M152.1 236.2c-3.5-12.1-7.8-33.2-7.8-33.2h-.5s-4.3 21.1-7.8 33.2l-11.1 37.5H163zM616 96H336v320h280c13.3 0 24-10.7 24-24V120c0-13.3-10.7-24-24-24zm-24 120c0 6.6-5.4 12-12 12h-11.4c-6.9 23.6-21.7 47.4-42.7 69.9 8.4 6.4 17.1 12.5 26.1 18 5.5 3.4 7.3 10.5 4.1 16.2l-7.9 13.9c-3.4 5.9-10.9 7.8-16.7 4.3-12.6-7.8-24.5-16.1-35.4-24.9-10.9 8.7-22.7 17.1-35.4 24.9-5.8 3.5-13.3 1.6-16.7-4.3l-7.9-13.9c-3.2-5.6-1.4-12.8 4.2-16.2 9.3-5.7 18-11.7 26.1-18-7.9-8.4-14.9-17-21-25.7-4-5.7-2.2-13.6 3.7-17.1l6.5-3.9 7.3-4.3c5.4-3.2 12.4-1.7 16 3.4 5 7 10.8 14 17.4 20.9 13.5-14.2 23.8-28.9 30-43.2H412c-6.6 0-12-5.4-12-12v-16c0-6.6 5.4-12 12-12h64v-16c0-6.6 5.4-12 12-12h16c6.6 0 12 5.4 12 12v16h64c6.6 0 12 5.4 12 12zM0 120v272c0 13.3 10.7 24 24 24h280V96H24c-13.3 0-24 10.7-24 24zm58.9 216.1L116.4 167c1.7-4.9 6.2-8.1 11.4-8.1h32.5c5.1 0 9.7 3.3 11.4 8.1l57.5 169.1c2.6 7.8-3.1 15.9-11.4 15.9h-22.9a12 12 0 0 1-11.5-8.6l-9.4-31.9h-60.2l-9.1 31.8c-1.5 5.1-6.2 8.7-11.5 8.7H70.3c-8.2 0-14-8.1-11.4-15.9z"/></svg>
+      </a></span>
+      <span class="navbutton" title="Keyboard" style="margin-right: 35px;">
+<svg viewBox="0 0 576 512"><path fill="currentColor" d="M528 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM128 180v-40c0-6.627-5.373-12-12-12H76c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12H76c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm288 0v-40c0-6.627-5.373-12-12-12H172c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h232c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12z"/></svg>
+      </span>
 
-.material-tooltip {font-family:ubuntu;
-font-weight:400;font-size:18px;
-line-height: 120%;}
+      <span class="navbutton" title="BigLinux" slyte="width: 100px;">
+        <img id="biglinuxlogo"  src="icon-logo-biglinux.png">
+      </span>      
+      
+      <span class="navbutton" title="Theme" style="margin-left: 35px;">
+<svg viewBox="0 0 512 512"><path fill="#333" d="M204.3 5C104.9 24.4 24.8 104.3 5.2 203.4c-37 187 131.7 326.4 258.8 306.7 41.2-6.4 61.4-54.6 42.5-91.7-23.1-45.4 9.9-98.4 60.9-98.4h79.7c35.8 0 64.8-29.6 64.9-65.3C511.5 97.1 368.1-26.9 204.3 5zM96 320c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm32-128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128-64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/></svg>
+      </span>
+      <span class="navbutton" title="Desktop">
+<svg viewBox="0 0 576 512"><path  fill="#333" d="M528 0H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h192l-16 48h-72c-13.3 0-24 10.7-24 24s10.7 24 24 24h272c13.3 0 24-10.7 24-24s-10.7-24-24-24h-72l-16-48h192c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zm-16 352H64V64h448v288z"/></svg>
+      </span>      
+  </nav>
 
-.with-gap {color: #ffffff !important;
-font-size:18px !important;
-margin-left:20px;
-margin-right:20px;
-margin-top:10%;
-}
+    <div style="height: 68%;" class="fc-card animated fadeIn panel" id="fc-main">
+        <div class="centretext">
+    <div id="desc">
+      <br><br><br>
+      <span class="icon64x64">            
+      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+         viewBox="0 0 269.2 247.6" style="enable-background:new 0 0 269.2 247.6;" xml:space="preserve">
+      <style type="text/css">
+        .st0{fill:#2991C9;stroke:#004884;stroke-miterlimit:10;}
+        .st1{fill:#CFCCC8;}
+        .st2{fill:#FFFFFF;}
+      </style>
+      <path class="st0" d="M258.8,165.3H11.6c-3.9,0-7-3.2-7-7V71.2c0-3.8,3.1-7,7-7h247.2c3.9,0,7,3.2,7,7v87.1
+        C265.8,162.1,262.6,165.3,258.8,165.3z"/>
+      <path class="st1" d="M25,87.5H12.2c-0.5,0-1-0.5-1-1V73.6c0-0.5,0.5-1,1-1H25c0.5,0,1,0.5,1,1v12.8C26,87,25.6,87.5,25,87.5z"/>
+      <path class="st1" d="M42.3,87.5H29.5c-0.5,0-1-0.5-1-1V73.6c0-0.5,0.5-1,1-1h12.8c0.5,0,1,0.5,1,1v12.8C43.3,87,42.9,87.5,42.3,87.5
+        z"/>
+      <path class="st1" d="M50.5,105H37.7c-0.6,0-1-0.5-1-1V91.1c0-0.5,0.4-1,1-1h12.8c0.5,0,1,0.5,1,1V104C51.5,104.5,51.1,105,50.5,105z
+        "/>
+      <path class="st1" d="M54.7,122.5H41.8c-0.5,0-1-0.5-1-1v-12.8c0-0.5,0.5-1,1-1h12.8c0.5,0,1,0.5,1,1v12.8
+        C55.7,122,55.2,122.5,54.7,122.5z"/>
+      <path class="st1" d="M63.9,140H51.1c-0.5,0-1-0.4-1-1v-12.8c0-0.5,0.5-1,1-1h12.8c0.5,0,1,0.5,1,1V139C64.9,139.5,64.5,140,63.9,140
+        z"/>
+      <path class="st1" d="M81.2,140H68.4c-0.6,0-1-0.4-1-1v-12.8c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1V139C82.2,139.5,81.8,140,81.2,140
+        z"/>
+      <path class="st1" d="M98.5,140H85.6c-0.6,0-1-0.4-1-1v-12.8c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1V139C99.5,139.5,99,140,98.5,140z"
+        />
+      <path class="st1" d="M115.8,140h-12.8c-0.6,0-1-0.4-1-1v-12.8c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1V139
+        C116.8,139.5,116.3,140,115.8,140z"/>
+      <path class="st1" d="M133,140h-12.8c-0.5,0-1-0.4-1-1v-12.8c0-0.5,0.5-1,1-1H133c0.6,0,1,0.5,1,1V139C134,139.5,133.6,140,133,140z"
+        />
+      <path class="st1" d="M150.3,140h-12.8c-0.6,0-1-0.4-1-1v-12.8c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1V139
+        C151.3,139.5,150.9,140,150.3,140z"/>
+      <path class="st1" d="M167.6,140h-12.8c-0.6,0-1-0.4-1-1v-12.8c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1V139
+        C168.6,139.5,168.1,140,167.6,140z"/>
+      <path class="st1" d="M184.9,140H172c-0.5,0-1-0.4-1-1v-12.8c0-0.5,0.5-1,1-1h12.8c0.5,0,1,0.5,1,1V139
+        C185.9,139.5,185.4,140,184.9,140z"/>
+      <path class="st1" d="M202.2,140h-12.8c-0.6,0-1-0.4-1-1v-12.8c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1V139
+        C203.2,139.5,202.7,140,202.2,140z"/>
+      <path class="st1" d="M219.4,140h-12.8c-0.6,0-1-0.4-1-1v-12.8c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1V139
+        C220.4,139.5,220,140,219.4,140z"/>
+      <path class="st1" d="M206,157.5h-12.8c-0.6,0-1-0.4-1-1v-12.8c0-0.6,0.4-1,1-1H206c0.6,0,1,0.4,1,1v12.8
+        C207,157,206.6,157.5,206,157.5z"/>
+      <path class="st1" d="M223.5,157.5h-12.8c-0.5,0-1-0.4-1-1v-3.9c0-0.6,0.5-1,1-1h12.8c0.5,0,1,0.4,1,1v3.9
+        C224.5,157,224.1,157.5,223.5,157.5z"/>
+      <path class="st1" d="M240.5,157.5h-12.8c-0.6,0-1-0.4-1-1v-3.9c0-0.6,0.4-1,1-1h12.8c0.6,0,1,0.4,1,1v3.9
+        C241.5,157,241.1,157.5,240.5,157.5z"/>
+      <path class="st1" d="M240.5,149.2h-12.8c-0.6,0-1-0.5-1-1v-3.9c0-0.6,0.4-1,1-1h12.8c0.6,0,1,0.4,1,1v3.9
+        C241.5,148.8,241.1,149.2,240.5,149.2z"/>
+      <path class="st1" d="M257.5,157.5h-12.8c-0.5,0-1-0.4-1-1v-3.9c0-0.6,0.5-1,1-1h12.8c0.5,0,1,0.4,1,1v3.9
+        C258.5,157,258.1,157.5,257.5,157.5z"/>
+      <path class="st1" d="M71.9,122.5H59c-0.5,0-1-0.5-1-1v-12.8c0-0.5,0.5-1,1-1h12.8c0.5,0,1,0.5,1,1v12.8
+        C72.9,122,72.4,122.5,71.9,122.5z"/>
+      <path class="st1" d="M89.1,122.5H76.3c-0.6,0-1-0.5-1-1v-12.8c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8
+        C90.1,122,89.7,122.5,89.1,122.5z"/>
+      <path class="st1" d="M106.3,122.5H93.5c-0.5,0-1-0.5-1-1v-12.8c0-0.5,0.5-1,1-1h12.8c0.5,0,1,0.5,1,1v12.8
+        C107.3,122,106.9,122.5,106.3,122.5z"/>
+      <path class="st1" d="M123.6,122.5h-12.8c-0.6,0-1-0.5-1-1v-12.8c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8
+        C124.6,122,124.1,122.5,123.6,122.5z"/>
+      <path class="st1" d="M140.8,122.5h-12.8c-0.5,0-1-0.5-1-1v-12.8c0-0.5,0.5-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8
+        C141.8,122,141.3,122.5,140.8,122.5z"/>
+      <path class="st1" d="M158,122.5h-12.8c-0.6,0-1-0.5-1-1v-12.8c0-0.5,0.4-1,1-1H158c0.6,0,1,0.5,1,1v12.8
+        C159,122,158.6,122.5,158,122.5z"/>
+      <path class="st1" d="M175.2,122.5h-12.8c-0.6,0-1-0.5-1-1v-12.8c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8
+        C176.2,122,175.8,122.5,175.2,122.5z"/>
+      <path class="st1" d="M192.5,122.5h-12.8c-0.6,0-1-0.5-1-1v-12.8c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8
+        C193.5,122,193,122.5,192.5,122.5z"/>
+      <path class="st1" d="M209.7,122.5h-12.8c-0.5,0-1-0.5-1-1v-12.8c0-0.5,0.5-1,1-1h12.8c0.5,0,1,0.5,1,1v12.8
+        C210.7,122,210.2,122.5,209.7,122.5z"/>
+      <path class="st1" d="M226.9,122.5h-12.8c-0.6,0-1-0.5-1-1v-12.8c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8
+        C227.9,122,227.5,122.5,226.9,122.5z"/>
+      <path class="st1" d="M244.1,122.5h-12.8c-0.6,0-1-0.5-1-1v-12.8c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8
+        C245.1,122,244.7,122.5,244.1,122.5z"/>
+      <path class="st1" d="M257.5,140h-34c-0.6,0-1-0.4-1-1v-12.8c0-0.5,0.4-1,1-1h34c0.5,0,1,0.5,1,1V139
+        C258.5,139.5,258.1,140,257.5,140z"/>
+      <path class="st1" d="M46.4,140h-34c-0.6,0-1-0.4-1-1v-12.8c0-0.5,0.4-1,1-1h34c0.5,0,1,0.5,1,1V139C47.4,139.5,47,140,46.4,140z"/>
+      <path class="st1" d="M67.8,105H54.9c-0.5,0-1-0.5-1-1V91.1c0-0.5,0.5-1,1-1h12.8c0.6,0,1,0.5,1,1V104C68.8,104.5,68.3,105,67.8,105z
+        "/>
+      <path class="st1" d="M85,105H72.2c-0.5,0-1-0.5-1-1V91.1c0-0.5,0.5-1,1-1H85c0.6,0,1,0.5,1,1V104C86,104.5,85.5,105,85,105z"/>
+      <path class="st1" d="M102.2,105H89.4c-0.6,0-1-0.5-1-1V91.1c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1V104
+        C103.2,104.5,102.8,105,102.2,105z"/>
+      <path class="st1" d="M119.4,105h-12.8c-0.6,0-1-0.5-1-1V91.1c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1V104
+        C120.4,104.5,120,105,119.4,105z"/>
+      <path class="st1" d="M136.7,105h-12.8c-0.5,0-1-0.5-1-1V91.1c0-0.5,0.5-1,1-1h12.8c0.6,0,1,0.5,1,1V104
+        C137.7,104.5,137.2,105,136.7,105z"/>
+      <path class="st1" d="M153.9,105h-12.8c-0.6,0-1-0.5-1-1V91.1c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1V104
+        C154.9,104.5,154.4,105,153.9,105z"/>
+      <path class="st1" d="M171.1,105h-12.8c-0.6,0-1-0.5-1-1V91.1c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1V104
+        C172.1,104.5,171.7,105,171.1,105z"/>
+      <path class="st1" d="M188.3,105h-12.8c-0.5,0-1-0.5-1-1V91.1c0-0.5,0.5-1,1-1h12.8c0.5,0,1,0.5,1,1V104
+        C189.3,104.5,188.9,105,188.3,105z"/>
+      <path class="st1" d="M205.6,105h-12.8c-0.6,0-1-0.5-1-1V91.1c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1V104
+        C206.6,104.5,206.1,105,205.6,105z"/>
+      <path class="st1" d="M222.8,105H210c-0.6,0-1-0.5-1-1V91.1c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1V104
+        C223.8,104.5,223.3,105,222.8,105z"/>
+      <path class="st1" d="M240,105h-12.8c-0.6,0-1-0.5-1-1V91.1c0-0.5,0.4-1,1-1H240c0.6,0,1,0.5,1,1V104C241,104.5,240.6,105,240,105z"
+        />
+      <path class="st1" d="M257.5,90.1h-12.8c-0.6,0-1,0.5-1,1v12.8c0,0.6,0.5,1,1,1h3.7v16.5c0,0.6,0.5,1,1,1h8.1c0.6,0,1-0.5,1-1v-17.5
+        v-3.3v-9.5C258.5,90.6,258.1,90.1,257.5,90.1z"/>
+      <path class="st1" d="M59.6,87.5H46.7c-0.5,0-1-0.5-1-1V73.6c0-0.5,0.5-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8C60.6,87,60.1,87.5,59.6,87.5
+        z"/>
+      <path class="st1" d="M76.8,87.5H64c-0.5,0-1-0.5-1-1V73.6c0-0.5,0.5-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8C77.8,87,77.4,87.5,76.8,87.5z"
+        />
+      <path class="st1" d="M94.1,87.5H81.3c-0.6,0-1-0.5-1-1V73.6c0-0.5,0.4-1,1-1h12.8c0.5,0,1,0.5,1,1v12.8C95.1,87,94.7,87.5,94.1,87.5
+        z"/>
+      <path class="st1" d="M111.4,87.5H98.5c-0.5,0-1-0.5-1-1V73.6c0-0.5,0.5-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8
+        C112.4,87,111.9,87.5,111.4,87.5z"/>
+      <path class="st1" d="M128.7,87.5h-12.8c-0.6,0-1-0.5-1-1V73.6c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8
+        C129.7,87,129.2,87.5,128.7,87.5z"/>
+      <path class="st1" d="M145.9,87.5h-12.8c-0.6,0-1-0.5-1-1V73.6c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8
+        C146.9,87,146.5,87.5,145.9,87.5z"/>
+      <path class="st1" d="M163.2,87.5h-12.8c-0.5,0-1-0.5-1-1V73.6c0-0.5,0.5-1,1-1h12.8c0.5,0,1,0.5,1,1v12.8
+        C164.2,87,163.7,87.5,163.2,87.5z"/>
+      <path class="st1" d="M180.5,87.5h-12.8c-0.6,0-1-0.5-1-1V73.6c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8
+        C181.5,87,181,87.5,180.5,87.5z"/>
+      <path class="st1" d="M197.7,87.5h-12.8c-0.6,0-1-0.5-1-1V73.6c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8
+        C198.7,87,198.3,87.5,197.7,87.5z"/>
+      <path class="st1" d="M215,87.5h-12.8c-0.6,0-1-0.5-1-1V73.6c0-0.5,0.4-1,1-1H215c0.6,0,1,0.5,1,1v12.8C216,87,215.5,87.5,215,87.5z"
+        />
+      <path class="st1" d="M232.3,87.5h-12.8c-0.6,0-1-0.5-1-1V73.6c0-0.5,0.4-1,1-1h12.8c0.6,0,1,0.5,1,1v12.8
+        C233.3,87,232.8,87.5,232.3,87.5z"/>
+      <path class="st1" d="M256.9,87.5h-20.2c-0.5,0-1-0.5-1-1V73.6c0-0.5,0.5-1,1-1h20.2c0.6,0,1,0.5,1,1v12.8
+        C257.9,87,257.4,87.5,256.9,87.5z"/>
+      <path class="st1" d="M32.4,105H12.2c-0.5,0-1-0.5-1-1V91.1c0-0.5,0.4-1,1-1h20.2c0.5,0,1,0.5,1,1V104C33.4,104.5,32.9,105,32.4,105z
+        "/>
+      <path class="st1" d="M32.4,157.5H12.2c-0.5,0-1-0.4-1-1v-12.8c0-0.6,0.4-1,1-1h20.2c0.5,0,1,0.4,1,1v12.8
+        C33.4,157,32.9,157.5,32.4,157.5z"/>
+      <path class="st1" d="M57.3,157.5H37.1c-0.5,0-1-0.4-1-1v-12.8c0-0.6,0.5-1,1-1h20.2c0.5,0,1,0.4,1,1v12.8
+        C58.3,157,57.9,157.5,57.3,157.5z"/>
+      <path class="st1" d="M81.8,157.5H61.6c-0.5,0-1-0.4-1-1v-12.8c0-0.6,0.5-1,1-1h20.2c0.6,0,1,0.4,1,1v12.8
+        C82.8,157,82.4,157.5,81.8,157.5z"/>
+      <path class="st1" d="M188.9,157.5h-20.2c-0.5,0-1-0.4-1-1v-12.8c0-0.6,0.5-1,1-1h20.2c0.6,0,1,0.4,1,1v12.8
+        C189.9,157,189.5,157.5,188.9,157.5z"/>
+      <path class="st1" d="M164.2,157.5H85.8c-0.5,0-1-0.4-1-1v-12.8c0-0.6,0.5-1,1-1h78.4c0.6,0,1,0.4,1,1v12.8
+        C165.2,157,164.8,157.5,164.2,157.5z"/>
+      <path class="st1" d="M37.4,122.5H12.2c-0.6,0-1-0.5-1-1v-12.8c0-0.5,0.4-1,1-1h25.2c0.6,0,1,0.5,1,1v12.8
+        C38.4,122,37.9,122.5,37.4,122.5z"/>
+      <g>
+        <path id="path6_44_" class="st2" d="M50.1,145.2c0.5-0.5,1.2-1,1.9-1.1c0.2,0,0.5,0,0.7,0c0.3,0,0.6,0.1,0.8,0.2
+          c0.4,0.2,0.8,0.6,1.1,1c0.4,0.6,0.7,1.2,0.8,1.9c0,0.2,0,0.5,0,0.7c-0.2-0.2-0.2-0.4-0.3-0.6c-0.2-0.3-0.3-0.5-0.6-0.7
+          c-0.3-0.3-0.8-0.5-1.3-0.5c-0.2,0-0.4,0-0.5,0.1c-0.5,0.1-0.9,0.4-1.3,0.8c-0.1,0.1-0.2,0.3-0.3,0.4c-0.1,0.2-0.2,0.3-0.3,0.5
+          c-0.3,0.5-0.4,1.1-0.5,1.7c0,0.2,0,0.5,0,0.7c0.1,0.2,0,0.4,0.2,0.5c0.1,0,0.2,0,0.3-0.1c0.3-0.2,0.5-0.4,0.7-0.7
+          c0.3-0.2,0.5-0.5,0.7-0.8c0.1-0.1,0.2-0.3,0.4-0.4c0.3-0.3,0.6-0.5,0.9-0.7c0.2-0.1,0.5-0.2,0.8-0.2c0.3,0,0.7,0.2,0.9,0.5
+          c0.3,0.4,0.5,0.9,0.6,1.4c0.1,0.2,0,0.5,0.1,0.8c0,0.9-0.2,1.7-0.5,2.5c-0.1,0.3-0.2,0.6-0.4,0.8c-0.1,0.1-0.1,0.2-0.2,0.2
+          c0-0.2,0.1-0.3,0.1-0.5c0-0.2,0-0.4,0-0.6c0-0.3,0-0.6,0-0.9c-0.1-0.3-0.1-0.6-0.2-0.9c0-0.2-0.1-0.4-0.2-0.6
+          c-0.1-0.1-0.1-0.2-0.2-0.3c-0.1-0.1-0.3-0.2-0.4-0.2c-0.1,0-0.2,0.1-0.3,0.1c-0.2,0.2-0.5,0.4-0.7,0.6c-0.2,0.2-0.3,0.3-0.6,0.5
+          c-0.3,0.2-0.7,0.4-1,0.3c-0.5,0-1-0.3-1.4-0.5c-0.2-0.1-0.4-0.3-0.6-0.4c-0.4-0.4-0.7-1-0.7-1.6c0-0.2-0.1-0.4,0-0.5
+          c0-0.7,0.2-1.4,0.5-2.1c0.2-0.3,0.3-0.6,0.6-0.8C49.9,145.4,50,145.3,50.1,145.2z"/>
+        <path id="path3742_44_" class="st2" d="M44.3,154.9c-0.5,0.5-1.2,1-1.9,1.1c-0.2,0-0.5,0-0.7,0c-0.3,0-0.6-0.1-0.8-0.2
+          c-0.4-0.2-0.8-0.6-1.1-1c-0.4-0.6-0.7-1.2-0.8-1.9c0-0.2,0-0.5,0-0.7c0.2,0.2,0.2,0.4,0.3,0.6c0.2,0.3,0.3,0.5,0.6,0.7
+          c0.3,0.3,0.8,0.5,1.3,0.5c0.2,0,0.4,0,0.5-0.1c0.5-0.1,0.9-0.4,1.3-0.8c0.1-0.1,0.2-0.3,0.3-0.4c0.1-0.2,0.2-0.3,0.3-0.5
+          c0.3-0.5,0.4-1.1,0.5-1.7c0-0.2,0-0.5,0-0.7c-0.1-0.2,0-0.4-0.2-0.5c-0.1,0-0.2,0-0.3,0.1c-0.3,0.2-0.5,0.4-0.7,0.7
+          c-0.3,0.2-0.5,0.5-0.7,0.8c-0.1,0.1-0.2,0.3-0.4,0.4c-0.3,0.3-0.6,0.5-0.9,0.7c-0.2,0.1-0.5,0.2-0.8,0.2c-0.3,0-0.7-0.2-0.9-0.5
+          c-0.3-0.4-0.5-0.9-0.6-1.4c-0.1-0.2,0-0.5-0.1-0.8c0-0.9,0.2-1.7,0.5-2.5c0.1-0.3,0.2-0.6,0.4-0.8c0.1-0.1,0.1-0.2,0.2-0.2
+          c0,0.2-0.1,0.3-0.1,0.5c0,0.2,0,0.4,0,0.6c0,0.3,0,0.6,0,0.9c0.1,0.3,0.1,0.6,0.2,0.9c0,0.2,0.1,0.4,0.2,0.6
+          c0.1,0.1,0.1,0.2,0.2,0.3c0.1,0.1,0.3,0.2,0.4,0.2c0.1,0,0.2-0.1,0.3-0.1c0.2-0.2,0.5-0.4,0.7-0.6c0.2-0.2,0.3-0.3,0.6-0.5
+          c0.3-0.2,0.7-0.4,1-0.3c0.5,0,1,0.3,1.4,0.5c0.2,0.1,0.4,0.3,0.6,0.4c0.4,0.4,0.7,1,0.8,1.6c0,0.2,0.1,0.4,0,0.5
+          c0,0.7-0.2,1.4-0.5,2.1c-0.2,0.3-0.3,0.6-0.6,0.8C44.6,154.7,44.5,154.8,44.3,154.9z"/>
+        <path id="path10_44_" class="st2" d="M45.9,145.8c0.5-0.2,1.1-0.1,1.5,0.1c0.1,0.1,0.3,0.3,0.4,0.5c0.1,0.2,0.1,0.5,0,0.7
+          c-0.1,0.3-0.4,0.5-0.7,0.7c-0.2,0.1-0.5,0.2-0.7,0.2c-0.3,0-0.5,0-0.8-0.1c-0.3-0.1-0.6-0.4-0.7-0.7c-0.1-0.2,0-0.5,0.1-0.7
+          C45.2,146.2,45.5,146,45.9,145.8z"/>
+        <path id="path12_44_" class="st2" d="M45.9,148.8c0.2-0.4,0.6-0.5,1-0.6c0.2,0,0.4,0,0.6,0.2c0.3,0.1,0.5,0.3,0.6,0.6
+          c0,0.3,0,0.7,0.1,1c0.2,0.7,0.6,1.2,1.1,1.7c0.2,0.3,0.6,0.5,0.8,0.8c-0.4,0-0.8-0.1-1.1-0.1c-0.5-0.1-0.9-0.2-1.3-0.5
+          c-0.2-0.1-0.5-0.2-0.6-0.4c-0.3-0.2-0.6-0.6-0.8-0.9c-0.2-0.4-0.4-0.8-0.5-1.3C45.8,149.2,45.9,149,45.9,148.8z"/>
+      </g>
+      </svg>
+    </span>            
 
-h1 {text-align:center;font-family:ubuntu;font-weight:400;font-size:18px;color:#fff;text-shadow:0em 0.05em 0 rgba(0,0,0,0.35)}
-button {color:#454545;background:transparent;border-width:2px;border-style: solid;border-color: #454545;position:relative;margin:1em;display:inline-block;padding:0.5em 1em;transition:all 0.3s ease-in-out;text-align:center;
-font-family:ubuntu;font-weight:bold;font-size:18px}
-button:before, button:after {content:'';display:block;position:absolute;border-color:#454545;box-sizing:border-box;border-style:solid;width:1em;height:1em;transition:all 0.3s ease-in-out}
-button:before {top:-6px;left:-6px;border-width:2px 0 0 2px;z-index:5;}
-button:after {bottom:-6px;right:-6px;border-width:0 2px 2px 0;}
-button:hover:before, button:hover:after {width:calc(100% + 12px);
-  height:calc(100% + 12px);border-color:#fff}
-button:hover {color:#353535;background-color:#fff;border-color:#fff}
-.panel {max-width:960px;text-align:center;position:relative;margin:auto;}
-
-
-.pink button {color:#eb1777;border-color:#eb1777}
-.pink button:before, .pink button:after  {border-color:#eb1777}
-.pink button:hover:before, .pink button:hover:after {border-color:#eb1777;}
-.pink button:hover {color:#fff;background-color:#eb1777;border-color:#eb1777;}
-.pink .panel {max-width:960px;text-align:center;position:relative;margin:auto;}
-
-
-.blue button {color:#3bb4e5;border-color:#3bb4e5}
-.blue button:before, .blue button:after  {border-color:#3bb4e5}
-.blue button:hover:before, .blue button:hover:after {width:calc(100% + 12px);
-  height:calc(100% + 12px);border-color:#3bb4e5;transform:rotateY(180deg)}
-.blue button:hover {color:#3bb4e5;background-color:transparent;border-color:#3bb4e5}
-.blue .panel {max-width:960px;text-align:center;position:relative;margin:auto;}
-
-.borderless button {border-color:rgba(0,0,0,0);color:#999}
-.borderless button:hover {border-color:#353535;background-color:transparent;color:#353535}
-.borderless button:before, .borderless button:after {border-color:transparent;}
-.borderless button:hover:before, .borderless button:hover:after {width:calc(100% + 12px); height:calc(100% + 12px);border-color:#353535}
-
-.bw button {color:#fff;border-color:#fff;text-shadow:0 1px 1px rgba(0,0,0,0.1);
-box-shadow:0 1px 3px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.1) inset
-}
-.bw button:before, .bw button:after  {border-color:#fff}
-.bw button:hover:before, .bw button:hover:after {width:calc(100% + 12px);
-  height:calc(100% + 12px);border-color:#353535;}
-.bw button:hover {color:#fff;background-color:#353535;border-color:#353535}
-.blue .panel {max-width:960px;text-align:center;position:relative;margin:auto;}
-
-
-[type="radio"]:not(:checked) + label, [type="radio"]:checked + label {
-    position: relative;
-    padding-left: 35px;
-    cursor: pointer;
-    display: inline-block;
-    height: 25px;
-    line-height: 25px;
-    font-size: 1rem;
-    margin-top: 0px;
-    transition: .28s ease;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-
-div#contentbig {
-    display: inline-flex;
-}
-
-div#theme {
-    margin-top: 20px;
-    display: grid;
-    justify-items: flex-start;
-    border: 2px solid #ffffff61;
-    margin-right: 26px;
-    margin-left: 26px;
-    padding-right: 0px;
-    padding-bottom: 28px;
-    border-radius: 11px;
-    padding-left: 2px;
-    padding-top: 24px;
-    min-width: 238px;
-}
-
-div#theme2 {
-display: inherit;
-    border: 2px solid #ffffff61;
-    margin-right: 26px;
-    margin-left: 26px;
-    padding-right: 0px;
-    padding-bottom: 28px;
-    border-radius: 11px;
-    padding-left: 2px;
-    padding-top: 24px;
-    min-width: 238px;
-}
-
-h2 {
-    margin-top: -38px;
-    margin-bottom: -7px;
-    margin-left: 10px;
-    height: 22px;
-    font-size: 20px;
-    text-shadow: 1px 1px 4px rgb(0, 0, 0), 1px 1px 4px rgb(0, 0, 0);
-}
-
-h3 {
-    margin-top: -38px;
-    margin-bottom: -7px;
-    margin-left: 10px;
-    height: 22px;
-    font-size: 20px;
-    text-shadow: 1px 1px 4px rgb(0, 0, 0), 1px 1px 4px rgb(0, 0, 0);
-}
-
-
-div#performance {
-    margin-top: 20px;
-    display: grid;
-    justify-items: flex-start;
-    border: 2px solid #ffffff61;
-    margin-right: 26px;
-    margin-left: 67px;
-    padding-right: 0px;
-    padding-bottom: 28px;
-    border-radius: 11px;
-    padding-left: 2px;
-    padding-top: 24px;
-    min-width: 327px;
-}
-
-
-
-div#contentbig {
-    margin-top: 16px;
-}
-
-label.tooltipped.with-gap {
-    margin-top: 14px;
-    margin-left: 21px;
-    margin-right: 50px;
-}
-
-div#theme2-2 {
-    margin-top: 30px;
-}
-
-.backdrop {
-background-color: rgba(101, 101, 101, 1);
-}
-
-.material-tooltip {font-family:ubuntu;
-font-weight:400;font-size:16px;
-border-radius: 15px;
-padding: 15px;
-box-shadow: 2px 3px 3px 0px rgba(0,0,0,0.75);
-line-height: 120%;}
-
-.chromium.col-md-2.waves-effect.waves-light.box {
-    justify-self: center;
-    margin-top: -6px;
-    margin-bottom: -22px;
-}
-
-.chromium.col-md-2.waves-effect.waves-light.box a {
-    color: #00b8ff !important;
-}
-
-
-.modal {
-    top: 50% !important;
-    transform: translate(0%, -50%) !important;
-    position: fixed;
-    left: 0;
-    background: url(01.jpg);
-    background-attachment: fixed;
-    right: 0;
-    color: white;
-    padding: 0;
-    max-height: 90%;
-    margin: auto;
-    overflow-y: auto;
-    border-radius: 15px;
-    will-change: top, opacity;
-}
-
-#modal5, #modalAndroid {
-    width: 1000px;
-}
-
-.col-md-modal {
-    cursor: pointer;
-    padding: 0px;
-    margin: auto;
-    margin-top: 13px;
-    width: 400px;
-    background-color: #00000080;
-    border-radius: 19px;
-    padding-left: 24px;
-    box-shadow: 3px 2px 2px 0px rgba(0, 0, 0, 0.77);
-}
-
-.modal .modal-content {
-    padding: 24px;
-    background-color: #2a4090;
-}
-
-div#chromium2 {
-    margin-top: 21px;
-}
-
-</style>
-
-
+    <h3>$SELECT_KEYBOARD</h3>
+  </div>
+  <ul class="columns" data-columns="2">
+    <li>
+     <a href="/usr/share/bigbashview/bcc/apps/boot-livecd/theme.sh.htm?keyboard=$keyboard">
+      <button class="fc-btn calamares-big-button left" id="BFin">
+        <span>  
+          ${keyboard^^}
+        </span>
+      </button>
+      </a>
+    </li>
+    <li>
+     <a href="/usr/share/bigbashview/bcc/apps/boot-livecd/theme.sh.htm?keyboard=us">
+      <button class="fc-btn calamares-big-button right" id="BAca">
+        <span>  
+          US
+        </span>
+      </button>
+      </a>
+    </li>  
+  </ul>
+</div>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
 
 EOF
-
-
-
-echo '<div id=page2>'
-echo '<div id="middle" class="bar">'
-echo '<div id="centered"><h1>'
-echo '<div id="top-text">'
-
-
-echo '<img src="keyboard.png" width="64" height="64"><br>'
-echo "Choose your keyboard model:" "$language" '<p>'
-
-
-echo '</div><div class="panel bw">'
-echo "<a href=\"/usr/share/bigbashview/bcc/apps/boot-livecd/index.sh.htm?keyboard=$keyboard\" class=\"css_btn_class black-text\"><button>" "${keyboard^^}" '</button></a>'
-
-echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/index.sh.htm?keyboard=us" class="css_btn_class black-text"><button>' "US" '</button></a>'
-
-
-
-echo "</div></div>"
-echo "</div></div>"
-
-    
-
-
-echo '</h1></div>'
-echo '</div></div>'

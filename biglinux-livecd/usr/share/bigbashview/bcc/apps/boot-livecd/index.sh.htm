@@ -5,47 +5,41 @@
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-livecd
 
-# enable swap on disk
-for diskswap in $(sudo blkid | grep 'TYPE="swap"' | grep -v zram | cut -f1 -d:)
-do
-    sudo swapon $diskswap  </dev/null &>/dev/null &
-done
 
-# Import BigControlCenter base modules / Importa os módulos básicos do BigControlCenter
-# That's include jquery and materialize / Isso inclui o jquery e o materialize
-# http://materializecss.com/
-. /usr/share/bigbashview/bcc/shell/base.sh
-
-
-if [ -e "/tmp/big_keyboard" ]; then
-    setxkbmap $(cat /tmp/big_keyboard)  </dev/null &>/dev/null &
-    #localectl set-x11-keymap $(cat /tmp/big_keyboard)
-fi
+PERFORMANCE=$"Desempenho"
+Browser_translate=$"Aceleração do navegador"
+Tema_translate=$"Tema"
+CLOSE=$"Fechar"
+fluent=$"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em computadores<br>antigos ou ambientes virtualizados."
+LESS_RAM=$"Reduzir efeitos visuais<br><small>(Indicado para computadores antigos)"
+BROWSER_GPU=$"Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no vídeo)"
+DESKTOP=$"Escolha o desktop:"
 
 
 theme_actual="$(cat /tmp/big_desktop_theme)"
 
 
-Desempenho_translate=$"Desempenho do desktop"
-Browser_translate=$"Aceleração do navegador"
-Tema_translate=$"Tema"
-CLOSE=$"Fechar"
-fluent=$"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em computadores<br>antigos ou ambientes virtualizados."
+######
+# Browser
+######
+if [ "$browser_config" = "1" ]; then
+    /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/browser-no.run quiet
+fi
 
-browser="$(cat "$HOME/.config/browser-optimize")"
+if [ "$browser_config" = "0" ]; then    
+    /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/browser-auto.run quiet
+fi
 
 
-if [ "$browser" = "" ]; then
+if [ "$(cat "$HOME/.config/browser-optimize")" = "" ]; then
     checked_browser_auto="checked"
+    browser_config=1
+else
+    browser_config=0
 fi
-
-if [ "$browser" = "performance" ]; then
-    checked_browser_yes="checked"
-fi
-
-if [ "$browser" = "optimize" ]; then
-    checked_browser_no="checked"
-fi
+######
+# Browser Close
+######
 
 
 
@@ -55,750 +49,107 @@ if [ "$theme_actual" = "" ]; then
     checked_breeze="checked"
 fi
 
-# if [ "$theme_actual" = "arc" ]; then
-#     checked_arc="checked"
-# fi
-# 
-# if [ "$theme_actual" = "adapta" ]; then
-#     checked_adapta="checked"
-# fi
-# 
-# if [ "$theme_actual" = "dark" ]; then
-#     checked_dark="checked"
-# fi
-
-if [ "$theme_actual" = "breeze" ]; then
-    checked_breeze="checked"
-fi
-
-if [ "$theme_actual" = "breeze-dark" ]; then
-    checked_breeze_dark="checked"
-fi
-
-if [ "$theme_actual" = "fluent" ]; then
-    checked_fluent="checked"
-fi
-
-if [ "$theme_actual" = "fluent-dark" ]; then
-    checked_fluent_dark="checked"
-fi
-
-if [ "$theme_actual" = "fluent-opaque" ]; then
-    checked_fluent_opaque="checked"
-fi
-
-if [ "$theme_actual" = "fluent-dark-opaque" ]; then
-    checked_fluent_opaque_dark="checked"
-fi
-
-if [ "$theme_actual" = "materia" ]; then
-    checked_materia="checked"
-fi
-
-if [ "$theme_actual" = "materia-dark" ]; then
-    checked_materia_dark="checked"
-fi
 
 
-performance_actual="$(cat "$HOME/.big_performance")"
-
-if [ "$performance_actual" = "" ] || [ "$performance_actual" = "0" ]; then
-    checked_normal="checked"
-fi
-
-if [ "$performance_actual" = "1" ]; then
-    checked_optimized="checked"
-fi
-
-if [ "$performance_actual" = "2" ]; then
-    checked_performance="checked"
-fi
-
-MEMORY="$(($(grep MemTotal /proc/meminfo | awk '{print $2}') /1024))"
-
-if [ "$performance_actual" = "" ] && [ "$MEMORY" -lt "5000" ]; then
-    checked_normal=""
-    checked_performance=""
-    checked_optimized="checked"
+if [ "$memory_less" = "1" ]; then
     /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/optimized.run quiet
 fi
 
-if [ "$performance_actual" = "" ] && [ "$MEMORY" -lt "2200" ]; then
-    checked_normal=""
-    checked_optimized=""
-    checked_performance="checked"
-    /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/performance.run quiet
+if [ "$memory_less" = "0" ]; then    
+    /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/normal.run quiet
 fi
 
+performance_actual="$(cat "$HOME/.big_performance")"
 
-NORMAL=$"Essa deve ser a melhor opção de desempenho<br>
-    para esse computador, mas você pode alternar<br>
-    entre os modos e escolher a sua preferência.<br><br>
-    As opções Otimizado e Performance, são dedicadas<br>
-    a computadores de baixo desempenho e não melhoram o<br>
-    desempenho em computadores de maior capacidade."
-    
-TOOLTIP_OTIMIZADO=$"Reduz o uso de memória e da placa de vídeo,
-      <br>com pequena redução dos recursos do sistema.<br><br>
-      Explicação avançada:<br>Utiliza a renderização QML via software, isso desativa<br>
-      a previsão de janelas ao passar o mouse na barra de tarefas,<br>
-      também impede o uso de alguns widgets do desktop que gerem<br>
-      gráficos em tempo real, por exemplo, o uso do monitor de<br>
-      processamento."
-      
-TOOLTIP_PERFORMANCE=$"Essa é a opção recomendada para computadores antigos.<br><br>
-      Aplica as configurações do modo Otimizado<br>
-      e adiciona o uso do XRender no gerênciador de janelas,<br>
-      economizando mais recursos do computador.<br>
-      Removendo a maior parte dos efeitos das janelas."
-      
-BROWSER_AUTO=$"O sistema irá definir se utiliza ou não a aceleração<br>
-utilizando a placa de vídeo nos navegadores."
+MEMORY="$(($(grep MemTotal /proc/meminfo | awk '{print $2}') /1024))"
 
-BROWSER_YES=$"Utilizar a aceleração de vídeo<br>
-nos navegadores. Em alguns computadores<br>
-essa opção pode gerar vídeos distorcidos."
-
-BROWSER_NO=$"Não utilizar a aceleração de vídeo<br>
-nos navegadores."
-
-
-if [ "$MEMORY" -le "3800" ] && [ "$(nproc)" -gt "1" ]; then
-    NORMAL=$"Esse computador deve funcionar consideravelmente<br>
-    melhor utilizando o modo Otimizado ou Performance."
+if [ "$performance_actual" = "" ] && [ "$MEMORY" -lt "3500" ]; then
+    checked_memory_less="checked"
+    memory_less=1
+    /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/optimized.run quiet
 fi
 
-if [ [ "$(grep -i "virtualbox" /sys/devices/virtual/dmi/id/product_name)" != "" ]; then
-    NORMAL=$"O sistema está funcionando dentro do VirtualBox,<br>
-    Recomendo que utilize o modo Otimizado ou Performance."
-fi
-
-
-
-  echo '
-  <body>
-  <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/usr/share/bigbashview/bcc/materialize/css/materialize.css">
-    <link rel="stylesheet" type="text/css" href="theme.css">
-    <script src="/usr/share/bigbashview/bcc/materialize/js/jquery.js"></script>
-    <script src="/usr/share/bigbashview/bcc/materialize/js/materialize.js"></script>
-    <script src="/usr/share/bigbashview/bcc/js/big.js"></script>
-  </head>
-  '
-
-echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
-
-cat << EOF
-<style>
-
-
-body {
-#			background-image: url(/usr/share/wallpapers/praia9.jpg) ;
-#			background-position: center center;
-#			background-repeat:  no-repeat;
-#			background-attachment: fixed;
-#			background-size:  cover;
-#			background-color: #000;
-margin-top: 0px;
-margin-left: 0px;
-margin-right: 0px;
-margin-bottom: 0px;
-padding: 0px;
-text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
-font-weight: 250;
-color: rgba(255, 255, 255, 1);
-font-family: 'Droid Sans';
-  text-align: justify;
-  text-justify: inter-word;
-}
-
-
-.material-tooltip {font-family:ubuntu;
-font-weight:400;font-size:17px;
-line-height: 120%;}
-
-.with-gap {color: #ffffff !important;
-font-size:17px !important;
-margin-left:20px;
-margin-right:20px;
-margin-top:10%;
-}
-
-h1 {margin: 0px;
-margin-right: 7px;
-margin-left: 7px;
-text-align:center;font-family:ubuntu;font-weight:400;font-size:17px;color:#fff;text-shadow:0em 0.05em 0 rgba(0,0,0,0.35)}
-button {color:#454545;background:transparent;border-width:2px;border-style: solid;border-color: #454545;position:relative;margin:1em;display:inline-block;padding:0.5em 1em;transition:all 0.3s ease-in-out;text-align:center;
-font-family:ubuntu;font-weight:bold;font-size:17px}
-button:before, button:after {content:'';display:block;position:absolute;border-color:#454545;box-sizing:border-box;border-style:solid;width:1em;height:1em;transition:all 0.3s ease-in-out}
-button:before {top:-6px;left:-6px;border-width:2px 0 0 2px;z-index:5;}
-button:after {bottom:-6px;right:-6px;border-width:0 2px 2px 0;}
-button:hover:before, button:hover:after {width:calc(100% + 12px);
-  height:calc(100% + 12px);border-color:#fff}
-button:hover {color:#353535;background-color:#fff;border-color:#fff}
-.panel {max-width:960px;text-align:center;position:relative;margin:auto;}
-
-
-.pink button {color:#eb1777;border-color:#eb1777}
-.pink button:before, .pink button:after  {border-color:#eb1777}
-.pink button:hover:before, .pink button:hover:after {border-color:#eb1777;}
-.pink button:hover {color:#fff;background-color:#eb1777;border-color:#eb1777;}
-.pink .panel {max-width:960px;text-align:center;position:relative;margin:auto;}
-
-
-.blue button {color:#3bb4e5;border-color:#3bb4e5}
-.blue button:before, .blue button:after  {border-color:#3bb4e5}
-.blue button:hover:before, .blue button:hover:after {width:calc(100% + 12px);
-  height:calc(100% + 12px);border-color:#3bb4e5;transform:rotateY(180deg)}
-.blue button:hover {color:#3bb4e5;background-color:transparent;border-color:#3bb4e5}
-.blue .panel {max-width:960px;text-align:center;position:relative;margin:auto;}
-
-.borderless button {border-color:rgba(0,0,0,0);color:#999}
-.borderless button:hover {border-color:#353535;background-color:transparent;color:#353535}
-.borderless button:before, .borderless button:after {border-color:transparent;}
-.borderless button:hover:before, .borderless button:hover:after {width:calc(100% + 12px); height:calc(100% + 12px);border-color:#353535}
-
-.bw button {color:#fff;border-color:#fff;text-shadow:0 1px 1px rgba(0,0,0,0.1);
-box-shadow:0 1px 3px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.1) inset;
-white-space: nowrap;
-}
-.bw button:before, .bw button:after  {border-color:#fff}
-.bw button:hover:before, .bw button:hover:after {width:calc(100% + 12px);
-  height:calc(100% + 12px);border-color:#353535;}
-.bw button:hover {color:#fff;background-color:#353535;border-color:#353535}
-.blue .panel {max-width:960px;text-align:center;position:relative;margin:auto;}
-
-
-[type="radio"]:not(:checked) + label, [type="radio"]:checked + label {
-    position: relative;
-    padding-left: 35px;
-    cursor: pointer;
-    display: inline-block;
-    height: 25px;
-    line-height: 25px;
-    font-size: 1rem;
-    margin-top: 0px;
-    transition: .28s ease;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-
-div#contentbig {
-    display: inline-flex;
-}
-
-div#theme {
-    margin-top: 20px;
-    display: grid;
-    justify-items: flex-start;
-    border: 2px solid #ffffff61;
-    margin-right: 26px;
-    margin-left: 26px;
-    padding-right: 0px;
-    padding-bottom: 28px;
-    border-radius: 11px;
-    padding-left: 2px;
-    padding-top: 24px;
-    min-width: 330px;
-}
-
-div#theme2 {
-display: inherit;
-    border: 2px solid #ffffff61;
-    margin-right: 26px;
-    margin-left: 26px;
-    padding-right: 0px;
-    padding-bottom: 28px;
-    border-radius: 11px;
-    padding-left: 2px;
-    padding-top: 24px;
-    min-width: 238px;
-}
-
-h2 {
-    margin-top: -38px;
-    margin-bottom: -7px;
-    margin-left: 10px;
-    height: 22px;
-    font-size: 20px;
-    text-shadow: 1px 1px 4px rgb(0, 0, 0), 1px 1px 4px rgb(0, 0, 0);
-}
-
-h3 {
-    margin-top: -38px;
-    margin-bottom: -7px;
-    margin-left: 10px;
-    height: 22px;
-    font-size: 20px;
-    text-shadow: 1px 1px 4px rgb(0, 0, 0), 1px 1px 4px rgb(0, 0, 0);
-}
-
-
-div#performance {
-    margin-top: 20px;
-    display: grid;
-    justify-items: flex-start;
-    border: 2px solid #ffffff61;
-    margin-right: 26px;
-    margin-left: 67px;
-    padding-right: 0px;
-    padding-bottom: 20px;
-    border-radius: 11px;
-    padding-left: 2px;
-    padding-top: 24px;
-    min-width: 327px;
-}
-
-
-
-div#contentbig {
-    margin-top: 16px;
-}
-
-label.tooltipped.with-gap {
-    margin-top: 5px;
-    margin-left: 21px;
-    margin-right: 50px;
-}
-
-div#theme2-2 {
-    margin-top: 30px;
-}
-
-.backdrop {
-background-color: rgba(101, 101, 101, 1);
-}
-
-.material-tooltip {font-family:ubuntu;
-font-weight:400;font-size:16px;
-border-radius: 15px;
-padding: 15px;
-box-shadow: 2px 3px 3px 0px rgba(0,0,0,0.75);
-line-height: 120%;}
-
-.modal {
-    top: 50% !important;
-    transform: translate(0%, -50%) !important;
-    position: fixed;
-    left: 0;
-    background: url(01.jpg);
-    background-attachment: fixed;
-    right: 0;
-    color: white;
-    padding: 0;
-    max-height: 150%;
-    margin: auto;
-    overflow-y: auto;
-    border-radius: 15px;
-    will-change: top, opacity;
-    width: 780px;
-}
-
-#modal5, #modalAndroid {
-    width: 1000px;
-}
-
-.col-md-modal {
-    cursor: pointer;
-    padding: 0px;
-    margin: auto;
-    margin-top: 13px;
-    width: 400px;
-    background-color: #00000080;
-    border-radius: 19px;
-    padding-left: 24px;
-    box-shadow: 3px 2px 2px 0px rgba(0, 0, 0, 0.77);
-}
-
-.modal .modal-content {
-    padding: 24px;
-    background-color: #2a4090;
-    background-color: #32352e;
-    color: #f1f1f1;
-    min-height: 370px;
-}
-
-.modal .modal-footer {
-    border-radius: 0 0 2px 2px;
-    background-color: #4a4e4e;
-    padding: 4px 6px;
-    height: 56px;
-    width: 100%;
-
-}
-
-.modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-flat {
-    color: white;
-}
-
-
-.btn, .btn-large {
-    background-color: #a5a5a559;
-    border-radius: 6px;
-    font-weight: 600;
-    margin-top: 10px;
-    height: 43px;
-    line-height: 42px;
-    place-self: center;
-}
-
-.btn-large:hover {
-    background-color: #ffffffd9;
-    color: #000000;
-}
-
-
-
-
-.collection a.collection-item {
-    display: block;
-    transition: .25s;
-    color: #ffffff;
-    height: 45px;
-    font-size: 16px;
-}
-
-.collection .collection-item {
-    background-color: #04040400;
-    line-height: 1.5rem;
-    padding: 10px 20px;
-    margin: 0;
-    /* border-bottom: 1px solid #e0e0e0; */
-    border: none;
-}
-
-.collection a.collection-item:not(.active):hover {
-    background-color: #00709a94;
-}
-
-.collection {
-    /* margin: 0.5rem 0 1rem 0; */
-    /* border: 1px solid #e0e0e0; */
-    border-radius: 2px;
-    overflow: hidden;
-    position: relative;
-    /* max-width: 1000; */
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 18px;
-    border: none;
-    background-color: #9a9a9a40;
-}
-
-body {
-    background-image: url(/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/bg.jpg);
-    margin-top: 6px;
-    background-attachment: fixed;
-    background-size: cover;
-    color: white;
-    font-size: 20px;
-    text-align-last: center;
-    margin: 0;
-}
-
-div#centered {
-    margin: 0;
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1003;
-}
-
-#page2 {
-    margin-right: 7%;
-    margin-left: 7%;
-    height: 100%;
-}
-
-
-#middle {
-    vertical-align: middle;
-    width: 100%;
-    max-width: 1100px;
-    padding-bottom: 15px;
-    padding-top: 1%;
-    font-size: 17px;
-    display: block;
-    box-sizing: border-box;
-    text-align: center;
-    border: 1px solid #ccc;
-    border-top: 0px;
-    margin: auto;
-    border-bottom: 0px;
-    margin-bottom: 0px;
-    height: 100%;
-    top: 0%;
-}
-
-
-.bar {
-  position: relative;
-  background: rgba(0,0,0,0.65);
-  box-shadow: 0px 0px 95px 0px rgba(0,0,0,1);
-	height: 100%;
-}
-
-
-
-div#brave {
-    justify-self: center;
-}
-
-a.waves-effect.waves-light.btn.modal-trigger {
-    font-weight: 600;
-}
-
-.switch label {
-    cursor: pointer;
-    font-size: 20px;
-    color: #ffffff;
-}
-
-div#preload-itens {
-    /* margin: auto; */
-    display: inline-grid;
-    text-align-last: left;
-    line-height: 1.7;
-}
-
-</style>
-
-
-<script>
-$('.tooltipped').tooltip({
- html: "<img src='/usr/share/wallpapers/BigLinux/plants.jpg'>"
-});
-</script>
-EOF
-
-
-echo "<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(elems, options);
-  });
-
-  // Or with jQuery
-
-  \$(document).ready(function(){
-    \$('.modal').modal();
-  });
-       
-</script>"
-
-
-
-echo '<div id=page2>'
-echo '<div id="middle" class="bar">'
-echo '<div id="centered"><h1>'
-echo '<div id="top-text">'
-
-
-  echo $"Obrigado por escolher a distribução BigLinux, uma remasterização da distribuição Manjaro, mantendo total compatibilidade e trazendo recursos avançados configurados de forma automática." '<p>'
-
-  echo $"Passe o mouse sobre as opções abaixo e faça sua escolha:" '<p>'
-  
-
-echo '</div><div class="panel bw">'
-echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux classic" class="css_btn_class black-text tooltipped" data-position="bottom" data-delay="150" data-tooltip="' $"Desktop KDE configurado com a barra de tarefas<br>em modo clássico, com a exibição dos nomes dos programas<br>em execução e menu de aplicativos compacto." "<br><img src=desktop_classic.jpg width=500>" '"><button>' $"Desktop Clássico" '<br>' $"(KDE Plasma)" '</button></a>'
-
-echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux new" class="css_btn_class black-text tooltipped" data-position="bottom" data-delay="150" data-tooltip="' $"Desktop KDE configurado com a barra de tarefas<br>em modo moderno, barra de tarefas baseada<br>em ícones e menu de aplicativos com ícones grandes,<br>remetendo à usabilidade de smartphones." "<br><img src=desktop_new.jpg width=500>" '"><button>' $"Desktop Moderno" '<br>' $"(KDE Plasma)" '</button></a>'
-
-echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux kunity" class="css_btn_class black-text tooltipped" data-position="bottom" data-delay="150" data-tooltip="' $"Desktop KDE configurado com barra de ferramentas lateral e superior.<br><br>A interface completa remete à usabilidade do desktop Unity." "<br><img src=desktop_kunity.jpg width=500>" '"><button>' $"Desktop K-Unity" '<br>' $"(KDE Plasma)" '</button></a>'
-
-echo '<a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux nextg" class="css_btn_class black-text tooltipped" data-position="bottom" data-delay="150" data-tooltip="' $"Desktop KDE configurado com duas barras, a superior<br>com o relógio e funções gerais, a inferior com ícones e o menu<br><br>A interface completa remete à usabilidade do desktop Gnome." "<br><img src=desktop_nextg.jpg width=500>" '"><button>' $"Desktop Next-G" '<br>' $"(KDE Plasma)" '</button></a>'
-
-cat << EOF
-<div id=contentbig>
-<div id=theme>
-<h2>$Tema_translate</h2>
-EOF
-cat << EOF
-</label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/breeze-theme.run')" name="option" type="radio" id="breeze" value="breeze" $checked_breeze />
-      <label for="breeze" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=breeze.jpg>">
-EOF
-echo $"Breeze"
-cat << EOF
-</label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/breeze-dark-theme.run')" name="option" type="radio" id="breeze-dark" value="breeze-dark" $checked_breeze_dark />
-      <label for="breeze-dark" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=breeze-dark.jpg>">
-EOF
-echo $"Breeze Dark"
-cat << EOF
-</label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/fluent-theme.run')" name="option" type="radio" id="fluent" value="fluent" $checked_fluent />
-      <label for="fluent" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="$fluent<br><br><img src=fluent.jpg>">
-EOF
-echo $"Fluent"
-cat << EOF
-</label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/fluent-dark-theme.run')" name="option" type="radio" id="fluent-dark" value="fluent-dark" $checked_fluent_dark />
-      <label for="fluent-dark" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="$fluent<br><br><img src=fluent-dark.jpg>">
-EOF
-echo $"Fluent Dark"
-
-cat << EOF
-</label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/fluent-opaque-theme.run')" name="option" type="radio" id="fluent-opaque" value="fluent-opaque" $checked_fluent_opaque />
-      <label for="fluent-opaque" class="tooltipped with-gap" data-position="right" data-delay="50" data-tooltip="<img src=fluent-opaque.jpg>">
-EOF
-      echo $"Fluent Opaque"
-cat << EOF
-</label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/boot-livecd/fluent-opaque-dark-theme.run')" name="option" type="radio" id="fluent-dark-opaque" value="fluent-dark-opaque" $checked_fluent_opaque_dark />
-      <label for="fluent-dark-opaque" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=fluent-dark-opaque.jpg>">
-EOF
-echo $"Fluent Dark Opaque"
-
-cat << EOF
-</label>
-      <input onclick="_run('./materia-theme.run')" name="option" type="radio" id="materia" value="materia" $checked_materia />
-      <label for="materia" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=materia.jpg>">
-EOF
-echo $"Materia"
-cat << EOF
-</label>
-      <input onclick="_run('./materia-dark-theme.run')" name="option" type="radio" id="materia-dark" value="materia-dark" $checked_materia_dark />
-      <label for="materia-dark" class="tooltipped with-gap tool03" data-position="right" data-delay="50" data-tooltip="<img src=materia-dark.jpg>">
-EOF
-echo $"Materia Dark" '</label>'
-
-
-
-
-
-cat << EOF
-</div><div id=performancebase>
-<div id=performance>
-<h2>$Desempenho_translate</h2>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/normal.run quiet')" name="option2" type="radio" id="normal" value="normal" $checked_normal>
-      <label for="normal" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$NORMAL<br><br>">
-EOF
-      echo $"Normal"
-cat << EOF
-</label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/optimized.run quiet')" name="option2" type="radio" id="optimized" value="optimized" $checked_optimized>
-      <label for="optimized" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$TOOLTIP_OTIMIZADO<br><br>">
-EOF
-echo $"Otimizado"
-cat << EOF
-</label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/performance.run quiet')" name="option2" type="radio" id="performance2" value="performance2" $checked_performance>
-      <label for="performance2" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$TOOLTIP_PERFORMANCE<br><br>">
-EOF
-echo $"Performance"
-echo '</label>'
-
-
-
-
-
-
-
-cat << EOF
-</div>
-<div id=performance>
-<h2>$Browser_translate</h2>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/browser-auto.run quiet')" name="browser" type="radio" id="browser_auto" value="browser_auto" $checked_browser_auto>
-      <label for="browser_auto" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$BROWSER_AUTO<br><br>">
-EOF
-      echo $"Automática"
-cat << EOF
-</label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/browser-yes.run quiet')" name="browser" type="radio" id="browser_yes" value="browser_yes" $checked_browser_yes>
-      <label for="browser_yes" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$BROWSER_YES<br><br>">
-EOF
-echo $"Ativar"
-cat << EOF
-</label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/browser-no.run quiet')" name="browser" type="radio" id="browser_no" value="browser_no" $checked_browser_no>
-      <label for="browser_no" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$BROWSER_NO<br><br>">
-EOF
-echo $"Desativar"
-echo '</label>'
-
-echo '<div id=brave>' '<a class="waves-effect waves-light btn modal-trigger" href="#modal1">' $"Configurações do Brave" '</a>' '</div>'
-
-echo '  <!-- Modal Trigger -->
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal">
-    <div class="modal-content">'
-      
-echo $"Remover propagandas:" '<p>'
-
-if [ -e "$HOME/.config/browser-brave-disable-ad" ]; then
-    checked_braveblock_no="checked"
+if [ "$performance_actual" = "1" ] || [ "$performance_actual" = "2" ]; then
+    checked_memory_less="checked"
+    memory_less=0
 else
-    checked_braveblock_yes="checked"
+    memory_less=1
 fi
 
-BRAVE_BLOCK_YES=$"Utilizar o bloqueio de propagandas faz alguns sites não funcionarem corretamente."
-
-BRAVE_BLOCK_NO=$"Deixe o bloqueio desativado para que o navegador seja compatível com mais sites."
-
-
 cat << EOF
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/braveblock-yes.run quiet')" name="braveblock" type="radio" id="braveblock_yes" value="braveblock_yes" $checked_braveblock_yes>
-      <label for="braveblock_yes" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$BRAVE_BLOCK_YES<br><br>">
-EOF
-echo $"Sim"
-cat << EOF
-</label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/braveblock-no.run quiet')" name="braveblock" type="radio" id="braveblock_no" value="braveblock_no" $checked_braveblock_no>
-      <label for="braveblock_no" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$BRAVE_BLOCK_NO<br><br>">
-EOF
-echo $"Não"
-echo '</label><br><br><br><br><br>'
 
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="desktop-style.css">
 
+</head>
+<body>
 
-if [ -e "$HOME/.config/browser-brave-disable-crypto" ]; then
-    checked_bravecrypto_no="checked"
-else
-    checked_bravecrypto_yes="checked"
-fi
+<body>
+    <nav>
+      <span class="navbutton" title="Language"><a class="top-link-active" href="index.html">
+<svg viewBox="0 0 640 512"><path fill="#aaa" d="M152.1 236.2c-3.5-12.1-7.8-33.2-7.8-33.2h-.5s-4.3 21.1-7.8 33.2l-11.1 37.5H163zM616 96H336v320h280c13.3 0 24-10.7 24-24V120c0-13.3-10.7-24-24-24zm-24 120c0 6.6-5.4 12-12 12h-11.4c-6.9 23.6-21.7 47.4-42.7 69.9 8.4 6.4 17.1 12.5 26.1 18 5.5 3.4 7.3 10.5 4.1 16.2l-7.9 13.9c-3.4 5.9-10.9 7.8-16.7 4.3-12.6-7.8-24.5-16.1-35.4-24.9-10.9 8.7-22.7 17.1-35.4 24.9-5.8 3.5-13.3 1.6-16.7-4.3l-7.9-13.9c-3.2-5.6-1.4-12.8 4.2-16.2 9.3-5.7 18-11.7 26.1-18-7.9-8.4-14.9-17-21-25.7-4-5.7-2.2-13.6 3.7-17.1l6.5-3.9 7.3-4.3c5.4-3.2 12.4-1.7 16 3.4 5 7 10.8 14 17.4 20.9 13.5-14.2 23.8-28.9 30-43.2H412c-6.6 0-12-5.4-12-12v-16c0-6.6 5.4-12 12-12h64v-16c0-6.6 5.4-12 12-12h16c6.6 0 12 5.4 12 12v16h64c6.6 0 12 5.4 12 12zM0 120v272c0 13.3 10.7 24 24 24h280V96H24c-13.3 0-24 10.7-24 24zm58.9 216.1L116.4 167c1.7-4.9 6.2-8.1 11.4-8.1h32.5c5.1 0 9.7 3.3 11.4 8.1l57.5 169.1c2.6 7.8-3.1 15.9-11.4 15.9h-22.9a12 12 0 0 1-11.5-8.6l-9.4-31.9h-60.2l-9.1 31.8c-1.5 5.1-6.2 8.7-11.5 8.7H70.3c-8.2 0-14-8.1-11.4-15.9z"/></svg>
+      </a></span>
+      <span class="navbutton" title="Keyboard" style="margin-right: 35px;">
+<svg viewBox="0 0 576 512"><path fill="#aaa" d="M528 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM128 180v-40c0-6.627-5.373-12-12-12H76c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm-336 96v-40c0-6.627-5.373-12-12-12H76c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12zm288 0v-40c0-6.627-5.373-12-12-12H172c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h232c6.627 0 12-5.373 12-12zm96 0v-40c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12z"/></svg>
+      </span>
 
-BRAVE_CRYPTO_YES=$"O navegador Brave tem supore a criptomoedas, esse pode ser um recurso útil."
-
-BRAVE_CRYPTO_NO=$"Desativar o suporte a criptomoedas economiza um pouco de memória RAM."
-
-
-
-echo $"Suportar criptomoedas:" '<p>'
+      <span class="navbutton" title="BigLinux" slyte="width: 100px;">
+        <img id="biglinuxlogo"  src="icon-logo-biglinux.png">
+      </span>      
       
-cat << EOF
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/bravecrypto-yes.run quiet')" name="bravecrypto" type="radio" id="bravecrypto_yes" value="bravecrypto_yes" $checked_bravecrypto_yes>
-      <label for="bravecrypto_yes" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$BRAVE_CRYPTO_YES<br><br>">
-EOF
-echo $"Sim"
-cat << EOF
-</label>
-      <input onclick="_run('/usr/share/bigbashview/bcc/apps/biglinux-themes-gui/bravecrypto-no.run quiet')" name="bravecrypto" type="radio" id="bravecrypto_no" value="bravecrypto_no" $checked_bravecrypto_no>
-      <label for="bravecrypto_no" class="tooltipped with-gap" data-position="top" data-delay="50" data-tooltip="<br>$BRAVE_CRYPTO_NO<br><br>">
-EOF
-echo $"Não"
-echo '</label><br>'
+      <span class="navbutton" title="Theme" style="margin-left: 35px;"><a class="top-link-active" href="theme.sh.htm">
+<svg viewBox="0 0 512 512"><path fill="#aaa" d="M204.3 5C104.9 24.4 24.8 104.3 5.2 203.4c-37 187 131.7 326.4 258.8 306.7 41.2-6.4 61.4-54.6 42.5-91.7-23.1-45.4 9.9-98.4 60.9-98.4h79.7c35.8 0 64.8-29.6 64.9-65.3C511.5 97.1 368.1-26.9 204.3 5zM96 320c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm32-128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128-64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/></svg>
+      </a></span>
+      <span class="navbutton" title="Desktop">
+<svg viewBox="0 0 576 512"><path  fill="currentColor" d="M528 0H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h192l-16 48h-72c-13.3 0-24 10.7-24 24s10.7 24 24 24h272c13.3 0 24-10.7 24-24s-10.7-24-24-24h-72l-16-48h192c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zm-16 352H64V64h448v288z"/></svg>
+      </span>      
+  </nav>
+    <div style="height: 95%;" class="fc-card animated fadeIn panel" id="fc-main">
+        <div class="centretext">
+          <div id="desc">
+            <h3>$DESKTOP</h3>
+            <ul id="menu">
 
+              <li>
+                <a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux new"><img src="icon-big-desktop-new.png"></a>
+              </li>
+              <li>
+                <a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux kunity"><img src="icon-big-desktop-kunity.png"></a>
+              </li>
+              <li>
+                <a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux nextg"><img src="icon-big-desktop-nextg.png"></a>
+              </li>
+              <li>
+                <a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux classic"><img src="icon-big-desktop-classic.png"></a>
+              </li>
 
-
-      
-echo '</div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">' $"Fechar" '</a>
+            </ul>
+          </div>
+          <div id="desc">
+            
+              <h4>$PERFORMANCE</h4>
+              
+                <ul>
+                  <li style="padding: 2px;">
+                    <input id="s0" type="checkbox" onclick="window.location.href='index.sh.htm?memory_less=$memory_less'" class="switch" $checked_memory_less>
+                    <label for="s0">$LESS_RAM</small></label>
+                  </li>
+                  <li style="padding-top: 2px;">
+                    <input id="s0" type="checkbox" onclick="window.location.href='index.sh.htm?browser_config=$browser_config'" class="switch" $checked_browser_auto>
+                    <label for="s0">$BROWSER_GPU</small></label>
+                  </li>
+                </ul>
+          </div>          
     </div>
-  </div>'
+</div>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
 
-echo "</div></div>"
-echo "</div></div>"
+EOF
 
-    
-
-
-echo '</h1></div>'
-echo '</div></div>'
