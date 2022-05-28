@@ -72,7 +72,7 @@ performance_actual="$(cat "$HOME/.big_performance")"
 
 MEMORY="$(($(grep MemTotal /proc/meminfo | awk '{print $2}') /1024))"
 
-if [ "$performance_actual" = "" ] && [ "$MEMORY" -lt "3500" ]; then
+if [ "$performance_actual" = "" ] && [ "$MEMORY" -lt "2500" ]; then
     checked_memory_less="checked"
     memory_less=1
     /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/optimized.run quiet
