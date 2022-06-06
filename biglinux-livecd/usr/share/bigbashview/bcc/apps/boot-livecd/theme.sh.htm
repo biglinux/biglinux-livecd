@@ -36,6 +36,13 @@ else
     fi
 fi
 
+CHOOSE_THEME=$"Escolha o tema dos aplicativos:"
+
+if [ "$(glxinfo | grep llvmpipe)" != "" ]; then
+  NO_OGL=$"Utilizando renderização por software, a qualidade das transparências será reduzida."
+fi
+
+
 cat << EOF
 
 <!DOCTYPE html>
@@ -69,7 +76,8 @@ cat << EOF
     <div style="height: 95%;" class="fc-card animated fadeIn panel" id="fc-main">
         <div class="centretext">
           <div id="desc">
-            <h3>Escolha o tema dos aplicativos:</h3>
+            <h3>$CHOOSE_THEME</h3>
+            <h5>$NO_OGL</h5>
           </div>
           <div id="desc">            
             <ul id="menu">

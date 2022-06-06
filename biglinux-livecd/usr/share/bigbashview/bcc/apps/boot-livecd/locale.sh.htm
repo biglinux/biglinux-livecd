@@ -23,6 +23,7 @@ export TEXTDOMAIN=biglinux-livecd
 timedatectl set-timezone $timezone </dev/null &>/dev/null &
 timedatectl set-ntp 1 </dev/null &>/dev/null &
 localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null &
+echo "LANG=${language}.UTF-8" | sudo tee -a /etc/environment
 
 if [ "$keyboard" = "us" ]; then
     setxkbmap $keyboard &

@@ -180,7 +180,6 @@ html {
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
   content: "";
   background: #bec5cd;
   background: -moz-linear-gradient(top, #bec5cd 0%, #818e9f 100%);

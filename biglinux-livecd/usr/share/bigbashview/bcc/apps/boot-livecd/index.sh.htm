@@ -20,14 +20,19 @@ Browser_translate=$"Aceleração do navegador"
 Tema_translate=$"Tema"
 CLOSE=$"Fechar"
 fluent=$"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em computadores<br>antigos ou ambientes virtualizados."
-LESS_RAM=$"Reduzir efeitos visuais<br><small>(Indicado para computadores antigos)"
+LESS_RAM=$"Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
 BROWSER_GPU=$"Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no vídeo)"
 DESKTOP=$"Escolha o desktop:"
-
+DESKTOP_FASTER=$"<b>Classic</b> e <b>New</b> têm melhor desempenho."
 
 ######
 # Browser
 ######
+
+
+
+
+
 if [ "$browser_config" = "1" ]; then
     /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/browser-no.run quiet
 fi
@@ -36,13 +41,14 @@ if [ "$browser_config" = "0" ]; then
     /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/browser-auto.run quiet
 fi
 
-
-if [ "$(cat "$HOME/.config/browser-optimize")" = "" ]; then
+if [ "$(cat "$HOME/.config/browser-optimize" 2>/dev/null)" = "" ]; then
     checked_browser_auto="checked"
     browser_config=1
 else
     browser_config=0
 fi
+
+
 ######
 # Browser Close
 ######
@@ -72,11 +78,11 @@ performance_actual="$(cat "$HOME/.big_performance")"
 
 MEMORY="$(($(grep MemTotal /proc/meminfo | awk '{print $2}') /1024))"
 
-if [ "$performance_actual" = "" ] && [ "$MEMORY" -lt "2500" ]; then
-    checked_memory_less="checked"
-    memory_less=1
-    /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/optimized.run quiet
-fi
+# if [ "$performance_actual" = "" ] && [ "$MEMORY" -lt "2500" ]; then
+#     checked_memory_less="checked"
+#     memory_less=1
+#     /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/optimized.run quiet
+# fi
 
 if [ "$performance_actual" = "1" ] || [ "$performance_actual" = "2" ]; then
     checked_memory_less="checked"
@@ -119,6 +125,7 @@ cat << EOF
         <div class="centretext">
           <div id="desc">
             <h3>$DESKTOP</h3>
+            <p>$DESKTOP_FASTER</p>
             <ul id="menu">
 
               <li>
@@ -139,7 +146,7 @@ cat << EOF
           </div>
           <div id="desc">
             
-              <h4>$PERFORMANCE</h4>
+              <br>
               
                 <ul>
                   <li style="padding: 2px;">
