@@ -62,7 +62,8 @@ echo "$(cat /tmp/big_language)" > $HOME/.config/user-dirs.locale
 change-plasma-theme --apply $(cut -f2 -d" " /etc/big_desktop_changed) clean
 
 #Make folders in home
-LC_ALL=$(cat /tmp/big_language).UTF-8 xdg-user-dirs-update --force 2> /dev/null
+wait
+LC_ALL=$(cat /tmp/big_language).UTF-8 xdg-user-dirs-update
 
 chmod +x /tmp/biglightdm
 cd ~
