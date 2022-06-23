@@ -64,6 +64,10 @@ change-plasma-theme --apply $(cut -f2 -d" " /etc/big_desktop_changed) clean
 #Make folders in home
 wait
 LC_ALL=$(cat /tmp/big_language).UTF-8 xdg-user-dirs-update
+. ~/.config/user-dirs.dirs
+cp -f "/usr/share/applications/calamares-biglinux.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
+chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
+
 
 chmod +x /tmp/biglightdm
 cd ~
