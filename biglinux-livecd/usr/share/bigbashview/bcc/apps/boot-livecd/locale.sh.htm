@@ -15,6 +15,9 @@ export LANGUAGE=${language}.UTF-8
 export LANG=${language}.UTF-8
 echo "$language" > /tmp/big_language
 echo "$keyboard" > /tmp/big_keyboard
+echo "LANGUAGE=${language}.UTF-8" | sudo tee -a /etc/environment 2>-
+echo "LANG=${language}.UTF-8" | sudo tee -a /etc/environment 2>-
+
 
 #Translation
 export TEXTDOMAINDIR="/usr/share/locale"
@@ -23,6 +26,8 @@ export TEXTDOMAIN=biglinux-livecd
 timedatectl set-timezone $timezone </dev/null &>/dev/null &
 timedatectl set-ntp 1 </dev/null &>/dev/null &
 localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null &
+LC_ALL=${language}.UTF-8 xdg-user-dirs-update --force 2>- &
+
 
 if [ "$keyboard" = "us" ]; then
     setxkbmap $keyboard &
