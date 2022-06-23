@@ -23,7 +23,7 @@ echo "LANG=${language}.UTF-8" | sudo tee -a /etc/environment 2>-
 
 timedatectl set-timezone $timezone </dev/null &>/dev/null &
 timedatectl set-ntp 1 </dev/null &>/dev/null &
-localectl set-locale ${language}.UTF-8
+localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null &
 
 #Translation
 export TEXTDOMAINDIR="/usr/share/locale"
