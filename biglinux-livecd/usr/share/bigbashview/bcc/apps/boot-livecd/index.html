@@ -2,9 +2,74 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Language BigLinux</title>
   <link rel="stylesheet" href="./style-language.css">
 
+  <script src='/usr/share/bigbashview/bcc/materialize/js/jquery.js'></script>
+  <script>
+function disableBody() {
+  $('body').css({
+    'pointer-events':'none'
+  });
+  $('#box_progress').css({
+    'display':'inline-flex'
+  });
+}
+  </script>
+
+  
+<style>
+div#box_progress {
+    position: fixed;
+    background-color: #00000087;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+    display: none;
+}
+/* Loading Ruscher */
+.lds-ring {
+    display: inline-flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  margin: 8px;
+  border: 8px solid rgba(0, 255, 255, .1);
+  border-top-color: #00a8e8;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  /*border-color: #fff transparent transparent transparent;*/
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Fim Loading Ruscher */
+</style>
+
+  
 </head>
 <body>
 <!-- partial:index.partial.html -->
@@ -12,6 +77,11 @@
 <head>
     <title>Install - BigLinux</title>
 </head>
+
+
+<div id=box_progress><div id=progress_loading>
+<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+</div></div>
 
 <body>
     <nav>
@@ -33,25 +103,24 @@
 <svg viewBox="0 0 576 512"><path  fill="#333" d="M528 0H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h192l-16 48h-72c-13.3 0-24 10.7-24 24s10.7 24 24 24h272c13.3 0 24-10.7 24-24s-10.7-24-24-24h-72l-16-48h192c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zm-16 352H64V64h448v288z"/></svg>
       </span>      
   </nav>
-
   
     <div style="height: 93%;" class="fc-card animated fadeIn panel" id="fc-main">
         <div class="centretext">
-        <a href="locale.sh.htm?language=pt_BR&lang=pt&keyboard=br&timezone=America/Sao_Paulo" class="collection-item">
+        <a onclick="disableBody();" href="locale.sh.htm?language=pt_BR&lang=pt&keyboard=br&timezone=America/Sao_Paulo" class="collection-item">
           <button class="fc-btn calamares-big-button" id="BFin">
             <span>  
               <img src="brazil.png"> Português - Brasil
             </span>
           </button>
           </a>
-          <a href="locale.sh.htm?language=en_US&lang=en&keyboard=us&timezone=America/New_York" class="collection-item">
+          <a onclick="disableBody();" href="locale.sh.htm?language=en_US&lang=en&keyboard=us&timezone=America/New_York" class="collection-item">
           <button class="fc-btn calamares-big-button" id="BAca">
             <span>  
               <img src="united-states-of-america.png"> English - United States
             </span>
           </button>
           </a>
-          <a href="locale.sh.htm?language=es_ES&lang=es&keyboard=es&timezone=Europe/Madrid" class="collection-item">
+          <a onclick="disableBody();" href="locale.sh.htm?language=es_ES&lang=es&keyboard=es&timezone=Europe/Madrid" class="collection-item">
           <button class="fc-btn calamares-big-button" id="BInt">
             <span>  
               <img src="spain.png"> Español - España
@@ -62,7 +131,7 @@
         <br/>
         <div class="centretext">
 <div id="page-list">
-<a href="locale.sh.htm?language=be_BY&lang=be&keyboard=by&timezone=Europe/Minsk" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=be_BY&lang=be&keyboard=by&timezone=Europe/Minsk" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 Belarusian - Belarus
@@ -72,7 +141,7 @@ Belarusian - Belarus
 - be_BY
 </div></button></a>
 
-<a href="locale.sh.htm?language=bg_BG&lang=bg&keyboard=bg&timezone=Europe/Sofia" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=bg_BG&lang=bg&keyboard=bg&timezone=Europe/Sofia" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 Bulgarian - Bulgaria
@@ -81,7 +150,7 @@ Bulgarian - Bulgaria
 - bg_BG
 </div></button></a>
 
-<a href="locale.sh.htm?language=zh_CN&lang=zh&keyboard=us&timezone=Asia/Shanghai" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=zh_CN&lang=zh&keyboard=us&timezone=Asia/Shanghai" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 Chinese - China
@@ -92,7 +161,7 @@ Chinese - China
 - zh_CN
 </div></button></a>
 
-<a href="locale.sh.htm?language=zh_HK&lang=zh&keyboard=us&timezone=Asia/Hong_Kong" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=zh_HK&lang=zh&keyboard=us&timezone=Asia/Hong_Kong" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 Chinese - Hong Kong SAR
@@ -103,7 +172,7 @@ Chinese - Hong Kong SAR
 - zh_HK
 </div></button></a>
 
-<a href="locale.sh.htm?language=zh_SG&lang=zh&keyboard=us&timezone=Asia/Singapore" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=zh_SG&lang=zh&keyboard=us&timezone=Asia/Singapore" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 Chinese - Singapore
@@ -114,7 +183,7 @@ Chinese - Singapore
 - zh_SG
 </div></button></a>
 
-<a href="locale.sh.htm?language=zh_TW&lang=zh&keyboard=us&timezone=Asia/Taipei" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=zh_TW&lang=zh&keyboard=us&timezone=Asia/Taipei" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 Chinese - Taiwan
@@ -125,7 +194,7 @@ Chinese - Taiwan
 - zh_TW
 </div></button></a>
 
-<a href="locale.sh.htm?language=hr_HR&lang=hr&keyboard=hr&timezone=Europe/Zagreb" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=hr_HR&lang=hr&keyboard=hr&timezone=Europe/Zagreb" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 Croatian - Croatia
@@ -134,7 +203,7 @@ hrvatski jezik
 - hr_HR
 </div></button></a>
 
-<a href="locale.sh.htm?language=cs_CZ&lang=cs&keyboard=cz&timezone=Europe/Prague" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=cs_CZ&lang=cs&keyboard=cz&timezone=Europe/Prague" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 Czech - Czech Republic
@@ -144,7 +213,7 @@ Czech - Czech Republic
 - cs_CZ
 </div></button></a>
 
-<a href="locale.sh.htm?language=da_DK&lang=da&keyboard=dk&timezone=Europe/Copenhagen" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=da_DK&lang=da&keyboard=dk&timezone=Europe/Copenhagen" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 Danish - Denmark
@@ -153,7 +222,7 @@ dansk
 - da_DK
 </div></button></a>
 
-<a href="locale.sh.htm?language=nl_BE&lang=nl&keyboard=be&timezone=Europe/Brussels" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=nl_BE&lang=nl&keyboard=be&timezone=Europe/Brussels" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 Dutch - Belgium
@@ -163,7 +232,7 @@ Vlaams
 - nl_BE
 </div></button></a>
 
-<a href="locale.sh.htm?language=nl_NL&lang=nl&keyboard=us&timezone=Europe/Amsterdam" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=nl_NL&lang=nl&keyboard=us&timezone=Europe/Amsterdam" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 Dutch - The Netherlands
@@ -173,7 +242,7 @@ Vlaams
 - nl_NL
 </div></button></a>
 
-<a href="locale.sh.htm?language=en_AU&lang=en&keyboard=us&timezone=Australia/Sydney" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=en_AU&lang=en&keyboard=us&timezone=Australia/Sydney" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 English - Australia
@@ -182,7 +251,7 @@ English
 - en_AU
 </div></button></a>
 
-<a href="locale.sh.htm?language=en_CA&lang=en&keyboard=us&timezone=America/Toronto" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=en_CA&lang=en&keyboard=us&timezone=America/Toronto" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 English - Canada
@@ -191,7 +260,7 @@ English
 - en_CA
 </div></button></a>
 
-<a href="locale.sh.htm?language=en_GB&lang=en&keyboard=gb&timezone=Europe/London" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=en_GB&lang=en&keyboard=gb&timezone=Europe/London" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 English - United Kingdom
@@ -200,7 +269,7 @@ English
 - en_GB
 </div></button></a>
 
-<a href="locale.sh.htm?language=en_IE&lang=en&keyboard=ie&timezone=Europe/Dublin" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=en_IE&lang=en&keyboard=ie&timezone=Europe/Dublin" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 English - Ireland
@@ -209,7 +278,7 @@ English
 - en_IE
 </div></button></a>
 
-<a href="locale.sh.htm?language=en_NZ&lang=en&keyboard=us&timezone=Pacific/Auckland" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=en_NZ&lang=en&keyboard=us&timezone=Pacific/Auckland" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 English - New Zealand
@@ -218,7 +287,7 @@ English
 - en_NZ
 </div></button></a>
 
-<a href="locale.sh.htm?language=en_PH&lang=en&keyboard=us&timezone=Asia/Manila" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=en_PH&lang=en&keyboard=us&timezone=Asia/Manila" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 English - Philippines
@@ -227,7 +296,7 @@ English
 - en_PH
 </div></button></a>
 
-<a href="locale.sh.htm?language=en_US&lang=en&keyboard=us&timezone=America/New_York" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=en_US&lang=en&keyboard=us&timezone=America/New_York" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 English - United States
@@ -236,7 +305,7 @@ English
 - en_US
 </div></button></a>
 
-<a href="locale.sh.htm?language=en_ZA&lang=en&keyboard=us&timezone=Africa/Johannesburg" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=en_ZA&lang=en&keyboard=us&timezone=Africa/Johannesburg" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 English - South Africa
@@ -245,7 +314,7 @@ English
 - en_ZA
 </div></button></a>
 
-<a href="locale.sh.htm?language=en_ZW&lang=en&keyboard=us&timezone=Africa/Harare" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=en_ZW&lang=en&keyboard=us&timezone=Africa/Harare" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 English - Zimbabwe
@@ -254,7 +323,7 @@ English
 - en_ZW
 </div></button></a>
 
-<a href="locale.sh.htm?language=et_EE&lang=et&keyboard=et&timezone=Europe/Tallinn" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=et_EE&lang=et&keyboard=et&timezone=Europe/Tallinn" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 Estonian - Estonia
@@ -264,7 +333,7 @@ eesti keel
 - et_EE
 </div></button></a>
 
-<a href="locale.sh.htm?language=fi_FI&lang=fi&keyboard=fi&timezone=Europe/Helsinki" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=fi_FI&lang=fi&keyboard=fi&timezone=Europe/Helsinki" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -275,7 +344,7 @@ suomen kieli
 - fi_FI
 </div></button></a>
 
-<a href="locale.sh.htm?language=fr_BE&lang=fr&keyboard=be&timezone=Europe/Brussels" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=fr_BE&lang=fr&keyboard=be&timezone=Europe/Brussels" class="collection-item">
 <button class="fc-btn collection">
 <div class=left>
 French - Belgium
@@ -285,7 +354,7 @@ langue française
 - fr_BE
 </div></button></a>
 
-<a href="locale.sh.htm?language=fr_CA&lang=fr&keyboard=ca&timezone=America/Toronto" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=fr_CA&lang=fr&keyboard=ca&timezone=America/Toronto" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -296,7 +365,7 @@ langue française
 - fr_CA
 </div></button></a>
 
-<a href="locale.sh.htm?language=fr_CH&lang=fr&keyboard=ch&timezone=Europe/Zurich" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=fr_CH&lang=fr&keyboard=ch&timezone=Europe/Zurich" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -307,7 +376,7 @@ langue française
 - fr_CH
 </div></button></a>
 
-<a href="locale.sh.htm?language=fr_FR&lang=fr&keyboard=fr&timezone=Europe/Paris" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=fr_FR&lang=fr&keyboard=fr&timezone=Europe/Paris" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -318,7 +387,7 @@ langue française
 - fr_FR
 </div></button></a>
 
-<a href="locale.sh.htm?language=fr_LU&lang=fr&keyboard=fr&timezone=Europe/Luxembourg" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=fr_LU&lang=fr&keyboard=fr&timezone=Europe/Luxembourg" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -329,7 +398,7 @@ langue française
 - fr_LU
 </div></button></a>
 
-<a href="locale.sh.htm?language=de_DE&lang=de&keyboard=de&timezone=Europe/Berlin" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=de_DE&lang=de&keyboard=de&timezone=Europe/Berlin" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -339,7 +408,7 @@ Deutsch
 - de_DE
 </div></button></a>
 
-<a href="locale.sh.htm?language=de_AT&lang=de&keyboard=de&timezone=Europe/Vienna" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=de_AT&lang=de&keyboard=de&timezone=Europe/Vienna" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -349,7 +418,7 @@ Deutsch
 - de_AT
 </div></button></a>
 
-<a href="locale.sh.htm?language=de_CH&lang=de&keyboard=de_CH-latin1&timezone=Europe/Zurich" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=de_CH&lang=de&keyboard=de_CH-latin1&timezone=Europe/Zurich" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -359,7 +428,7 @@ Deutsch
 - de_CH
 </div></button></a>
 
-<a href="locale.sh.htm?language=de_LI&lang=de&keyboard=de&timezone=Europe/Vaduz" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=de_LI&lang=de&keyboard=de&timezone=Europe/Vaduz" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -369,7 +438,7 @@ Deutsch
 - de_LI
 </div></button></a>
 
-<a href="locale.sh.htm?language=de_LU&lang=de&keyboard=de&timezone=Europe/Luxembourg" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=de_LU&lang=de&keyboard=de&timezone=Europe/Luxembourg" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -379,7 +448,7 @@ Deutsch
 - de_LU
 </div></button></a>
 
-<a href="locale.sh.htm?language=el_GR&lang=el&keyboard=gr&timezone=Europe/Athens" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=el_GR&lang=el&keyboard=gr&timezone=Europe/Athens" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -389,7 +458,7 @@ Greek - Greece
 - el_GR
 </div></button></a>
 
-<a href="locale.sh.htm?language=he_IL&lang=he&keyboard=il&timezone=Asia/Jerusalem" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=he_IL&lang=he&keyboard=il&timezone=Asia/Jerusalem" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -399,7 +468,7 @@ Hebrew - Israel
 - he_IL
 </div></button></a>
 
-<a href="locale.sh.htm?language=hu_HU&lang=hu&keyboard=hu&timezone=Europe/Budapest" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=hu_HU&lang=hu&keyboard=hu&timezone=Europe/Budapest" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -409,7 +478,7 @@ magyar
 - hu_HU
 </div></button></a>
 
-<a href="locale.sh.htm?language=is_IS&lang=is&keyboard=is&timezone=Atlantic/Reykjavik" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=is_IS&lang=is&keyboard=is&timezone=Atlantic/Reykjavik" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -419,7 +488,7 @@ Icelandic - Iceland
 - is_IS
 </div></button></a>
 
-<a href="locale.sh.htm?language=it_CH&lang=it&keyboard=it&timezone=Europe/Zurich" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=it_CH&lang=it&keyboard=it&timezone=Europe/Zurich" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -429,7 +498,7 @@ italiano
 - it_CH
 </div></button></a>
 
-<a href="locale.sh.htm?language=it_IT&lang=it&keyboard=it&timezone=Europe/Rome" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=it_IT&lang=it&keyboard=it&timezone=Europe/Rome" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -439,7 +508,7 @@ italiano
 - it_IT
 </div></button></a>
 
-<a href="locale.sh.htm?language=ja_JP&lang=ja&keyboard=jp&timezone=Asia/Tokyo" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=ja_JP&lang=ja&keyboard=jp&timezone=Asia/Tokyo" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -449,7 +518,7 @@ Japanese - Japan
 - ja_JP
 </div></button></a>
 
-<a href="locale.sh.htm?language=ko_KR&lang=ko&keyboard=kr&timezone=Asia/Seoul" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=ko_KR&lang=ko&keyboard=kr&timezone=Asia/Seoul" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -460,7 +529,7 @@ Korean - Korea
 - ko_KR
 </div></button></a>
 
-<a href="locale.sh.htm?language=nb_NO&lang=nb&keyboard=no&timezone=Europe/Oslo" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=nb_NO&lang=nb&keyboard=no&timezone=Europe/Oslo" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -470,7 +539,7 @@ Norsk bokmål
 - nb_NO
 </div></button></a>
 
-<a href="locale.sh.htm?language=nn_NO&lang=nn&keyboard=no&timezone=Europe/Oslo" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=nn_NO&lang=nn&keyboard=no&timezone=Europe/Oslo" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -480,7 +549,7 @@ Norsk nynorsk
 - nn_NO
 </div></button></a>
 
-<a href="locale.sh.htm?language=pl_PL&lang=pl&keyboard=pl&timezone=Europe/Warsaw" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=pl_PL&lang=pl&keyboard=pl&timezone=Europe/Warsaw" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -491,7 +560,7 @@ polszczyzna
 - pl_PL
 </div></button></a>
 
-<a href="locale.sh.htm?language=pt_BR&lang=pt&keyboard=br&timezone=America/Sao_Paulo" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=pt_BR&lang=pt&keyboard=br&timezone=America/Sao_Paulo" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -501,7 +570,7 @@ Português do Brasil
 - pt_BR
 </div></button></a>
 
-<a href="locale.sh.htm?language=pt_PT&lang=pt&keyboard=pt&timezone=Europe/Lisbon" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=pt_PT&lang=pt&keyboard=pt&timezone=Europe/Lisbon" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -511,7 +580,7 @@ Português
 - pt_PT
 </div></button></a>
 
-<a href="locale.sh.htm?language=ro_RO&lang=ro&keyboard=ro&timezone=Europe/Bucharest" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=ro_RO&lang=ro&keyboard=ro&timezone=Europe/Bucharest" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -521,7 +590,7 @@ limba română
 - ro_RO
 </div></button></a>
 
-<a href="locale.sh.htm?language=ru_RU&lang=ru&keyboard=ru&timezone=Europe/Moscow" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=ru_RU&lang=ru&keyboard=ru&timezone=Europe/Moscow" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -531,7 +600,7 @@ Russian - Russia
 - ru_RU
 </div></button></a>
 
-<a href="locale.sh.htm?language=sk_SK&lang=sk&keyboard=sk&timezone=Europe/Bratislava" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=sk_SK&lang=sk&keyboard=sk&timezone=Europe/Bratislava" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -542,7 +611,7 @@ slovenský jazyk
 - sk_SK
 </div></button></a>
 
-<a href="locale.sh.htm?language=sl_SI&lang=sl&keyboard=si&timezone=Europe/Ljubljana" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=sl_SI&lang=sl&keyboard=si&timezone=Europe/Ljubljana" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -553,7 +622,7 @@ slovenščina
 - sl_SI
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_AR&lang=es&keyboard=latam&timezone=America/Argentina/Buenos_Aires" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_AR&lang=es&keyboard=latam&timezone=America/Argentina/Buenos_Aires" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -564,7 +633,7 @@ castellano
 - es_AR
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_BO&lang=es&keyboard=latam&timezone=America/La_Paz" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_BO&lang=es&keyboard=latam&timezone=America/La_Paz" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -575,7 +644,7 @@ castellano
 - es_BO
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_CL&lang=es&keyboard=latam&timezone=America/Santiago" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_CL&lang=es&keyboard=latam&timezone=America/Santiago" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -586,7 +655,7 @@ castellano
 - es_CL
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_CO&lang=es&keyboard=latam&timezone=America/Bogota" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_CO&lang=es&keyboard=latam&timezone=America/Bogota" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -597,7 +666,7 @@ castellano
 - es_CO
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_CR&lang=es&keyboard=latam&timezone=America/Costa_Rica" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_CR&lang=es&keyboard=latam&timezone=America/Costa_Rica" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -608,7 +677,7 @@ castellano
 - es_CR
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_DO&lang=es&keyboard=latam&timezone=America/Santo_Domingo" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_DO&lang=es&keyboard=latam&timezone=America/Santo_Domingo" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -619,7 +688,7 @@ castellano
 - es_DO
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_EC&lang=es&keyboard=latam&timezone=America/Guayaquil" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_EC&lang=es&keyboard=latam&timezone=America/Guayaquil" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -630,7 +699,7 @@ castellano
 - es_EC
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_ES&lang=es&keyboard=es&timezone=Europe/Madrid" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_ES&lang=es&keyboard=es&timezone=Europe/Madrid" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -641,7 +710,7 @@ castellano
 - es_ES
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_GT&lang=es&keyboard=latam&timezone=America/Guatemala" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_GT&lang=es&keyboard=latam&timezone=America/Guatemala" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -652,7 +721,7 @@ castellano
 - es_GT
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_HN&lang=es&keyboard=latam&timezone=America/Tegucigalpa" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_HN&lang=es&keyboard=latam&timezone=America/Tegucigalpa" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -663,7 +732,7 @@ castellano
 - es_HN
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_MX&lang=es&keyboard=latam&timezone=America/Mexico_City" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_MX&lang=es&keyboard=latam&timezone=America/Mexico_City" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -674,7 +743,7 @@ castellano
 - es_MX
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_NI&lang=es&keyboard=latam&timezone=America/Managua" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_NI&lang=es&keyboard=latam&timezone=America/Managua" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -685,7 +754,7 @@ castellano
 - es_NI
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_PA&lang=es&keyboard=latam&timezone=America/Panama" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_PA&lang=es&keyboard=latam&timezone=America/Panama" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -696,7 +765,7 @@ castellano
 - es_PA
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_PE&lang=es&keyboard=latam&timezone=America/Lima" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_PE&lang=es&keyboard=latam&timezone=America/Lima" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -707,7 +776,7 @@ castellano
 - es_PE
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_PR&lang=es&keyboard=latam&timezone=America/Puerto_Rico" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_PR&lang=es&keyboard=latam&timezone=America/Puerto_Rico" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -718,7 +787,7 @@ castellano
 - es_PR
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_PY&lang=es&keyboard=latam&timezone=America/Asuncion" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_PY&lang=es&keyboard=latam&timezone=America/Asuncion" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -729,7 +798,7 @@ castellano
 - es_PY
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_SV&lang=es&keyboard=latam&timezone=America/El_Salvador" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_SV&lang=es&keyboard=latam&timezone=America/El_Salvador" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -740,7 +809,7 @@ castellano
 - es_SV
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_UY&lang=es&keyboard=latam&timezone=America/Montevideo" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_UY&lang=es&keyboard=latam&timezone=America/Montevideo" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -751,7 +820,7 @@ castellano
 - es_UY
 </div></button></a>
 
-<a href="locale.sh.htm?language=es_VE&lang=es&keyboard=latam&timezone=America/Caracas" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=es_VE&lang=es&keyboard=latam&timezone=America/Caracas" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -762,7 +831,7 @@ castellano
 - es_VE
 </div></button></a>
 
-<a href="locale.sh.htm?language=sv_FI&lang=sv&keyboard=se&timezone=Europe/Helsinki" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=sv_FI&lang=sv&keyboard=se&timezone=Europe/Helsinki" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -772,7 +841,7 @@ Svenska
 - sv_FI
 </div></button></a>
 
-<a href="locale.sh.htm?language=sv_SE&lang=sv&keyboard=se&timezone=Europe/Stockholm" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=sv_SE&lang=sv&keyboard=se&timezone=Europe/Stockholm" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -782,7 +851,7 @@ Svenska
 - sv_SE
 </div></button></a>
 
-<a href="locale.sh.htm?language=tr_TR&lang=tr&keyboard=tr&timezone=Europe/Istanbul" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=tr_TR&lang=tr&keyboard=tr&timezone=Europe/Istanbul" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
@@ -792,7 +861,7 @@ Türkçe
 - tr_TR
 </div></button></a>
 
-<a href="locale.sh.htm?language=uk_UA&lang=uk&keyboard=ua&timezone=Europe/Kiev" class="collection-item">
+<a onclick="disableBody();" href="locale.sh.htm?language=uk_UA&lang=uk&keyboard=ua&timezone=Europe/Kiev" class="collection-item">
 <button class="fc-btn collection">
 
 <div class=left>
