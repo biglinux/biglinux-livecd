@@ -4,9 +4,8 @@
 #  Author1: Bruno Goncalves (www.biglinux.com.br) 
 #  Author2: Rafael Ruscher (rruscher@gmail.com)  
 #  Date:    2022/02/28 
-#  Modified:2022/07/10 
 #  
-#  Description: Live CD usage of BigLinux 
+#  Description: Control Center to help usage of BigLinux 
 #  
 # Licensed by GPL V2 or greater
 ##################################
@@ -16,15 +15,28 @@ export LANGUAGE=${language}.UTF-8
 export LANG=${language}.UTF-8
 echo "$language" > /tmp/big_language
 echo "$keyboard" > /tmp/big_keyboard
+echo "LANGUAGE=${language}.UTF-8" | sudo tee -a /etc/environment 2>-
+echo "LANG=${language}.UTF-8" | sudo tee -a /etc/environment 2>-
+
+
+
+
+timedatectl set-timezone $timezone </dev/null &>/dev/null &
+timedatectl set-ntp 1 </dev/null &>/dev/null &
+
+
+
+if [ "$language" = "en_US" ] || [ "$language" = "pt_BR" ]; then
+  localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null &
+else
+  localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null
+fi
+
 
 #Translation
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-livecd
 
-timedatectl set-timezone $timezone </dev/null &>/dev/null &
-timedatectl set-ntp 1 </dev/null &>/dev/null &
-localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null &
-echo "LANG=${language}.UTF-8" | sudo tee -a /etc/environment
 
 if [ "$keyboard" = "us" ]; then
     setxkbmap $keyboard &

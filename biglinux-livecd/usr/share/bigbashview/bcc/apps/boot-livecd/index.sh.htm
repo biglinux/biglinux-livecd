@@ -4,12 +4,14 @@
 #  Author1: Bruno Goncalves (www.biglinux.com.br) 
 #  Author2: Rafael Ruscher (rruscher@gmail.com)  
 #  Date:    2022/02/28 
-#  Modified:2022/07/10 
 #  
-#  Description: Live CD usage of BigLinux 
+#  Description: Control Center to help usage of BigLinux 
 #  
 # Licensed by GPL V2 or greater
 ##################################
+
+export LANGUAGE=$(cat /tmp/big_language).UTF-8
+export LANG=$(cat /tmp/big_language).UTF-8
 
 #Translation
 export TEXTDOMAINDIR="/usr/share/locale"
@@ -24,11 +26,17 @@ fluent=$"Esse tema possui transparências com efeitos que<br>podem tornar o sist
 LESS_RAM=$"Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
 BROWSER_GPU=$"Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no vídeo)"
 DESKTOP=$"Escolha o desktop:"
-DESKTOP_FASTER=$"<b>Classic</b>, <b>New</b> e <b>Modern</b> têm melhor desempenho."
+DESKTOP_FASTER=$"têm melhor desempenho."
+AND=$"e"
+
 
 ######
 # Browser
 ######
+
+
+
+
 
 if [ "$browser_config" = "1" ]; then
     /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/browser-no.run quiet
@@ -45,9 +53,12 @@ else
     browser_config=0
 fi
 
+
 ######
 # Browser Close
 ######
+
+
 
 if [ "$theme" = "" ]; then
     biglinux-themes.sh --apply breeze
@@ -57,6 +68,8 @@ else
     biglinux-themes.sh --apply $theme
     echo "$theme" > /tmp/big_desktop_theme
 fi
+
+
 
 if [ "$memory_less" = "1" ]; then
     /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/optimized.run quiet
@@ -117,7 +130,7 @@ cat << EOF
         <div class="centretext">
           <div id="desc">
             <h3>$DESKTOP</h3>
-            <p>$DESKTOP_FASTER</p>
+            <p><b>Classic</b>, <b>New<b> $AND <b>Modern</b> $DESKTOP_FASTER</p>
             <ul id="menu">
 
               <li>
