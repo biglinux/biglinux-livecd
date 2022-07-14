@@ -139,8 +139,21 @@ input[type=radio] + label {
 html {
   box-sizing: border-box;
   font-family: "Lato", sans-serif;
+  height: 100%;
+}
+
+body {
   margin: 0;
   padding: 0;
+  content: "";
+  background: #bec5cd;
+  background: -moz-linear-gradient(top, #bec5cd 0%, #818e9f 100%);
+  background: -webkit-linear-gradient(top, #bec5cd 0%, #818e9f 100%);
+  background: linear-gradient(to bottom, #bec5cd 0%, #818e9f 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#bec5cd", endColorstr="#818e9f",GradientType=0 );
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;  
 }
 
 .biglinux-card {
@@ -175,17 +188,6 @@ html {
 .biglinux-left-panel h4 {
   color: #fff;
   margin: 1rem 1rem 0;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  content: "";
-  background: #bec5cd;
-  background: -moz-linear-gradient(top, #bec5cd 0%, #818e9f 100%);
-  background: -webkit-linear-gradient(top, #bec5cd 0%, #818e9f 100%);
-  background: linear-gradient(to bottom, #bec5cd 0%, #818e9f 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#bec5cd", endColorstr="#818e9f",GradientType=0 );
 }
 
 #menu a img {
@@ -408,7 +410,7 @@ nav button:focus {
     border: solid 2px white;
 }*/
 #fc-main {
-  display: block;
+  display: table;
 }
 
 .fc-card {
