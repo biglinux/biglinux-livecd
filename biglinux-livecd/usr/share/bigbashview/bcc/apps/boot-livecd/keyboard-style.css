@@ -1,20 +1,21 @@
 html {
   box-sizing: border-box;
   font-family: "Lato", sans-serif;
-  margin: 0;
-  padding: 0;
   height: 100%;
 }
+
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
-  content: '';
+  content: "";
   background: #bec5cd;
   background: -moz-linear-gradient(top, #bec5cd 0%, #818e9f 100%);
-  background: -webkit-linear-gradient(top, #bec5cd 0%,#818e9f 100%);
-  background: linear-gradient(to bottom, #bec5cd 0%,#818e9f 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bec5cd', endColorstr='#818e9f',GradientType=0 );  
+  background: -webkit-linear-gradient(top, #bec5cd 0%, #818e9f 100%);
+  background: linear-gradient(to bottom, #bec5cd 0%, #818e9f 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#bec5cd", endColorstr="#818e9f",GradientType=0 );
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;  
 }
 .icon64x64 svg {
   align-items: center;
@@ -173,7 +174,7 @@ i {
 }
 
 #fc-main {
-    display: block;
+    display: table;
 }
 
 .fc-card {
