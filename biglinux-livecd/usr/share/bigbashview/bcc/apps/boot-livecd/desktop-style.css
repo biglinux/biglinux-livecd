@@ -535,3 +535,15 @@ a {
   background: #4271b6;
   border-radius: 10px;
 }
+
+ul#browser_gpu {
+    columns: 1;
+}
+
+div#browser_gpu_desc {
+    font-size: 13px;
+    margin-top: -12px;
+    margin-bottom: 15px;
+    color: #919191;
+}
+
