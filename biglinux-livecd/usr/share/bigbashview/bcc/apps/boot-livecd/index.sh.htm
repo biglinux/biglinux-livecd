@@ -1,9 +1,8 @@
 #!/bin/bash
-
 ##################################
 #  Author1: Bruno Goncalves (www.biglinux.com.br) 
 #  Author2: Rafael Ruscher (rruscher@gmail.com)  
-#  Date:    2022/02/28 
+#  Date:    2022/08/19
 #  
 #  Description: Control Center to help usage of BigLinux 
 #  
@@ -17,7 +16,6 @@ export LANG=$(cat /tmp/big_language).UTF-8
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-livecd
 
-
 PERFORMANCE=$"Desempenho"
 Browser_translate=$"Aceleração do navegador"
 Tema_translate=$"Tema"
@@ -29,7 +27,6 @@ BROWSER_GPU_DESC=$"Melhora o desempenho, mas em alguns equipamentos causa instab
 DESKTOP=$"Escolha o desktop:"
 DESKTOP_FASTER=$"têm melhor desempenho."
 AND=$"e"
-
 
 ######
 # Browser
@@ -104,11 +101,12 @@ cat << EOF
 
 <html>
 <head>
+  <title>BigLinux</title>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="desktop-style.css">
+  <script type="text/javascript" src="/usr/share/bigbashview/bcc/apps/big-store/materialize/js/jquery.js"></script>
+  <script src="jquery-ui.js"></script>
+  <link rel="stylesheet" href="desktop-style.css">  
 </head>
-<body>
-
 <body>
   <nav>
     <span class="navbutton" title="Language"><a class="top-link-active" href="index.html">
@@ -129,33 +127,19 @@ cat << EOF
       <svg viewBox="0 0 576 512"><path  fill="currentColor" d="M528 0H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h192l-16 48h-72c-13.3 0-24 10.7-24 24s10.7 24 24 24h272c13.3 0 24-10.7 24-24s-10.7-24-24-24h-72l-16-48h192c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zm-16 352H64V64h448v288z"/></svg>
     </span>
   </nav>
-<div class="fc-card animated fadeIn panel" id="fc-main">
-    <div class="centretext">
-      <div id="desc">
-        <h3>$DESKTOP</h3>
-        <p><b>Classic</b>, <b>New<b> $AND <b>Modern</b> $DESKTOP_FASTER</p>
-
-        <ul id=browser_gpu>
-
-          <li style="padding-top: 2px;">
-            <input id="s1" type="checkbox" onclick="window.location.href='index.sh.htm?browser_config=$browser_config'" class="switch" $checked_browser_auto>
-            <label for="s1">$BROWSER_GPU</label>
-            <div id=browser_gpu_desc>$BROWSER_GPU_DESC</div>
-          </li>
-        </ul>
-
-
 EOF
-
-
 # Run script to checksum
-nice -n+20 ionice -c 3 ./biglinux-verify-md5sum.sh > /dev/null 2>&1 &
+#nice -n+20 ionice -c 3 ./biglinux-verify-md5sum.sh > /dev/null 2>&1 &
 
 # Add checksum automatic reload
-cat << EOF
-<meta charset="utf-8">
-    <script type="text/javascript" src="/usr/share/bigbashview/bcc/apps/big-store/materialize/js/jquery.js"></script>
-
+cat << EOF 
+<script>
+  \$( function() {
+    \$( "#progressbar" ).progressbar({
+      value: 0
+    });
+  } );
+  </script>
     <script type="text/javascript">
         function fileReplaceDiv(i, div, file){
         if(i == true){
@@ -186,11 +170,21 @@ cat << EOF
 EOF
 echo "<script>fileReplaceDiv(true, '#checksum_biglinux', '/tmp/checksum_biglinux.html');</script>"
 echo '<div id=checksum_biglinux></div>'
+echo '<div id=progressbar><div id=textprogress></div></div>'
 # End checksum automatic reload
-
-
-cat << EOF
-
+cat << EOF  
+<div class="fc-card animated fadeIn panel" id="fc-main">
+    <div class="centretext">
+      <div id="desc">
+        <h3>$DESKTOP</h3>
+        <ul id=browser_gpu>
+          <li style="padding-top: 2px;">
+            <input id="s1" type="checkbox" onclick="window.location.href='index.sh.htm?browser_config=$browser_config'" class="switch" $checked_browser_auto>
+            <label for="s1">$BROWSER_GPU</label>
+            <div id=browser_gpu_desc>$BROWSER_GPU_DESC</div>
+          </li>
+        </ul>
+        <p><b>Classic</b>, <b>New<b> $AND <b>Modern</b> $DESKTOP_FASTER</p>
         <ul id="menu">
           <li>
             <a href="/usr/share/bigbashview/bcc/apps/boot-livecd/make.sh.htm?desktop=startkde-biglinux classic"><img src="icon-big-desktop-classic.png"></a>
@@ -215,12 +209,7 @@ cat << EOF
   </div>
 </div>
 <br>
+<!-- partial --> 
 </body>
 </html>
-<!-- partial -->
-  
-</body>
-</html>
-
 EOF
-
