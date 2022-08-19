@@ -1,9 +1,8 @@
 #!/bin/bash
-
 ##################################
 #  Author1: Bruno Goncalves (www.biglinux.com.br) 
 #  Author2: Rafael Ruscher (rruscher@gmail.com)  
-#  Date:    2022/02/28 
+#  Date:    2022/08/19
 #  
 #  Description: Control Center to help usage of BigLinux 
 #  
@@ -15,16 +14,11 @@ export LANGUAGE=${language}.UTF-8
 export LANG=${language}.UTF-8
 echo "$language" > /tmp/big_language
 echo "$keyboard" > /tmp/big_keyboard
-echo "LANGUAGE=${language}.UTF-8" | sudo tee -a /etc/environment 2>-
-echo "LANG=${language}.UTF-8" | sudo tee -a /etc/environment 2>-
-
-
-
+echo "LANGUAGE=${language}.UTF-8" | sudo tee -a /etc/environment &>/dev/null &
+echo "LANG=${language}.UTF-8" | sudo tee -a /etc/environment &>/dev/null &
 
 timedatectl set-timezone $timezone </dev/null &>/dev/null &
 timedatectl set-ntp 1 </dev/null &>/dev/null &
-
-
 
 if [ "$language" = "en_US" ] || [ "$language" = "pt_BR" ]; then
   localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null &
@@ -32,11 +26,9 @@ else
   localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null
 fi
 
-
 #Translation
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-livecd
-
 
 if [ "$keyboard" = "us" ]; then
     setxkbmap $keyboard &
@@ -50,9 +42,11 @@ cat << EOF
 
 <html>
 <head>
+  <title>BigLinux</title>
   <meta charset="UTF-8">
+  <script type="text/javascript" src="/usr/share/bigbashview/bcc/apps/big-store/materialize/js/jquery.js"></script>
+  <script src="jquery-ui.js"></script>
   <link rel="stylesheet" href="keyboard-style.css">
-
 </head>
 <body>
 <!-- partial:index.partial.html -->
@@ -62,6 +56,30 @@ cat << EOF
 
 <body>
     <nav>
+      <div class="Message Message--red" id="js-timer" style="display: none;">
+        <div class="Message-icon">
+          <i class="fa fa-times" style="width: 25px;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 25px;"><path fill="currentColor" d="M506.3 417l-213.3-364c-16.33-28-57.54-28-73.98 0l-213.2 364C-10.59 444.9 9.849 480 42.74 480h426.6C502.1 480 522.6 445 506.3 417zM232 168c0-13.25 10.75-24 24-24S280 154.8 280 168v128c0 13.25-10.75 24-23.1 24S232 309.3 232 296V168zM256 416c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 401.9 273.4 416 256 416z"/></svg></i>
+        </div>
+        <div class="Message-body">
+          <p>Ocorreu um problema com imagem ISO</p>
+          <button class="Message-button" id="js-helpMe">Eita, me ajude por favor!</button>
+          <button class="Message-button js-messageClose">Não me importo.</button>
+        </div>
+        <button class="Message-close js-messageClose"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="width: 10px;"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg></button>
+      </div>
+
+      <div class="Message Message--green" id="js-timer2" style="display: none;">
+        <div class="Message-icon" style="width: 25px;">
+          <i class="fa fa-check"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 25px;"><path fill="currentColor" d="M438.6 105.4C451.1 117.9 451.1 138.1 438.6 150.6L182.6 406.6C170.1 419.1 149.9 419.1 137.4 406.6L9.372 278.6C-3.124 266.1-3.124 245.9 9.372 233.4C21.87 220.9 42.13 220.9 54.63 233.4L159.1 338.7L393.4 105.4C405.9 92.88 426.1 92.88 438.6 105.4H438.6z"/></svg></i>
+        </div>
+        <div class="Message-body">
+          <p>Imagem ISO está tudo bem!</p>
+          <p>Siga em frente.</p>
+        </div>
+        <button class="Message-close js-messageClose"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="width: 10px;"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg></button>
+      </div>    
+    
       <span class="navbutton" title="Language"><a class="top-link-active" href="index.html">
 <svg viewBox="0 0 640 512"><path fill="#aaa" d="M152.1 236.2c-3.5-12.1-7.8-33.2-7.8-33.2h-.5s-4.3 21.1-7.8 33.2l-11.1 37.5H163zM616 96H336v320h280c13.3 0 24-10.7 24-24V120c0-13.3-10.7-24-24-24zm-24 120c0 6.6-5.4 12-12 12h-11.4c-6.9 23.6-21.7 47.4-42.7 69.9 8.4 6.4 17.1 12.5 26.1 18 5.5 3.4 7.3 10.5 4.1 16.2l-7.9 13.9c-3.4 5.9-10.9 7.8-16.7 4.3-12.6-7.8-24.5-16.1-35.4-24.9-10.9 8.7-22.7 17.1-35.4 24.9-5.8 3.5-13.3 1.6-16.7-4.3l-7.9-13.9c-3.2-5.6-1.4-12.8 4.2-16.2 9.3-5.7 18-11.7 26.1-18-7.9-8.4-14.9-17-21-25.7-4-5.7-2.2-13.6 3.7-17.1l6.5-3.9 7.3-4.3c5.4-3.2 12.4-1.7 16 3.4 5 7 10.8 14 17.4 20.9 13.5-14.2 23.8-28.9 30-43.2H412c-6.6 0-12-5.4-12-12v-16c0-6.6 5.4-12 12-12h64v-16c0-6.6 5.4-12 12-12h16c6.6 0 12 5.4 12 12v16h64c6.6 0 12 5.4 12 12zM0 120v272c0 13.3 10.7 24 24 24h280V96H24c-13.3 0-24 10.7-24 24zm58.9 216.1L116.4 167c1.7-4.9 6.2-8.1 11.4-8.1h32.5c5.1 0 9.7 3.3 11.4 8.1l57.5 169.1c2.6 7.8-3.1 15.9-11.4 15.9h-22.9a12 12 0 0 1-11.5-8.6l-9.4-31.9h-60.2l-9.1 31.8c-1.5 5.1-6.2 8.7-11.5 8.7H70.3c-8.2 0-14-8.1-11.4-15.9z"/></svg>
       </a></span>
@@ -78,10 +96,79 @@ cat << EOF
       </span>
       <span class="navbutton" title="Desktop">
 <svg viewBox="0 0 576 512"><path  fill="#333" d="M528 0H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h192l-16 48h-72c-13.3 0-24 10.7-24 24s10.7 24 24 24h272c13.3 0 24-10.7 24-24s-10.7-24-24-24h-72l-16-48h192c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zm-16 352H64V64h448v288z"/></svg>
-      </span>      
+      </span>
+      
   </nav>
+EOF
+# Run script to checksum
+nice -n+20 ionice -c 3 ./biglinux-verify-md5sum.sh > /dev/null 2>&1 &
 
+# Add checksum automatic reload
+cat << EOF
+  <script>
+  \$( function() {
+    \$( "#progressbar" ).progressbar({
+      value: 0
+    });
+
+    function closeMessage(el) {
+      el.addClass("is-hidden");
+    }
+
+    \$(".js-messageClose").on("click", function(e) {
+      closeMessage(\$(this).closest(".Message"));
+    });
+
+    \$("#js-helpMe").on("click", function(e) {
+      alert("Precisa criar novamente a ISO");
+      closeMessage(\$(this).closest(".Message"));
+    });
+
+
+    \$(document).ready(function() {
+      setTimeout(function() {
+        //closeMessage(\$('#js-timer'));
+        closeMessage(\$('#js-timer2'));
+      }, 5000);
+    });    
+    
+  } );
+  </script>
+    <script type="text/javascript">
+        function fileReplaceDiv(i, div, file){
+        if(i == true){
+            setTimeout
+            (
+                function()
+                {
+                    $.ajax({
+                        url:file,
+                        type:'GET',
+                        error: function()  
+                        { 
+                            console.log("Loop");
+                            fileReplaceDiv(true, div, file);
+                        },
+                        success: function()
+                        {
+                            \$(div).load(file);
+                            fileReplaceDiv(true, div, file);
+                        }
+                    });
+                },
+                500
+            );
+        }
+        } 
+    </script>
+EOF
+echo "<script>fileReplaceDiv(true, '#checksum_biglinux', '/tmp/checksum_biglinux.html');</script>"
+echo '<div id=checksum_biglinux></div>'
+echo '<div id=progressbar><div id=textprogress></div></div>'
+# End checksum automatic reload
+cat << EOF
     <div class="fc-card animated fadeIn panel" id="fc-main">
+    
         <div class="centretext">
     <div id="desc">
       <br><br><br>
@@ -273,12 +360,8 @@ cat << EOF
   </ul>
 </div>
 </div>
-<br>
+<br>  
+<!-- partial --> 
 </body>
 </html>
-<!-- partial -->
-  
-</body>
-</html>
-
 EOF
