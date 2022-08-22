@@ -1,0 +1,58 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the biglinux-livecd package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: biglinux-livecd\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-01 06:12-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: be\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Desempenho"
+msgstr "Прадукцыйнасць"
+
+msgid "Escolha o desktop:"
+msgstr "Выберыце працоўны стол:"
+
+msgid "Escolha o modelo do teclado:"
+msgstr "Выберыце мадэль клавіятуры:"
+
+msgid "Escolha o tema dos aplicativos:"
+msgstr "Выберыце тэму прыкладання:"
+
+msgid ""
+"Renderizar o desktop via software<br><small>(Pode ser útil em máquina "
+"virtual)"
+msgstr ""
+"Рэндэрынг працоўнага стала праз праграмнае забеспячэнне<br> <small>(Можа "
+"быць карысным у віртуальнай машыне)"
+
+msgid "Tema"
+msgstr "Тэма"
+
+msgid ""
+"Utilizando renderização por software, a qualidade das transparências será "
+"reduzida."
+msgstr "З дапамогай праграмнага рэндэрынгу якасць празрыстасці будзе зніжана."
+
+msgid "e"
+msgstr "і"
+
+msgid "têm melhor desempenho."
+msgstr "мець лепшую прадукцыйнасць."
+
+#~ msgid ""
+#~ "Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no "
+#~ "vídeo)"
+#~ msgstr ""
+#~ "Выкарыстанне графічнага працэсара ў браўзэрах<br> <small>(Адключыць у "
+#~ "выпадку скажэння відэа)"

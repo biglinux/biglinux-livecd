@@ -1,0 +1,58 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the biglinux-livecd package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: biglinux-livecd\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-01 06:12-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: is\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Desempenho"
+msgstr "Árangur"
+
+msgid "Escolha o desktop:"
+msgstr "Veldu skjáborðið:"
+
+msgid "Escolha o modelo do teclado:"
+msgstr "Veldu lyklaborðslíkanið þitt:"
+
+msgid "Escolha o tema dos aplicativos:"
+msgstr "Veldu þema forritanna:"
+
+msgid ""
+"Renderizar o desktop via software<br><small>(Pode ser útil em máquina "
+"virtual)"
+msgstr ""
+"Sendu skjáborðið í gegnum hugbúnað <br><small>(Getur verið gagnlegt í "
+"sýndarvél)"
+
+msgid "Tema"
+msgstr "Þema"
+
+msgid ""
+"Utilizando renderização por software, a qualidade das transparências será "
+"reduzida."
+msgstr "Með því að nota hugbúnað flutningur, gæði af the gagnsæi mun minnka."
+
+msgid "e"
+msgstr "og"
+
+msgid "têm melhor desempenho."
+msgstr "standa sig betur."
+
+#~ msgid ""
+#~ "Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no "
+#~ "vídeo)"
+#~ msgstr ""
+#~ "Notaðu GPU í vöfrum <br><small>(Slökkva á ef um er að ræða röskun á "
+#~ "myndskeiðum)"

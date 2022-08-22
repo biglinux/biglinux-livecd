@@ -1,0 +1,59 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the biglinux-livecd package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: biglinux-livecd\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-01 06:12-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Desempenho"
+msgstr "Performance"
+
+msgid "Escolha o desktop:"
+msgstr "Choisissez votre bureau :"
+
+msgid "Escolha o modelo do teclado:"
+msgstr "Choisissez votre modèle de clavier :"
+
+msgid "Escolha o tema dos aplicativos:"
+msgstr "Choisissez le thème des applications :"
+
+msgid ""
+"Renderizar o desktop via software<br><small>(Pode ser útil em máquina "
+"virtual)"
+msgstr ""
+"Rendre le bureau par logiciel<br><small>(Peut être utile dans une machine "
+"virtuelle)"
+
+msgid "Tema"
+msgstr "Thème"
+
+msgid ""
+"Utilizando renderização por software, a qualidade das transparências será "
+"reduzida."
+msgstr ""
+"En utilisant le rendu logiciel, la qualité des transparents sera réduite."
+
+msgid "e"
+msgstr "et"
+
+msgid "têm melhor desempenho."
+msgstr "avoir de meilleures performances."
+
+#~ msgid ""
+#~ "Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no "
+#~ "vídeo)"
+#~ msgstr ""
+#~ "Utiliser le GPU dans les navigateurs<br><small>(Désactivé en cas de "
+#~ "distorsion vidéo)"
