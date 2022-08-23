@@ -2,57 +2,89 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the biglinux-livecd package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-01 06:12-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: attranslate\n"
 
 msgid "Desempenho"
 msgstr "Výkon"
 
-msgid "Escolha o desktop:"
-msgstr "Vyberte si pracovnú plochu:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Vyberte si model klávesnice:"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Vyberte si tému aplikácií:"
-
-msgid ""
-"Renderizar o desktop via software<br><small>(Pode ser útil em máquina "
-"virtual)"
-msgstr ""
-"Vykresľovanie pracovnej plochy pomocou softvéru<br><small>(Môže byť užitočné "
-"vo virtuálnom počítači)"
+msgid "Aceleração do navegador"
+msgstr "Zrýchlenie prehliadača"
 
 msgid "Tema"
 msgstr "Téma"
 
-msgid ""
-"Utilizando renderização por software, a qualidade das transparências será "
-"reduzida."
-msgstr "Pri použití softvérového vykresľovania sa zníži kvalita priehľadov."
+msgid "Fechar"
+msgstr "Zavrieť"
 
-msgid "e"
-msgstr "e"
+msgid ""
+"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
+"computadores<br>antigos ou ambientes virtualizados."
+msgstr ""
+"Táto téma má priehľadnosť s efektmi, ktoré<br>môže spomaliť systém na počítačoch<br>alebo "
+"virtualizované prostredia."
+
+msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
+msgstr "Vykresľovanie pracovnej plochy pomocou softvéru<br><small>(Môže byť užitočné vo virtuálnom počítači)"
+
+msgid "Utilizar GPU nos navegadores"
+msgstr "Používanie GPU v prehliadačoch"
+
+msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
+msgstr "Zlepšuje výkon, ale na niektorých zariadeniach spôsobuje nestabilitu"
+
+msgid "Escolha o desktop:"
+msgstr "Vyberte si pracovnú plochu:"
 
 msgid "têm melhor desempenho."
 msgstr "dosahovať lepšie výsledky."
 
-#~ msgid ""
-#~ "Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no "
-#~ "vídeo)"
-#~ msgstr ""
-#~ "Používanie GPU v prehliadačoch<br><small>(Vypnúť v prípade skreslenia "
-#~ "videa)"
+msgid "e"
+msgstr "e"
+
+msgid "Escolha o tema dos aplicativos:"
+msgstr "Vyberte si tému aplikácií:"
+
+msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
+msgstr "Pri použití softvérového vykresľovania sa zníži kvalita priehľadov."
+
+msgid "Escolha o modelo do teclado:"
+msgstr "Vyberte si model klávesnice:"
+
+msgid ""
+"\n"
+"<big><big>Oops!</big></big>\n"
+"A verificação de integridade falhou, é necessário fazer o download \n"
+"do sistema novamente ou utilizar outro pendrive.\n"
+"\n"
+"ERRO: checksum_biglinux\n"
+msgstr ""
+"\n"
+"<big><big>Jejda!</big></big>\n"
+"Kontrola stavu zlyhala, je potrebné stiahnuť \n"
+"znova systém alebo použite iný USB kľúč.\n"
+"\n"
+"CHYBA: checksum_biglinux"
+
+msgid "ERRO: A verificação de integridade falhou!"
+msgstr "CHYBA: Kontrola stavu zlyhala!"
+
+msgid "Erro."
+msgstr "Chyba."
+
+msgid "O sistema passou no teste de integridade."
+msgstr "Systém prešiel zdravotným testom."
+
+msgid "Verificando a integridade do sistema:"
+msgstr "Kontrola stavu systému:"

@@ -2,57 +2,89 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the biglinux-livecd package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-01 06:12-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: attranslate\n"
 
 msgid "Desempenho"
 msgstr "Prestanda"
 
-msgid "Escolha o desktop:"
-msgstr "Välj ditt skrivbord:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Välj din tangentbordsmodell:"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Välj tema för ansökningarna:"
-
-msgid ""
-"Renderizar o desktop via software<br><small>(Pode ser útil em máquina "
-"virtual)"
-msgstr ""
-"Återgivning av skrivbordet med hjälp av mjukvara<br><small>(Kan vara "
-"användbar i virtuell maskin)"
+msgid "Aceleração do navegador"
+msgstr "Webbläsarens acceleration"
 
 msgid "Tema"
 msgstr "Tema"
 
-msgid ""
-"Utilizando renderização por software, a qualidade das transparências será "
-"reduzida."
-msgstr ""
-"Om du använder mjukvaruåtergivning kommer kvaliteten på transparenter att "
-"försämras."
+msgid "Fechar"
+msgstr "Stänga"
 
-msgid "e"
-msgstr "e"
+msgid ""
+"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
+"computadores<br>antigos ou ambientes virtualizados."
+msgstr ""
+"Detta tema har OH-film med effekter som<br>kan sakta ner systemet på datorer<br>eller "
+"virtualiserade miljöer."
+
+msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
+msgstr "Återgivning av skrivbordet med hjälp av mjukvara<br><small>(Kan vara användbar i virtuell maskin)"
+
+msgid "Utilizar GPU nos navegadores"
+msgstr "Använd GPU i webbläsare"
+
+msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
+msgstr "Förbättrar prestanda, men på viss utrustning orsakar instabilitet"
+
+msgid "Escolha o desktop:"
+msgstr "Välj ditt skrivbord:"
 
 msgid "têm melhor desempenho."
 msgstr "presterar bättre."
 
-#~ msgid ""
-#~ "Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no "
-#~ "vídeo)"
-#~ msgstr "Använd GPU i webbläsare<br><small>(Inaktiveras vid videodistorsion)"
+msgid "e"
+msgstr "e"
+
+msgid "Escolha o tema dos aplicativos:"
+msgstr "Välj tema för ansökningarna:"
+
+msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
+msgstr "Om du använder mjukvaruåtergivning kommer kvaliteten på transparenter att försämras."
+
+msgid "Escolha o modelo do teclado:"
+msgstr "Välj din tangentbordsmodell:"
+
+msgid ""
+"\n"
+"<big><big>Oops!</big></big>\n"
+"A verificação de integridade falhou, é necessário fazer o download \n"
+"do sistema novamente ou utilizar outro pendrive.\n"
+"\n"
+"ERRO: checksum_biglinux\n"
+msgstr ""
+"\n"
+"<big><big>Hoppsan!</big></big>\n"
+"Hälsokontrollen misslyckades, det är nödvändigt att ladda ner \n"
+"systemet igen eller använd ett annat USB-minne.\n"
+"\n"
+"FEL: checksum_biglinux"
+
+msgid "ERRO: A verificação de integridade falhou!"
+msgstr "FEL: Hälsokontrollen misslyckades!"
+
+msgid "Erro."
+msgstr "Fel."
+
+msgid "O sistema passou no teste de integridade."
+msgstr "Systemet klarade hälsotestet."
+
+msgid "Verificando a integridade do sistema:"
+msgstr "Kontrollera systemets hälsa:"

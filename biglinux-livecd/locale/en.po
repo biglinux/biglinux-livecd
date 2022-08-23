@@ -2,55 +2,89 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the biglinux-livecd package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-01 06:12-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: attranslate\n"
 
 msgid "Desempenho"
 msgstr "Performance"
 
-msgid "Escolha o desktop:"
-msgstr "Choose the desktop:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Choose your keyboard model:"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Choose the theme for the applications:"
-
-msgid ""
-"Renderizar o desktop via software<br><small>(Pode ser útil em máquina "
-"virtual)"
-msgstr ""
-"Render the desktop via software<br><small>(May be useful in virtual machine)"
+msgid "Aceleração do navegador"
+msgstr "Browser acceleration"
 
 msgid "Tema"
 msgstr "Topic"
 
-msgid ""
-"Utilizando renderização por software, a qualidade das transparências será "
-"reduzida."
-msgstr ""
-"Using software rendering, the quality of transparencies will be reduced."
+msgid "Fechar"
+msgstr "Close"
 
-msgid "e"
-msgstr "and"
+msgid ""
+"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
+"computadores<br>antigos ou ambientes virtualizados."
+msgstr ""
+"This theme has transparencies with effects that<br>can slow the system down on computers<br>or "
+"virtualized environments."
+
+msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
+msgstr "Render the desktop via software<br><small>(May be useful in virtual machine)"
+
+msgid "Utilizar GPU nos navegadores"
+msgstr "Use GPU in browsers"
+
+msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
+msgstr "Improves performance, but on some equipment causes instability"
+
+msgid "Escolha o desktop:"
+msgstr "Choose the desktop:"
 
 msgid "têm melhor desempenho."
 msgstr "have better performance."
 
-#~ msgid ""
-#~ "Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no "
-#~ "vídeo)"
-#~ msgstr "Use GPU in browsers<br><small>(Disable in case of video distortion)"
+msgid "e"
+msgstr "and"
+
+msgid "Escolha o tema dos aplicativos:"
+msgstr "Choose the theme for the applications:"
+
+msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
+msgstr "Using software rendering, the quality of transparencies will be reduced."
+
+msgid "Escolha o modelo do teclado:"
+msgstr "Choose your keyboard model:"
+
+msgid ""
+"\n"
+"<big><big>Oops!</big></big>\n"
+"A verificação de integridade falhou, é necessário fazer o download \n"
+"do sistema novamente ou utilizar outro pendrive.\n"
+"\n"
+"ERRO: checksum_biglinux\n"
+msgstr ""
+"\n"
+"<big><big>Oops!</big></big>\n"
+"Health check failed, it is necessary to download \n"
+"system again or use another USB stick.\n"
+"\n"
+"ERROR: checksum_biglinux"
+
+msgid "ERRO: A verificação de integridade falhou!"
+msgstr "ERROR: Health check failed!"
+
+msgid "Erro."
+msgstr "Error."
+
+msgid "O sistema passou no teste de integridade."
+msgstr "The system passed the health test."
+
+msgid "Verificando a integridade do sistema:"
+msgstr "Checking system health:"

@@ -2,59 +2,91 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the biglinux-livecd package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-01 06:12-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: attranslate\n"
 
 msgid "Desempenho"
 msgstr "Производительность"
 
-msgid "Escolha o desktop:"
-msgstr "Выберите свой рабочий стол:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Выберите модель клавиатуры:"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Выберите тему приложений:"
-
-msgid ""
-"Renderizar o desktop via software<br><small>(Pode ser útil em máquina "
-"virtual)"
-msgstr ""
-"Рендеринг рабочего стола с помощью программного обеспечения<br><small>(Может "
-"быть полезно в виртуальной машине)"
+msgid "Aceleração do navegador"
+msgstr "Ускорение браузера"
 
 msgid "Tema"
 msgstr "Тема"
 
-msgid ""
-"Utilizando renderização por software, a qualidade das transparências será "
-"reduzida."
-msgstr ""
-"При использовании программного рендеринга качество прозрачных изображений "
-"будет снижено."
+msgid "Fechar"
+msgstr "Закрывать"
 
-msgid "e"
-msgstr "а также"
+msgid ""
+"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
+"computadores<br>antigos ou ambientes virtualizados."
+msgstr ""
+"Эта тема имеет прозрачные пленки с эффектами, которые<br>Может замедлить работу системы на "
+"компьютерах<br>или виртуализированные среды."
+
+msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
+msgstr ""
+"Рендеринг рабочего стола с помощью программного обеспечения<br><small>(Может быть полезно в "
+"виртуальной машине)"
+
+msgid "Utilizar GPU nos navegadores"
+msgstr "Использование GPU в браузерах"
+
+msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
+msgstr "Повышает производительность, но на некоторых устройствах вызывает нестабильность"
+
+msgid "Escolha o desktop:"
+msgstr "Выберите свой рабочий стол:"
 
 msgid "têm melhor desempenho."
 msgstr "иметь лучшую производительность."
 
-#~ msgid ""
-#~ "Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no "
-#~ "vídeo)"
-#~ msgstr ""
-#~ "Использование GPU в браузерах<br><small>(Отключается в случае искажения "
-#~ "видео)"
+msgid "e"
+msgstr "а также"
+
+msgid "Escolha o tema dos aplicativos:"
+msgstr "Выберите тему приложений:"
+
+msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
+msgstr "При использовании программного рендеринга качество прозрачных изображений будет снижено."
+
+msgid "Escolha o modelo do teclado:"
+msgstr "Выберите модель клавиатуры:"
+
+msgid ""
+"\n"
+"<big><big>Oops!</big></big>\n"
+"A verificação de integridade falhou, é necessário fazer o download \n"
+"do sistema novamente ou utilizar outro pendrive.\n"
+"\n"
+"ERRO: checksum_biglinux\n"
+msgstr ""
+"\n"
+"<big><big>Ой!</big></big>\n"
+"Проверка работоспособности не удалась, необходимо скачать \n"
+"снова система или используйте другой USB-накопитель.\n"
+"\n"
+"ОШИБКА: checksum_biglinux"
+
+msgid "ERRO: A verificação de integridade falhou!"
+msgstr "ОШИБКА: Не удалось проверить работоспособность!"
+
+msgid "Erro."
+msgstr "Ошибка."
+
+msgid "O sistema passou no teste de integridade."
+msgstr "Система прошла тест на работоспособность."
+
+msgid "Verificando a integridade do sistema:"
+msgstr "Проверка работоспособности системы:"

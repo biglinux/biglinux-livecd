@@ -2,59 +2,89 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the biglinux-livecd package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-01 06:12-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: attranslate\n"
 
 msgid "Desempenho"
 msgstr "Performanse"
 
-msgid "Escolha o desktop:"
-msgstr "Odaberite radnu površinu:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Odaberite model tipkovnice:"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Odaberite temu aplikacija:"
-
-msgid ""
-"Renderizar o desktop via software<br><small>(Pode ser útil em máquina "
-"virtual)"
-msgstr ""
-"Render desktop putem softvera <br><small>(Može biti korisno u virtualnom "
-"stroju)"
+msgid "Aceleração do navegador"
+msgstr "Ubrzanje preglednika"
 
 msgid "Tema"
 msgstr "Tema"
 
-msgid ""
-"Utilizando renderização por software, a qualidade das transparências será "
-"reduzida."
-msgstr ""
-"Korištenjem prikazivanja softvera, kvaliteta prozirnih folija bit će "
-"smanjena."
+msgid "Fechar"
+msgstr "Blizak"
 
-msgid "e"
-msgstr "i"
+msgid ""
+"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
+"computadores<br>antigos ou ambientes virtualizados."
+msgstr ""
+"Ova tema ima prozirnosti s učincima koji<br>može usporiti sustav na računalima<br>ili "
+"virtualizirana okruženja."
+
+msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
+msgstr "Render desktop putem softvera <br><small>(Može biti korisno u virtualnom stroju)"
+
+msgid "Utilizar GPU nos navegadores"
+msgstr "Korištenje GPU-a u preglednicima"
+
+msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
+msgstr "Poboljšava performanse, ali na nekoj opremi uzrokuje nestabilnost"
+
+msgid "Escolha o desktop:"
+msgstr "Odaberite radnu površinu:"
 
 msgid "têm melhor desempenho."
 msgstr "bolje."
 
-#~ msgid ""
-#~ "Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no "
-#~ "vídeo)"
-#~ msgstr ""
-#~ "Koristite GPU u preglednicima <br><small>(Onemogući u slučaju izobličenja "
-#~ "videozapisa)"
+msgid "e"
+msgstr "i"
+
+msgid "Escolha o tema dos aplicativos:"
+msgstr "Odaberite temu aplikacija:"
+
+msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
+msgstr "Korištenjem prikazivanja softvera, kvaliteta prozirnih folija bit će smanjena."
+
+msgid "Escolha o modelo do teclado:"
+msgstr "Odaberite model tipkovnice:"
+
+msgid ""
+"\n"
+"<big><big>Oops!</big></big>\n"
+"A verificação de integridade falhou, é necessário fazer o download \n"
+"do sistema novamente ou utilizar outro pendrive.\n"
+"\n"
+"ERRO: checksum_biglinux\n"
+msgstr ""
+"\n"
+"<big><big>Ups!</big></big>\n"
+"Zdravstvena provjera nije uspjela, potrebno je preuzeti \n"
+"ponovno sustav ili koristite drugi USB stick.\n"
+"\n"
+"POGREŠKA: checksum_biglinux"
+
+msgid "ERRO: A verificação de integridade falhou!"
+msgstr "POGREŠKA: Provjera stanja nije uspjela!"
+
+msgid "Erro."
+msgstr "Greška."
+
+msgid "O sistema passou no teste de integridade."
+msgstr "Sustav je prošao zdravstveni test."
+
+msgid "Verificando a integridade do sistema:"
+msgstr "Provjera stanja sustava:"

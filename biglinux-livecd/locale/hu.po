@@ -2,56 +2,89 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the biglinux-livecd package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-01 06:12-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: attranslate\n"
 
 msgid "Desempenho"
 msgstr "Teljesítmény"
 
-msgid "Escolha o desktop:"
-msgstr "Válassza ki az asztalt:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Válassza ki a billentyűzet modelljét:"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Válassza ki az alkalmazások témáját:"
-
-msgid ""
-"Renderizar o desktop via software<br><small>(Pode ser útil em máquina "
-"virtual)"
-msgstr ""
-"Az asztal megjelenítése szoftveresen<br><small>(Hasznos lehet virtuális "
-"gépben)"
+msgid "Aceleração do navegador"
+msgstr "Böngésző gyorsítás"
 
 msgid "Tema"
 msgstr "Téma"
 
-msgid ""
-"Utilizando renderização por software, a qualidade das transparências será "
-"reduzida."
-msgstr "A szoftveres renderelés használatával a fóliák minősége csökken."
+msgid "Fechar"
+msgstr "Bezár"
 
-msgid "e"
-msgstr "e"
+msgid ""
+"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
+"computadores<br>antigos ou ambientes virtualizados."
+msgstr ""
+"Ennek a témának vannak olyan átírásai, amelyek hatásai<br>lelassíthatja a rendszert a "
+"számítógépeken<br>vagy virtualizált környezetek."
+
+msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
+msgstr "Az asztal megjelenítése szoftveresen<br><small>(Hasznos lehet virtuális gépben)"
+
+msgid "Utilizar GPU nos navegadores"
+msgstr "GPU használata böngészőkben"
+
+msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
+msgstr "Javítja a teljesítményt, de egyes berendezéseken instabilitást okoz"
+
+msgid "Escolha o desktop:"
+msgstr "Válassza ki az asztalt:"
 
 msgid "têm melhor desempenho."
 msgstr "jobban teljesít."
 
-#~ msgid ""
-#~ "Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no "
-#~ "vídeo)"
-#~ msgstr ""
-#~ "GPU használata böngészőkben<br><small>(Videótorzulás esetén kikapcsolható)"
+msgid "e"
+msgstr "e"
+
+msgid "Escolha o tema dos aplicativos:"
+msgstr "Válassza ki az alkalmazások témáját:"
+
+msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
+msgstr "A szoftveres renderelés használatával a fóliák minősége csökken."
+
+msgid "Escolha o modelo do teclado:"
+msgstr "Válassza ki a billentyűzet modelljét:"
+
+msgid ""
+"\n"
+"<big><big>Oops!</big></big>\n"
+"A verificação de integridade falhou, é necessário fazer o download \n"
+"do sistema novamente ou utilizar outro pendrive.\n"
+"\n"
+"ERRO: checksum_biglinux\n"
+msgstr ""
+"\n"
+"<big><big>Hoppá!</big></big>\n"
+"Az állapot-ellenőrzés nem sikerült, le kell tölteni \n"
+"rendszer újra, vagy használjon másik USB-meghajtót.\n"
+"\n"
+"HIBA: checksum_biglinux"
+
+msgid "ERRO: A verificação de integridade falhou!"
+msgstr "HIBA: Az állapotellenőrzés sikertelen volt!"
+
+msgid "Erro."
+msgstr "Hiba."
+
+msgid "O sistema passou no teste de integridade."
+msgstr "A rendszer átment az egészségügyi teszten."
+
+msgid "Verificando a integridade do sistema:"
+msgstr "A rendszer állapotának ellenőrzése:"

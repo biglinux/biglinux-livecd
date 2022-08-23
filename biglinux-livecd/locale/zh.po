@@ -2,53 +2,87 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the biglinux-livecd package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-01 06:12-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: zh\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: attranslate\n"
 
 msgid "Desempenho"
 msgstr "业绩"
 
-msgid "Escolha o desktop:"
-msgstr "选择你的桌面。"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "选择你的键盘型号。"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "选择应用程序的主题。"
-
-msgid ""
-"Renderizar o desktop via software<br><small>(Pode ser útil em máquina "
-"virtual)"
-msgstr "通过软件渲染桌面<br><small>(可以在虚拟机中发挥作用)"
+msgid "Aceleração do navegador"
+msgstr "浏览器加速"
 
 msgid "Tema"
 msgstr "主题"
 
-msgid ""
-"Utilizando renderização por software, a qualidade das transparências será "
-"reduzida."
-msgstr "使用软件渲染，透明胶片的质量将被降低。"
+msgid "Fechar"
+msgstr "关闭"
 
-msgid "e"
-msgstr "和"
+msgid ""
+"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
+"computadores<br>antigos ou ambientes virtualizados."
+msgstr "这个主题有透明胶片，效果<br>可能会降低计算机上的系统速度<br>或虚拟化环境。"
+
+msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
+msgstr "通过软件渲染桌面<br><small>(可以在虚拟机中发挥作用)"
+
+msgid "Utilizar GPU nos navegadores"
+msgstr "在浏览器中使用 GPU"
+
+msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
+msgstr "提高性能，但在某些设备上会导致不稳定"
+
+msgid "Escolha o desktop:"
+msgstr "选择你的桌面。"
 
 msgid "têm melhor desempenho."
 msgstr "有更好的表現。"
 
-#~ msgid ""
-#~ "Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no "
-#~ "vídeo)"
-#~ msgstr "在浏览器中使用GPU<br><small>(在视频失真情况下禁用)"
+msgid "e"
+msgstr "和"
+
+msgid "Escolha o tema dos aplicativos:"
+msgstr "选择应用程序的主题。"
+
+msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
+msgstr "使用软件渲染，透明胶片的质量将被降低。"
+
+msgid "Escolha o modelo do teclado:"
+msgstr "选择你的键盘型号。"
+
+msgid ""
+"\n"
+"<big><big>Oops!</big></big>\n"
+"A verificação de integridade falhou, é necessário fazer o download \n"
+"do sistema novamente ou utilizar outro pendrive.\n"
+"\n"
+"ERRO: checksum_biglinux\n"
+msgstr ""
+"\n"
+"<big><big>哎呀！</big></big>\n"
+"健康检查失败，需要下载\n"
+"系统再次使用或使用另一个 U 盘。\n"
+"\n"
+"错误：checksum_biglinux"
+
+msgid "ERRO: A verificação de integridade falhou!"
+msgstr "错误：运行状况检查失败！"
+
+msgid "Erro."
+msgstr "错误。"
+
+msgid "O sistema passou no teste de integridade."
+msgstr "系统已通过运行状况测试。"
+
+msgid "Verificando a integridade do sistema:"
+msgstr "检查系统运行状况："

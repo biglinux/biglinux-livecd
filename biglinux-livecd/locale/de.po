@@ -2,56 +2,89 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the biglinux-livecd package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-01 06:12-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: attranslate\n"
 
 msgid "Desempenho"
 msgstr "Leistung"
 
-msgid "Escolha o desktop:"
-msgstr "Wählen Sie Ihren Desktop:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Wählen Sie Ihr Tastaturmodell:"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Wählen Sie das Thema der Anwendungen:"
-
-msgid ""
-"Renderizar o desktop via software<br><small>(Pode ser útil em máquina "
-"virtual)"
-msgstr ""
-"Rendering des Desktops per Software<br><small>(Kann in einer virtuellen "
-"Maschine nützlich sein)"
+msgid "Aceleração do navegador"
+msgstr "Browserbeschleunigung"
 
 msgid "Tema"
 msgstr "Thema"
 
-msgid ""
-"Utilizando renderização por software, a qualidade das transparências será "
-"reduzida."
-msgstr "Beim Software-Rendering wird die Qualität der Transparenzen reduziert."
+msgid "Fechar"
+msgstr "Schließen"
 
-msgid "e"
-msgstr "und"
+msgid ""
+"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
+"computadores<br>antigos ou ambientes virtualizados."
+msgstr ""
+"Dieses Thema hat Folien mit Effekten, die<br>kann das System auf Computern verlangsamen<br>oder "
+"virtualisierte Umgebungen."
+
+msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
+msgstr "Rendering des Desktops per Software<br><small>(Kann in einer virtuellen Maschine nützlich sein)"
+
+msgid "Utilizar GPU nos navegadores"
+msgstr "GPU in Browsern verwenden"
+
+msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
+msgstr "Verbessert die Leistung, verursacht aber bei einigen Geräten Instabilität"
+
+msgid "Escolha o desktop:"
+msgstr "Wählen Sie Ihren Desktop:"
 
 msgid "têm melhor desempenho."
 msgstr "bessere Leistung haben."
 
-#~ msgid ""
-#~ "Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no "
-#~ "vídeo)"
-#~ msgstr ""
-#~ "GPU in Browsern verwenden<br><small>(Bei Videoverzerrungen deaktivieren)"
+msgid "e"
+msgstr "und"
+
+msgid "Escolha o tema dos aplicativos:"
+msgstr "Wählen Sie das Thema der Anwendungen:"
+
+msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
+msgstr "Beim Software-Rendering wird die Qualität der Transparenzen reduziert."
+
+msgid "Escolha o modelo do teclado:"
+msgstr "Wählen Sie Ihr Tastaturmodell:"
+
+msgid ""
+"\n"
+"<big><big>Oops!</big></big>\n"
+"A verificação de integridade falhou, é necessário fazer o download \n"
+"do sistema novamente ou utilizar outro pendrive.\n"
+"\n"
+"ERRO: checksum_biglinux\n"
+msgstr ""
+"\n"
+"<big><big>Hoppla!</big></big>\n"
+"Zustandsprüfung fehlgeschlagen, es ist notwendig herunterzuladen \n"
+"System wieder oder verwenden Sie einen anderen USB-Stick.\n"
+"\n"
+"FEHLER: checksum_biglinux"
+
+msgid "ERRO: A verificação de integridade falhou!"
+msgstr "FEHLER: Zustandsprüfung fehlgeschlagen!"
+
+msgid "Erro."
+msgstr "Fehler."
+
+msgid "O sistema passou no teste de integridade."
+msgstr "Das System hat den Gesundheitstest bestanden."
+
+msgid "Verificando a integridade do sistema:"
+msgstr "Überprüfen des Systemzustands:"

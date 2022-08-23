@@ -2,58 +2,89 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the biglinux-livecd package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-01 06:12-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: attranslate\n"
 
 msgid "Desempenho"
 msgstr "Ydelse"
 
-msgid "Escolha o desktop:"
-msgstr "Vælg dit skrivebord:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Vælg din tastaturmodel:"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Vælg temaet for programmerne:"
-
-msgid ""
-"Renderizar o desktop via software<br><small>(Pode ser útil em máquina "
-"virtual)"
-msgstr ""
-"Gengivelse af skrivebordet via software<br><small>(Kan være nyttig i en "
-"virtuel maskine)"
+msgid "Aceleração do navegador"
+msgstr "Browser acceleration"
 
 msgid "Tema"
 msgstr "Tema"
 
-msgid ""
-"Utilizando renderização por software, a qualidade das transparências será "
-"reduzida."
-msgstr ""
-"Ved brug af softwarerensning vil kvaliteten af transparenter blive reduceret."
+msgid "Fechar"
+msgstr "Lukke"
 
-msgid "e"
-msgstr "e"
+msgid ""
+"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
+"computadores<br>antigos ou ambientes virtualizados."
+msgstr ""
+"Dette tema har transparenter med effekter, der<br>kan bremse systemet på computere<br>eller "
+"virtualiserede miljøer."
+
+msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
+msgstr "Gengivelse af skrivebordet via software<br><small>(Kan være nyttig i en virtuel maskine)"
+
+msgid "Utilizar GPU nos navegadores"
+msgstr "Brug GPU i browsere"
+
+msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
+msgstr "Forbedrer ydeevnen, men på nogle udstyr forårsager ustabilitet"
+
+msgid "Escolha o desktop:"
+msgstr "Vælg dit skrivebord:"
 
 msgid "têm melhor desempenho."
 msgstr "yde bedre."
 
-#~ msgid ""
-#~ "Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no "
-#~ "vídeo)"
-#~ msgstr ""
-#~ "Brug GPU i browsere<br><small>(Deaktiveres i tilfælde af "
-#~ "videoforvrængning)"
+msgid "e"
+msgstr "e"
+
+msgid "Escolha o tema dos aplicativos:"
+msgstr "Vælg temaet for programmerne:"
+
+msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
+msgstr "Ved brug af softwarerensning vil kvaliteten af transparenter blive reduceret."
+
+msgid "Escolha o modelo do teclado:"
+msgstr "Vælg din tastaturmodel:"
+
+msgid ""
+"\n"
+"<big><big>Oops!</big></big>\n"
+"A verificação de integridade falhou, é necessário fazer o download \n"
+"do sistema novamente ou utilizar outro pendrive.\n"
+"\n"
+"ERRO: checksum_biglinux\n"
+msgstr ""
+"\n"
+"<big><big>Ups!</big></big>\n"
+"Sundhedstjek mislykkedes, det er nødvendigt at downloade \n"
+"system igen eller brug en anden USB-stick.\n"
+"\n"
+"FEJL: checksum_biglinux"
+
+msgid "ERRO: A verificação de integridade falhou!"
+msgstr "FEJL: Sundhedstjek mislykkedes!"
+
+msgid "Erro."
+msgstr "Fejl."
+
+msgid "O sistema passou no teste de integridade."
+msgstr "Systemet bestod sundhedstesten."
+
+msgid "Verificando a integridade do sistema:"
+msgstr "Kontrolsystemets tilstand:"
