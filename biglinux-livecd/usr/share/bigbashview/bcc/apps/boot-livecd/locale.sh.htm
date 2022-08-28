@@ -26,6 +26,9 @@ else
   localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null
 fi
 
+# Run script to checksum
+nice -n+20 ionice -c 3 ./biglinux-verify-md5sum.sh > /dev/null 2>&1 &
+
 #Translation
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-livecd
@@ -100,8 +103,7 @@ cat << EOF
       
   </nav>
 EOF
-# Run script to checksum
-nice -n+20 ionice -c 3 ./biglinux-verify-md5sum.sh > /dev/null 2>&1 &
+
 
 # Add checksum automatic reload
 cat << EOF
