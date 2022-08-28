@@ -1,21 +1,6 @@
 #!/bin/bash
 
 
-# if [ "${LANG:0:2}" = "pt" ]
-# then
-#     BIGBASHVIEW_LANG="pt"
-#     sudo timedatectl set-timezone America/Sao_Paulo
-#     
-# elif [ "${LANG:0:2}" = "es" ]
-# then
-#     BIGBASHVIEW_LANG="es"
-#     
-# else
-#     BIGBASHVIEW_LANG="en"
-# fi
-
-
-
 # Virtualization fix open
 # if [ "$(lspci | grep -i vga | grep -i vmware)" != "" ]; then
 #     kwriteconfig5 --file ~/.config/kded5rc --group Module-kscreen --key autoload false
@@ -35,10 +20,17 @@ then
 Enabled=false' >> ~/.config/kwalletrc
 fi
 
-# Disable discover update in live
-# sudo rm -Rf /usr/share/plasma/plasmoids/org.kde.discovernotifier
-# sudo rm -f /etc/xdg/autostart/org.kde.discover.notifier.desktop
-# sudo rm -f /usr/lib/x86_64-linux-gnu/libexec/DiscoverNotifier
+# Verify cmdline biglinux.bootcmd
+eval "kernel_args=( $(cat /proc/cmdline) )"
+for arg in "${kernel_args[@]}" ; do
+    case "$arg" in
+        biglinux.bootcmd=*)
+            ${arg#biglinux.bootcmd=}
+            exit
+            ;;
+    esac
+done
+
 
 cd /usr/share/bigbashview/bcc/apps/boot-livecd/
 
