@@ -47,12 +47,12 @@ if [ "$browser_config" = "0" ]; then
     /usr/share/bigbashview/bcc/apps/biglinux-themes-gui/browser-auto.run quiet
 fi
 
-# if [ "$(cat "$HOME/.config/browser-optimize" 2>/dev/null)" = "" ]; then
-#     checked_browser_auto="checked"
-#     browser_config=1
-# else
-#     browser_config=0
-# fi
+if [ "$(cat "$HOME/.config/browser-optimize" 2>/dev/null)" = "" ]; then
+    checked_browser_auto="checked"
+    browser_config=1
+else
+    browser_config=0
+fi
 
 
 ######

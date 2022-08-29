@@ -16,6 +16,7 @@ echo "$language" > /tmp/big_language
 echo "$keyboard" > /tmp/big_keyboard
 echo "LANGUAGE=${language}.UTF-8" | sudo tee -a /etc/environment &>/dev/null &
 echo "LANG=${language}.UTF-8" | sudo tee -a /etc/environment &>/dev/null &
+echo "LC_MESSAGES=${language}.UTF-8" | sudo tee -a /etc/environment &>/dev/null &
 
 timedatectl set-timezone $timezone </dev/null &>/dev/null &
 timedatectl set-ntp 1 </dev/null &>/dev/null &
