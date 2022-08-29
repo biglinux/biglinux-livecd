@@ -44,6 +44,7 @@ fi
 
 export LANGUAGE=$(cat /tmp/big_language).UTF-8
 export LANG=$(cat /tmp/big_language).UTF-8
+export LC_MESSAGES=$(cat /tmp/big_language).UTF-8
 
 echo "[Formats]
 LANG=$(cat /tmp/big_language).UTF-8" > $HOME/.config/plasma-localerc
