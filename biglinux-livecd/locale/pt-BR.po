@@ -56,19 +56,6 @@ msgstr "têm melhor desempenho."
 msgid "e"
 msgstr "e"
 
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Escolha o tema dos aplicativos:"
-
-msgid ""
-"Utilizando renderização por software, a qualidade das transparências será "
-"reduzida."
-msgstr ""
-"Utilizando renderização por software, a qualidade das transparências será "
-"reduzida."
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Escolha o modelo do teclado:"
-
 msgid ""
 "\n"
 "<big><big>Oops!</big></big>\n"
@@ -86,6 +73,19 @@ msgstr ""
 
 msgid "ERRO: A verificação de integridade falhou!"
 msgstr "ERRO: A verificação de integridade falhou!"
+
+msgid "Escolha o modelo do teclado:"
+msgstr "Escolha o modelo do teclado:"
+
+msgid "Escolha o tema dos aplicativos:"
+msgstr "Escolha o tema dos aplicativos:"
+
+msgid ""
+"Utilizando renderização por software, a qualidade das transparências será "
+"reduzida."
+msgstr ""
+"Utilizando renderização por software, a qualidade das transparências será "
+"reduzida."
 
 msgid "Erro."
 msgstr "Erro."

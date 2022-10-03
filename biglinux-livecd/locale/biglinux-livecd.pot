@@ -49,16 +49,6 @@ msgstr  ""
 msgid   "e"
 msgstr  ""
 
-msgid   "Escolha o tema dos aplicativos:"
-msgstr  ""
-
-msgid   "Utilizando renderização por software, a qualidade das transparências "
-        "será reduzida."
-msgstr  ""
-
-msgid   "Escolha o modelo do teclado:"
-msgstr  ""
-
 msgid   "\n"
         "<big><big>Oops!</big></big>\n"
         "A verificação de integridade falhou, é necessário fazer o download \n"
@@ -68,6 +58,16 @@ msgid   "\n"
 msgstr  ""
 
 msgid   "ERRO: A verificação de integridade falhou!"
+msgstr  ""
+
+msgid   "Escolha o modelo do teclado:"
+msgstr  ""
+
+msgid   "Escolha o tema dos aplicativos:"
+msgstr  ""
+
+msgid   "Utilizando renderização por software, a qualidade das transparências "
+        "será reduzida."
 msgstr  ""
 
 msgid   "Erro."
