@@ -1,8 +1,5 @@
 #!/bin/bash
 
-exec 2> /home/biglinux/xpto.log
-exec 1>&2
-
 #copy pacman keys
 sudo mkdir -p /etc/pacman.d/gnupg/
 sudo cp -f /usr/share/pacman/keyrings/pubring.gpg /etc/pacman.d/gnupg/
