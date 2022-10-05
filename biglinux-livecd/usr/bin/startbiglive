@@ -1,5 +1,14 @@
 #!/bin/bash
 
+exec 2> /home/biglinux/xpto.log
+exec 1>&2
+
+#copy pacman keys
+sudo mkdir -p /etc/pacman.d/gnupg/
+sudo cp -f /usr/share/pacman/keyrings/pubring.gpg /etc/pacman.d/gnupg/
+sudo cp -f /usr/share/pacman/keyrings/trustdb.gpg /etc/pacman.d/gnupg/
+sudo pacman -R --noconfirm biglinux-key
+
 
 # Virtualization fix open
 # if [ "$(lspci | grep -i vga | grep -i vmware)" != "" ]; then
@@ -65,11 +74,5 @@ chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 chmod +x /tmp/biglightdm
 cd ~
 /tmp/biglightdm
-
-#copy pacman keys
-sudo mkdir -p /etc/pacman.d/gnupg/
-sudo cp -f /usr/share/pacman/keyrings/pubring.gpg /etc/pacman.d/gnupg/
-sudo cp -f /usr/share/pacman/keyrings/trustdb.gpg /etc/pacman.d/gnupg/
-sudo pacman -R --noconfirm biglinux-key
 
 sudo systemctl restart sddm
