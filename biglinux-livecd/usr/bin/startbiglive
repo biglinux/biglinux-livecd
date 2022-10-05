@@ -70,11 +70,6 @@ cd ~
 sudo mkdir -p /etc/pacman.d/gnupg/
 sudo cp -f /usr/share/pacman/keyrings/pubring.gpg /etc/pacman.d/gnupg/
 sudo cp -f /usr/share/pacman/keyrings/trustdb.gpg /etc/pacman.d/gnupg/
-
-#copy keys
-sudo mkdir -p /etc/pacman.d/gnupg/
-sudo cp -f /usr/share/pacman/keyrings/pubring.gpg /etc/pacman.d/gnupg/
-sudo cp -f /usr/share/pacman/keyrings/trustdb.gpg /etc/pacman.d/gnupg/
 sudo pacman -R --noconfirm biglinux-key
 
 sudo systemctl restart sddm
