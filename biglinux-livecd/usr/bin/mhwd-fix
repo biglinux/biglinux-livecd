@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ -e "/livefs-pkgs.txt" -a -n "$(grep 'driver=free' /proc/cmdline)" ]; then
+echo '#!/bin/sh
+
+echo "Disable mhwd-live"' > /usr/bin/mhwd-live
+fi

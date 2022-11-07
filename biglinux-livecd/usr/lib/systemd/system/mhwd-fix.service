@@ -1,0 +1,11 @@
+[Unit]
+Description=disable mhwd if opensource driver
+Before=mhwd-live.service
+
+[Service]
+ExecStart=/usr/bin/mhwd-fix
+Type=oneshot
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
