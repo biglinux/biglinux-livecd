@@ -10,6 +10,7 @@ pkgdesc="Complete control center to use in BigLinux with KDE"
 depends=('bigbashview')
 source=("git+https://github.com/biglinux/biglinux-livecd.git")
 md5sums=(SKIP)
+install=${pkgname}.install
 
 package() {
     # Verify default folder
