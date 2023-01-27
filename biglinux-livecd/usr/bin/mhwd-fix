@@ -6,6 +6,12 @@ echo '#!/bin/sh
 echo "Disable mhwd-live"' > /usr/bin/mhwd-live
 fi
 
+if [ -e "/livefs-pkgs.txt" -a -n "$(grep 'driver=nonfree' /proc/cmdline)" ]; then
+echo '#!/bin/sh
+
+true' > /usr/bin/mkinitcpio
+fi
+
 # Enable ssh if cmdline have sshenable
 if [ "$(grep sshenable /proc/cmdline)" != "" ]; then
     echo "biglinux:biglinux" | chpasswd
