@@ -1,5 +1,0 @@
-#!/bin/bash
-
-biglinux-themes.sh --apply fluent-dark
-
-echo "fluent-dark" > "/tmp/big_desktop_theme"

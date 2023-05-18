@@ -1,5 +1,0 @@
-#!/bin/bash
-
-biglinux-themes.sh --apply materia-dark
-
-echo "materia-dark" > "/tmp/big_desktop_theme"

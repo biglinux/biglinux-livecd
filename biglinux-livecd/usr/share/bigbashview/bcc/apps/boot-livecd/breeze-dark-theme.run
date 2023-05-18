@@ -1,4 +1,0 @@
-biglinux-themes.sh --apply breeze-dark
-
-echo "breeze-dark" > "/tmp/big_desktop_theme"
-

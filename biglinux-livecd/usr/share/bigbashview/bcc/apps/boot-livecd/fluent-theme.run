@@ -1,5 +1,0 @@
-#!/bin/bash
-
-biglinux-themes.sh --apply fluent
-
-echo "fluent" > "/tmp/big_desktop_theme"
