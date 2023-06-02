@@ -14,9 +14,6 @@ msgstr  "Project-Id-Version: biglinux-livecd\n"
         "Content-Type: text/plain; charset=UTF-8\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-msgid   "Escolha o modelo do teclado:"
-msgstr  ""
-
 msgid   "Erro."
 msgstr  ""
 
@@ -26,11 +23,25 @@ msgstr  ""
 msgid   "Verificando a integridade do sistema:"
 msgstr  ""
 
+msgid   "\n"
+        "<big><big>Oops!</big></big>\n"
+        "A verificação de integridade falhou, é necessário fazer o download \n"
+        "do sistema novamente ou utilizar outro pendrive.\n"
+        "\n"
+        "ERRO: checksum_biglinux\n"
+msgstr  ""
+
+msgid   "ERRO: A verificação de integridade falhou!"
+msgstr  ""
+
 msgid   "Escolha o tema dos aplicativos:"
 msgstr  ""
 
 msgid   "Utilizando renderização por software, a qualidade das transparências "
         "será reduzida."
+msgstr  ""
+
+msgid   "Escolha o modelo do teclado:"
 msgstr  ""
 
 msgid   "Desempenho"
@@ -66,15 +77,4 @@ msgid   "têm melhor desempenho."
 msgstr  ""
 
 msgid   "e"
-msgstr  ""
-
-msgid   "\n"
-        "<big><big>Oops!</big></big>\n"
-        "A verificação de integridade falhou, é necessário fazer o download \n"
-        "do sistema novamente ou utilizar outro pendrive.\n"
-        "\n"
-        "ERRO: checksum_biglinux\n"
-msgstr  ""
-
-msgid   "ERRO: A verificação de integridade falhou!"
 msgstr  ""
