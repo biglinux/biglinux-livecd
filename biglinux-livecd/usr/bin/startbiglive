@@ -12,7 +12,26 @@
 #     kwriteconfig5 --file ~/.config/kded5rc --group Module-kscreen --key autoload false
 # fi
 # Virtualization fix close
+# Obtém a lista de monitores disponíveis usando xrandr
 
+monitores=$(xrandr | grep -w connected | awk '{print $1}')
+
+# Obtém a resolução recomendada do primeiro monitor
+primeiro_monitor=$(echo $monitores | awk '{print $1}')
+resolucao_primeiro_monitor=$(xrandr | grep "$primeiro_monitor connected" -A1 | tail -n1 | awk '{print $1}')
+
+# Cria uma string para armazenar a configuração xrandr
+configuracao_xrandr=""
+
+# Loop pelos monitores (exceto o primeiro) para construir a configuração xrandr
+for monitor in $monitores; do
+    if [ "$monitor" != "$primeiro_monitor" ]; then
+        configuracao_xrandr="$configuracao_xrandr --output $monitor --same-as $primeiro_monitor --mode $resolucao_primeiro_monitor"
+    fi
+done
+
+# Aplica a configuração xrandr para duplicar a saída em todos os monitores
+xrandr $configuracao_xrandr
 
 
 if [ "$(grep 'Autolock=false' ~/.config/kscreenlockerrc)" = "" ];
