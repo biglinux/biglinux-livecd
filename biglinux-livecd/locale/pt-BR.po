@@ -15,18 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Escolha o modelo do teclado:"
-msgstr "Escolha o modelo do teclado:"
-
-msgid "Erro."
-msgstr "Erro."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "O sistema passou no teste de integridade."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Verificando a integridade do sistema:"
-
 msgid "Escolha o tema dos aplicativos:"
 msgstr "Escolha o tema dos aplicativos:"
 
@@ -36,6 +24,9 @@ msgid ""
 msgstr ""
 "Utilizando renderização por software, a qualidade das transparências será "
 "reduzida."
+
+msgid "Escolha o modelo do teclado:"
+msgstr "Escolha o modelo do teclado:"
 
 msgid "Desempenho"
 msgstr "Desempenho"
@@ -95,3 +86,12 @@ msgstr ""
 
 msgid "ERRO: A verificação de integridade falhou!"
 msgstr "ERRO: A verificação de integridade falhou!"
+
+msgid "Erro."
+msgstr "Erro."
+
+msgid "O sistema passou no teste de integridade."
+msgstr "O sistema passou no teste de integridade."
+
+msgid "Verificando a integridade do sistema:"
+msgstr "Verificando a integridade do sistema:"
