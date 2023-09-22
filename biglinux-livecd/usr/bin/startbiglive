@@ -59,7 +59,7 @@ done
 
 cd /usr/share/bigbashview/bcc/apps/boot-livecd/
 if systemctl -q is-enabled biglinux-dual-gpu-manager-after-display-manager; then
-    systemctl start biglinux-dual-gpu-manager-after-display-manager
+    sudo systemctl start biglinux-dual-gpu-manager-after-display-manager 2>&1 &
 fi
 
 if [ -e "/tmp/big_desktop_theme" ]; then
