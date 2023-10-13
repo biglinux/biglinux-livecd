@@ -62,11 +62,7 @@ if systemctl -q is-enabled biglinux-dual-gpu-manager-after-display-manager; then
     sudo systemctl start biglinux-dual-gpu-manager-after-display-manager 2>&1 &
 fi
 
-if [ -e "/tmp/big_desktop_theme" ]; then
-    QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" /usr/bin/bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.sh.htm
-else
-    QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" /usr/bin/bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.html
-fi
+QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" /usr/bin/bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.html
 
 export LANGUAGE=$(cat /tmp/big_language).UTF-8
 export LANG=$(cat /tmp/big_language).UTF-8
