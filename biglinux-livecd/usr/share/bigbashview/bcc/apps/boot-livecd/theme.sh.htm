@@ -29,11 +29,11 @@ done
 
 if [ "$keyboard" != "" ]; then
 
-    setxkbmap $keyboard  </dev/null &>/dev/null &
+    setxkbmap "${keyboard//\\/}"  </dev/null &>/dev/null &
     echo "$keyboard" > /tmp/big_keyboard
 else
     if [ -e "/tmp/big_keyboard" ]; then
-        setxkbmap $(cat /tmp/big_keyboard)  </dev/null &>/dev/null &
+        setxkbmap "$(sed 's|\\||g' /tmp/big_keyboard)"  </dev/null &>/dev/null &
         #localectl set-x11-keymap $(cat /tmp/big_keyboard)
     fi
 fi
