@@ -28,6 +28,22 @@ msgstr  ""
 msgid   "Escolha o modelo do teclado:"
 msgstr  ""
 
+msgid   "Escolha o tema dos aplicativos:"
+msgstr  ""
+
+msgid   "Utilizando renderização por software, a qualidade das transparências "
+        "será reduzida."
+msgstr  ""
+
+msgid   "Erro."
+msgstr  ""
+
+msgid   "O sistema passou no teste de integridade."
+msgstr  ""
+
+msgid   "Verificando a integridade do sistema:"
+msgstr  ""
+
 msgid   "Desempenho"
 msgstr  ""
 
@@ -61,20 +77,4 @@ msgid   "têm melhor desempenho."
 msgstr  ""
 
 msgid   "e"
-msgstr  ""
-
-msgid   "Escolha o tema dos aplicativos:"
-msgstr  ""
-
-msgid   "Utilizando renderização por software, a qualidade das transparências "
-        "será reduzida."
-msgstr  ""
-
-msgid   "Erro."
-msgstr  ""
-
-msgid   "O sistema passou no teste de integridade."
-msgstr  ""
-
-msgid   "Verificando a integridade do sistema:"
 msgstr  ""

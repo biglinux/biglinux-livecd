@@ -36,6 +36,25 @@ msgstr "ERRO: A verificação de integridade falhou!"
 msgid "Escolha o modelo do teclado:"
 msgstr "Escolha o modelo do teclado:"
 
+msgid "Escolha o tema dos aplicativos:"
+msgstr "Escolha o tema dos aplicativos:"
+
+msgid ""
+"Utilizando renderização por software, a qualidade das transparências será "
+"reduzida."
+msgstr ""
+"Utilizando renderização por software, a qualidade das transparências será "
+"reduzida."
+
+msgid "Erro."
+msgstr "Erro."
+
+msgid "O sistema passou no teste de integridade."
+msgstr "O sistema passou no teste de integridade."
+
+msgid "Verificando a integridade do sistema:"
+msgstr "Verificando a integridade do sistema:"
+
 msgid "Desempenho"
 msgstr "Desempenho"
 
@@ -76,22 +95,3 @@ msgstr "têm melhor desempenho."
 
 msgid "e"
 msgstr "e"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Escolha o tema dos aplicativos:"
-
-msgid ""
-"Utilizando renderização por software, a qualidade das transparências será "
-"reduzida."
-msgstr ""
-"Utilizando renderização por software, a qualidade das transparências será "
-"reduzida."
-
-msgid "Erro."
-msgstr "Erro."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "O sistema passou no teste de integridade."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Verificando a integridade do sistema:"
