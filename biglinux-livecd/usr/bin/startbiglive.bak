@@ -1,0 +1,91 @@
+#!/bin/bash
+
+# #copy pacman keys
+# sudo mkdir -p /etc/pacman.d/gnupg/
+# sudo cp -f /usr/share/pacman/keyrings/pubring.gpg /etc/pacman.d/gnupg/
+# sudo cp -f /usr/share/pacman/keyrings/trustdb.gpg /etc/pacman.d/gnupg/
+# sudo pacman -R --noconfirm biglinux-key
+
+
+# Virtualization fix open
+# if [ "$(lspci | grep -i vga | grep -i vmware)" != "" ]; then
+#     kwriteconfig5 --file ~/.config/kded5rc --group Module-kscreen --key autoload false
+# fi
+# Virtualization fix close
+# Obtém a lista de monitores disponíveis usando xrandr
+
+monitores=$(xrandr | grep -w connected | awk '{print $1}')
+
+# Obtém a resolução recomendada do primeiro monitor
+primeiro_monitor=$(echo $monitores | awk '{print $1}')
+resolucao_primeiro_monitor=$(xrandr | grep "$primeiro_monitor connected" -A1 | tail -n1 | awk '{print $1}')
+
+# Cria uma string para armazenar a configuração xrandr
+configuracao_xrandr=""
+
+# Loop pelos monitores (exceto o primeiro) para construir a configuração xrandr
+for monitor in $monitores; do
+    if [ "$monitor" != "$primeiro_monitor" ]; then
+        configuracao_xrandr="$configuracao_xrandr --output $monitor --same-as $primeiro_monitor --mode $resolucao_primeiro_monitor"
+    fi
+done
+
+# Aplica a configuração xrandr para duplicar a saída em todos os monitores
+xrandr $configuracao_xrandr
+
+
+if [ "$(grep 'Autolock=false' ~/.config/kscreenlockerrc)" = "" ];
+then
+    sed -i '/\[Daemon\]/a\'$'\n''Autolock=false\nLockOnResume=false' ~/.config/kscreenlockerrc
+fi
+
+if [ "$(grep 'Enabled=false' ~/.config/kwalletrc)" = "" ];
+then
+    echo '[Wallet]
+Enabled=false' >> ~/.config/kwalletrc
+fi
+
+# Verify cmdline biglinux.bootcmd
+eval "kernel_args=( $(cat /proc/cmdline) )"
+for arg in "${kernel_args[@]}" ; do
+    case "$arg" in
+        biglinux.bootcmd=*)
+            ${arg#biglinux.bootcmd=}
+            exit
+            ;;
+    esac
+done
+
+
+cd /usr/share/bigbashview/bcc/apps/boot-livecd/
+if systemctl -q is-enabled biglinux-dual-gpu-manager-after-display-manager; then
+    sudo systemctl start biglinux-dual-gpu-manager-after-display-manager 2>&1 &
+fi
+
+QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" /usr/bin/bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.html
+
+export LANGUAGE=$(cat /tmp/big_language).UTF-8
+export LANG=$(cat /tmp/big_language).UTF-8
+export LC_MESSAGES=$(cat /tmp/big_language).UTF-8
+
+echo "[Formats]
+LANG=$(cat /tmp/big_language).UTF-8" > $HOME/.config/plasma-localerc
+
+echo "$(cat /tmp/big_language)" > $HOME/.config/user-dirs.locale
+
+#Apply desktop configuration
+change-plasma-theme --apply $(cut -f2 -d" " /etc/big_desktop_changed) clean quiet
+
+#Make folders in home
+wait
+LC_ALL=$(cat /tmp/big_language).UTF-8 xdg-user-dirs-update
+. ~/.config/user-dirs.dirs
+cp -f "/usr/share/applications/calamares-biglinux.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
+chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
+
+
+chmod +x /tmp/biglightdm
+cd ~
+/tmp/biglightdm
+
+sudo systemctl restart sddm
