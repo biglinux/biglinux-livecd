@@ -11,18 +11,26 @@ apply_config_if_absent() {
     fi
 }
 
-# Identifica o ambiente de desktop
-desktop_env=$(echo $XDG_CURRENT_DESKTOP | tr '[:upper:]' '[:lower:]')
-
-# Configurações específicas para KDE
-if [[ $desktop_env == *"kde"* ]]; then
-    apply_config_if_absent ~/.config/kscreenlockerrc 'Autolock=false' '[Daemon]\nAutolock=false\nLockOnResume=false'
-    apply_config_if_absent ~/.config/kwalletrc 'Enabled=false' '[Wallet]\nEnabled=false'
-    # Outras configurações específicas do KDE podem ser adicionadas aqui
+# Identifica o gerenciador de exibição e/ou sessão
+if systemctl status sddm &> /dev/null; then
+    display_manager="sddm"
+elif systemctl status gdm &> /dev/null; then
+    display_manager="gdm"
+elif systemctl status lightdm &> /dev/null; then
+    display_manager="lightdm"
+else
+    display_manager="unknown"
 fi
 
-# Configurações específicas para GNOME
-if [[ $desktop_env == *"gnome"* ]]; then
+# Configurações específicas para SDDM (KDE e LXQT)
+if [[ $display_manager == "sddm" ]]; then
+    apply_config_if_absent ~/.config/kscreenlockerrc 'Autolock=false' '[Daemon]\nAutolock=false\nLockOnResume=false'
+    apply_config_if_absent ~/.config/kwalletrc 'Enabled=false' '[Wallet]\nEnabled=false'
+    # Outras configurações específicas do KDE e LXQT podem ser adicionadas aqui
+fi
+
+# Configurações específicas para GDM (GNOME)
+if [[ $display_manager == "gdm" ]]; then
     # Adicione aqui as configurações específicas do GNOME
 fi
 
@@ -87,14 +95,21 @@ chmod +x /tmp/biglightdm
 /tmp/biglightdm
 
 # Reinicia o gerenciador de exibição apropriado
-if [[ $desktop_env == *"gnome"* ]]; then
-    # Para ambientes GNOME, geralmente usa-se o GDM
-    sudo systemctl restart gdm
-elif [[ $desktop_env == *"kde"* ]]; then
-    # Para ambientes KDE, geralmente usa-se o SDDM
-    sudo systemctl restart sddm
-else
-    # Para outros ambientes, pode-se usar o LightDM ou outro
-    # Substitua 'lightdm' pelo gerenciador de exibição desejado, se necessário
-    sudo systemctl restart lightdm
-fi
+case $display_manager in
+    "sddm")
+        # Para ambientes KDE e LXQT
+        sudo systemctl restart sddm
+        ;;
+    "gdm")
+        # Para ambientes GNOME
+        sudo systemctl restart gdm
+        ;;
+    "lightdm")
+        # Para outros ambientes, usando LightDM
+        sudo systemctl restart lightdm
+        ;;
+    *)
+        # Se o gerenciador de exibição não for identificado
+        echo "Gerenciador de exibição desconhecido. Não é possível reiniciar."
+        ;;
+esac
