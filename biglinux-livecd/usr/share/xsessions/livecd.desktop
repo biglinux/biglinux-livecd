@@ -3,4 +3,4 @@ Type=XSession
 Exec=/usr/bin/startbiglive
 TryExec=/usr/bin/startplasma-x11
 DesktopNames=livecd
-Name=livecd
+Name=Live CD Xorg

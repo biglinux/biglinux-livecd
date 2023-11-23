@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/bin/startbiglive
+TryExec=/usr/bin/startplasma-wayland
+DesktopNames=livecd
+Name=Live CD Wayland
