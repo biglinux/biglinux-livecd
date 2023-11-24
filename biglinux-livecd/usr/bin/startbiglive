@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Verifica o tipo de sessão e move o diretório apropriado
+if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+    sudo mv /usr/share/wayland-sessions /usr/share/wayland-sessions.bak
+elif [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    sudo mv /usr/share/xsessions /usr/share/xsessions.bak
+fi
+
 # Identifica o gerenciador de exibição e/ou sessão
 if systemctl status sddm &> /dev/null; then
     display_manager="sddm"
