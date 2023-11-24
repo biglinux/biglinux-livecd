@@ -1,15 +1,18 @@
 #!/bin/bash
 
-# Identifica o gerenciador de exibição e/ou sessão
-if systemctl status sddm &> /dev/null; then
-    display_manager="sddm"
-elif systemctl status gdm &> /dev/null; then
-    display_manager="gdm"
-elif systemctl status lightdm &> /dev/null; then
-    display_manager="lightdm"
-else
-    display_manager="unknown"
-fi
+# #copy pacman keys
+# sudo mkdir -p /etc/pacman.d/gnupg/
+# sudo cp -f /usr/share/pacman/keyrings/pubring.gpg /etc/pacman.d/gnupg/
+# sudo cp -f /usr/share/pacman/keyrings/trustdb.gpg /etc/pacman.d/gnupg/
+# sudo pacman -R --noconfirm biglinux-key
+
+
+# Virtualization fix open
+# if [ "$(lspci | grep -i vga | grep -i vmware)" != "" ]; then
+#     kwriteconfig5 --file ~/.config/kded5rc --group Module-kscreen --key autoload false
+# fi
+# Virtualization fix close
+# Obtém a lista de monitores disponíveis usando xrandr
 
 monitores=$(xrandr | grep -w connected | awk '{print $1}')
 
@@ -53,13 +56,12 @@ for arg in "${kernel_args[@]}" ; do
     esac
 done
 
-# Gerencia o serviço biglinux-dual-gpu-manager-after-display-manager
+
 cd /usr/share/bigbashview/bcc/apps/boot-livecd/
 if systemctl -q is-enabled biglinux-dual-gpu-manager-after-display-manager; then
     sudo systemctl start biglinux-dual-gpu-manager-after-display-manager 2>&1 &
 fi
 
-# Configurações de ambiente para QT e executa bigbashview
 QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" /usr/bin/bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.html
 
 export LANGUAGE=$(cat /tmp/big_language).UTF-8
@@ -81,24 +83,9 @@ LC_ALL=$(cat /tmp/big_language).UTF-8 xdg-user-dirs-update
 cp -f "/usr/share/applications/calamares-biglinux.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 
-# Configurações específicas para SDDM (KDE/LXQT)
-if [[ $display_manager == "sddm" ]]; then
-    chmod +x /tmp/biglightdm
-    cd ~
-    /tmp/biglightdm
-    sudo systemctl restart sddm
 
-# Configurações específicas para GDM (GNOME)
-elif [[ $display_manager == "gdm" ]]; then
-        chmod +x /tmp/biglightdm
-    cd ~
-    /tmp/biglightdm
-    sudo systemctl restart gdm
+chmod +x /tmp/biglightdm
+cd ~
+/tmp/biglightdm
 
-# Configurações específicas para LIGTHDM
-elif [[ $display_manager == "lightdm" ]]; then
-    chmod +x /tmp/biglightdm
-    cd ~
-    /tmp/biglightdm
-    sudo systemctl restart lightdm
-fi
+sudo systemctl restart sddm
