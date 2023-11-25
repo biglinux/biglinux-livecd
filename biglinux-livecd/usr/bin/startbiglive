@@ -1,52 +1,53 @@
 #!/bin/bash
 
-# Verifica o tipo de sessão e move o diretório apropriado
+# Identify the display manager
+for dm in sddm gdm lightdm; do
+    if systemctl status $dm &> /dev/null; then
+        display_manager=$dm
+        break
+    fi
+done
+display_manager=${display_manager:-"unknown"}
+
+# Check the session type and move to the appropriate directory
 if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+    # Rename the Wayland session
     sudo mv /usr/share/wayland-sessions /usr/share/wayland-sessions.bak
+
+    monitors=$(xrandr | grep -w connected | awk '{print $1}')
+
+    # Get the recommended resolution of the first monitor
+    first_monitor=$(echo $monitors | awk '{print $1}')
+    resolution_first_monitor=$(xrandr | grep "$first_monitor connected" -A1 | tail -n1 | awk '{print $1}')
+
+    # Create a string to store the xrandr configuration
+    xrandr_configuration=""
+
+    # Loop through monitors (excluding the first one) to build the xrandr configuration
+    for monitor in $monitors; do
+        if [ "$monitor" != "$first_monitor" ]; then
+            xrandr_configuration="$xrandr_configuration --output $monitor --same-as $first_monitor --mode $resolution_first_monitor"
+        fi
+    done
+
+    # Apply the xrandr configuration to duplicate the output on all monitors
+    xrandr $xrandr_configuration
+
 elif [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    # Rename the X11 session
     sudo mv /usr/share/xsessions /usr/share/xsessions.bak
 fi
 
-# Identifica o gerenciador de exibição e/ou sessão
-if systemctl status sddm &> /dev/null; then
-    display_manager="sddm"
-elif systemctl status gdm &> /dev/null; then
-    display_manager="gdm"
-elif systemctl status lightdm &> /dev/null; then
-    display_manager="lightdm"
-else
-    display_manager="unknown"
-fi
-
-monitores=$(xrandr | grep -w connected | awk '{print $1}')
-
-# Obtém a resolução recomendada do primeiro monitor
-primeiro_monitor=$(echo $monitores | awk '{print $1}')
-resolucao_primeiro_monitor=$(xrandr | grep "$primeiro_monitor connected" -A1 | tail -n1 | awk '{print $1}')
-
-# Cria uma string para armazenar a configuração xrandr
-configuracao_xrandr=""
-
-# Loop pelos monitores (exceto o primeiro) para construir a configuração xrandr
-for monitor in $monitores; do
-    if [ "$monitor" != "$primeiro_monitor" ]; then
-        configuracao_xrandr="$configuracao_xrandr --output $monitor --same-as $primeiro_monitor --mode $resolucao_primeiro_monitor"
+# Specific settings for SDDM
+if [[ $display_manager == "sddm" ]]; then
+    if [ "$(grep 'Autolock=false' ~/.config/kscreenlockerrc)" = "" ]; then
+        sed -i '/\[Daemon\]/a\'$'\n''Autolock=false\nLockOnResume=false' ~/.config/kscreenlockerrc
     fi
-done
 
-# Aplica a configuração xrandr para duplicar a saída em todos os monitores
-xrandr $configuracao_xrandr
-
-
-if [ "$(grep 'Autolock=false' ~/.config/kscreenlockerrc)" = "" ];
-then
-    sed -i '/\[Daemon\]/a\'$'\n''Autolock=false\nLockOnResume=false' ~/.config/kscreenlockerrc
-fi
-
-if [ "$(grep 'Enabled=false' ~/.config/kwalletrc)" = "" ];
-then
-    echo '[Wallet]
-Enabled=false' >> ~/.config/kwalletrc
+    if [ "$(grep 'Enabled=false' ~/.config/kwalletrc)" = "" ]; then
+        echo '[Wallet]
+    Enabled=false' >> ~/.config/kwalletrc
+    fi
 fi
 
 # Verify cmdline biglinux.bootcmd
@@ -60,52 +61,40 @@ for arg in "${kernel_args[@]}" ; do
     esac
 done
 
-# Gerencia o serviço biglinux-dual-gpu-manager-after-display-manager
+# Manage the biglinux-dual-gpu-manager-after-display-manager service
 cd /usr/share/bigbashview/bcc/apps/boot-livecd/
 if systemctl -q is-enabled biglinux-dual-gpu-manager-after-display-manager; then
     sudo systemctl start biglinux-dual-gpu-manager-after-display-manager 2>&1 &
 fi
 
-# Configurações de ambiente para QT e executa bigbashview
-QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" /usr/bin/bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.html
+# Environment settings for QT and run bigbashview
+if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+    QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" /usr/bin/bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.html
+else
+    QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" /usr/bin/bigbashview -c black -t qt -s index.html
+fi
 
+# Language and theme settings
 export LANGUAGE=$(cat /tmp/big_language).UTF-8
 export LANG=$(cat /tmp/big_language).UTF-8
 export LC_MESSAGES=$(cat /tmp/big_language).UTF-8
-
-echo "[Formats]
-LANG=$(cat /tmp/big_language).UTF-8" > $HOME/.config/plasma-localerc
-
 echo "$(cat /tmp/big_language)" > $HOME/.config/user-dirs.locale
 
-#Apply desktop configuration
-change-plasma-theme --apply $(cut -f2 -d" " /etc/big_desktop_changed) clean quiet
+if [[ $display_manager == "sddm" ]]; then
+    echo -e "[Formats]\nLANG=$(cat /tmp/big_language).UTF-8" > $HOME/.config/plasma-localerc
+    change-plasma-theme --apply $(cut -f2 -d" " /etc/big_desktop_changed) clean quiet
+fi
 
-#Make folders in home
+# Make folders in home
 wait
 LC_ALL=$(cat /tmp/big_language).UTF-8 xdg-user-dirs-update
 . ~/.config/user-dirs.dirs
 cp -f "/usr/share/applications/calamares-biglinux.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 
-# Configurações específicas para SDDM (KDE/LXQT)
-if [[ $display_manager == "sddm" ]]; then
+# Specific settings for display managers
+if [[ $display_manager =~ ^(sddm|gdm|lightdm)$ ]]; then
     chmod +x /tmp/biglightdm
-    cd ~
     /tmp/biglightdm
-    sudo systemctl restart sddm
-
-# Configurações específicas para GDM (GNOME)
-elif [[ $display_manager == "gdm" ]]; then
-        chmod +x /tmp/biglightdm
-    cd ~
-    /tmp/biglightdm
-    sudo systemctl restart gdm
-
-# Configurações específicas para LIGTHDM
-elif [[ $display_manager == "lightdm" ]]; then
-    chmod +x /tmp/biglightdm
-    cd ~
-    /tmp/biglightdm
-    sudo systemctl restart lightdm
+    sudo systemctl restart $display_manager
 fi
