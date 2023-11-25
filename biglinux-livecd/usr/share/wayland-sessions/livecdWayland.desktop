@@ -1,6 +1,7 @@
 [Desktop Entry]
+Name=Live CD Wayland
 Type=Application
 Exec=/usr/bin/startbiglive
 TryExec=/usr/bin/startplasma-wayland
 DesktopNames=livecd
-Name=Live CD Wayland
+X-GDM-SessionRegisters=true
