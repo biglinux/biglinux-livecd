@@ -71,7 +71,7 @@ fi
 if [ "$XDG_SESSION_TYPE" = "x11" ]; then
     QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" /usr/bin/bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.html
 else
-    QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" /usr/bin/bigbashview -c black -t qt -s index.html
+    QT_QPA_PLATFORM=wayland /usr/bin/bigbashview -w fullscreen -c black -t qt index-wayland.html
 fi
 
 # Language and theme settings
@@ -91,6 +91,11 @@ LC_ALL=$(cat /tmp/big_language).UTF-8 xdg-user-dirs-update
 . ~/.config/user-dirs.dirs
 cp -f "/usr/share/applications/calamares-biglinux.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
+
+# Checks if the display manager is GDM and removes unwanted files
+if [[ $display_manager == "gdm" ]]; then
+    rm -f "$HOME/Empty Bash" "$HOME/Empty Desktop File.desktop" "$HOME/Empty File"
+fi
 
 # Specific settings for display managers
 if [[ $display_manager =~ ^(sddm|gdm|lightdm)$ ]]; then
