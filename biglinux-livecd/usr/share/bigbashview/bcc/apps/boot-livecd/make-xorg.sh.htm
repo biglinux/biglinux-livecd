@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+##################################
+#  Author: Tales A. Mendonça (talesam@gmail.com)
+#  Date:    2023/11/25
+#
+#  Description: Performs language and keyboard information
+#
+# Licensed by GPL V2 or greater
+##################################
+
+export LANGUAGE=$(cat /tmp/big_language).UTF-8
+export LANG=$(cat /tmp/big_language).UTF-8
+
+#Translation
+export TEXTDOMAINDIR="/usr/share/locale"
+export TEXTDOMAIN=biglinux-livecd
+
+# enable swap on disk
+for diskswap in $(sudo blkid | grep 'TYPE="swap"' | grep -v zram | cut -f1 -d:)
+do
+    sudo swapon $diskswap  </dev/null &>/dev/null &
+done
+
+# That's include jquery and materialize / Isso inclui o jquery e o materialize
+# http://materializecss.com/
+. /usr/share/bigbashview/bcc/shell/base.sh
+
+if [ "$keyboard" != "" ]; then
+
+    setxkbmap "${keyboard//\\/}"  </dev/null &>/dev/null &
+    echo "$keyboard" > /tmp/big_keyboard
+else
+    if [ -e "/tmp/big_keyboard" ]; then
+        setxkbmap "$(sed 's|\\||g' /tmp/big_keyboard)"  </dev/null &>/dev/null &
+        #localectl set-x11-keymap $(cat /tmp/big_keyboard)
+    fi
+fi
+
+echo '
+<body onload=window.location="/usr/share/bigbashview/close.sh">
+'
+
+# Identify the display manager
+for dm in sddm gdm lightdm; do
+    if systemctl status $dm &> /dev/null; then
+        display_manager=$dm
+        break
+    fi
+done
+display_manager=${display_manager:-"unknown"}
+
+if [[ $display_manager == "sddm" ]]; then
+    # Start Session KDE
+    startplasma-x11
+    break
+fi
+
+if [[ $display_manager == "lightdm" ]]; then
+    if [ "$XDG_CURRENT_DESKTOP" = "Deepin" ]; then
+        # Start Session Deepin
+        dde-session
+        break
+    elif [ "$XDG_CURRENT_DESKTOP" = "KDE" ]; then
+        # Start Session KDE
+        startplasma-x11
+        break
+    fi
+fi
+
+if [[ $display_manager == "gdm" ]]; then
+    # Start Session GNOME
+    gnome-session
+    break
+fi
+
+    
