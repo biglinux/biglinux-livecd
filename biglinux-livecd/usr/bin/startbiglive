@@ -33,9 +33,9 @@ if [ "$XDG_SESSION_TYPE" = "x11" ]; then
     # Apply the xrandr configuration to duplicate the output on all monitors
     xrandr $xrandr_configuration
 
-elif [ "$XDG_SESSION_TYPE" = "wayland" ]; then
-    # Rename the X11 session
-    sudo mv /usr/share/xsessions /usr/share/xsessions.bak
+# elif [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+#     # Rename the X11 session
+#     sudo mv /usr/share/xsessions /usr/share/xsessions.bak
 fi
 
 # Specific settings for SDDM
@@ -98,7 +98,27 @@ chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 
 # Checks if the display manager is GDM and removes unwanted files
 if [[ $display_manager == "gdm" ]]; then
+
+    # Path to the control file that indicates whether the script has been executed
+    controlFile="$HOME/.gnome_keyring_first_boot_disabled"
+
+    # Checks if the script has not been executed
+    if [ ! -f "$controlFile" ]; then
+        # Unlocks the existing keyring (assuming it has no password)
+        gnome-keyring-daemon --unlock <<< ""
+
+        # Stores a test key to set up the default keyring (without a password)
+        secret-tool store --label='Default Keyring' keyring default <<< ""
+
+        # Creates the control file to prevent the script from being executed again
+        touch "$controlFile"
+    fi
+
+    # Removes unwanted files
     rm -f "$HOME/Empty Bash" "$HOME/Empty Desktop File.desktop" "$HOME/Empty File"
+
+    # Updates user directories
+    xdg-user-dirs-update
 fi
 
 # Specific settings for display managers
