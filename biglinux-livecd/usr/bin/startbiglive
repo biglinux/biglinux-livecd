@@ -96,7 +96,7 @@ LC_ALL=$(cat /tmp/big_language).UTF-8 xdg-user-dirs-update
 cp -f "/usr/share/applications/calamares-biglinux.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 
-# Checks if the display manager is GDM and removes unwanted files
+# Checks if the display manager is GDM and removes unwanted files.
 if [[ $display_manager == "gdm" ]]; then
 
     # Path to the control file that indicates whether the script has been executed
