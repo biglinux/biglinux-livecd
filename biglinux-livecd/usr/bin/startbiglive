@@ -69,7 +69,7 @@ fi
 
 # Environment settings for QT and run bigbashview
 if [ "$XDG_SESSION_TYPE" = "x11" ]; then
-    if [[ $display_manager == "gdm" ]]; then
+    if [[ $display_manager == "sddm" ]]; then
         QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" /usr/bin/bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.html
     else
         QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" /usr/bin/bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index-xorg.html
@@ -96,23 +96,26 @@ LC_ALL=$(cat /tmp/big_language).UTF-8 xdg-user-dirs-update
 cp -f "/usr/share/applications/calamares-biglinux.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 
-# Checks if the display manager is GDM and removes unwanted files.
-if [[ $display_manager == "gdm" ]]; then
+    # Checks if the display manager is GDM and removes unwanted files.
+    if [[ $display_manager == "gdm" ]]; then
 
-    # Path to the control file that indicates whether the script has been executed
-    controlFile="$HOME/.gnome_keyring_first_boot_disabled"
+    # Path to the control file
+    control_file="$HOME/.gnome_keyring_unlocked"
 
-    # Checks if the script has not been executed
-    if [ ! -f "$controlFile" ]; then
-        # Unlocks the existing keyring (assuming it has no password)
+    # Check if the script has already been executed
+    if [ ! -f "$control_file" ]; then
+        # Unlock the existing keyring (assuming there is no password)
         gnome-keyring-daemon --unlock <<< ""
 
-        # Stores a test key to set up the default keyring (without a password)
+        # Store a test key to set up the default keyring (without a password)
         secret-tool store --label='Default Keyring' keyring default <<< ""
 
-        # Creates the control file to prevent the script from being executed again
-        touch "$controlFile"
+        # Create the control file to prevent the script from being executed again
+        touch "$control_file"
     fi
+
+    # Unlock the keyring at login (assuming there is no password)
+    gnome-keyring-daemon --unlock <<< "password"
 
     # Removes unwanted files
     rm -f "$HOME/Empty Bash" "$HOME/Empty Desktop File.desktop" "$HOME/Empty File"
