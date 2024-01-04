@@ -96,26 +96,8 @@ LC_ALL=$(cat /tmp/big_language).UTF-8 xdg-user-dirs-update
 cp -f "/usr/share/applications/calamares-biglinux.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 
-    # Checks if the display manager is GDM and removes unwanted files.
-    if [[ $display_manager == "gdm" ]]; then
-
-    # Path to the control file
-    control_file="$HOME/.gnome_keyring_unlocked"
-
-    # Check if the script has already been executed
-    if [ ! -f "$control_file" ]; then
-        # Unlock the existing keyring (assuming there is no password)
-        gnome-keyring-daemon --unlock <<< ""
-
-        # Store a test key to set up the default keyring (without a password)
-        secret-tool store --label='Default Keyring' keyring default <<< ""
-
-        # Create the control file to prevent the script from being executed again
-        touch "$control_file"
-    fi
-
-    # Unlock the keyring at login (assuming there is no password)
-    gnome-keyring-daemon --unlock <<< "password"
+# Checks if the display manager is GDM and removes unwanted files.
+if [[ $display_manager == "gdm" ]]; then
 
     # Removes unwanted files
     rm -f "$HOME/Empty Bash" "$HOME/Empty Desktop File.desktop" "$HOME/Empty File"
