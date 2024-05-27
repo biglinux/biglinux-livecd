@@ -102,9 +102,8 @@ if [[ $display_manager == "gdm" ]]; then
     xdg-user-dirs-update
 fi
 
-# Specific settings for display managers
-if [[ $display_manager =~ ^(sddm|gdm|lightdm)$ ]]; then
-    chmod +x /tmp/biglightdm
-    /tmp/biglightdm
-    sudo systemctl restart $display_manager
+if [[ $display_manager = "sddm" ]]; then
+    startkde-biglinux
 fi
+
+sudo systemctl restart $display_manager

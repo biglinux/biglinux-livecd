@@ -32,6 +32,9 @@ echo "<script>const projectName = 'biglinux-livecd';</script>"
 
 cat /usr/share/bigbashview/framework/html/genericHeader.html
 
+Select_Desktop=$"Choose the desktop configuration:"
+
+
 cat << EOF
   <link rel="stylesheet" href="style.css">
   <style>
@@ -51,7 +54,7 @@ cat << EOF
     <i class="icon-menu">monitor</i>
     <i class="icon-menu">palette</i>
   </nav>
-  <br><br><br>
+      <h5 class="small center-align large-margin large-padding">$Select_Desktop</h5>
   <div class="autogrid-fit center-align margin-desktop">
       <!-- Available desktops -->
       <template x-for="(desktopName, index) in listDesktops" :key="index">

@@ -27,6 +27,8 @@ fi
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-livecd
 
+Select_Theme=$"Choose the system appearance:"
+
 
 echo "<!-- Name of JSON file with translation -->
   <script>const projectName = 'biglinux-livecd';</script>"
@@ -53,7 +55,7 @@ cat << EOF
     <i class="icon-menu">monitor</i>
     <i class="icon-menu">palette</i>
   </nav>
-  <br><br><br>
+  <h5 class="small center-align large-margin large-padding">$Select_Theme</h5>
   <div class="autogrid-fit center-align div-image-theme">
       <!-- Available themes -->
       <template x-for="(themeName, index) in listThemes" :key="index">
