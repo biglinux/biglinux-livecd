@@ -1,0 +1,161 @@
+#!/bin/bash
+##################################
+#  Author1: Bruno Goncalves (www.biglinux.com.br) 
+#  Author2: Rafael Ruscher (rruscher@gmail.com)  
+#  Date:    2022/08/19
+#  
+#  Description: Control Center to help usage of BigLinux 
+#  
+# Licensed by GPL V2 or greater
+##################################
+
+######
+# Keyboard
+######
+if [ "$keyboard" != "" ]; then
+
+    setxkbmap "${keyboard//\\/}"  </dev/null &>/dev/null &
+    echo "$keyboard" > /tmp/big_keyboard
+else
+    if [ -e "/tmp/big_keyboard" ]; then
+        setxkbmap "$(sed 's|\\||g' /tmp/big_keyboard)"  </dev/null &>/dev/null &
+        #localectl set-x11-keymap $(cat /tmp/big_keyboard)
+    fi
+fi
+
+#Translation
+export TEXTDOMAINDIR="/usr/share/locale"
+export TEXTDOMAIN=biglinux-livecd
+
+
+echo "<!-- Name of JSON file with translation -->
+  <script>const projectName = 'biglinux-livecd';</script>"
+
+  cat /usr/share/bigbashview/framework/html/genericHeader.html
+
+cat << EOF
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .theme-image {
+        min-width: 22vw; 
+    }
+    .div-image-theme {
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+  </style>
+</head>
+<body x-data="environment()">
+  <nav class="center-align top-bar padding">
+    <i class="icon-menu">language_chinese_dayi</i>
+    <i class="icon-menu">keyboard</i>
+    <img class="logo-image" src="/usr/share/icons/hicolor/scalable/apps/big-favicon-new.svg">
+    <i class="icon-menu">monitor</i>
+    <i class="icon-menu">palette</i>
+  </nav>
+  <br><br><br>
+  <div class="autogrid-fit center-align div-image-theme">
+      <!-- Available themes -->
+      <template x-for="(themeName, index) in listThemes" :key="index">
+          <button @click="applyTheme(themeName)"
+                  :id="'theme-' + index"
+                  class="vertical border no-border space-between box-items">
+              <img :src="'/usr/share/bigbashview/apps/biglinux-themes-gui/img/' + themeName + '.png'" class="responsive no-round theme-image" />
+          </button>
+      </template>
+  </div>
+
+  <script>
+  document.addEventListener('alpine:init', () => {
+      Alpine.data('environment', () => ({
+          theme: '',
+          listThemes: [],
+          currentFocus: 0,
+          columns: 0,
+          async init() {
+              await this.fetchThemes();
+              this.addKeyboardNavigation();
+              window.addEventListener('resize', this.calculateColumns.bind(this));
+              this.calculateColumns();
+          },
+          async fetchThemes() {
+              const response = await fetch('/usr/share/bigbashview/apps/biglinux-themes-gui/list-themes.sh');
+              const text = await response.text();
+              this.listThemes = text.split(/\r?\n/).filter(line => line.trim() !== '');
+          },
+          calculateColumns() {
+              const container = document.querySelector('body');
+              const button = container.querySelector('button');
+              if (button) {
+                  const buttonWidth = button.offsetWidth * 1.3;
+                  this.columns = Math.floor(container.offsetWidth / buttonWidth);
+              }
+          },
+          applyTheme(themeName = '') {
+              if (themeName === '') {
+                  themeName = this.listThemes[this.currentFocus];
+              }
+              _run('/usr/share/bigbashview/apps/biglinux-themes-gui/apply-theme.sh ' + themeName );
+              _run('echo ' + this.themeName + ' > /tmp/big_desktop_theme');
+              location.href = 'make.sh.htm';
+          },
+          addKeyboardNavigation() {
+              window.addEventListener('keydown', (event) => {
+                  if (event.key === 'ArrowDown') {
+                      event.preventDefault();
+                      this.moveFocus('down');
+                  } else if (event.key === 'ArrowUp') {
+                      event.preventDefault();
+                      this.moveFocus('up');
+                  } else if (event.key === 'ArrowLeft') {
+                      event.preventDefault();
+                      this.moveFocus('left');
+                  } else if (event.key === 'ArrowRight') {
+                      event.preventDefault();
+                      this.moveFocus('right');
+                  } else if (event.key === 'Enter') {
+                      event.preventDefault();
+                      this.applyTheme();
+                  }
+              });
+          },
+          moveFocus(direction) {
+              this.removeHighlight();
+              const total = this.listThemes.length;
+              const columns = this.columns || 1; // Default to 1 if not calculated
+
+              if (direction === 'down') {
+                  this.currentFocus = (this.currentFocus + columns) % total;
+              } else if (direction === 'up') {
+                  this.currentFocus = (this.currentFocus - columns + total) % total;
+              } else if (direction === 'left') {
+                  this.currentFocus = (this.currentFocus - 1 + total) % total;
+              } else if (direction === 'right') {
+                  this.currentFocus = (this.currentFocus + 1) % total;
+              }
+
+              this.highlightCurrent();
+          },
+          highlightCurrent() {
+              const buttons = document.querySelectorAll('.autogrid-fit button');
+              buttons.forEach(button => button.classList.remove('highlight'));
+              const currentElement = buttons[this.currentFocus];
+              if (currentElement) {
+                  currentElement.focus();
+                  currentElement.classList.add('highlight');
+              }
+          },
+          removeHighlight() {
+              const buttons = document.querySelectorAll('.autogrid-fit button');
+              buttons.forEach(button => button.classList.remove('highlight'));
+          }
+      }));
+  });
+  </script>
+</body>
+</html>
+EOF
+
+
+
+

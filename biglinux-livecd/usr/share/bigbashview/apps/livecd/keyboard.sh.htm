@@ -1,0 +1,122 @@
+#!/bin/bash
+##################################
+#  Author1: Bruno Goncalves (www.biglinux.com.br) 
+#  Author2: Rafael Ruscher (rruscher@gmail.com)  
+#  Date:    2022/08/19
+#  
+#  Description: Control Center to help usage of BigLinux 
+#  
+# Licensed by GPL V2 or greater
+##################################
+
+#Change language system
+export LANGUAGE=$language.UTF-8
+export LANG=$language.UTF-8
+echo "$language" > /tmp/big_language
+echo "$keyboard" > /tmp/big_keyboard
+echo "LANGUAGE=$language.UTF-8" | sudo tee -a /etc/environment &>/dev/null &
+echo "LANG=$language.UTF-8" | sudo tee -a /etc/environment &>/dev/null &
+echo "LC_MESSAGES=$language.UTF-8" | sudo tee -a /etc/environment &>/dev/null &
+
+timedatectl set-timezone $timezone </dev/null &>/dev/null &
+timedatectl set-ntp 1 </dev/null &>/dev/null &
+
+if [ "$language" = "en_US" ] || [ "$language" = "pt_BR" ]; then
+  localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null &
+else
+  localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null
+fi
+
+# Run script to checksum
+nice -n+20 ionice -c 3 ./biglinux-verify-md5sum.sh > /dev/null 2>&1 &
+
+#Translation
+export TEXTDOMAINDIR="/usr/share/locale"
+export TEXTDOMAIN=biglinux-livecd
+
+if [ "$keyboard" = "us" ]; then
+    setxkbmap $keyboard &
+    echo '<body onload=window.location="desktop.sh.htm">'
+    exit
+fi
+
+SELECT_KEYBOARD=$"Escolha o modelo do teclado:"
+
+echo "<!-- Name of JSON file with translation -->
+  <script>const projectName = 'biglinux-livecd';</script>"
+
+  cat /usr/share/bigbashview/framework/html/genericHeader.html
+
+cat << EOF
+  <link rel="stylesheet" href="style.css">
+</head>
+<body x-data="navigation()">
+  <nav class="center-align top-bar padding">
+    <i class="icon-menu">language_chinese_dayi</i>
+    <i class="icon-menu">keyboard</i>
+    <img class="logo-image" src="/usr/share/icons/hicolor/scalable/apps/big-favicon-new.svg">
+    <i class="icon-menu">monitor</i>
+    <i class="icon-menu">palette</i>
+  </nav>
+  <div class="center-align">
+    <h5 class="small center-align large-margin large-padding">$SELECT_KEYBOARD</h5>
+    
+    <a href="/usr/share/bigbashview/bcc/apps/boot-livecd/desktop.sh.htm?keyboard=$keyboard" id="link1">
+      <button class="tertiary margin large" id="button1">${keyboard^^}</button>
+    </a>
+    <a href="/usr/share/bigbashview/bcc/apps/boot-livecd/desktop.sh.htm?keyboard=us\(intl\)" id="link2">
+      <button class="tertiary margin large" id="button2">US</button>
+    </a>
+    
+    <p><img src="keyboard.svg" width="256"></p>
+  </div>
+  
+  <script>
+    function navigation() {
+      return {
+        currentFocus: 0,
+        links: ['link1', 'link2'],
+        init() {
+          // Focus on the first link/button initially
+          this.highlightCurrent();
+          
+          window.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowLeft') {
+              event.preventDefault();
+              this.moveFocus(1);
+            } else if (event.key === 'ArrowRight') {
+              event.preventDefault();
+              this.moveFocus(-1);
+            } else if (event.key === 'Enter') {
+              event.preventDefault();
+              this.activateLink();
+            }
+          });
+        },
+        moveFocus(step) {
+          this.removeHighlight();
+          this.currentFocus = (this.currentFocus + step + this.links.length) % this.links.length;
+          this.highlightCurrent();
+        },
+        highlightCurrent() {
+          const currentElement = document.getElementById(this.links[this.currentFocus]).querySelector('button');
+          currentElement.focus();
+          currentElement.classList.add('highlight');
+        },
+        removeHighlight() {
+          const currentElement = document.getElementById(this.links[this.currentFocus]).querySelector('button');
+          currentElement.classList.remove('highlight');
+        },
+        activateLink() {
+          document.getElementById(this.links[this.currentFocus]).click();
+        }
+      }
+    }
+  </script>
+</body>
+</html>
+EOF
+
+
+
+

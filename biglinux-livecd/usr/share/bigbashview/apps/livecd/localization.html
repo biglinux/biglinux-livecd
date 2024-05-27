@@ -1,0 +1,156 @@
+    <!-- Name of JSON file with translation -->
+    <script>const projectName = 'biglinux-livecd';</script> 
+    <!-- Include the generic header (CSS and JS) -->
+    <?include html /usr/share/bigbashview/framework/html/genericHeader.html?>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+  
+  <nav class="center-align top-bar padding">
+    <i class="icon-menu">language_chinese_dayi</i>
+    <i class="icon-menu">keyboard</i>
+    <img class="logo-image" src="/usr/share/icons/hicolor/scalable/apps/big-favicon-new.svg">
+    <i class="icon-menu">monitor</i>
+    <i class="icon-menu">palette</i>
+  </nav>
+  
+  <div x-data="localizationApp()" x-init="initApp">
+   <div class="container">
+      <div class="field prefix round input-search">
+        <i>search</i>
+        <div class="center-align" type="search" x-text="query" :placeholder="placeholderText" id="searchInput"></div>
+      </div>
+      
+      <div class="localization-container">
+        <template x-for="(localization, index) in filteredLocalizations" :key="localization.code">
+          <div class="localization-item">
+            <div class="internal-localization-item" :class="{'active': index === selectedIndex}" :id="'item-' + index" @mouseenter="selectedIndex = index" @mouseleave="selectedIndex = -1">
+              <a :href="localization.url" class="left-align flex internal-localization-item">
+              <div class="div-flag"><img :src="localization.flag" class="flag-image"></div>
+              <div class="localization-description">
+                  <div class="localization-name" x-text="capitalize(localization.name)"></div>
+                  <div class="localization-name-orig" x-text="capitalize(localization.nameOrig)"></div>
+              </div>
+            </a>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+  function localizationApp() {
+    return {
+      localizations: [],
+      query: '',
+      filteredLocalizations: [],
+      selectedIndex: -1,
+      columns: 3, // Number of columns in the grid
+      initApp() {
+        this.fetchLocalizations();
+        document.addEventListener('keydown', this.handleKeydown.bind(this));
+      },
+      fetchLocalizations() {
+        fetch('localization.json')
+          .then(response => response.json())
+          .then(data => {
+            this.localizations = data;
+            this.filterList(); // Filter initially to apply default sorting
+          });
+      },
+      normalizeString(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      },
+      capitalize(str) {
+        return str.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+      },
+      filterList() {
+        const normalizedQuery = this.normalizeString(this.query);
+        const favorites = ['pt_BR', 'en_US', 'es_ES'];
+  
+        this.filteredLocalizations = this.localizations
+          .filter(loc => 
+            this.normalizeString(loc.name).includes(normalizedQuery) ||
+            this.normalizeString(loc.nameOrig).includes(normalizedQuery)
+          )
+          .sort((a, b) => {
+            const aFavorite = favorites.includes(a.code);
+            const bFavorite = favorites.includes(b.code);
+            if (aFavorite && !bFavorite) return -1;
+            if (!aFavorite && bFavorite) return 1;
+            return 0;
+          });
+  
+        this.selectedIndex = -1; // Reset the selected index after filtering
+      },
+      goToFirstUrl() {
+        if (this.query === '') {
+          const enUSLocalization = this.localizations.find(loc => loc.code === 'en_US');
+          if (enUSLocalization) {
+            window.location.href = enUSLocalization.url;
+          }
+        } else if (this.filteredLocalizations.length > 0) {
+          window.location.href = this.filteredLocalizations[0].url;
+        }
+      },
+      handleKeydown(event) {
+        const rowCount = Math.ceil(this.filteredLocalizations.length / this.columns);
+        const maxIndex = this.filteredLocalizations.length - 1;
+  
+        if (['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'].includes(event.key)) {
+          event.preventDefault();
+        }
+  
+        if (event.key === 'Enter') {
+          if (this.selectedIndex >= 0) {
+            window.location.href = this.filteredLocalizations[this.selectedIndex].url;
+          } else {
+            this.goToFirstUrl();
+          }
+        } else if (event.key === 'Backspace') {
+          if (this.query.length > 0) {
+            this.query = this.query.slice(0, -1);
+            this.filterList();
+          }
+        } else if (event.key === 'ArrowDown') {
+          if (this.selectedIndex + this.columns <= maxIndex) {
+            this.selectedIndex += this.columns;
+          } else if (this.selectedIndex !== maxIndex) {
+            this.selectedIndex = maxIndex;
+          }
+        } else if (event.key === 'ArrowUp') {
+          if (this.selectedIndex - this.columns >= 0) {
+            this.selectedIndex -= this.columns;
+          } else if (this.selectedIndex !== -1) {
+            this.selectedIndex = 0;
+          }
+        } else if (event.key === 'ArrowRight') {
+          if (this.selectedIndex % this.columns !== this.columns - 1 && this.selectedIndex < maxIndex) {
+            this.selectedIndex++;
+          }
+        } else if (event.key === 'ArrowLeft') {
+          if (this.selectedIndex % this.columns !== 0 && this.selectedIndex > 0) {
+            this.selectedIndex--;
+          }
+        } else if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) { // Only add printable characters
+          this.query += event.key;
+          this.filterList();
+        }
+  
+        this.scrollToSelectedItem();
+      },
+      scrollToSelectedItem() {
+        if (this.selectedIndex !== -1) {
+          const item = document.getElementById('item-' + this.selectedIndex);
+          if (item) {
+            item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      }
+    }
+  }
+  </script>
+  
+  </body>
+  </html>

@@ -62,20 +62,16 @@ for arg in "${kernel_args[@]}" ; do
 done
 
 # Manage the biglinux-dual-gpu-manager-after-display-manager service
-cd /usr/share/bigbashview/bcc/apps/boot-livecd/
+cd /usr/share/bigbashview/apps/livecd/
 if systemctl -q is-enabled biglinux-dual-gpu-manager-after-display-manager; then
     sudo systemctl start biglinux-dual-gpu-manager-after-display-manager 2>&1 &
 fi
 
 # Environment settings for QT and run bigbashview
 if [ "$XDG_SESSION_TYPE" = "x11" ]; then
-    if [[ $display_manager == "sddm" ]]; then
-        QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" /usr/bin/bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index.html
-    else
-        QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" /usr/bin/bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') index-xorg.html
-    fi
+        QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') localization.html
 else
-    QT_QPA_PLATFORM=wayland /usr/bin/bigbashview -w fullscreen -c black -t qt index-wayland.html
+    QT_QPA_PLATFORM=wayland /usr/bin/bigbashview -w fullscreen -c black -t qt index.html
 fi
 
 # Language and theme settings
