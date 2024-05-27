@@ -69,7 +69,7 @@ fi
 
 # Environment settings for QT and run bigbashview
 if [ "$XDG_SESSION_TYPE" = "x11" ]; then
-        QT_QUICK_BACKEND=software QMLSCENE_DEVICE=softwarecontext QTWEBENGINE_CHROMIUM_FLAGS="--disable-logging --disable-gpu --no-sandbox --single-process --disable-gpu-compositing" bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') localization.html
+        bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') localization.html
 else
     QT_QPA_PLATFORM=wayland /usr/bin/bigbashview -w fullscreen -c black -t qt index.html
 fi
