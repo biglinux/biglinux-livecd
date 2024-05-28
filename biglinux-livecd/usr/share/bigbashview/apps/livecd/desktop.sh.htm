@@ -96,7 +96,7 @@ cat << EOF
               if (desktopName === '') {
                   desktopName = this.listDesktops[this.currentFocus];
               }
-              _run('/usr/share/bigbashview/apps/biglinux-themes-gui/apply-desktop.sh ' + desktopName + ' quiet');
+              _run('/usr/share/bigbashview/apps/biglinux-themes-gui/apply-desktop.sh quiet ' + desktopName);
               _run('echo ' + this.desktopName + ' > /tmp/big_desktop_changed');
               location.href = 'theme.sh.htm';
           },
