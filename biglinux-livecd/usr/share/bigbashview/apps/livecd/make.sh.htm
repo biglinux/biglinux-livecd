@@ -13,8 +13,4 @@
 sudo cp -f /tmp/big_desktop_theme /etc/default-theme-biglinux
 sudo cp -f /tmp/big_desktop_changed /etc/big_desktop_changed
 
-echo '
-<body onload=window.location="/usr/share/bigbashview/close.sh">
-'
-
-killall kwin_wayland
+echo '<body onload=window.location="/usr/share/bigbashview/close.sh">'
