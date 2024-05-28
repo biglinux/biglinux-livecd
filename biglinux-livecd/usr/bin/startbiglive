@@ -64,7 +64,7 @@ fi
 if [ "$XDG_SESSION_TYPE" == "x11" ]; then
         bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') localization.html
 else
-    QT_QPA_PLATFORM=wayland /usr/bin/bigbashview -w fullscreen -c black -t qt index.html
+    kwin_wayland --drm --no-lockscreen --no-global-shortcuts --locale1 '/usr/bin/bigbashview -w fullscreen -c black -t qt -d /usr/share/bigbashview/apps/livecd localization.html'
 fi
 
 # Language and theme settings
