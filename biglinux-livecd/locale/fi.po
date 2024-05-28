@@ -16,75 +16,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Suorituskyky"
-
-msgid "Aceleração do navegador"
-msgstr "Selaimen kiihtyvyys"
-
-msgid "Tema"
-msgstr "Teema"
-
-msgid "Fechar"
-msgstr "Sulkea"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Tällä teemalla on kalvoja, joilla on vaikutuksia, jotka<br>voi hidastaa järjestelmää "
-"tietokoneissa<br>tai virtualisoidut ympäristöt."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Työpöydän renderöinti ohjelmiston avulla<br><small>(Voi olla hyödyllinen virtuaalikoneessa)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Käytä grafiikkasuoritinta selaimissa"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Parantaa suorituskykyä, mutta joissakin laitteissa aiheuttaa epävakautta"
-
-msgid "Escolha o desktop:"
-msgstr "Valitse työpöytäsi:"
-
-msgid "têm melhor desempenho."
-msgstr "toimivat paremmin."
-
-msgid "e"
-msgstr "e"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Valitse sovellusten teema:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Ohjelmiston renderöintiä käytettäessä läpinäkyvien kuvien laatu heikkenee."
+msgid "Choose the desktop configuration:"
+msgstr "Valitse työpöydän asetukset:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Valitse näppäimistömalli:"
 
+msgid "Choose the system appearance:"
+msgstr "Valitse järjestelmän ulkoasu:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
-"\n"
-"<big><big>Hups!</big></big>\n"
-"Terveystarkastus epäonnistui, on tarpeen ladata \n"
-"järjestelmä uudelleen tai käytä toista USB-tikkua.\n"
+"<big><big>Voi ei</big></big>\n"
+"Eheys tarkistus epäonnistui, järjestelmä on ladattava uudelleen tai käytettävä toista USB-asemaa.\n"
 "\n"
 "VIRHE: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "VIRHE: Terveystarkastus epäonnistui!"
-
-msgid "Erro."
-msgstr "Virhe."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Järjestelmä läpäisi terveystestin."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Järjestelmän kunnon tarkistaminen:"
+msgid "ERROR: Integrity check failed."
+msgstr "VIRHE: Eheystarkistus epäonnistui."

@@ -16,75 +16,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Performance"
-
-msgid "Aceleração do navegador"
-msgstr "Accélération du navigateur"
-
-msgid "Tema"
-msgstr "Thème"
-
-msgid "Fechar"
-msgstr "Fermer"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Ce thème a des transparences avec des effets qui<br>peut ralentir le système sur les "
-"ordinateurs<br>ou des environnements virtualisés."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Rendre le bureau par logiciel<br><small>(Peut être utile dans une machine virtuelle)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Utiliser GPU dans les navigateurs"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Améliore les performances, mais sur certains équipements provoque une instabilité"
-
-msgid "Escolha o desktop:"
-msgstr "Choisissez votre bureau :"
-
-msgid "têm melhor desempenho."
-msgstr "avoir de meilleures performances."
-
-msgid "e"
-msgstr "et"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Choisissez le thème des applications :"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "En utilisant le rendu logiciel, la qualité des transparents sera réduite."
+msgid "Choose the desktop configuration:"
+msgstr "Choisissez la configuration du bureau :"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Choisissez votre modèle de clavier :"
 
+msgid "Choose the system appearance:"
+msgstr "Choisissez l'apparence du système :"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
-"\n"
-"<big><big>Oups!</big></big>\n"
-"Échec du contrôle de santé, il est nécessaire de télécharger \n"
-"ou utilisez une autre clé USB.\n"
+"<big><big>Oups</big></big>\n"
+"La vérification de l'intégrité a échoué, il est nécessaire de télécharger à nouveau le système ou "
+"d'utiliser une autre clé USB.\n"
 "\n"
 "ERREUR : checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "ERREUR : Échec de la vérification de l’état !"
-
-msgid "Erro."
-msgstr "Erreur."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Le système a réussi le test d’intégrité."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Vérification de l’intégrité du système :"
+msgid "ERROR: Integrity check failed."
+msgstr "ERREUR : Échec de la vérification de l'intégrité."

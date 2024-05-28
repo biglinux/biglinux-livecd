@@ -16,75 +16,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Árangur"
-
-msgid "Aceleração do navegador"
-msgstr "Hröðun vafra"
-
-msgid "Tema"
-msgstr "Þema"
-
-msgid "Fechar"
-msgstr "Loka"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Þetta þema hefur gagnsæi með áhrifum sem<br>getur hægt á kerfinu á tölvum<br>eða sýndarvæddu "
-"umhverfi."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Sendu skjáborðið í gegnum hugbúnað <br><small>(Getur verið gagnlegt í sýndarvél)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Notaðu GPU í vöfrum"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Bætir afköst, en á sumum búnaði veldur óstöðugleiki"
-
-msgid "Escolha o desktop:"
-msgstr "Veldu skjáborðið:"
-
-msgid "têm melhor desempenho."
-msgstr "standa sig betur."
-
-msgid "e"
-msgstr "og"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Veldu þema forritanna:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Með því að nota hugbúnað flutningur, gæði af the gagnsæi mun minnka."
+msgid "Choose the desktop configuration:"
+msgstr "Pilih konfigurasi desktop:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Veldu lyklaborðslíkanið þitt:"
 
+msgid "Choose the system appearance:"
+msgstr "Pilih tampilan sistem:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
-msgstr ""
-"\n"
-"<big><big>Oops!</big></big>\n"
-"Heilsufarsskoðun mistókst, það er nauðsynlegt að hlaða niður \n"
-"kerfið aftur eða notaðu annan USB staf.\n"
-"\n"
-"VILLA: checksum_biglinux"
+"ERROR: checksum_biglinux\n"
+msgstr "Kesalahan: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "VILLA: Heilsufarsskoðun mistókst!"
-
-msgid "Erro."
-msgstr "Villa."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Kerfið stóðst heilbrigðisprófið."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Athugun á heilsu kerfisins:"
+msgid "ERROR: Integrity check failed."
+msgstr "KESALAHAN: Pemeriksaan integritas gagal."

@@ -16,77 +16,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Производительность"
-
-msgid "Aceleração do navegador"
-msgstr "Ускорение браузера"
-
-msgid "Tema"
-msgstr "Тема"
-
-msgid "Fechar"
-msgstr "Закрывать"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Эта тема имеет прозрачные пленки с эффектами, которые<br>Может замедлить работу системы на "
-"компьютерах<br>или виртуализированные среды."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr ""
-"Рендеринг рабочего стола с помощью программного обеспечения<br><small>(Может быть полезно в "
-"виртуальной машине)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Использование GPU в браузерах"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Повышает производительность, но на некоторых устройствах вызывает нестабильность"
-
-msgid "Escolha o desktop:"
-msgstr "Выберите свой рабочий стол:"
-
-msgid "têm melhor desempenho."
-msgstr "иметь лучшую производительность."
-
-msgid "e"
-msgstr "а также"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Выберите тему приложений:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "При использовании программного рендеринга качество прозрачных изображений будет снижено."
+msgid "Choose the desktop configuration:"
+msgstr "Выберите конфигурацию рабочего стола:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Выберите модель клавиатуры:"
 
+msgid "Choose the system appearance:"
+msgstr "Выберите внешний вид системы:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
-"\n"
-"<big><big>Ой!</big></big>\n"
-"Проверка работоспособности не удалась, необходимо скачать \n"
-"снова система или используйте другой USB-накопитель.\n"
+"<big><big>Упс</big></big>\n"
+"Проверка целостности не пройдена, необходимо скачать систему заново или использовать другой "
+"USB-накопитель.\n"
 "\n"
 "ОШИБКА: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "ОШИБКА: Не удалось проверить работоспособность!"
-
-msgid "Erro."
-msgstr "Ошибка."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Система прошла тест на работоспособность."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Проверка работоспособности системы:"
+msgid "ERROR: Integrity check failed."
+msgstr "Ошибка: Проверка целостности не удалась."

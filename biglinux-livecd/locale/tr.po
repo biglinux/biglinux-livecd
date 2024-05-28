@@ -16,75 +16,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Performans"
-
-msgid "Aceleração do navegador"
-msgstr "Tarayıcı hızlandırma"
-
-msgid "Tema"
-msgstr "Tema"
-
-msgid "Fechar"
-msgstr "Kapatmak"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Bu temanın etkileri olan saydamlıklar vardır:<br>bilgisayarlarda sistemi yavaşlatabilir<br>veya "
-"sanallaştırılmış ortamlar."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Masaüstünü yazılım aracılığıyla oluşturma<br><small>(Sanal makinede faydalı olabilir)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "GPU'yu tarayıcılarda kullanma"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Performansı artırır, ancak bazı ekipmanlarda kararsızlığa neden olur"
-
-msgid "Escolha o desktop:"
-msgstr "Masaüstünüzü seçin:"
-
-msgid "têm melhor desempenho."
-msgstr "daha iyi performans gösterir."
-
-msgid "e"
-msgstr "e"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Uygulamaların temasını seçin:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Yazılım oluşturma kullanıldığında asetatların kalitesi düşecektir."
+msgid "Choose the desktop configuration:"
+msgstr "Masaüstü yapılandırmasını seçin:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Klavye modelinizi seçin:"
 
+msgid "Choose the system appearance:"
+msgstr "Sistem görünümünü seçin:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
-"\n"
-"<big><big>Oops!</big></big>\n"
-"Durum kontrolü başarısız oldu, indirmek gerekiyor \n"
-"sistemi tekrar kullanın veya başka bir USB bellek kullanın.\n"
+"Bütünlük kontrolü başarısız oldu, sistemi tekrar indirmek veya başka bir USB sürücü kullanmak "
+"gereklidir.\n"
 "\n"
 "HATA: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "HATA: Durum denetimi başarısız oldu!"
-
-msgid "Erro."
-msgstr "Hata."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Sistem sistem sistem durumu testini geçti."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Sistem durumunu kontrol etme:"
+msgid "ERROR: Integrity check failed."
+msgstr "HATA: Bütünlük kontrolü başarısız oldu."

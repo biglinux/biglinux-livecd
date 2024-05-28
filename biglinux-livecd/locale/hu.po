@@ -16,75 +16,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Teljesítmény"
-
-msgid "Aceleração do navegador"
-msgstr "Böngésző gyorsítás"
-
-msgid "Tema"
-msgstr "Téma"
-
-msgid "Fechar"
-msgstr "Bezár"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Ennek a témának vannak olyan átírásai, amelyek hatásai<br>lelassíthatja a rendszert a "
-"számítógépeken<br>vagy virtualizált környezetek."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Az asztal megjelenítése szoftveresen<br><small>(Hasznos lehet virtuális gépben)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "GPU használata böngészőkben"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Javítja a teljesítményt, de egyes berendezéseken instabilitást okoz"
-
-msgid "Escolha o desktop:"
-msgstr "Válassza ki az asztalt:"
-
-msgid "têm melhor desempenho."
-msgstr "jobban teljesít."
-
-msgid "e"
-msgstr "e"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Válassza ki az alkalmazások témáját:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "A szoftveres renderelés használatával a fóliák minősége csökken."
+msgid "Choose the desktop configuration:"
+msgstr "Válassza ki az asztali konfigurációt:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Válassza ki a billentyűzet modelljét:"
 
+msgid "Choose the system appearance:"
+msgstr "Válassza ki a rendszer megjelenését:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
-"\n"
-"<big><big>Hoppá!</big></big>\n"
-"Az állapot-ellenőrzés nem sikerült, le kell tölteni \n"
-"rendszer újra, vagy használjon másik USB-meghajtót.\n"
+"<big><big>Hoppá</big></big>\n"
+"Az adatok integritásának ellenőrzése sikertelen volt, szükséges lehet újra letölteni a rendszert, "
+"vagy másik USB-meghajtót használni.\n"
 "\n"
 "HIBA: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "HIBA: Az állapotellenőrzés sikertelen volt!"
-
-msgid "Erro."
-msgstr "Hiba."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "A rendszer átment az egészségügyi teszten."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "A rendszer állapotának ellenőrzése:"
+msgid "ERROR: Integrity check failed."
+msgstr "HIBA: Az adatok integritása ellenőrzése sikertelen volt."

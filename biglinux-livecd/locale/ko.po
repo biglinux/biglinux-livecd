@@ -16,73 +16,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "퍼포먼스"
-
-msgid "Aceleração do navegador"
-msgstr "브라우저 가속"
-
-msgid "Tema"
-msgstr "테마"
-
-msgid "Fechar"
-msgstr "닫다"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr "이 테마에는 다음과 같은 효과가있는 투명도가 있습니다.<br>컴퓨터에서 시스템 속도를 늦출 수 있습니다<br>또는 가상화 된 환경."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "소프트웨어를 통해 데스크탑 렌더링 <br><small>(가상 머신에서 유용할 수 있음)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "브라우저에서 GPU 사용"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "성능을 향상시키지만 일부 장비에서는 불안정을 일으킵니다."
-
-msgid "Escolha o desktop:"
-msgstr "데스크탑 선택:"
-
-msgid "têm melhor desempenho."
-msgstr "더 잘 수행합니다."
-
-msgid "e"
-msgstr "과"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "앱의 테마를 선택합니다."
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "소프트웨어 렌더링을 사용하면 투명도의 품질이 저하됩니다."
+msgid "Choose the desktop configuration:"
+msgstr "데스크톱 구성을 선택하십시오:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "키보드 모델을 선택합니다."
 
+msgid "Choose the system appearance:"
+msgstr "시스템 외관을 선택하세요:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
-"\n"
-"<big><big>이런!</big></big>\n"
-"상태 확인에 실패했습니다. 다운로드해야 합니다. \n"
-"시스템을 다시 사용하거나 다른 USB 스틱을 사용하십시오.\n"
+"<big><big>이런</big></big>\n"
+"무결성 검사 실패, 시스템을 다시 다운로드하거나 다른 USB 드라이브를 사용해야 합니다.\n"
 "\n"
 "오류: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "오류: 상태 확인에 실패했습니다!"
-
-msgid "Erro."
-msgstr "오류."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "시스템이 상태 테스트를 통과했습니다."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "시스템 상태 확인:"
+msgid "ERROR: Integrity check failed."
+msgstr "오류: 무결성 검사 실패."

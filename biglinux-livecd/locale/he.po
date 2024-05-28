@@ -16,73 +16,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "ביצועים"
-
-msgid "Aceleração do navegador"
-msgstr "האצת דפדפן"
-
-msgid "Tema"
-msgstr "ערכת נושא"
-
-msgid "Fechar"
-msgstr "קרוב"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr "ערכת נושא זו כוללת שקפים עם אפקטים ש<br>יכול להאט את המערכת במחשבים<br>או סביבות וירטואליות."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "לעבד את שולחן העבודה באמצעות תוכנה <br><small>(יכול להיות שימושי במכונה וירטואלית)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "שימוש ב-GPU בדפדפנים"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "משפר את הביצועים, אך בחלק מהציוד גורם לחוסר יציבות"
-
-msgid "Escolha o desktop:"
-msgstr "בחר את שולחן העבודה:"
-
-msgid "têm melhor desempenho."
-msgstr "ביצועים טובים יותר."
-
-msgid "e"
-msgstr "ו"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "בחר את ערכת הנושא של האפליקציות:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "על ידי שימוש בעיבוד תוכנה, איכות השקפים תופחת."
+msgid "Choose the desktop configuration:"
+msgstr "בחר את תצורת השולחן:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "בחר את דגם המקלדת שלך:"
 
+msgid "Choose the system appearance:"
+msgstr "בחר את המראה של המערכת:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
-"\n"
-"<big><big>אופס!</big></big>\n"
-"בדיקת הבריאות נכשלה, יש צורך להוריד \n"
-"מערכת שוב או להשתמש במקל USB אחר.\n"
+"<big><big>אופס</big></big>\n"
+"הבדיקת תקינות נכשלה, יש להוריד את המערכת שוב או להשתמש בכונן USB אחר.\n"
 "\n"
 "שגיאה: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "שגיאה: בדיקת הבריאות נכשלה!"
-
-msgid "Erro."
-msgstr "שגיאה."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "המערכת עברה את מבחן הבריאות."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "בדיקת תקינות המערכת:"
+msgid "ERROR: Integrity check failed."
+msgstr "שגיאה: בדיקת תקינות נכשלה."

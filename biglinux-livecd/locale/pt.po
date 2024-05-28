@@ -16,75 +16,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Desempenho"
-
-msgid "Aceleração do navegador"
-msgstr "Aceleração do navegador"
-
-msgid "Tema"
-msgstr "Tema"
-
-msgid "Fechar"
-msgstr "Fechar"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Utilizar GPU nos navegadores"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-
-msgid "Escolha o desktop:"
-msgstr "Escolha o desktop:"
-
-msgid "têm melhor desempenho."
-msgstr "têm melhor desempenho."
-
-msgid "e"
-msgstr "e"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Escolha o tema dos aplicativos:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Utilizando renderização por software, a qualidade das transparências será reduzida."
+msgid "Choose the desktop configuration:"
+msgstr "Escolha a configuração do desktop:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Escolha o modelo do teclado:"
 
+msgid "Choose the system appearance:"
+msgstr "Escolha a aparência do sistema:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
+"Integridade falhou, é necessário baixar o sistema novamente ou usar outro pen drive USB.\n"
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
-"\n"
-"ERRO: checksum_biglinux\n"
+"ERRO: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "ERRO: A verificação de integridade falhou!"
-
-msgid "Erro."
-msgstr "Erro."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "O sistema passou no teste de integridade."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Verificando a integridade do sistema:"
+msgid "ERROR: Integrity check failed."
+msgstr "ERRO: Falha na verificação de integridade."

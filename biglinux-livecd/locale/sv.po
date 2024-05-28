@@ -16,75 +16,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Prestanda"
-
-msgid "Aceleração do navegador"
-msgstr "Webbläsarens acceleration"
-
-msgid "Tema"
-msgstr "Tema"
-
-msgid "Fechar"
-msgstr "Stänga"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Detta tema har OH-film med effekter som<br>kan sakta ner systemet på datorer<br>eller "
-"virtualiserade miljöer."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Återgivning av skrivbordet med hjälp av mjukvara<br><small>(Kan vara användbar i virtuell maskin)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Använd GPU i webbläsare"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Förbättrar prestanda, men på viss utrustning orsakar instabilitet"
-
-msgid "Escolha o desktop:"
-msgstr "Välj ditt skrivbord:"
-
-msgid "têm melhor desempenho."
-msgstr "presterar bättre."
-
-msgid "e"
-msgstr "e"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Välj tema för ansökningarna:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Om du använder mjukvaruåtergivning kommer kvaliteten på transparenter att försämras."
+msgid "Choose the desktop configuration:"
+msgstr "Välj skrivbordskonfiguration:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Välj din tangentbordsmodell:"
 
+msgid "Choose the system appearance:"
+msgstr "Välj systemets utseende:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
-"\n"
-"<big><big>Hoppsan!</big></big>\n"
-"Hälsokontrollen misslyckades, det är nödvändigt att ladda ner \n"
-"systemet igen eller använd ett annat USB-minne.\n"
+"Integritetskontrollen misslyckades, det är nödvändigt att ladda ner systemet igen eller använda en "
+"annan USB-enhet.\n"
 "\n"
 "FEL: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "FEL: Hälsokontrollen misslyckades!"
-
-msgid "Erro."
-msgstr "Fel."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Systemet klarade hälsotestet."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Kontrollera systemets hälsa:"
+msgid "ERROR: Integrity check failed."
+msgstr "Fel: Integritetskontrollen misslyckades."

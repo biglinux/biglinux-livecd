@@ -16,75 +16,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Изпълнение"
-
-msgid "Aceleração do navegador"
-msgstr "Ускорение на браузъра"
-
-msgid "Tema"
-msgstr "Тема"
-
-msgid "Fechar"
-msgstr "Затварям"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Тази тема има прозрачности с ефекти, които<br>може да забави системата на компютрите<br>или "
-"виртуализирани среди."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Изобразяване на работния плот чрез софтуер<br><small>(Може да бъде полезно във виртуална машина)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Използване на GPU в браузъри"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Подобрява производителността, но на някои оборудване причинява нестабилност"
-
-msgid "Escolha o desktop:"
-msgstr "Изберете десктопа си:"
-
-msgid "têm melhor desempenho."
-msgstr "работят по-добре."
-
-msgid "e"
-msgstr "e"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Изберете темата на приложенията:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "При използване на софтуерно рендиране качеството на прозрачните изображения се намалява."
+msgid "Choose the desktop configuration:"
+msgstr "Изберете конфигурация на работния плот:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Изберете модела си на клавиатура:"
 
+msgid "Choose the system appearance:"
+msgstr "Изберете външния вид на системата:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
-msgstr ""
-"\n"
-"<big><big>Опа!</big></big>\n"
-"Здравната проверка е неуспешна, е необходимо да изтеглите \n"
-"система отново или използвайте друг USB стик.\n"
-"\n"
-"ГРЕШКА: checksum_biglinux"
+"ERROR: checksum_biglinux\n"
+msgstr "Грешка: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "ГРЕШКА: Проверката на здравето е неуспешна!"
-
-msgid "Erro."
-msgstr "Грешка."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Системата премина здравния тест."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Проверка на здравето на системата:"
+msgid "ERROR: Integrity check failed."
+msgstr "ГРЕШКА: Проверката на цялостта е неуспешна."

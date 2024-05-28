@@ -16,75 +16,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Tulemuslikkus"
-
-msgid "Aceleração do navegador"
-msgstr "Brauseri kiirendus"
-
-msgid "Tema"
-msgstr "Teema"
-
-msgid "Fechar"
-msgstr "Sulgema"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Sellel teemal on läbipaistvused, mille mõjud on<br>võib aeglustada süsteemi arvutites<br>või "
-"virtualiseeritud keskkonnad."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Töölaua renderdamine tarkvara abil<br><small>(Võib olla kasulik virtuaalmasinas)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Kasutage brauserites GPU-d"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Parandab jõudlust, kuid mõnel seadmel põhjustab ebastabiilsust"
-
-msgid "Escolha o desktop:"
-msgstr "Valige oma töölaud:"
-
-msgid "têm melhor desempenho."
-msgstr "toimima paremini."
-
-msgid "e"
-msgstr "e"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Valige rakenduste teema:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Tarkvaralist renderdamist kasutades väheneb läbipaistvuse kvaliteet."
+msgid "Choose the desktop configuration:"
+msgstr "Valige töölaua konfiguratsioon:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Valige oma klaviatuuri mudel:"
 
+msgid "Choose the system appearance:"
+msgstr "Valige süsteemi välimus:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
-"\n"
-"<big><big>Oops!</big></big>\n"
-"Tervisekontroll ebaõnnestus, on vaja alla laadida \n"
-"süsteemi uuesti või kasutage mõnda muud USB-mälupulka.\n"
+"<big><big>Oih</big></big>\n"
+"Andmetsükli kontroll ebaõnnestus, on vajalik süsteem uuesti alla laadida või kasutada teist "
+"USB-mälupulka.\n"
 "\n"
 "VIGA: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "VIGA: Tervisekontroll ebaõnnestus!"
-
-msgid "Erro."
-msgstr "Viga."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Süsteem läbis tervisekontrolli."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Süsteemi seisundi kontrollimine:"
+msgid "ERROR: Integrity check failed."
+msgstr "Viga: Tervikluse kontroll nurjus."
