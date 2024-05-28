@@ -16,75 +16,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Performanse"
-
-msgid "Aceleração do navegador"
-msgstr "Ubrzanje preglednika"
-
-msgid "Tema"
-msgstr "Tema"
-
-msgid "Fechar"
-msgstr "Blizak"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Ova tema ima prozirnosti s učincima koji<br>može usporiti sustav na računalima<br>ili "
-"virtualizirana okruženja."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Render desktop putem softvera <br><small>(Može biti korisno u virtualnom stroju)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Korištenje GPU-a u preglednicima"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Poboljšava performanse, ali na nekoj opremi uzrokuje nestabilnost"
-
-msgid "Escolha o desktop:"
-msgstr "Odaberite radnu površinu:"
-
-msgid "têm melhor desempenho."
-msgstr "bolje."
-
-msgid "e"
-msgstr "i"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Odaberite temu aplikacija:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Korištenjem prikazivanja softvera, kvaliteta prozirnih folija bit će smanjena."
+msgid "Choose the desktop configuration:"
+msgstr "Odaberite konfiguraciju radne površine:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Odaberite model tipkovnice:"
 
+msgid "Choose the system appearance:"
+msgstr "Odaberite izgled sustava:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
+"Integritetna provjera nije uspjela, potrebno je ponovno preuzeti sustav ili koristiti drugi USB "
+"pogon.\n"
 "\n"
-"<big><big>Ups!</big></big>\n"
-"Zdravstvena provjera nije uspjela, potrebno je preuzeti \n"
-"ponovno sustav ili koristite drugi USB stick.\n"
-"\n"
-"POGREŠKA: checksum_biglinux"
+"GREŠKA: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "POGREŠKA: Provjera stanja nije uspjela!"
-
-msgid "Erro."
-msgstr "Greška."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Sustav je prošao zdravstveni test."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Provjera stanja sustava:"
+msgid "ERROR: Integrity check failed."
+msgstr "Pogreška: Provjera integriteta nije uspjela."

@@ -16,75 +16,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Prestaties"
-
-msgid "Aceleração do navegador"
-msgstr "Browserversnelling"
-
-msgid "Tema"
-msgstr "Thema"
-
-msgid "Fechar"
-msgstr "Sluiten"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Dit thema heeft transparanten met effecten die<br>kan het systeem vertragen op computers<br>of "
-"gevirtualiseerde omgevingen."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Weergave van het bureaublad via software<br><small>(Kan nuttig zijn in virtuele machine)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "GPU gebruiken in browsers"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Verbetert de prestaties, maar veroorzaakt op sommige apparatuur instabiliteit"
-
-msgid "Escolha o desktop:"
-msgstr "Kies uw bureaublad:"
-
-msgid "têm melhor desempenho."
-msgstr "beter presteren."
-
-msgid "e"
-msgstr "e"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Kies het thema van de toepassingen:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Als u softwarematige rendering gebruikt, zal de kwaliteit van de transparanten minder worden."
+msgid "Choose the desktop configuration:"
+msgstr "Kies de bureaubladconfiguratie:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Kies uw toetsenbordmodel:"
 
+msgid "Choose the system appearance:"
+msgstr "Kies het systeemuiterlijk:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
-"\n"
-"<big><big>Oeps!</big></big>\n"
-"Gezondheidscheck mislukt, het is noodzakelijk om te downloaden \n"
-"opnieuw systeem of gebruik een andere USB-stick.\n"
+"Integriteitscontrole mislukt, het is noodzakelijk om het systeem opnieuw te downloaden of een "
+"andere USB-drive te gebruiken.\n"
 "\n"
 "FOUT: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "FOUT: Gezondheidscheck mislukt!"
-
-msgid "Erro."
-msgstr "Fout."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Het systeem doorstond de gezondheidstest."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Systeemstatus controleren:"
+msgid "ERROR: Integrity check failed."
+msgstr "FOUT: Integriteitscontrole mislukt."

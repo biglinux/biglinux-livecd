@@ -16,75 +16,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Ydelse"
-
-msgid "Aceleração do navegador"
-msgstr "Browser acceleration"
-
-msgid "Tema"
-msgstr "Tema"
-
-msgid "Fechar"
-msgstr "Lukke"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Dette tema har transparenter med effekter, der<br>kan bremse systemet på computere<br>eller "
-"virtualiserede miljøer."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Gengivelse af skrivebordet via software<br><small>(Kan være nyttig i en virtuel maskine)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Brug GPU i browsere"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Forbedrer ydeevnen, men på nogle udstyr forårsager ustabilitet"
-
-msgid "Escolha o desktop:"
-msgstr "Vælg dit skrivebord:"
-
-msgid "têm melhor desempenho."
-msgstr "yde bedre."
-
-msgid "e"
-msgstr "e"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Vælg temaet for programmerne:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Ved brug af softwarerensning vil kvaliteten af transparenter blive reduceret."
+msgid "Choose the desktop configuration:"
+msgstr "Vælg skrivebordskonfiguration:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Vælg din tastaturmodel:"
 
+msgid "Choose the system appearance:"
+msgstr "Vælg systemets udseende:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
-"\n"
-"<big><big>Ups!</big></big>\n"
-"Sundhedstjek mislykkedes, det er nødvendigt at downloade \n"
-"system igen eller brug en anden USB-stick.\n"
+"Integritetskontrollen mislykkedes, det er nødvendigt at downloade systemet igen eller bruge en "
+"anden USB-drev.\n"
 "\n"
 "FEJL: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "FEJL: Sundhedstjek mislykkedes!"
-
-msgid "Erro."
-msgstr "Fejl."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Systemet bestod sundhedstesten."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Kontrolsystemets tilstand:"
+msgid "ERROR: Integrity check failed."
+msgstr "Fejl: Integritetskontrol mislykkedes."

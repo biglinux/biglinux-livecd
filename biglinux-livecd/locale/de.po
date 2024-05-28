@@ -16,75 +16,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Leistung"
-
-msgid "Aceleração do navegador"
-msgstr "Browserbeschleunigung"
-
-msgid "Tema"
-msgstr "Thema"
-
-msgid "Fechar"
-msgstr "Schließen"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Dieses Thema hat Folien mit Effekten, die<br>kann das System auf Computern verlangsamen<br>oder "
-"virtualisierte Umgebungen."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Rendering des Desktops per Software<br><small>(Kann in einer virtuellen Maschine nützlich sein)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "GPU in Browsern verwenden"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Verbessert die Leistung, verursacht aber bei einigen Geräten Instabilität"
-
-msgid "Escolha o desktop:"
-msgstr "Wählen Sie Ihren Desktop:"
-
-msgid "têm melhor desempenho."
-msgstr "bessere Leistung haben."
-
-msgid "e"
-msgstr "und"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Wählen Sie das Thema der Anwendungen:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Beim Software-Rendering wird die Qualität der Transparenzen reduziert."
+msgid "Choose the desktop configuration:"
+msgstr "Wählen Sie die Desktop-Konfiguration:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Wählen Sie Ihr Tastaturmodell:"
 
+msgid "Choose the system appearance:"
+msgstr "Wählen Sie das Systemaussehen:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
-"\n"
-"<big><big>Hoppla!</big></big>\n"
-"Zustandsprüfung fehlgeschlagen, es ist notwendig herunterzuladen \n"
-"System wieder oder verwenden Sie einen anderen USB-Stick.\n"
+"Integritätsprüfung fehlgeschlagen, es ist erforderlich, das System erneut herunterzuladen oder ein "
+"anderes USB-Laufwerk zu verwenden.\n"
 "\n"
 "FEHLER: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "FEHLER: Zustandsprüfung fehlgeschlagen!"
-
-msgid "Erro."
-msgstr "Fehler."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Das System hat den Gesundheitstest bestanden."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Überprüfen des Systemzustands:"
+msgid "ERROR: Integrity check failed."
+msgstr "FEHLER: Integritätsprüfung fehlgeschlagen."

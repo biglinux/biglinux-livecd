@@ -16,75 +16,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Performanță"
-
-msgid "Aceleração do navegador"
-msgstr "Accelerarea browserului"
-
-msgid "Tema"
-msgstr "Tema"
-
-msgid "Fechar"
-msgstr "Închide"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Această temă are transparente cu efecte care<br>poate încetini sistemul pe computere<br>sau medii "
-"virtualizate."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Redarea desktop-ului prin intermediul unui software<br><small>(Poate fi util în mașina virtuală)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Utilizarea GPU-ului în browsere"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Îmbunătățește performanța, dar pe unele echipamente provoacă instabilitate"
-
-msgid "Escolha o desktop:"
-msgstr "Alegeți-vă desktop-ul:"
-
-msgid "têm melhor desempenho."
-msgstr "să aibă performanțe mai bune."
-
-msgid "e"
-msgstr "e"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Alegeți tema aplicațiilor:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Dacă se utilizează redarea software, calitatea transparențelor va fi redusă."
+msgid "Choose the desktop configuration:"
+msgstr "Alegeți configurația desktopului:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Alegeți modelul de tastatură:"
 
+msgid "Choose the system appearance:"
+msgstr "Alegeți aspectul sistemului:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
-"\n"
-"<big><big>Oops!</big></big>\n"
-"Verificarea de sănătate nu a reușit, este necesar să descărcați \n"
-"sistem din nou sau de a folosi un alt stick USB.\n"
+"<big><big>Oops</big></big>\n"
+"Verificarea integrității a eșuat, este necesar să descărcați din nou sistemul sau să utilizați un "
+"alt USB.\n"
 "\n"
 "EROARE: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "EROARE: Verificarea stării de sănătate nu a reușit!"
-
-msgid "Erro."
-msgstr "Eroare."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Sistemul a trecut testul de sănătate."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Verificarea stării de sănătate a sistemului:"
+msgid "ERROR: Integrity check failed."
+msgstr "Eroare: Verificarea integrității a eșuat."

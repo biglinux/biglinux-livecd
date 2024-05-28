@@ -16,75 +16,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Výkon"
-
-msgid "Aceleração do navegador"
-msgstr "Akcelerace prohlížeče"
-
-msgid "Tema"
-msgstr "Téma"
-
-msgid "Fechar"
-msgstr "Zavřít"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Tento motiv má průhledné fólie s efekty, které<br>může zpomalit systém v počítačích<br>nebo "
-"virtualizovaná prostředí."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Vykreslování pracovní plochy pomocí softwaru<br><small>(Může být užitečné ve virtuálním počítači)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Použití GPU v prohlížečích"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Zlepšuje výkon, ale na některých zařízeních způsobuje nestabilitu"
-
-msgid "Escolha o desktop:"
-msgstr "Vyberte si plochu:"
-
-msgid "têm melhor desempenho."
-msgstr "lepší výkonnost."
-
-msgid "e"
-msgstr "e"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Zvolte téma aplikací:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Při použití softwarového vykreslování se sníží kvalita průsvitek."
+msgid "Choose the desktop configuration:"
+msgstr "Vyberte konfiguraci pracovní plochy:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Vyberte si model klávesnice:"
 
+msgid "Choose the system appearance:"
+msgstr "Vyberte vzhled systému:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
+"Integrita ověření selhala, je nutné stáhnout systém znovu nebo použít jiný USB disk.\n"
 "\n"
-"<big><big>Jejda!</big></big>\n"
-"Kontrola stavu se nezdařila, je nutné stáhnout \n"
-"systém znovu nebo použijte jinou USB klíčenku.\n"
-"\n"
-"CHYBA: checksum_biglinux"
+"CHYBA: kontrolní součet_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "CHYBA: Kontrola stavu se nezdařila!"
-
-msgid "Erro."
-msgstr "Chyba."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Systém prošel zdravotním testem."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Kontrola stavu systému:"
+msgid "ERROR: Integrity check failed."
+msgstr "Chyba: Kontrola integrity selhala."

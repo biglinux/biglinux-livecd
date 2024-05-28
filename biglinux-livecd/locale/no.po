@@ -16,75 +16,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Ytelse"
-
-msgid "Aceleração do navegador"
-msgstr "Akselerasjon i nettleseren"
-
-msgid "Tema"
-msgstr "Tema"
-
-msgid "Fechar"
-msgstr "Lukke"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Dette temaet har transparenter med effekter som<br>kan gjøre systemet tregere på "
-"datamaskiner<br>eller virtualiserte miljøer."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Gjengi skrivebordet via programvare <br><small>(Kan være nyttig i en virtuell maskin)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Bruk GPU i nettlesere"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Forbedrer ytelsen, men på noe utstyr forårsaker ustabilitet"
-
-msgid "Escolha o desktop:"
-msgstr "Velg skrivebordet:"
-
-msgid "têm melhor desempenho."
-msgstr "utføre bedre."
-
-msgid "e"
-msgstr "og"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Velg temaet for appene:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Ved å bruke programvaregjengivelse vil kvaliteten på transparentene bli redusert."
+msgid "Choose the desktop configuration:"
+msgstr "Velg skrivebordskonfigurasjonen:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Velg tastaturmodell:"
 
+msgid "Choose the system appearance:"
+msgstr "Velg systemutseende:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
+"Integritetssjekk mislyktes, det er nødvendig å laste ned systemet på nytt eller bruke en annen "
+"USB-stasjon.\n"
 "\n"
-"<big><big>Oops!</big></big>\n"
-"Helsesjekk mislyktes, det er nødvendig å laste ned \n"
-"systemet igjen, eller bruk en annen USB-pinne.\n"
-"\n"
-"FEIL: checksum_biglinux"
+"FEIL: sjekksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "FEIL: Tilstandskontroll mislyktes."
-
-msgid "Erro."
-msgstr "Feil."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Systemet besto helsetesten."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Kontrollerer systemtilstanden:"
+msgid "ERROR: Integrity check failed."
+msgstr "FEIL: Integritetssjekk mislyktes."

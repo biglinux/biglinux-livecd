@@ -1,0 +1,43 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the biglinux-livecd package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: biglinux-livecd\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Choose the desktop configuration:"
+msgstr "Choose the desktop configuration:"
+
+msgid "Escolha o modelo do teclado:"
+msgstr "Escolha o modelo do teclado:"
+
+msgid "Choose the system appearance:"
+msgstr "Choose the system appearance:"
+
+msgid ""
+"\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use "
+"another USB drive.\n"
+"\n"
+"ERROR: checksum_biglinux\n"
+msgstr ""
+"\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use "
+"another USB drive.\n"
+"\n"
+"ERROR: checksum_biglinux\n"
+
+msgid "ERROR: Integrity check failed."
+msgstr "ERROR: Integrity check failed."

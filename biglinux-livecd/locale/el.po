@@ -16,77 +16,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Επιδόσεις"
-
-msgid "Aceleração do navegador"
-msgstr "Επιτάχυνση προγράμματος περιήγησης"
-
-msgid "Tema"
-msgstr "Θέμα"
-
-msgid "Fechar"
-msgstr "Κλείνω"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Αυτό το θέμα έχει διαφάνειες με εφέ που<br>μπορεί να επιβραδύνει το σύστημα σε υπολογιστές<br>ή "
-"εικονικά διαμορφωμένα περιβάλλοντα."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr ""
-"Απεικόνιση της επιφάνειας εργασίας μέσω λογισμικού<br><small>(Μπορεί να είναι χρήσιμο σε εικονική "
-"μηχανή)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Χρήση GPU σε προγράμματα περιήγησης"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Βελτιώνει την απόδοση, αλλά σε ορισμένες συσκευές προκαλεί αστάθεια"
-
-msgid "Escolha o desktop:"
-msgstr "Επιλέξτε την επιφάνεια εργασίας σας:"
-
-msgid "têm melhor desempenho."
-msgstr "αποδίδουν καλύτερα."
-
-msgid "e"
-msgstr "e"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Επιλέξτε το θέμα των εφαρμογών:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Χρησιμοποιώντας λογισμικό απόδοσης, η ποιότητα των διαφανειών θα μειωθεί."
+msgid "Choose the desktop configuration:"
+msgstr "Επιλέξτε τη διαμόρφωση της επιφάνειας εργασίας:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Επιλέξτε το μοντέλο του πληκτρολογίου σας:"
 
+msgid "Choose the system appearance:"
+msgstr "Επιλέξτε την εμφάνιση του συστήματος:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
-"\n"
-"<big><big>Ουπς!</big></big>\n"
-"Ο έλεγχος υγείας απέτυχε, είναι απαραίτητο να κάνετε λήψη \n"
-"σύστημα ξανά ή χρησιμοποιήστε ένα άλλο USB stick.\n"
+"Αποτυχία ελέγχου ακεραιότητας, είναι απαραίτητο να κατεβάσετε ξανά το σύστημα ή να χρησιμοποιήσετε "
+"ένα άλλο USB drive.\n"
 "\n"
 "ΣΦΑΛΜΑ: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "ΣΦΑΛΜΑ: Ο έλεγχος υγείας απέτυχε!"
-
-msgid "Erro."
-msgstr "Λάθος."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Το σύστημα πέρασε το τεστ υγείας."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Έλεγχος εύρυθμης λειτουργίας συστήματος:"
+msgid "ERROR: Integrity check failed."
+msgstr "ΣΦΑΛΜΑ: Αποτυχία ελέγχου ακεραιότητας."

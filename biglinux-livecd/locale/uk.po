@@ -16,77 +16,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Продуктивність"
-
-msgid "Aceleração do navegador"
-msgstr "прискорення браузера"
-
-msgid "Tema"
-msgstr "Тема"
-
-msgid "Fechar"
-msgstr "Закрити"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Ця тема має прозорі плівки з ефектами, які<br>може уповільнити роботу системи на "
-"комп'ютерах,<br>або віртуалізовані середовища."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr ""
-"Відображати робочий стіл за допомогою програмного забезпечення<br><small>(може бути корисним у "
-"віртуальній машині)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Використання графічного процесора в браузерах"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Покращує продуктивність, але на деяких обладнанні викликає нестабільність"
-
-msgid "Escolha o desktop:"
-msgstr "Виберіть робочий стіл:"
-
-msgid "têm melhor desempenho."
-msgstr "мають кращу продуктивність."
-
-msgid "e"
-msgstr "і"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Виберіть тему програми:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Використовуючи програмну візуалізацію, якість прозорих плівк буде знижена."
+msgid "Choose the desktop configuration:"
+msgstr "Виберіть конфігурацію робочого столу:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Виберіть модель клавіатури:"
 
+msgid "Choose the system appearance:"
+msgstr "Виберіть зовнішній вигляд системи:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
+"<big><big>Помилка</big></big>\n"
+"Перевірка цілісності не вдалася, необхідно знову завантажити систему або використати інший "
+"USB-накопичувач.\n"
 "\n"
-"<big><big>Ой!</big></big>\n"
-"Перевірка здоров'я не вдалася, необхідно завантажити \n"
-"знову система або скористайтеся іншим USB-накопичувачем.\n"
-"\n"
-"ПОМИЛКА: checksum_biglinux"
+"ПОМИЛКА: контрольна сума_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "ПОМИЛКА: Перевірка здоров'я не вдалася!"
-
-msgid "Erro."
-msgstr "Помилка."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "Система пройшла тест на здоров'я."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Перевірка справності системи:"
+msgid "ERROR: Integrity check failed."
+msgstr "ПОМИЛКА: Перевірка цілісності не вдалася."

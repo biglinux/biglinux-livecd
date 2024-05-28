@@ -16,75 +16,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Desempenho"
-msgstr "Wydajność"
-
-msgid "Aceleração do navegador"
-msgstr "Przyspieszenie przeglądarki"
-
-msgid "Tema"
-msgstr "Temat"
-
-msgid "Fechar"
-msgstr "Zamykać"
-
-msgid ""
-"Esse tema possui transparências com efeitos que<br>podem tornar o sistema lento em "
-"computadores<br>antigos ou ambientes virtualizados."
-msgstr ""
-"Ten motyw ma przezroczystości z efektami, które<br>może spowolnić działanie systemu na "
-"komputerach<br>lub środowisk zwirtualizowanych."
-
-msgid "Renderizar o desktop via software<br><small>(Pode ser útil em máquina virtual)"
-msgstr "Rendering pulpitu przez oprogramowanie<br><small>(Może być przydatny w maszynie wirtualnej)"
-
-msgid "Utilizar GPU nos navegadores"
-msgstr "Używanie procesora GPU w przeglądarkach"
-
-msgid "Melhora o desempenho, mas em alguns equipamentos causa instabilidade"
-msgstr "Poprawia wydajność, ale na niektórych urządzeniach powoduje niestabilność"
-
-msgid "Escolha o desktop:"
-msgstr "Proszę wybrać swój pulpit:"
-
-msgid "têm melhor desempenho."
-msgstr "lepiej sobie radzą."
-
-msgid "e"
-msgstr "e"
-
-msgid "Escolha o tema dos aplicativos:"
-msgstr "Proszę wybrać temat aplikacji:"
-
-msgid "Utilizando renderização por software, a qualidade das transparências será reduzida."
-msgstr "Przy zastosowaniu renderingu programowego, jakość przezroczy będzie obniżona."
+msgid "Choose the desktop configuration:"
+msgstr "Wybierz konfigurację pulpitu:"
 
 msgid "Escolha o modelo do teclado:"
 msgstr "Proszę wybrać swój model klawiatury:"
 
+msgid "Choose the system appearance:"
+msgstr "Wybierz wygląd systemu:"
+
 msgid ""
 "\n"
-"<big><big>Oops!</big></big>\n"
-"A verificação de integridade falhou, é necessário fazer o download \n"
-"do sistema novamente ou utilizar outro pendrive.\n"
+"<big><big>Oops</big></big>\n"
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"ERRO: checksum_biglinux\n"
+"ERROR: checksum_biglinux\n"
 msgstr ""
+"Integrity check failed, it is necessary to download the system again or use another USB drive.\n"
 "\n"
-"<big><big>Oops!</big></big>\n"
-"Kontrola stanu nie powiodła się, konieczne jest pobranie \n"
-"lub użyj innej pamięci USB.\n"
-"\n"
-"BŁĄD: checksum_biglinux"
+"ERROR: checksum_biglinux"
 
-msgid "ERRO: A verificação de integridade falhou!"
-msgstr "BŁĄD: Kontrola kondycji nie powiodła się!"
-
-msgid "Erro."
-msgstr "Błąd."
-
-msgid "O sistema passou no teste de integridade."
-msgstr "System przeszedł test zdrowotny."
-
-msgid "Verificando a integridade do sistema:"
-msgstr "Sprawdzanie kondycji systemu:"
+msgid "ERROR: Integrity check failed."
+msgstr "BŁĄD: Sprawdzanie integralności nie powiodło się."
