@@ -21,9 +21,7 @@ echo "LC_MESSAGES=$language.UTF-8" | sudo tee -a /etc/environment &>/dev/null &
 timedatectl set-timezone $timezone </dev/null &>/dev/null &
 timedatectl set-ntp 1 </dev/null &>/dev/null &
 
-if [ "$language" = "en_US" ] || [ "$language" = "pt_BR" ]; then
-  localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null
-fi
+localectl set-locale ${language}.UTF-8 </dev/null &>/dev/null &
 
 # Run script to checksum
 nice -n+20 ionice -c 3 ./biglinux-verify-md5sum.sh > /dev/null 2>&1 &
