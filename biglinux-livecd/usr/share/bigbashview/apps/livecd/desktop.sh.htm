@@ -9,6 +9,17 @@
 # Licensed by GPL V2 or greater
 ##################################
 
+#Translation
+export LANGUAGE=$(</tmp/big_language).UTF-8
+export LANG=$LANGUAGE
+export LC_ALL=$LANGUAGE
+export TEXTDOMAINDIR="/usr/share/locale"
+export TEXTDOMAIN=biglinux-livecd
+
+echo "<script>const projectName = 'biglinux-livecd';</script>"
+
+cat /usr/share/bigbashview/framework/html/genericHeader.html
+
 ######
 # Keyboard
 ######
@@ -16,21 +27,17 @@ if [ "$keyboard" != "" ]; then
 
     setxkbmap "${keyboard//\\/}"  </dev/null &>/dev/null &
     echo "$keyboard" > /tmp/big_keyboard
+    echo "[Layout]
+    LayoutList=$keyboard
+    Use=true" > ~/.config/kxkbrc
 else
     if [ -e "/tmp/big_keyboard" ]; then
         setxkbmap "$(sed 's|\\||g' /tmp/big_keyboard)"  </dev/null &>/dev/null &
-        #localectl set-x11-keymap $(cat /tmp/big_keyboard)
+        echo "[Layout]
+        LayoutList=$(sed 's|\\||g' /tmp/big_keyboard)
+        Use=true" > ~/.config/kxkbrc
     fi
 fi
-
-#Translation
-export TEXTDOMAINDIR="/usr/share/locale"
-export TEXTDOMAIN=biglinux-livecd
-
-
-echo "<script>const projectName = 'biglinux-livecd';</script>"
-
-cat /usr/share/bigbashview/framework/html/genericHeader.html
 
 Select_Desktop=$"Choose the desktop configuration:"
 

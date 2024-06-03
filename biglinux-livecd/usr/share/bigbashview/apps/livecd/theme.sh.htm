@@ -9,6 +9,17 @@
 # Licensed by GPL V2 or greater
 ##################################
 
+#Translation
+export LANGUAGE=$(</tmp/big_language).UTF-8
+export LANG=$LANGUAGE
+export LC_ALL=$LANGUAGE
+export TEXTDOMAINDIR="/usr/share/locale"
+export TEXTDOMAIN=biglinux-livecd
+
+echo "<script>const projectName = 'biglinux-livecd';</script>"
+
+cat /usr/share/bigbashview/framework/html/genericHeader.html
+
 ######
 # Keyboard
 ######
@@ -23,17 +34,7 @@ else
     fi
 fi
 
-#Translation
-export TEXTDOMAINDIR="/usr/share/locale"
-export TEXTDOMAIN=biglinux-livecd
-
 Select_Theme=$"Choose the system appearance:"
-
-
-echo "<!-- Name of JSON file with translation -->
-  <script>const projectName = 'biglinux-livecd';</script>"
-
-  cat /usr/share/bigbashview/framework/html/genericHeader.html
 
 cat << EOF
   <link rel="stylesheet" href="style.css">
