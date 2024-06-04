@@ -25,7 +25,7 @@
         <template x-for="(localization, index) in filteredLocalizations" :key="localization.code">
           <div class="localization-item">
             <div class="internal-localization-item" :class="{'active': index === selectedIndex}" :id="'item-' + index" @mouseenter="selectedIndex = index" @mouseleave="selectedIndex = -1">
-              <a :href="localization.url" class="left-align flex internal-localization-item">
+              <a :href="localization.url" class="left-align flex internal-localization-item no-margin large-padding">
               <div class="div-flag"><img :src="localization.flag" class="flag-image"></div>
               <div class="localization-description">
                   <div class="localization-name" x-text="capitalize(localization.name)"></div>
