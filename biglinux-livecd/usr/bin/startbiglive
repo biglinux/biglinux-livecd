@@ -61,10 +61,15 @@ if systemctl -q is-enabled biglinux-dual-gpu-manager-after-display-manager; then
 fi
 
 # Environment settings for QT and run bigbashview
-if [ "$XDG_SESSION_TYPE" == "x11" ]; then
-        bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') localization.html
-else
-    kwin_wayland --drm --no-lockscreen --locale1 --exit-with-session '/usr/bin/bigbashview -w fullscreen -c black -t qt -d /usr/share/bigbashview/apps/livecd localization.html'
+    if [ "$XDG_SESSION_TYPE" == "x11" ]; then
+            bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') localization.html
+    else
+        if [[ $display_manager == "sddm" ]]; then
+            kwin_wayland --drm --no-lockscreen --locale1 --exit-with-session '/usr/bin/bigbashview -w fullscreen -c black -t qt -d /usr/share/bigbashview/apps/livecd localization.html'
+        elif [[ $display_manager == "gdm" ]]; then
+            mutter --wayland /usr/bin/gnome-bbv-live-session
+        fi
+    fi
 fi
 
 # Language and theme settings
@@ -86,19 +91,24 @@ chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 
 # Checks if the display manager is GDM and removes unwanted files.
 if [[ $display_manager == "gdm" ]]; then
-
     # Removes unwanted files
     rm -f "$HOME/Empty Bash" "$HOME/Empty Desktop File.desktop" "$HOME/Empty File"
 
     # Updates user directories
     xdg-user-dirs-update
-fi
-
-if [[ $display_manager == "sddm" ]]; then
+    
+    if [[ "$XDG_SESSION_TYPE" == "x11" ]]; then
+        . /usr/bin/startgnome-biglinux
+        exec /usr/lib/gnome-session-binary "$@"
+    else
+        . /usr/bin/startgnome-biglinux
+        exec /usr/lib/gnome-session-binary "$@"
+    fi
+elif [[ $display_manager == "sddm" ]]; then
     if [[ "$XDG_SESSION_TYPE" == "x11" ]]; then
         startkde-biglinux
     else
-        startkde-biglinux wayland    
+        startkde-biglinux wayland
     fi
 fi
 
