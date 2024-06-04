@@ -61,16 +61,16 @@ if systemctl -q is-enabled biglinux-dual-gpu-manager-after-display-manager; then
 fi
 
 # Environment settings for QT and run bigbashview
-    if [ "$XDG_SESSION_TYPE" == "x11" ]; then
-            bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') localization.html
-    else
-        if [[ $display_manager == "sddm" ]]; then
-            kwin_wayland --drm --no-lockscreen --locale1 --exit-with-session '/usr/bin/bigbashview -w fullscreen -c black -t qt -d /usr/share/bigbashview/apps/livecd localization.html'
-        elif [[ $display_manager == "gdm" ]]; then
-            mutter --wayland /usr/bin/gnome-bbv-live-session
-        fi
+if [ "$XDG_SESSION_TYPE" == "x11" ]; then
+        bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') localization.html
+else
+    if [[ $display_manager == "sddm" ]]; then
+        kwin_wayland --drm --no-lockscreen --locale1 --exit-with-session '/usr/bin/bigbashview -w fullscreen -c black -t qt -d /usr/share/bigbashview/apps/livecd localization.html'
+    elif [[ $display_manager == "gdm" ]]; then
+        mutter --wayland /usr/bin/gnome-bbv-live-session
     fi
 fi
+
 
 # Language and theme settings
 export LANGUAGE=$(cat /tmp/big_language).UTF-8
