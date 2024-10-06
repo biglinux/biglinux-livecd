@@ -110,6 +110,8 @@ elif [[ $display_manager == "sddm" ]]; then
     else
         startkde-biglinux wayland
     fi
+elif [[ -e /usr/share/xsessions/xfce.desktop ]]; then
+    xfce4-session
 fi
 
 sudo systemctl restart $display_manager
