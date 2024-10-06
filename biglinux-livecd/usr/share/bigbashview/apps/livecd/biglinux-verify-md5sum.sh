@@ -21,9 +21,22 @@ FileVerified="/tmp/checksum_biglinux_ok.html"
 
 if [ ! -e $FileVerified ]; then
 
-    rm -f $File
+    ###### Detecting folder with files
+    # Try with manjaro folder
+    if [[ -e /run/miso/bootmnt/manjaro/x86_64/ ]]; then
     cd /run/miso/bootmnt/manjaro/x86_64/
-    #cd /home/biglinux/x86_64/
+    
+    # Try with folder same as HOSTNAME
+    elif [[ -e /run/miso/bootmnt/$HOSTNAME/x86_64/ ]]; then
+    cd /run/miso/bootmnt/$HOSTNAME/x86_64/
+    
+    # Try folder removing efi and boot folder
+    elif [[ -e $(ls -d1 /run/miso/bootmnt/*/ | grep -ve '/efi/' -ve '/boot/') ]]; then
+    cd $(ls -d1 /run/miso/bootmnt/*/ | grep -ve '/efi/' -ve '/boot/')
+    fi
+    ######
+
+    rm -f $File
 
     md5sum --status -c desktopfs.md5
     if [ "$?" != "0" ] ; then
