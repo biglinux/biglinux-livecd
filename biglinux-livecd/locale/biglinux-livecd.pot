@@ -14,13 +14,13 @@ msgstr  "Project-Id-Version: biglinux-livecd\n"
         "Content-Type: text/plain; charset=CHARSET\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-msgid   "Choose the desktop configuration:"
+msgid   "Choose the system appearance:"
 msgstr  ""
 
 msgid   "Escolha o modelo do teclado:"
 msgstr  ""
 
-msgid   "Choose the system appearance:"
+msgid   "Choose the desktop configuration:"
 msgstr  ""
 
 msgid   "\n"
