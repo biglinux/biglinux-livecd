@@ -34,6 +34,8 @@ else
     fi
 fi
 
+if [[ -e /usr/share/bigbashview/apps/biglinux-themes-gui/list-themes.sh ]]; then
+
 Select_Theme=$"Choose the system appearance:"
 
 cat << EOF
@@ -52,7 +54,7 @@ cat << EOF
   <nav class="center-align top-bar padding">
     <i class="icon-menu">language_chinese_dayi</i>
     <i class="icon-menu">keyboard</i>
-    <img class="logo-image" src="/usr/share/icons/hicolor/scalable/apps/big-favicon-new.svg">
+    <img class="logo-image" src="/usr/share/bigbashview/apps/livecd/icon-logo-biglinux.png">
     <i class="icon-menu">monitor</i>
     <i class="icon-menu">palette</i>
   </nav>
@@ -159,6 +161,7 @@ cat << EOF
 </html>
 EOF
 
+else
 
-
-
+    echo "<meta http-equiv=\"refresh\" content=\"0; URL='make.sh.htm '\"/>"
+fi
