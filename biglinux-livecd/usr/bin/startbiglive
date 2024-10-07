@@ -36,11 +36,11 @@ if [[ $display_manager == "sddm" ]]; then
     if [ "$(grep 'Autolock=false' ~/.config/kscreenlockerrc)" = "" ]; then
         sed -i '/\[Daemon\]/a\'$'\n''Autolock=false\nLockOnResume=false' ~/.config/kscreenlockerrc
     fi
+fi
 
-    if [ "$(grep 'Enabled=false' ~/.config/kwalletrc)" = "" ]; then
-        echo '[Wallet]
-    Enabled=false' >> ~/.config/kwalletrc
-    fi
+if [ "$(grep 'Enabled=false' ~/.config/kwalletrc)" = "" ]; then
+    echo '[Wallet]
+Enabled=false' >> ~/.config/kwalletrc
 fi
 
 # Verify cmdline biglinux.bootcmd
@@ -82,10 +82,7 @@ export LANGUAGE=$(cat /tmp/big_language).UTF-8
 export LANG=$(cat /tmp/big_language).UTF-8
 export LC_MESSAGES=$(cat /tmp/big_language).UTF-8
 echo "$(cat /tmp/big_language)" > $HOME/.config/user-dirs.locale
-
-if [[ $display_manager == "sddm" ]]; then
-    echo -e "[Formats]\nLANG=$(cat /tmp/big_language).UTF-8" > $HOME/.config/plasma-localerc
-fi
+echo -e "[Formats]\nLANG=$(cat /tmp/big_language).UTF-8" > $HOME/.config/plasma-localerc
 
 # Make folders in home
 wait
@@ -118,6 +115,12 @@ elif [[ $display_manager == "sddm" ]]; then
         startkde-biglinux wayland
     fi
 elif [[ -e /usr/share/xsessions/xfce.desktop ]]; then
+    export XDG_MENU_PREFIX=xfce-
+    export DESKTOP_SESSION=xfce
+    export XDG_SESSION_DESKTOP=xfce
+    export QT_QPA_PLATFORMTHEME=xfce
+    export GDMSESSION=xfce
+    export XDG_CURRENT_DESKTOP=XFCE
     startxfce4
 fi
 
