@@ -71,6 +71,7 @@ else
     fi
 fi
 
+wait
 
 # Language and theme settings
 export LANGUAGE=$(cat /tmp/big_language).UTF-8
@@ -81,7 +82,6 @@ echo "$(cat /tmp/big_language)" > $HOME/.config/user-dirs.locale
 echo -e "[Formats]\nLANG=$(cat /tmp/big_language).UTF-8" > $HOME/.config/plasma-localerc
 
 # Make folders in home
-wait
 xdg-user-dirs-update
 . ~/.config/user-dirs.dirs
 cp -f "/usr/share/applications/calamares-biglinux.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
