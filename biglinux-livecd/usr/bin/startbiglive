@@ -81,12 +81,13 @@ fi
 export LANGUAGE=$(cat /tmp/big_language).UTF-8
 export LANG=$(cat /tmp/big_language).UTF-8
 export LC_MESSAGES=$(cat /tmp/big_language).UTF-8
+export LC_ALL=$(cat /tmp/big_language).UTF-8
 echo "$(cat /tmp/big_language)" > $HOME/.config/user-dirs.locale
 echo -e "[Formats]\nLANG=$(cat /tmp/big_language).UTF-8" > $HOME/.config/plasma-localerc
 
 # Make folders in home
 wait
-LC_ALL=$(cat /tmp/big_language).UTF-8 xdg-user-dirs-update
+xdg-user-dirs-update
 . ~/.config/user-dirs.dirs
 cp -f "/usr/share/applications/calamares-biglinux.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
