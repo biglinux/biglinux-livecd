@@ -14,15 +14,6 @@ msgstr  "Project-Id-Version: biglinux-livecd\n"
         "Content-Type: text/plain; charset=CHARSET\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-msgid   "Choose the system appearance:"
-msgstr  ""
-
-msgid   "Escolha o modelo do teclado:"
-msgstr  ""
-
-msgid   "Choose the desktop configuration:"
-msgstr  ""
-
 msgid   "\n"
         "<big><big>Oops</big></big>\n"
         "Integrity check failed, it is necessary to download the system again "
@@ -32,4 +23,13 @@ msgid   "\n"
 msgstr  ""
 
 msgid   "ERROR: Integrity check failed."
+msgstr  ""
+
+msgid   "Choose the desktop configuration:"
+msgstr  ""
+
+msgid   "Choose the system appearance:"
+msgstr  ""
+
+msgid   "Escolha o modelo do teclado:"
 msgstr  ""
