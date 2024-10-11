@@ -13,4 +13,9 @@
 sudo cp -f /tmp/big_desktop_theme /etc/default-theme-biglinux
 sudo cp -f /tmp/big_desktop_changed /etc/big_desktop_changed
 
+# Wait apply localectl before start desktop
+while ps -aux | grep -q [l]ocalectl; do
+    sleep 0.1
+done
+
 echo '<body onload=window.location="/usr/share/bigbashview/close.sh">'
