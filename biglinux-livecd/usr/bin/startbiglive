@@ -60,6 +60,11 @@ if systemctl -q is-enabled biglinux-dual-gpu-manager-after-display-manager; then
     sudo systemctl start biglinux-dual-gpu-manager-after-display-manager 2>&1 &
 fi
 
+# Apply theme
+if [[ -e /usr/share/sync-kde-and-gtk-places/sync-gnome-theme-to-qt.sh ]]; then
+    /usr/share/sync-kde-and-gtk-places/sync-gnome-theme-to-qt.sh
+fi
+
 # Environment settings for QT and run bigbashview
 if [ "$XDG_SESSION_TYPE" == "x11" ]; then
         bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') localization.html
@@ -86,11 +91,6 @@ xdg-user-dirs-update
 . ~/.config/user-dirs.dirs
 cp -f "/usr/share/applications/calamares-biglinux.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
-
-# Apply theme
-if [[ -e /usr/share/sync-kde-and-gtk-places/sync-gnome-theme-to-qt.sh ]]; then
-    /usr/share/sync-kde-and-gtk-places/sync-gnome-theme-to-qt.sh
-fi
 
 cd ~
 
