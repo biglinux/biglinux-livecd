@@ -90,7 +90,7 @@ body {
   --background: rgb(36,36,36);
   --on-background:#3c3a3a;
   --surface: rgb(44,44,44);
-  --on-surface: rgb(255,255,255);
+  --on-surface: rgb(255,255,255) !important;
   --surface-variant: rgb(255,255,255,0.1);
   --on-surface-variant: rgb(255,255,255);
   --outline:#72787e;
