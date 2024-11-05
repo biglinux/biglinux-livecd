@@ -119,7 +119,7 @@ elif [[ -e /usr/share/xsessions/xfce.desktop ]]; then
     export GDMSESSION=xfce
     export XDG_CURRENT_DESKTOP=XFCE
     startxfce4
-elif [[ -e cinnamon-session-cinnamon ]]; then
+elif [[ -e /usr/bin/cinnamon-session-cinnamon ]]; then
     export DESKTOP_SESSION=cinnamon
     export XDG_SESSION_DESKTOP=cinnamon
     export XDG_CURRENT_DESKTOP=X-Cinnamon
