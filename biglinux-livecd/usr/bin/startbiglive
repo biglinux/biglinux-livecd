@@ -119,6 +119,12 @@ elif [[ -e /usr/share/xsessions/xfce.desktop ]]; then
     export GDMSESSION=xfce
     export XDG_CURRENT_DESKTOP=XFCE
     startxfce4
+elif [[ -e cinnamon-session-cinnamon ]]; then
+    export DESKTOP_SESSION=cinnamon
+    export XDG_SESSION_DESKTOP=cinnamon
+    export XDG_CURRENT_DESKTOP=X-Cinnamon
+    export GDMSESSION=cinnamon
+    cinnamon-session-cinnamon
 fi
 
 sudo systemctl restart $display_manager
