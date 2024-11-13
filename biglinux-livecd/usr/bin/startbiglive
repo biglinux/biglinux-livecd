@@ -67,12 +67,26 @@ fi
 
 # Environment settings for QT and run bigbashview
 if [ "$XDG_SESSION_TYPE" == "x11" ]; then
+        systemctl --user start plasma-kglobalaccel.service
         bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') localization.html
 else
     if [[ $display_manager == "sddm" ]]; then
-        QT_SCALE_FACTOR_ROUNDING_POLICY=RoundPreferFloor kwin_wayland --drm --no-lockscreen --locale1 --exit-with-session '/usr/bin/bigbashview -w fullscreen -c black -t qt -d /usr/share/bigbashview/apps/livecd localization.html'
+        export DESKTOP_SESSION=KDE
+        export XDG_SESSION_DESKTOP=KDE
+        export QT_QPA_PLATFORMTHEME=kvantum
+        export GDMSESSION=KDE
+        export XDG_CURRENT_DESKTOP=KDE
+        export QT_SCALE_FACTOR_ROUNDING_POLICY=RoundPreferFloor
+        systemctl --user start plasma-kglobalaccel.service
+        dbus-run-session kwin_wayland_wrapper --xwayland '/usr/bin/bigbashview -w fullscreen -c black -t qt -d /usr/share/bigbashview/apps/livecd localization.html'
     elif [[ $display_manager == "gdm" ]]; then
-        QT_SCALE_FACTOR_ROUNDING_POLICY=RoundPreferFloor mutter --wayland /usr/bin/gnome-bbv-live-session
+        export DESKTOP_SESSION=gnome
+        export XDG_SESSION_DESKTOP=gnome
+        export QT_QPA_PLATFORMTHEME=kvantum
+        export GDMSESSION=gnome
+        export XDG_CURRENT_DESKTOP=gnome
+        export QT_SCALE_FACTOR_ROUNDING_POLICY=RoundPreferFloor
+        mutter --wayland /usr/bin/gnome-bbv-live-session
     fi
 fi
 
