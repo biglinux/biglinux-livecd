@@ -18,4 +18,5 @@ while ps -aux | grep -q [l]ocalectl; do
     sleep 0.1
 done
 
+killall kwin_wayland kwin_wayland_wrapper
 echo '<body onload=window.location="/usr/share/bigbashview/close.sh">'
