@@ -36,7 +36,7 @@ if [ "$keyboard" = "us" ]; then
     exit
 fi
 
-SELECT_KEYBOARD=$"Escolha o modelo do teclado:"
+SELECT_KEYBOARD=$"Choose your keyboard layout:"
 
 echo "<!-- Name of JSON file with translation -->
   <script>const projectName = 'biglinux-livecd';</script>"
@@ -46,6 +46,7 @@ echo "<!-- Name of JSON file with translation -->
 cat << EOF
   <link rel="stylesheet" href="style.css">
 </head>
+<title>$SELECT_KEYBOARD</title>
 <body x-data="navigation()">
   <nav class="center-align top-bar padding">
     <i class="icon-menu">language_chinese_dayi</i>

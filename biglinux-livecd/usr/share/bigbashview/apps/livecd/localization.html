@@ -4,6 +4,7 @@
     <?include html /usr/share/bigbashview/framework/html/genericHeader.html?>
     <link rel="stylesheet" href="style.css">
   </head>
+  <title>Choose Language</title>
   <body>
   
   <nav class="center-align top-bar padding">
@@ -23,8 +24,19 @@
       
       <div class="localization-container">
         <template x-for="(localization, index) in filteredLocalizations" :key="localization.code">
-          <div class="localization-item">
-            <div class="internal-localization-item" :class="{'active': index === selectedIndex}" :id="'item-' + index" @mouseenter="selectedIndex = index" @mouseleave="selectedIndex = -1">
+
+
+
+
+          
+          <div 
+          class="localization-item" 
+          role="option" 
+          :aria-selected="index === selectedIndex"
+          tabindex="-1"
+          :id="'item-' + index" 
+          @mouseenter="selectedIndex = index" 
+          @mouseleave="selectedIndex = -1">
               <a :href="localization.url" class="left-align flex internal-localization-item no-margin large-padding">
               <div class="div-flag"><img :src="localization.flag" class="flag-image"></div>
               <div class="localization-description">
@@ -32,7 +44,6 @@
                   <div class="localization-name-orig" x-text="capitalize(localization.nameOrig)"></div>
               </div>
             </a>
-            </div>
           </div>
         </template>
       </div>
@@ -95,59 +106,67 @@
         }
       },
       handleKeydown(event) {
-        const rowCount = Math.ceil(this.filteredLocalizations.length / this.columns);
-        const maxIndex = this.filteredLocalizations.length - 1;
-  
-        if (['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'].includes(event.key)) {
-          event.preventDefault();
-        }
-  
-        if (event.key === 'Enter') {
-          if (this.selectedIndex >= 0) {
-            window.location.href = this.filteredLocalizations[this.selectedIndex].url;
-          } else {
-            this.goToFirstUrl();
-          }
-        } else if (event.key === 'Backspace') {
-          if (this.query.length > 0) {
-            this.query = this.query.slice(0, -1);
-            this.filterList();
-          }
-        } else if (event.key === 'ArrowDown') {
-          if (this.selectedIndex + this.columns <= maxIndex) {
-            this.selectedIndex += this.columns;
-          } else if (this.selectedIndex !== maxIndex) {
-            this.selectedIndex = maxIndex;
-          }
-        } else if (event.key === 'ArrowUp') {
-          if (this.selectedIndex - this.columns >= 0) {
-            this.selectedIndex -= this.columns;
-          } else if (this.selectedIndex !== -1) {
-            this.selectedIndex = 0;
-          }
-        } else if (event.key === 'ArrowRight') {
-          if (this.selectedIndex % this.columns !== this.columns - 1 && this.selectedIndex < maxIndex) {
-            this.selectedIndex++;
-          }
-        } else if (event.key === 'ArrowLeft') {
-          if (this.selectedIndex % this.columns !== 0 && this.selectedIndex > 0) {
-            this.selectedIndex--;
-          }
-        } else if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) { // Only add printable characters
-          this.query += event.key;
-          this.filterList();
-        }
-  
-        this.scrollToSelectedItem();
-      },
-      scrollToSelectedItem() {
-        if (this.selectedIndex !== -1) {
-          const item = document.getElementById('item-' + this.selectedIndex);
-          if (item) {
-            item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }
-      }
+  const rowCount = Math.ceil(this.filteredLocalizations.length / this.columns);
+  const maxIndex = this.filteredLocalizations.length - 1;
+
+  if (event.key === 'Tab') {
+    // Permitir que o navegador lide com o Tab
+    return;
+  }
+
+  if (['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'].includes(event.key)) {
+    event.preventDefault(); // Impedir comportamento padrão para as setas
+  }
+
+  if (event.key === 'Enter') {
+    if (this.selectedIndex >= 0) {
+      window.location.href = this.filteredLocalizations[this.selectedIndex].url;
+    } else {
+      this.goToFirstUrl();
+    }
+  } else if (event.key === 'ArrowDown') {
+    if (this.selectedIndex + this.columns <= maxIndex) {
+      this.selectedIndex += this.columns;
+    } else if (this.selectedIndex !== maxIndex) {
+      this.selectedIndex = maxIndex;
+    }
+  } else if (event.key === 'ArrowUp') {
+    if (this.selectedIndex - this.columns >= 0) {
+      this.selectedIndex -= this.columns;
+    } else if (this.selectedIndex !== -1) {
+      this.selectedIndex = 0;
+    }
+  } else if (event.key === 'ArrowRight') {
+    if (this.selectedIndex % this.columns !== this.columns - 1 && this.selectedIndex < maxIndex) {
+      this.selectedIndex++;
+    }
+  } else if (event.key === 'ArrowLeft') {
+    if (this.selectedIndex % this.columns !== 0 && this.selectedIndex > 0) {
+      this.selectedIndex--;
+    }
+  }
+
+  this.updateTabIndexes();
+  this.scrollToSelectedItem();
+},
+updateTabIndexes() {
+  // Define tabindex="0" apenas para o item selecionado
+  this.filteredLocalizations.forEach((_, index) => {
+    const item = document.getElementById('item-' + index);
+    if (item) {
+      item.setAttribute('tabindex', index === this.selectedIndex ? '0' : '-1');
+    }
+  });
+},
+scrollToSelectedItem() {
+  if (this.selectedIndex !== -1) {
+    const item = document.getElementById('item-' + this.selectedIndex);
+    if (item) {
+      item.focus(); // Move o foco para o item selecionado
+      item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+}
     }
   }
   </script>
