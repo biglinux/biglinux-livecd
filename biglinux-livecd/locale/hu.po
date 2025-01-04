@@ -16,15 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Choose the desktop configuration:"
-msgstr "Válassza ki az asztali konfigurációt:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Válassza ki a billentyűzet modelljét:"
-
-msgid "Choose the system appearance:"
-msgstr "Válassza ki a rendszer megjelenését:"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -40,3 +31,12 @@ msgstr ""
 
 msgid "ERROR: Integrity check failed."
 msgstr "HIBA: Az adatok integritása ellenőrzése sikertelen volt."
+
+msgid "Choose the desktop configuration:"
+msgstr "Válassza ki az asztali konfigurációt:"
+
+msgid "Choose the system appearance:"
+msgstr "Válassza ki a rendszer megjelenését:"
+
+msgid "Choose your keyboard layout:"
+msgstr "Válaszd ki a billentyűzetkiosztást:"

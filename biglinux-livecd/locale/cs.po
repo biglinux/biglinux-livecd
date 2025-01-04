@@ -16,15 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Choose the desktop configuration:"
-msgstr "Vyberte konfiguraci pracovní plochy:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Vyberte si model klávesnice:"
-
-msgid "Choose the system appearance:"
-msgstr "Vyberte vzhled systému:"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -39,3 +30,12 @@ msgstr ""
 
 msgid "ERROR: Integrity check failed."
 msgstr "Chyba: Kontrola integrity selhala."
+
+msgid "Choose the desktop configuration:"
+msgstr "Vyberte konfiguraci pracovní plochy:"
+
+msgid "Choose the system appearance:"
+msgstr "Vyberte vzhled systému:"
+
+msgid "Choose your keyboard layout:"
+msgstr "Vyberte si rozložení klávesnice:"

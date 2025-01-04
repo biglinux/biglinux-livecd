@@ -39,5 +39,5 @@ msgstr "Choose the desktop configuration:"
 msgid "Choose the system appearance:"
 msgstr "Choose the system appearance:"
 
-msgid "Escolha o modelo do teclado:"
-msgstr "Escolha o modelo do teclado:"
+msgid "Choose your keyboard layout:"
+msgstr "Choose your keyboard layout:"

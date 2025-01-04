@@ -31,5 +31,5 @@ msgstr  ""
 msgid   "Choose the system appearance:"
 msgstr  ""
 
-msgid   "Escolha o modelo do teclado:"
+msgid   "Choose your keyboard layout:"
 msgstr  ""

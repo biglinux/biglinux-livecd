@@ -16,15 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Choose the desktop configuration:"
-msgstr "Odaberite konfiguraciju radne površine:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Odaberite model tipkovnice:"
-
-msgid "Choose the system appearance:"
-msgstr "Odaberite izgled sustava:"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -39,3 +30,12 @@ msgstr ""
 
 msgid "ERROR: Integrity check failed."
 msgstr "Pogreška: Provjera integriteta nije uspjela."
+
+msgid "Choose the desktop configuration:"
+msgstr "Odaberite konfiguraciju radne površine:"
+
+msgid "Choose the system appearance:"
+msgstr "Odaberite izgled sustava:"
+
+msgid "Choose your keyboard layout:"
+msgstr "Odaberite raspored tipkovnice:"

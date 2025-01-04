@@ -16,15 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Choose the desktop configuration:"
-msgstr "데스크톱 구성을 선택하십시오:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "키보드 모델을 선택합니다."
-
-msgid "Choose the system appearance:"
-msgstr "시스템 외관을 선택하세요:"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -39,3 +30,12 @@ msgstr ""
 
 msgid "ERROR: Integrity check failed."
 msgstr "오류: 무결성 검사 실패."
+
+msgid "Choose the desktop configuration:"
+msgstr "데스크톱 구성을 선택하십시오:"
+
+msgid "Choose the system appearance:"
+msgstr "시스템 외관을 선택하세요:"
+
+msgid "Choose your keyboard layout:"
+msgstr "키보드 레이아웃을 선택하세요:"

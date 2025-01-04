@@ -16,15 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Choose the desktop configuration:"
-msgstr "デスクトップ構成を選択してください。"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "キーボードの機種を選んでください。"
-
-msgid "Choose the system appearance:"
-msgstr "システムの外観を選択してください:"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -39,3 +30,12 @@ msgstr ""
 
 msgid "ERROR: Integrity check failed."
 msgstr "エラー：整合性チェックに失敗しました。"
+
+msgid "Choose the desktop configuration:"
+msgstr "デスクトップ構成を選択してください。"
+
+msgid "Choose the system appearance:"
+msgstr "システムの外観を選択してください:"
+
+msgid "Choose your keyboard layout:"
+msgstr "キーボードレイアウトを選択してください："
