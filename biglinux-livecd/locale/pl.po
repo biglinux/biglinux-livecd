@@ -16,15 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Choose the desktop configuration:"
-msgstr "Wybierz konfigurację pulpitu:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Proszę wybrać swój model klawiatury:"
-
-msgid "Choose the system appearance:"
-msgstr "Wybierz wygląd systemu:"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -38,3 +29,12 @@ msgstr ""
 
 msgid "ERROR: Integrity check failed."
 msgstr "BŁĄD: Sprawdzanie integralności nie powiodło się."
+
+msgid "Choose the desktop configuration:"
+msgstr "Wybierz konfigurację pulpitu:"
+
+msgid "Choose the system appearance:"
+msgstr "Wybierz wygląd systemu:"
+
+msgid "Choose your keyboard layout:"
+msgstr "Wybierz układ klawiatury:"

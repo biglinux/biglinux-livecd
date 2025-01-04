@@ -16,15 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Choose the desktop configuration:"
-msgstr "Alegeți configurația desktopului:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Alegeți modelul de tastatură:"
-
-msgid "Choose the system appearance:"
-msgstr "Alegeți aspectul sistemului:"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -40,3 +31,12 @@ msgstr ""
 
 msgid "ERROR: Integrity check failed."
 msgstr "EROARE: Verificarea integrității a eșuat."
+
+msgid "Choose the desktop configuration:"
+msgstr "Alegeți configurația desktopului:"
+
+msgid "Choose the system appearance:"
+msgstr "Alegeți aspectul sistemului:"
+
+msgid "Choose your keyboard layout:"
+msgstr "Alegeți aranjamentul tastaturii:"

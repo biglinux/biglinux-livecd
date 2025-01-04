@@ -16,15 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Choose the desktop configuration:"
-msgstr "Выберите конфигурацию рабочего стола:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Выберите модель клавиатуры:"
-
-msgid "Choose the system appearance:"
-msgstr "Выберите внешний вид системы:"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -40,3 +31,12 @@ msgstr ""
 
 msgid "ERROR: Integrity check failed."
 msgstr "Ошибка: Проверка целостности не удалась."
+
+msgid "Choose the desktop configuration:"
+msgstr "Выберите конфигурацию рабочего стола:"
+
+msgid "Choose the system appearance:"
+msgstr "Выберите внешний вид системы:"
+
+msgid "Choose your keyboard layout:"
+msgstr "Выберите раскладку клавиатуры:"

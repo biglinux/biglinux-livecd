@@ -16,15 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Choose the desktop configuration:"
-msgstr "Pilih konfigurasi desktop:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Veldu lyklaborðslíkanið þitt:"
-
-msgid "Choose the system appearance:"
-msgstr "Pilih tampilan sistem:"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -35,3 +26,12 @@ msgstr "Kesalahan: checksum_biglinux"
 
 msgid "ERROR: Integrity check failed."
 msgstr "KESALAHAN: Pemeriksaan integritas gagal."
+
+msgid "Choose the desktop configuration:"
+msgstr "Pilih konfigurasi desktop:"
+
+msgid "Choose the system appearance:"
+msgstr "Pilih tampilan sistem:"
+
+msgid "Choose your keyboard layout:"
+msgstr "Veldu lyklaborðsuppsetningu þína:"

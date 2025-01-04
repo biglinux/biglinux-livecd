@@ -16,15 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Choose the desktop configuration:"
-msgstr "Choisissez la configuration du bureau :"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Choisissez votre modèle de clavier :"
-
-msgid "Choose the system appearance:"
-msgstr "Choisissez l'apparence du système :"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -40,3 +31,12 @@ msgstr ""
 
 msgid "ERROR: Integrity check failed."
 msgstr "ERREUR : Échec de la vérification de l'intégrité."
+
+msgid "Choose the desktop configuration:"
+msgstr "Choisissez la configuration du bureau :"
+
+msgid "Choose the system appearance:"
+msgstr "Choisissez l'apparence du système :"
+
+msgid "Choose your keyboard layout:"
+msgstr "Choisissez votre disposition de clavier :"

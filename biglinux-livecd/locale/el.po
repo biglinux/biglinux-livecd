@@ -16,15 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Choose the desktop configuration:"
-msgstr "Επιλέξτε τη διαμόρφωση της επιφάνειας εργασίας:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Επιλέξτε το μοντέλο του πληκτρολογίου σας:"
-
-msgid "Choose the system appearance:"
-msgstr "Επιλέξτε την εμφάνιση του συστήματος:"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -39,3 +30,12 @@ msgstr ""
 
 msgid "ERROR: Integrity check failed."
 msgstr "ΣΦΑΛΜΑ: Αποτυχία ελέγχου ακεραιότητας."
+
+msgid "Choose the desktop configuration:"
+msgstr "Επιλέξτε τη διαμόρφωση της επιφάνειας εργασίας:"
+
+msgid "Choose the system appearance:"
+msgstr "Επιλέξτε την εμφάνιση του συστήματος:"
+
+msgid "Choose your keyboard layout:"
+msgstr "Επιλέξτε τη διάταξη του πληκτρολογίου σας:"

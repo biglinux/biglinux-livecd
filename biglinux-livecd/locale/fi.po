@@ -16,15 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Choose the desktop configuration:"
-msgstr "Valitse työpöydän asetukset:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Valitse näppäimistömalli:"
-
-msgid "Choose the system appearance:"
-msgstr "Valitse järjestelmän ulkoasu:"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -39,3 +30,12 @@ msgstr ""
 
 msgid "ERROR: Integrity check failed."
 msgstr "VIRHE: Eheystarkistus epäonnistui."
+
+msgid "Choose the desktop configuration:"
+msgstr "Valitse työpöydän asetukset:"
+
+msgid "Choose the system appearance:"
+msgstr "Valitse järjestelmän ulkoasu:"
+
+msgid "Choose your keyboard layout:"
+msgstr "Valitse näppäimistöasettelu:"

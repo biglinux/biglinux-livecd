@@ -16,15 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
 
-msgid "Choose the desktop configuration:"
-msgstr "Изберете конфигурация на работния плот:"
-
-msgid "Escolha o modelo do teclado:"
-msgstr "Изберете модела си на клавиатура:"
-
-msgid "Choose the system appearance:"
-msgstr "Изберете външния вид на системата:"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -35,3 +26,12 @@ msgstr "Грешка: checksum_biglinux"
 
 msgid "ERROR: Integrity check failed."
 msgstr "ГРЕШКА: Проверката на цялостта е неуспешна."
+
+msgid "Choose the desktop configuration:"
+msgstr "Изберете конфигурация на работния плот:"
+
+msgid "Choose the system appearance:"
+msgstr "Изберете външния вид на системата:"
+
+msgid "Choose your keyboard layout:"
+msgstr "Изберете разположение на клавиатурата:"
