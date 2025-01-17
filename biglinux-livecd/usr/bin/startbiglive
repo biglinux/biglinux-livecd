@@ -119,12 +119,15 @@ if [[ $display_manager == "gdm" ]]; then
     # Start Gnome
     /usr/bin/gnome-session
 
-    elif [[ $display_manager == "sddm" || $display_manager == "lxdm" ]]; then
+elif [[ -e /usr/share/wayland-sessions/hyprland.desktop ]]; then
+    Hyprland
+elif [[ $display_manager == "sddm" || $display_manager == "lxdm" ]]; then
     if [[ "$XDG_SESSION_TYPE" == "x11" ]]; then
         startkde-biglinux
     else
         startkde-biglinux wayland
     fi
+
 elif [[ -e /usr/share/xsessions/xfce.desktop ]]; then
     export XDG_MENU_PREFIX=xfce-
     export DESKTOP_SESSION=xfce
@@ -133,6 +136,7 @@ elif [[ -e /usr/share/xsessions/xfce.desktop ]]; then
     export GDMSESSION=xfce
     export XDG_CURRENT_DESKTOP=XFCE
     startxfce4
+
 elif [[ -e /usr/bin/cinnamon-session-cinnamon ]]; then
     export DESKTOP_SESSION=cinnamon
     export XDG_SESSION_DESKTOP=cinnamon
