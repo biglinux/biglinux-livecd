@@ -14,10 +14,10 @@ msgstr  "Project-Id-Version: biglinux-livecd\n"
         "Content-Type: text/plain; charset=CHARSET\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-msgid   "Choose the system appearance:"
+msgid   "Choose your keyboard layout:"
 msgstr  ""
 
-msgid   "Choose your keyboard layout:"
+msgid   "Choose the desktop configuration:"
 msgstr  ""
 
 msgid   "\n"
@@ -31,5 +31,5 @@ msgstr  ""
 msgid   "ERROR: Integrity check failed."
 msgstr  ""
 
-msgid   "Choose the desktop configuration:"
+msgid   "Choose the system appearance:"
 msgstr  ""

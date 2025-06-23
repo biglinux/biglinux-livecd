@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -27,15 +26,11 @@ msgstr ""
 "הבדיקת תקינות נכשלה, יש להוריד את המערכת שוב או להשתמש בכונן USB אחר.\n"
 "\n"
 "שגיאה: checksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "שגיאה: בדיקת תקינות נכשלה."
-
 msgid "Choose the desktop configuration:"
 msgstr "בחר את תצורת השולחן:"
-
 msgid "Choose the system appearance:"
 msgstr "בחר את המראה של המערכת:"
-
 msgid "Choose your keyboard layout:"
 msgstr "בחר את פריסת המקלדת שלך:"

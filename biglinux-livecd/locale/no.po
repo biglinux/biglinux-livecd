@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -27,15 +26,11 @@ msgstr ""
 "USB-stasjon.\n"
 "\n"
 "FEIL: sjekksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "FEIL: Integritetssjekk mislyktes."
-
 msgid "Choose the desktop configuration:"
 msgstr "Velg skrivebordskonfigurasjonen:"
-
 msgid "Choose the system appearance:"
 msgstr "Velg systemutseende:"
-
 msgid "Choose your keyboard layout:"
 msgstr "Velg tastaturoppsett:"

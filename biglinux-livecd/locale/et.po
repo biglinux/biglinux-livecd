@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -28,15 +27,11 @@ msgstr ""
 "USB-mälupulka.\n"
 "\n"
 "VIGA: checksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "Viga: Tervikluse kontroll nurjus."
-
 msgid "Choose the desktop configuration:"
 msgstr "Valige töölaua konfiguratsioon:"
-
 msgid "Choose the system appearance:"
 msgstr "Valige süsteemi välimus:"
-
 msgid "Choose your keyboard layout:"
 msgstr "Vali oma klaviatuuri paigutus:"

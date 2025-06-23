@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -27,15 +26,11 @@ msgstr ""
 "Integrita ověření selhala, je nutné stáhnout systém znovu nebo použít jiný USB disk.\n"
 "\n"
 "CHYBA: kontrolní součet_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "Chyba: Kontrola integrity selhala."
-
 msgid "Choose the desktop configuration:"
 msgstr "Vyberte konfiguraci pracovní plochy:"
-
 msgid "Choose the system appearance:"
 msgstr "Vyberte vzhled systému:"
-
 msgid "Choose your keyboard layout:"
 msgstr "Vyberte si rozložení klávesnice:"

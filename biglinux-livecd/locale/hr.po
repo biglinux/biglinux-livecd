@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -27,15 +26,11 @@ msgstr ""
 "pogon.\n"
 "\n"
 "GREŠKA: checksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "Pogreška: Provjera integriteta nije uspjela."
-
 msgid "Choose the desktop configuration:"
 msgstr "Odaberite konfiguraciju radne površine:"
-
 msgid "Choose the system appearance:"
 msgstr "Odaberite izgled sustava:"
-
 msgid "Choose your keyboard layout:"
 msgstr "Odaberite raspored tipkovnice:"

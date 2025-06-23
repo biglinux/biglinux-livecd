@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -28,15 +27,11 @@ msgstr ""
 "USB-накопитель.\n"
 "\n"
 "ОШИБКА: checksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "Ошибка: Проверка целостности не удалась."
-
 msgid "Choose the desktop configuration:"
 msgstr "Выберите конфигурацию рабочего стола:"
-
 msgid "Choose the system appearance:"
 msgstr "Выберите внешний вид системы:"
-
 msgid "Choose your keyboard layout:"
 msgstr "Выберите раскладку клавиатуры:"

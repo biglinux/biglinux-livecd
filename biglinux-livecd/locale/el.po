@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -27,15 +26,11 @@ msgstr ""
 "ένα άλλο USB drive.\n"
 "\n"
 "ΣΦΑΛΜΑ: checksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "ΣΦΑΛΜΑ: Αποτυχία ελέγχου ακεραιότητας."
-
 msgid "Choose the desktop configuration:"
 msgstr "Επιλέξτε τη διαμόρφωση της επιφάνειας εργασίας:"
-
 msgid "Choose the system appearance:"
 msgstr "Επιλέξτε την εμφάνιση του συστήματος:"
-
 msgid "Choose your keyboard layout:"
 msgstr "Επιλέξτε τη διάταξη του πληκτρολογίου σας:"

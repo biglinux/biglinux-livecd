@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -27,15 +26,11 @@ msgstr ""
 "gereklidir.\n"
 "\n"
 "HATA: checksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "HATA: Bütünlük kontrolü başarısız oldu."
-
 msgid "Choose the desktop configuration:"
 msgstr "Masaüstü yapılandırmasını seçin:"
-
 msgid "Choose the system appearance:"
 msgstr "Sistem görünümünü seçin:"
-
 msgid "Choose your keyboard layout:"
 msgstr "Klavye düzeninizi seçin:"

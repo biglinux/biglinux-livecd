@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -26,15 +25,11 @@ msgstr ""
 "Integridade falhou, é necessário baixar o sistema novamente ou usar outro pen drive USB.\n"
 "\n"
 "ERRO: checksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "ERRO: Falha na verificação de integridade."
-
 msgid "Choose the desktop configuration:"
 msgstr "Escolha a configuração do desktop:"
-
 msgid "Choose the system appearance:"
 msgstr "Escolha a aparência do sistema:"
-
 msgid "Choose your keyboard layout:"
 msgstr "Escolha o layout do seu teclado:"

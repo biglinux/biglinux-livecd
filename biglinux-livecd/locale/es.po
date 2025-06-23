@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -23,15 +22,11 @@ msgid ""
 "\n"
 "ERROR: checksum_biglinux\n"
 msgstr "Error: checksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "ERROR: Error de verificación de integridad."
-
 msgid "Choose the desktop configuration:"
 msgstr "Elija la configuración del escritorio:"
-
 msgid "Choose the system appearance:"
 msgstr "Elegir la apariencia del sistema:"
-
 msgid "Choose your keyboard layout:"
 msgstr "Elige tu diseño de teclado:"

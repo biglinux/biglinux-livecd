@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -27,15 +26,11 @@ msgstr ""
 "무결성 검사 실패, 시스템을 다시 다운로드하거나 다른 USB 드라이브를 사용해야 합니다.\n"
 "\n"
 "오류: checksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "오류: 무결성 검사 실패."
-
 msgid "Choose the desktop configuration:"
 msgstr "데스크톱 구성을 선택하십시오:"
-
 msgid "Choose the system appearance:"
 msgstr "시스템 외관을 선택하세요:"
-
 msgid "Choose your keyboard layout:"
 msgstr "키보드 레이아웃을 선택하세요:"

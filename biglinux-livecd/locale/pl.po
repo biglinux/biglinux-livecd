@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -26,15 +25,11 @@ msgstr ""
 "Błąd integralności, konieczne jest ponowne pobranie systemu lub użycie innego dysku USB.\n"
 "\n"
 "BŁĄD: checksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "BŁĄD: Sprawdzanie integralności nie powiodło się."
-
 msgid "Choose the desktop configuration:"
 msgstr "Wybierz konfigurację pulpitu:"
-
 msgid "Choose the system appearance:"
 msgstr "Wybierz wygląd systemu:"
-
 msgid "Choose your keyboard layout:"
 msgstr "Wybierz układ klawiatury:"

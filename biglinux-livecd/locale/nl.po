@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -27,15 +26,11 @@ msgstr ""
 "andere USB-drive te gebruiken.\n"
 "\n"
 "FOUT: checksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "FOUT: Integriteitscontrole mislukt."
-
 msgid "Choose the desktop configuration:"
 msgstr "Kies de bureaubladconfiguratie:"
-
 msgid "Choose the system appearance:"
 msgstr "Kies het systeemuiterlijk:"
-
 msgid "Choose your keyboard layout:"
 msgstr "Kies uw toetsenbordindeling:"

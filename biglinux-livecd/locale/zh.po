@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -27,15 +26,11 @@ msgstr ""
 "完整性检查失败，需要重新下载系统或使用另一个USB驱动器。\n"
 "\n"
 "错误：checksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "完整性检查失败。"
-
 msgid "Choose the desktop configuration:"
 msgstr "选择桌面配置："
-
 msgid "Choose the system appearance:"
 msgstr "选择系统外观："
-
 msgid "Choose your keyboard layout:"
 msgstr "选择您的键盘布局："

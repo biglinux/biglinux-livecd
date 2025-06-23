@@ -15,11 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Choose the system appearance:"
-msgstr "Choose the system appearance:"
-
 msgid "Choose your keyboard layout:"
 msgstr "Choose your keyboard layout:"
+
+msgid "Choose the desktop configuration:"
+msgstr "Choose the desktop configuration:"
 
 msgid ""
 "\n"
@@ -39,5 +39,5 @@ msgstr ""
 msgid "ERROR: Integrity check failed."
 msgstr "ERROR: Integrity check failed."
 
-msgid "Choose the desktop configuration:"
-msgstr "Choose the desktop configuration:"
+msgid "Choose the system appearance:"
+msgstr "Choose the system appearance:"

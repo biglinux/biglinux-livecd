@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -28,15 +27,11 @@ msgstr ""
 "alt stick USB.\n"
 "\n"
 "EROARE: checksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "EROARE: Verificarea integrității a eșuat."
-
 msgid "Choose the desktop configuration:"
 msgstr "Alegeți configurația desktopului:"
-
 msgid "Choose the system appearance:"
 msgstr "Alegeți aspectul sistemului:"
-
 msgid "Choose your keyboard layout:"
 msgstr "Alegeți aranjamentul tastaturii:"

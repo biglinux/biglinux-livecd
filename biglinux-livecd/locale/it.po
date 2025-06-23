@@ -15,7 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -27,15 +26,11 @@ msgstr ""
 "un'altra chiavetta USB.\n"
 "\n"
 "ERRORE: checksum_biglinux"
-
 msgid "ERROR: Integrity check failed."
 msgstr "ERRORE: Controllo dell'integrità non riuscito."
-
 msgid "Choose the desktop configuration:"
 msgstr "Scegli la configurazione del desktop:"
-
 msgid "Choose the system appearance:"
 msgstr "Scegli l'aspetto del sistema:"
-
 msgid "Choose your keyboard layout:"
 msgstr "Scegli il layout della tastiera:"
