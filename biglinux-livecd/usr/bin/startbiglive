@@ -109,7 +109,10 @@ chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 cd ~
 
 # Checks if the display manager is GDM and removes unwanted files.
-if [[ $display_manager == "gdm" ]]; then
+if grep -iq 'BigCommunity-Core.iso' /proc/cmdline; then
+    /usr/bin/start-calamares-session
+
+elif [[ $display_manager == "gdm" ]]; then
     # Removes unwanted files
     rm -f "$HOME/Empty Bash" "$HOME/Empty Desktop File.desktop" "$HOME/Empty File"
 
