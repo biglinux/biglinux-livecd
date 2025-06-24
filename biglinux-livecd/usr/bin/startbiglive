@@ -110,7 +110,7 @@ cd ~
 
 # Checks if the display manager is GDM and removes unwanted files.
 if grep -iq 'BigCommunity-Core.iso' /proc/cmdline; then
-    /usr/bin/start-calamares-session
+    sudo calamares_polkit
 
 elif [[ $display_manager == "gdm" ]]; then
     # Removes unwanted files
