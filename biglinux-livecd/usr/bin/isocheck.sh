@@ -25,12 +25,11 @@ if [ -f /lib/live/mount/medium/md5sum.txt ];then
 	fi
     done < /lib/live/mount/medium/md5sum.txt
 fi
-) | dialog --title "check md5..." --gauge "starting to check md5... \n\n Verificando integridade do sistema..." 6 100 0
+) | dialog --title "check md5..." --gauge "starting to check md5..." 6 100 0
 if [ -f /tmp/check_failed ];then
     value=`cat /tmp/check_failed`
-    dialog --title "check md5" --msgbox "checksum failed \n  $value  \n\n O sistema esta corrompido"  10 60
+    dialog --title "check md5" --msgbox "checksum failed \n  $value"  10 60
 else
-    dialog --title "check md5" --msgbox "checksum success \n\n Nenhum erro encontrado"  10 20
+    dialog --title "check md5" --msgbox "checksum success"  10 20
 fi
-echo 1 > /proc/sys/kernel/sysrq
-echo b > /proc/sysrq-trigger
+

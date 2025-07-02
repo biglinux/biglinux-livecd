@@ -19,18 +19,32 @@ fi
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-livecd
 
-TITLE=$"Erro: Falha na verificação de integridade"
-HEADING="Oops!"
-BODY=$"Integrity check failed, it is necessary to download the system again or use another USB drive."
+
+TITLE=$"Error: Integrity Check Failed"
+ICON_NAME="dialog-error"
+HEADING=$"Oops!"
+BODY=$"The integrity check failed. It is necessary to download the system again or use another USB drive."
+EXPLANATION=$"<b>Why?</b> Think of the installation file as a precise digital package. This error means the package was damaged during download, or the USB drive itself is faulty and is damaging the file."
 ERROR_CODE="ERROR: checksum fail"
 BUTTON_TEXT=$"Close"
 
-WAYLAND_DISPLAY= yad --title="$TITLE" \
-    --window-icon=dialog-error \
-    --image=icon-crash.svg \
-    --text-align=left \
-    --width=650 \
+
+TEXT_CONTENT="<span size='28000' weight='bold' foreground='#d32f2f'>⚠ $HEADING</span>\n\n"
+TEXT_CONTENT+="<span size='14000' >$BODY</span>\n\n"
+TEXT_CONTENT+="<span size='12000' style='italic' >$EXPLANATION</span>\n\n"
+TEXT_CONTENT+="<span font_family='monospace'"
+TEXT_CONTENT+="foreground='#c62828'"
+TEXT_CONTENT+="size='14000'> 🔍 $ERROR_CODE </span>"
+
+# --- Modern YAD Dialog with Enhanced Design ---
+yad --title="$TITLE" \
+    --window-icon="$ICON_NAME" \
+    --width=640 \
+    --borders=20 \
+    --center \
     --on-top \
-    --margins=180 \
-    --button="$BUTTON_TEXT:1" \
-    --text="<span size='xx-large' weight='bold'>${HEADING}</span>\n\n${BODY}\n\n<tt>${ERROR_CODE}</tt>"
+    --text="$TEXT_CONTENT" \
+    --text-width=40 \
+    --text-align=center \
+    --button="$BUTTON_TEXT!gtk-close:0"
+

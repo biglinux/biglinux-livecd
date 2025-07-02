@@ -9,15 +9,15 @@
 # Licensed by GPL V2 or greater
 ##################################
 
-export LANGUAGE=$(cat /tmp/big_language).UTF-8
-export LANG=$(cat /tmp/big_language).UTF-8
+export LANGUAGE=$(</tmp/big_language).UTF-8
+export LANG=$(</tmp/big_language).UTF-8
 
 #Translation
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-livecd
 
 
-yad --window-icon=gtk-no --width=450 --height=300 --fixed --infobox --text-align=left --text=$"
+WAYLAND_DISPLAY= yad --window-icon=gtk-no --width=450 --height=300 --fixed --infobox --text-align=left --text=$"
 <big><big>Oops</big></big>
 Integrity check failed, it is necessary to download the system again or use another USB drive.
 
