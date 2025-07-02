@@ -35,6 +35,34 @@ msgid "ERROR: Integrity check failed."
 msgstr "EROARE: Verificarea integrității a eșuat."
 msgid "Choose the system appearance:"
 msgstr "Alegeți aspectul sistemului:"
+#: NEEDS WORK
+msgid "Error: Integrity Check Failed"
+msgstr "Eroare: Verificarea integrității a eșuat"
+#: NEEDS WORK
+msgid "Oops!"
+msgstr "Oops!"
+#: NEEDS WORK
+msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
+msgstr ""
+"Verificarea integrității a eșuat. Este necesar să descărcați din nou sistemul sau să folosiți un "
+"alt dispozitiv USB."
+#: NEEDS WORK
+msgid ""
+"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
+"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
+msgstr ""
+"<b>De ce?</b> Gândiți-vă la fișierul de instalare ca la un pachet digital precis. Această eroare "
+"înseamnă că pachetul a fost deteriorat în timpul descărcării sau că unitatea USB în sine este "
+"defectă și deteriorază fișierul."
+#: NEEDS WORK
+msgid "Close"
+msgstr "Închide"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
+#: NEEDS WORK
+msgid "BigLinux Setup"
+msgstr "Configurare BigLinux"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
 #: NEEDS WORK

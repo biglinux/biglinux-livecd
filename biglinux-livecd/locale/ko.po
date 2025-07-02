@@ -34,6 +34,29 @@ msgid "ERROR: Integrity check failed."
 msgstr "오류: 무결성 검사 실패."
 msgid "Choose the system appearance:"
 msgstr "시스템 외관을 선택하세요:"
+#: NEEDS WORK
+msgid "Error: Integrity Check Failed"
+msgstr "오류: 무결성 검사 실패"
+#: NEEDS WORK
+msgid "Oops!"
+msgstr "죄송합니다!"
+#: NEEDS WORK
+msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
+msgstr "무결성 검사가 실패했습니다. 시스템을 다시 다운로드하거나 다른 USB 드라이브를 사용해야 합니다."
+#: NEEDS WORK
+msgid ""
+"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
+"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
+msgstr "<b>왜?</b> 설치 파일을 정밀한 디지털 패키지로 생각하세요. 이 오류는 패키지가 다운로드 중 손상되었거나 USB 드라이브 자체에 결함이 있어 파일이 손상되었음을 의미합니다."
+#: NEEDS WORK
+msgid "Close"
+msgstr "닫기"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
+#: NEEDS WORK
+msgid "BigLinux Setup"
+msgstr "빅리눅스 설정"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
 #: NEEDS WORK

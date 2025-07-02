@@ -30,6 +30,31 @@ msgid "ERROR: Integrity check failed."
 msgstr "KESALAHAN: Pemeriksaan integritas gagal."
 msgid "Choose the system appearance:"
 msgstr "Pilih tampilan sistem:"
+#: NEEDS WORK
+msgid "Error: Integrity Check Failed"
+msgstr "Villa: Skoðun á heiðarleika mistókst"
+#: NEEDS WORK
+msgid "Oops!"
+msgstr "Oops!"
+#: NEEDS WORK
+msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
+msgstr "Heimildarprófið mistókst. Nauðsynlegt er að hlaða kerfinu niður aftur eða nota annan USB drif."
+#: NEEDS WORK
+msgid ""
+"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
+"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
+msgstr ""
+"<b>Af hverju?</b> Hugsaðu um uppsetningarskrána sem nákvæma stafræna pakkann. Þessi villa þýðir að "
+"pakkinn var skemmdur við niðurhal, eða USB drifið sjálft er gallað og skemmir skrána."
+#: NEEDS WORK
+msgid "Close"
+msgstr "Lokaðu"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
+#: NEEDS WORK
+msgid "BigLinux Setup"
+msgstr "BigLinux Uppsetning"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
 #: NEEDS WORK

@@ -30,6 +30,33 @@ msgid "ERROR: Integrity check failed."
 msgstr "ГРЕШКА: Проверката на цялостта е неуспешна."
 msgid "Choose the system appearance:"
 msgstr "Изберете външния вид на системата:"
+#: NEEDS WORK
+msgid "Error: Integrity Check Failed"
+msgstr "Грешка: Проверката на целостта не успя"
+#: NEEDS WORK
+msgid "Oops!"
+msgstr "Съжалявам!"
+#: NEEDS WORK
+msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
+msgstr ""
+"Проверката на целостта не успя. Необходимо е да изтеглите системата отново или да използвате друг "
+"USB флаш памет."
+#: NEEDS WORK
+msgid ""
+"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
+"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
+msgstr ""
+"<b>Защо?</b> Помислете за инсталационния файл като за прецизен цифров пакет. Тази грешка означава, "
+"че пакетът е повреден по време на изтегляне, или самият USB флаш памет е дефектен и поврежда файла."
+#: NEEDS WORK
+msgid "Close"
+msgstr "Затвори"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
+#: NEEDS WORK
+msgid "BigLinux Setup"
+msgstr "BigLinux Настройка"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
 #: NEEDS WORK

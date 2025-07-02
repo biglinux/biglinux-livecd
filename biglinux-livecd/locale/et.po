@@ -35,6 +35,33 @@ msgid "ERROR: Integrity check failed."
 msgstr "Viga: Tervikluse kontroll nurjus."
 msgid "Choose the system appearance:"
 msgstr "Valige süsteemi välimus:"
+#: NEEDS WORK
+msgid "Error: Integrity Check Failed"
+msgstr "Viga: Tõhususe kontroll ebaõnnestus"
+#: NEEDS WORK
+msgid "Oops!"
+msgstr "Kahjuks!"
+#: NEEDS WORK
+msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
+msgstr ""
+"Integriteedikontroll ebaõnnestus. On vajalik süsteem uuesti alla laadida või kasutada teist "
+"USB-mälupulka."
+#: NEEDS WORK
+msgid ""
+"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
+"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
+msgstr ""
+"<b>Miks?</b> Mõtle installifailile kui täpset digitaalset paketti. See viga tähendab, et pakett "
+"kahjustus allalaadimise ajal või USB-mälupulk ise on vigane ja kahjustab faili."
+#: NEEDS WORK
+msgid "Close"
+msgstr "Sulge"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
+#: NEEDS WORK
+msgid "BigLinux Setup"
+msgstr "BigLinuxi seadistus"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
 #: NEEDS WORK

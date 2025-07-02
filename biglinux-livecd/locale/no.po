@@ -34,6 +34,33 @@ msgid "ERROR: Integrity check failed."
 msgstr "FEIL: Integritetssjekk mislyktes."
 msgid "Choose the system appearance:"
 msgstr "Velg systemutseende:"
+#: NEEDS WORK
+msgid "Error: Integrity Check Failed"
+msgstr "Feil: Integritetskontroll mislyktes"
+#: NEEDS WORK
+msgid "Oops!"
+msgstr "Oops!"
+#: NEEDS WORK
+msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
+msgstr ""
+"Integritetskontrollen feilet. Det er nødvendig å laste ned systemet på nytt eller bruke en annen "
+"USB-stasjon."
+#: NEEDS WORK
+msgid ""
+"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
+"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
+msgstr ""
+"<b>Hvorfor?</b> Tenk på installasjonsfilen som en presis digital pakke. Denne feilen betyr at "
+"pakken ble skadet under nedlastingen, eller at USB-enheten i seg selv er defekt og skader filen."
+#: NEEDS WORK
+msgid "Close"
+msgstr "Lukk"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
+#: NEEDS WORK
+msgid "BigLinux Setup"
+msgstr "BigLinux Oppsett"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
 #: NEEDS WORK

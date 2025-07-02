@@ -34,6 +34,31 @@ msgid "ERROR: Integrity check failed."
 msgstr "エラー：整合性チェックに失敗しました。"
 msgid "Choose the system appearance:"
 msgstr "システムの外観を選択してください:"
+#: NEEDS WORK
+msgid "Error: Integrity Check Failed"
+msgstr "エラー: 整合性チェックに失敗しました"
+#: NEEDS WORK
+msgid "Oops!"
+msgstr "おっと！"
+#: NEEDS WORK
+msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
+msgstr "整合性チェックに失敗しました。システムを再度ダウンロードするか、別のUSBドライブを使用する必要があります。"
+#: NEEDS WORK
+msgid ""
+"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
+"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
+msgstr ""
+"<b>なぜ？</b> "
+"インストールファイルを正確なデジタルパッケージと考えてください。このエラーは、パッケージがダウンロード中に破損したか、USBドライブ自体に問題があり、ファイルが損傷していることを意味します。"
+#: NEEDS WORK
+msgid "Close"
+msgstr "閉じる"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
+#: NEEDS WORK
+msgid "BigLinux Setup"
+msgstr "BigLinux セットアップ"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
 #: NEEDS WORK

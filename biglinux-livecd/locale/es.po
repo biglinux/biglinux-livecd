@@ -30,6 +30,34 @@ msgid "ERROR: Integrity check failed."
 msgstr "ERROR: Error de verificación de integridad."
 msgid "Choose the system appearance:"
 msgstr "Elegir la apariencia del sistema:"
+#: NEEDS WORK
+msgid "Error: Integrity Check Failed"
+msgstr "Error: Fallo en la Verificación de Integridad"
+#: NEEDS WORK
+msgid "Oops!"
+msgstr "¡Vaya!"
+#: NEEDS WORK
+msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
+msgstr ""
+"La verificación de integridad falló. Es necesario descargar el sistema nuevamente o usar otra "
+"unidad USB."
+#: NEEDS WORK
+msgid ""
+"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
+"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
+msgstr ""
+"<b>¿Por qué?</b> Piensa en el archivo de instalación como un paquete digital preciso. Este error "
+"significa que el paquete se dañó durante la descarga, o que la unidad USB en sí está defectuosa y "
+"está dañando el archivo."
+#: NEEDS WORK
+msgid "Close"
+msgstr "Cerrar"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
+#: NEEDS WORK
+msgid "BigLinux Setup"
+msgstr "Configuración de BigLinux"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
 #: NEEDS WORK

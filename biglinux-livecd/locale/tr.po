@@ -34,6 +34,34 @@ msgid "ERROR: Integrity check failed."
 msgstr "HATA: Bütünlük kontrolü başarısız oldu."
 msgid "Choose the system appearance:"
 msgstr "Sistem görünümünü seçin:"
+#: NEEDS WORK
+msgid "Error: Integrity Check Failed"
+msgstr "Hata: Bütünlük Kontrolü Başarısız oldu"
+#: NEEDS WORK
+msgid "Oops!"
+msgstr "Oops!"
+#: NEEDS WORK
+msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
+msgstr ""
+"Bütünlük kontrolü başarısız oldu. Sistemi tekrar indirmek veya başka bir USB sürücü kullanmak "
+"gereklidir."
+#: NEEDS WORK
+msgid ""
+"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
+"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
+msgstr ""
+"<b>Neden?</b> Kurulum dosyasını hassas bir dijital paket olarak düşünün. Bu hata, paketin indirme "
+"sırasında hasar gördüğü veya USB sürücüsünün kendisinin arızalı olduğu ve dosyayı bozduğu anlamına "
+"gelir."
+#: NEEDS WORK
+msgid "Close"
+msgstr "Kapat"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
+#: NEEDS WORK
+msgid "BigLinux Setup"
+msgstr "BigLinux Kurulumu"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
 #: NEEDS WORK
