@@ -44,7 +44,7 @@ Enabled=false' >> ~/.config/kwalletrc
 fi
 
 # Verify cmdline biglinux.bootcmd
-eval "kernel_args=( $(cat /proc/cmdline) )"
+eval "kernel_args=( $(</proc/cmdline) )"
 for arg in "${kernel_args[@]}" ; do
     case "$arg" in
         biglinux.bootcmd=*)
@@ -54,12 +54,6 @@ for arg in "${kernel_args[@]}" ; do
     esac
 done
 
-# Manage the biglinux-dual-gpu-manager-after-display-manager service
-cd /usr/share/bigbashview/apps/livecd/
-if systemctl -q is-enabled biglinux-dual-gpu-manager-after-display-manager; then
-    sudo systemctl start biglinux-dual-gpu-manager-after-display-manager 2>&1 &
-fi
-
 # Apply theme
 if [[ -e /usr/share/sync-kde-and-gtk-places/sync-gnome-theme-to-qt.sh ]]; then
     /usr/share/sync-kde-and-gtk-places/sync-gnome-theme-to-qt.sh
@@ -68,7 +62,7 @@ fi
 # Environment settings for QT and run bigbashview
 if [ "$XDG_SESSION_TYPE" == "x11" ]; then
         systemctl --user start plasma-kglobalaccel.service
-        bigbashview -c black -t qt -s $(LANG=C xdpyinfo  | grep 'dimensions:' | sed 's|.*dimensions:||g;s| pixels.*||g') localization.html
+        python /usr/share/biglinux/livecd/main.py
 else
     if [[ $display_manager == "sddm" ]]; then
         export DESKTOP_SESSION=KDE
@@ -78,7 +72,7 @@ else
         export XDG_CURRENT_DESKTOP=KDE
         export QT_SCALE_FACTOR_ROUNDING_POLICY=RoundPreferFloor
         systemctl --user start plasma-kglobalaccel.service
-        dbus-run-session kwin_wayland_wrapper --drm --no-lockscreen --xwayland '/usr/bin/bigbashview -w fullscreen -c black -t qt -d /usr/share/bigbashview/apps/livecd localization.html'
+        dbus-run-session kwin_wayland_wrapper --drm --no-lockscreen --xwayland 'python /usr/share/biglinux/livecd/main.py'
     elif [[ $display_manager == "gdm" ]]; then
         export DESKTOP_SESSION=gnome
         export XDG_SESSION_DESKTOP=gnome
@@ -93,12 +87,12 @@ fi
 wait
 
 # Language and theme settings
-export LANGUAGE=$(cat /tmp/big_language).UTF-8
-export LANG=$(cat /tmp/big_language).UTF-8
-export LC_MESSAGES=$(cat /tmp/big_language).UTF-8
-export LC_ALL=$(cat /tmp/big_language).UTF-8
-echo "$(cat /tmp/big_language)" > $HOME/.config/user-dirs.locale
-echo -e "[Formats]\nLANG=$(cat /tmp/big_language).UTF-8" > $HOME/.config/plasma-localerc
+export LANGUAGE=$(</tmp/big_language).UTF-8
+export LANG=$(</tmp/big_language).UTF-8
+export LC_MESSAGES=$(</tmp/big_language).UTF-8
+export LC_ALL=$(</tmp/big_language).UTF-8
+echo "$(</tmp/big_language)" > $HOME/.config/user-dirs.locale
+echo -e "[Formats]\nLANG=$(</tmp/big_language).UTF-8" > $HOME/.config/plasma-localerc
 
 # Make folders in home
 xdg-user-dirs-update
