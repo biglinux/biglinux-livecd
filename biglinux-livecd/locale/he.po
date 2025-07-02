@@ -15,6 +15,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
+msgid "Choose your keyboard layout:"
+msgstr "בחר את פריסת המקלדת שלך:"
+msgid "Choose the desktop configuration:"
+msgstr "בחר את תצורת השולחן:"
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -28,9 +32,75 @@ msgstr ""
 "שגיאה: checksum_biglinux"
 msgid "ERROR: Integrity check failed."
 msgstr "שגיאה: בדיקת תקינות נכשלה."
-msgid "Choose the desktop configuration:"
-msgstr "בחר את תצורת השולחן:"
 msgid "Choose the system appearance:"
 msgstr "בחר את המראה של המערכת:"
-msgid "Choose your keyboard layout:"
-msgstr "בחר את פריסת המקלדת שלך:"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
+#: NEEDS WORK
+msgid "Language"
+msgstr "שפה"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
+#: NEEDS WORK
+msgid "Keyboard"
+msgstr "מקלדת"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
+#: NEEDS WORK
+msgid "Desktop Layout"
+msgstr "פריסת שולחן עבודה"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
+#: NEEDS WORK
+msgid "Theme"
+msgstr "נושא"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
+#: NEEDS WORK
+msgid "Search for a language..."
+msgstr "חפש שפה..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
+#: NEEDS WORK
+msgid "Could not load language data."
+msgstr "לא ניתן לטעון את נתוני השפה."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
+#: NEEDS WORK
+msgid "Choose Your Keyboard Layout"
+msgstr "בחר את פריסת המקלדת שלך"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
+#: NEEDS WORK
+msgid "Choose a Desktop Layout"
+msgstr "בחר פריסת שולחן עבודה"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
+#: NEEDS WORK
+msgid "Settings"
+msgstr "הגדרות"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
+#: NEEDS WORK
+msgid "JamesDSP Audio"
+msgstr "ג'יימסDSP אודיו"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
+#: NEEDS WORK
+msgid "Enable audio improvements"
+msgstr "אפשר שיפורי שמע"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
+#: NEEDS WORK
+msgid "Image quality"
+msgstr "איכות תמונה"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
+#: NEEDS WORK
+msgid "Enable enhanced contrast"
+msgstr "אפשר להפעיל ניגודיות משופרת"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
+#: NEEDS WORK
+msgid "Choose a System Theme"
+msgstr "בחר נושא מערכת"

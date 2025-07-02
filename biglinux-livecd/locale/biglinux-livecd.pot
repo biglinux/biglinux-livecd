@@ -14,12 +14,15 @@ msgstr  "Project-Id-Version: biglinux-livecd\n"
         "Content-Type: text/plain; charset=CHARSET\n"
         "Content-Transfer-Encoding: 8bit\n"
 
+#
 msgid   "Choose your keyboard layout:"
 msgstr  ""
 
+#
 msgid   "Choose the desktop configuration:"
 msgstr  ""
 
+#
 msgid   "\n"
         "<big><big>Oops</big></big>\n"
         "Integrity check failed, it is necessary to download the system again "
@@ -28,8 +31,80 @@ msgid   "\n"
         "ERROR: checksum_biglinux\n"
 msgstr  ""
 
+#
 msgid   "ERROR: Integrity check failed."
 msgstr  ""
 
+#
 msgid   "Choose the system appearance:"
+msgstr  ""
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
+msgid   "Language"
+msgstr  ""
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
+msgid   "Keyboard"
+msgstr  ""
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
+msgid   "Desktop Layout"
+msgstr  ""
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
+msgid   "Theme"
+msgstr  ""
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
+msgid   "Search for a language..."
+msgstr  ""
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
+msgid   "Could not load language data."
+msgstr  ""
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
+msgid   "Choose Your Keyboard Layout"
+msgstr  ""
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
+msgid   "Choose a Desktop Layout"
+msgstr  ""
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
+msgid   "Settings"
+msgstr  ""
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
+msgid   "JamesDSP Audio"
+msgstr  ""
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
+msgid   "Enable audio improvements"
+msgstr  ""
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
+msgid   "Image quality"
+msgstr  ""
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
+msgid   "Enable enhanced contrast"
+msgstr  ""
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
+msgid   "Choose a System Theme"
 msgstr  ""

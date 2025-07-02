@@ -15,6 +15,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
+msgid "Choose your keyboard layout:"
+msgstr "Επιλέξτε τη διάταξη του πληκτρολογίου σας:"
+msgid "Choose the desktop configuration:"
+msgstr "Επιλέξτε τη διαμόρφωση της επιφάνειας εργασίας:"
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -28,9 +32,75 @@ msgstr ""
 "ΣΦΑΛΜΑ: checksum_biglinux"
 msgid "ERROR: Integrity check failed."
 msgstr "ΣΦΑΛΜΑ: Αποτυχία ελέγχου ακεραιότητας."
-msgid "Choose the desktop configuration:"
-msgstr "Επιλέξτε τη διαμόρφωση της επιφάνειας εργασίας:"
 msgid "Choose the system appearance:"
 msgstr "Επιλέξτε την εμφάνιση του συστήματος:"
-msgid "Choose your keyboard layout:"
-msgstr "Επιλέξτε τη διάταξη του πληκτρολογίου σας:"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
+#: NEEDS WORK
+msgid "Language"
+msgstr "Γλώσσα"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
+#: NEEDS WORK
+msgid "Keyboard"
+msgstr "Πληκτρολόγιο"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
+#: NEEDS WORK
+msgid "Desktop Layout"
+msgstr "Διάταξη Επιφάνειας Εργασίας"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
+#: NEEDS WORK
+msgid "Theme"
+msgstr "Θέμα"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
+#: NEEDS WORK
+msgid "Search for a language..."
+msgstr "Αναζητήστε μια γλώσσα..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
+#: NEEDS WORK
+msgid "Could not load language data."
+msgstr "Δεν ήταν δυνατή η φόρτωση των δεδομένων γλώσσας."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
+#: NEEDS WORK
+msgid "Choose Your Keyboard Layout"
+msgstr "Επιλέξτε τη διάταξη του πληκτρολογίου σας"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
+#: NEEDS WORK
+msgid "Choose a Desktop Layout"
+msgstr "Επιλέξτε μια Διάταξη Επιφάνειας Εργασίας"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
+#: NEEDS WORK
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
+#: NEEDS WORK
+msgid "JamesDSP Audio"
+msgstr "JamesDSP Ήχος"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
+#: NEEDS WORK
+msgid "Enable audio improvements"
+msgstr "Ενεργοποιήστε τις βελτιώσεις ήχου"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
+#: NEEDS WORK
+msgid "Image quality"
+msgstr "Ποιότητα εικόνας"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
+#: NEEDS WORK
+msgid "Enable enhanced contrast"
+msgstr "Ενεργοποιήστε την ενισχυμένη αντίθεση"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
+#: NEEDS WORK
+msgid "Choose a System Theme"
+msgstr "Επιλέξτε ένα Θέμα Συστήματος"

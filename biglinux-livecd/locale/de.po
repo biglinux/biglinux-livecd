@@ -15,6 +15,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
+msgid "Choose your keyboard layout:"
+msgstr "Wählen Sie Ihr Tastaturlayout aus:"
+msgid "Choose the desktop configuration:"
+msgstr "Wählen Sie die Desktop-Konfiguration:"
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -30,9 +34,75 @@ msgstr ""
 "FEHLER: checksum_biglinux\n"
 msgid "ERROR: Integrity check failed."
 msgstr "FEHLER: Integritätsprüfung fehlgeschlagen."
-msgid "Choose the desktop configuration:"
-msgstr "Wählen Sie die Desktop-Konfiguration:"
 msgid "Choose the system appearance:"
 msgstr "Wählen Sie das Erscheinungsbild des Systems:"
-msgid "Choose your keyboard layout:"
-msgstr "Wählen Sie Ihr Tastaturlayout aus:"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
+#: NEEDS WORK
+msgid "Language"
+msgstr "Sprache"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
+#: NEEDS WORK
+msgid "Keyboard"
+msgstr "Tastatur"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
+#: NEEDS WORK
+msgid "Desktop Layout"
+msgstr "Desktop-Layout"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
+#: NEEDS WORK
+msgid "Theme"
+msgstr "Thema"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
+#: NEEDS WORK
+msgid "Search for a language..."
+msgstr "Sprache suchen..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
+#: NEEDS WORK
+msgid "Could not load language data."
+msgstr "Konnte Sprachdaten nicht laden."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
+#: NEEDS WORK
+msgid "Choose Your Keyboard Layout"
+msgstr "Wählen Sie Ihr Tastaturlayout"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
+#: NEEDS WORK
+msgid "Choose a Desktop Layout"
+msgstr "Wählen Sie ein Desktop-Layout aus"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
+#: NEEDS WORK
+msgid "Settings"
+msgstr "Einstellungen"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
+#: NEEDS WORK
+msgid "JamesDSP Audio"
+msgstr "JamesDSP Audio"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
+#: NEEDS WORK
+msgid "Enable audio improvements"
+msgstr "Audioverbesserungen aktivieren"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
+#: NEEDS WORK
+msgid "Image quality"
+msgstr "Bildqualität"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
+#: NEEDS WORK
+msgid "Enable enhanced contrast"
+msgstr "Erweiterten Kontrast aktivieren"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
+#: NEEDS WORK
+msgid "Choose a System Theme"
+msgstr "Wählen Sie ein Systemdesign aus"

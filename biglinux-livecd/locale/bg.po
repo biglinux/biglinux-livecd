@@ -15,6 +15,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
+msgid "Choose your keyboard layout:"
+msgstr "Изберете разредката на клавиатурата:"
+msgid "Choose the desktop configuration:"
+msgstr "Изберете конфигурация на работния плот:"
 msgid ""
 "\n"
 "<big><big>Oops</big></big>\n"
@@ -24,9 +28,75 @@ msgid ""
 msgstr "Грешка: checksum_biglinux"
 msgid "ERROR: Integrity check failed."
 msgstr "ГРЕШКА: Проверката на цялостта е неуспешна."
-msgid "Choose the desktop configuration:"
-msgstr "Изберете конфигурация на работния плот:"
 msgid "Choose the system appearance:"
 msgstr "Изберете външния вид на системата:"
-msgid "Choose your keyboard layout:"
-msgstr "Изберете разредката на клавиатурата:"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
+#: NEEDS WORK
+msgid "Language"
+msgstr "Език"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
+#: NEEDS WORK
+msgid "Keyboard"
+msgstr "Клавиатура"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
+#: NEEDS WORK
+msgid "Desktop Layout"
+msgstr "Работен плот"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
+#: NEEDS WORK
+msgid "Theme"
+msgstr "Тема"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
+#: NEEDS WORK
+msgid "Search for a language..."
+msgstr "Търсете език..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
+#: NEEDS WORK
+msgid "Could not load language data."
+msgstr "Не можа да зареди езиковите данни."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
+#: NEEDS WORK
+msgid "Choose Your Keyboard Layout"
+msgstr "Изберете разредката на клавиатурата си"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
+#: NEEDS WORK
+msgid "Choose a Desktop Layout"
+msgstr "Изберете оформление на работния плот"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
+#: NEEDS WORK
+msgid "Settings"
+msgstr "Настройки"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
+#: NEEDS WORK
+msgid "JamesDSP Audio"
+msgstr "JamesDSP Аудио"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
+#: NEEDS WORK
+msgid "Enable audio improvements"
+msgstr "Активирайте подобрения на звука"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
+#: NEEDS WORK
+msgid "Image quality"
+msgstr "Качество на изображението"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
+#: NEEDS WORK
+msgid "Enable enhanced contrast"
+msgstr "Активирайте подобрен контраст"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
+#: NEEDS WORK
+msgid "Choose a System Theme"
+msgstr "Изберете система тема"
