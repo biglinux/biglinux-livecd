@@ -4,7 +4,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 gi.require_version("GdkPixbuf", "2.0")
 from gi.repository import Gtk, Adw, GdkPixbuf, GLib, Gdk
-from translations import _
+from translations import _, set_language
 from config import SetupConfig
 from services import SystemService
 from ui.language_view import LanguageView
@@ -16,12 +16,14 @@ import os
 ASSETS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets"))
 LOGO_PATH = os.path.join(ASSETS_DIR, "logo.png")
 
+
 def load_svg_pixbuf(path, size):
     try:
         return GdkPixbuf.Pixbuf.new_from_file_at_size(path, size, size)
     except GLib.Error as e:
         print(f"Failed to load SVG {path}: {e}")
         return GdkPixbuf.Pixbuf.new(GdkPixbuf.Colorspace.RGB, True, 8, size, size)
+
 
 class AppWindow(Adw.ApplicationWindow):
     __gtype_name__ = "AppWindow"
@@ -31,18 +33,22 @@ class AppWindow(Adw.ApplicationWindow):
         self.system_service = system_service
         self.config = SetupConfig()
         self.completed_steps = set()  # Track completed steps
-        self.set_title("BigLinux Setup")
+        self.set_title(_("BigLinux Setup"))
         self.fullscreen()
 
         style_manager = Adw.StyleManager.get_default()
         style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
 
         css_provider = Gtk.CssProvider()
-        css_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "style.css"))
+        css_path = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), "..", "style.css")
+        )
         if os.path.exists(css_path):
             css_provider.load_from_path(css_path)
             Gtk.StyleContext.add_provider_for_display(
-                self.get_display(), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+                self.get_display(),
+                css_provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
             )
 
         self.set_content(self._build_ui())
@@ -109,6 +115,34 @@ class AppWindow(Adw.ApplicationWindow):
 
         return root_box
 
+    def _retranslate_ui(self):
+        """Updates all visible text in the application to the new language."""
+        self.set_title(_("BigLinux Setup"))
+
+        # Iterate through all pages in the stack, even non-visible ones
+        pages = self.stack.get_pages()
+        for i in range(pages.get_n_items()):
+            page = pages.get_item(i)
+            if not page:
+                continue
+
+            view = page.get_child()
+            view_name = page.get_name()
+
+            # Update the title of the stack page
+            if view_name == "language":
+                page.set_title(_("Language"))
+            elif view_name == "keyboard":
+                page.set_title(_("Keyboard"))
+            elif view_name == "desktop":
+                page.set_title(_("Desktop Layout"))
+            elif view_name == "theme":
+                page.set_title(_("Theme"))
+
+            # Trigger re-translation within the view itself
+            if hasattr(view, "_retranslate_ui"):
+                view._retranslate_ui()
+
     def _ensure_view(self, view_name: str, *args):
         """Creates and adds a view to the stack if it doesn't exist."""
         if not self.stack.get_child_by_name(view_name):
@@ -129,13 +163,13 @@ class AppWindow(Adw.ApplicationWindow):
         button.set_size_request(48, 48)
         button.connect("clicked", self._on_step_button_clicked, step_info["name"])
         button.add_css_class("flat")
-        
+
         try:
             cursor = Gdk.Cursor.new_from_name("pointer", None)
             button.set_cursor(cursor)
         except Exception:
             pass
-            
+
         step_info["button"] = button
         if step_info["name"] == "language":
             step_info["img"] = img
@@ -189,7 +223,18 @@ class AppWindow(Adw.ApplicationWindow):
     def _on_language_selected(self, view, selection):
         self.config.language = selection
         params = selection.url_params
-        self.system_service.apply_language_settings(params["language"], params["timezone"])
+        self.system_service.apply_language_settings(
+            params["language"], params["timezone"]
+        )
+
+        # --- DYNAMIC TRANSLATION ---
+        # 1. Set the new language for the entire application
+        lang_code = params.get("lang")
+        set_language(lang_code)
+
+        # 2. Retranslate all existing UI elements
+        self._retranslate_ui()
+        # --- END DYNAMIC TRANSLATION ---
 
         # Mark language step as completed
         self.completed_steps.add("language")
@@ -209,10 +254,10 @@ class AppWindow(Adw.ApplicationWindow):
                     img.set_from_pixbuf(pixbuf)
 
         keyboard_layout = params.get("keyboard", "us")
-        
+
         # LAZY LOADING: Ensure keyboard view exists before updating or showing it
         self._ensure_view("keyboard", keyboard_layout)
-        
+
         if keyboard_view := self.stack.get_child_by_name("keyboard"):
             keyboard_view.update_primary_layout(keyboard_layout)
 

@@ -33,10 +33,10 @@ class LanguageListItem(GObject.Object):
         self.name = name
         self.name_orig = nameOrig
         self.code = code
-        
+
         # This logic works for any path, including /usr/share/circle-flags-svg/br.svg
         self.flag_icon_name = os.path.splitext(os.path.basename(flag))[0]
-        
+
         # Normalization is done on-the-fly, which is fast enough for this dataset.
         self.normalized_name = normalize_string(name)
         self.normalized_name_orig = normalize_string(nameOrig)
@@ -94,6 +94,10 @@ class LanguageView(Adw.Bin):
 
         return root_box
 
+    def _retranslate_ui(self):
+        """Updates translatable text within the language view."""
+        self.search_entry.set_placeholder_text(_("Search for a language..."))
+
     def _load_languages(self):
         try:
             # Point back to the original, non-preprocessed JSON file.
@@ -112,7 +116,7 @@ class LanguageView(Adw.Bin):
         except (FileNotFoundError, json.JSONDecodeError) as e:
             print(f"Error loading languages: {e}")
             self.set_child(Gtk.Label(label=_("Could not load language data.")))
-        
+
         return GLib.SOURCE_REMOVE
 
     def _create_filtered_model(self):
@@ -164,13 +168,20 @@ class LanguageView(Adw.Bin):
     def _on_factory_setup(self, factory, list_item):
         root_box = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
-            halign=Gtk.Align.FILL, valign=Gtk.Align.CENTER,
-            margin_top=0, margin_bottom=0, margin_start=30, margin_end=30,
+            halign=Gtk.Align.FILL,
+            valign=Gtk.Align.CENTER,
+            margin_top=0,
+            margin_bottom=0,
+            margin_start=30,
+            margin_end=30,
             height_request=100,
         )
         content_box = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL, spacing=20,
-            height_request=100, halign=Gtk.Align.START, valign=Gtk.Align.CENTER,
+            orientation=Gtk.Orientation.HORIZONTAL,
+            spacing=20,
+            height_request=100,
+            halign=Gtk.Align.START,
+            valign=Gtk.Align.CENTER,
         )
         root_box.append(content_box)
         list_item.set_child(root_box)
@@ -205,10 +216,25 @@ class LanguageView(Adw.Bin):
         flag_widget = Gtk.Image.new_from_icon_name(item.flag_icon_name)
         flag_widget.set_pixel_size(36)
 
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2, halign=Gtk.Align.START, valign=Gtk.Align.CENTER)
-        name_label = Gtk.Label(halign=Gtk.Align.START, label=item.name, wrap=True, justify=Gtk.Justification.LEFT)
+        vbox = Gtk.Box(
+            orientation=Gtk.Orientation.VERTICAL,
+            spacing=2,
+            halign=Gtk.Align.START,
+            valign=Gtk.Align.CENTER,
+        )
+        name_label = Gtk.Label(
+            halign=Gtk.Align.START,
+            label=item.name,
+            wrap=True,
+            justify=Gtk.Justification.LEFT,
+        )
         name_label.add_css_class("heading")
-        orig_name_label = Gtk.Label(halign=Gtk.Align.START, label=item.name_orig, wrap=True, justify=Gtk.Justification.LEFT)
+        orig_name_label = Gtk.Label(
+            halign=Gtk.Align.START,
+            label=item.name_orig,
+            wrap=True,
+            justify=Gtk.Justification.LEFT,
+        )
         orig_name_label.add_css_class("caption")
         vbox.append(name_label)
         vbox.append(orig_name_label)
@@ -227,7 +253,10 @@ class LanguageView(Adw.Bin):
     def handle_global_key_press(self, keyval):
         if keyval == Gdk.KEY_Return or keyval == Gdk.KEY_KP_Enter:
             selection_model = self.grid_view.get_model()
-            if selection_model and selection_model.get_selected() != Gtk.INVALID_LIST_POSITION:
+            if (
+                selection_model
+                and selection_model.get_selected() != Gtk.INVALID_LIST_POSITION
+            ):
                 item = selection_model.get_item(selection_model.get_selected())
                 if item:
                     self._activate_item(item)

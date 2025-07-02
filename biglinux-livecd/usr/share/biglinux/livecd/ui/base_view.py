@@ -7,6 +7,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, GObject, GLib, Gdk
 from services import SystemService
 from abc import ABCMeta, abstractmethod
+from translations import _
 
 
 class GObjectMeta(type(GObject.Object), ABCMeta):
@@ -47,9 +48,9 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
         self.main_box.set_margin_end(24)
         scrolled_window.set_child(self.main_box)
 
-        title = Gtk.Label(label=self.get_title(), halign=Gtk.Align.CENTER)
-        title.add_css_class("title-2")
-        self.main_box.append(title)
+        self.title_label = Gtk.Label(label=self.get_title(), halign=Gtk.Align.CENTER)
+        self.title_label.add_css_class("title-2")
+        self.main_box.append(self.title_label)
 
         # This container centers the FlowBox vertically within the available space.
         centering_box = Gtk.Box(
@@ -90,6 +91,11 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
         clamp.set_child(self.flow_box)
 
         return scrolled_window
+
+    def _retranslate_ui(self):
+        """Updates the view's title to the current language."""
+        if hasattr(self, "title_label"):
+            self.title_label.set_label(self.get_title())
 
     def load_items(self):
         items = self.get_items()

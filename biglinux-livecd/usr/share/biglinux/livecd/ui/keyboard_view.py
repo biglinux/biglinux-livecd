@@ -31,11 +31,11 @@ class KeyboardView(Adw.Bin):
         root_box.set_margin_start(24)
         root_box.set_margin_end(24)
 
-        title = Gtk.Label(
+        self.title_label = Gtk.Label(
             label=_("Choose Your Keyboard Layout"), halign=Gtk.Align.CENTER
         )
-        title.add_css_class("title-2")
-        root_box.append(title)
+        self.title_label.add_css_class("title-2")
+        root_box.append(self.title_label)
 
         # Centered vertical box for keyboard selection and image
         center_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
@@ -91,6 +91,11 @@ class KeyboardView(Adw.Bin):
             center_box.append(img)
 
         return root_box
+
+    def _retranslate_ui(self):
+        """Updates the view's title to the current language."""
+        if hasattr(self, "title_label"):
+            self.title_label.set_label(_("Choose Your Keyboard Layout"))
 
     def load_layouts(self):
         # Clear existing children

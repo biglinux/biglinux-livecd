@@ -57,11 +57,13 @@ class ThemeView(BaseItemView):
 
         # --- Settings Section (Bottom) ---
         if self.jamesdsp_available or self.contrast_available:
-            settings_title = Gtk.Label(label=_("Settings"), halign=Gtk.Align.CENTER)
-            settings_title.add_css_class("title-2")
-            settings_title.set_vexpand(True)
-            settings_title.set_valign(Gtk.Align.END)
-            self.main_box.append(settings_title)
+            self.settings_title_label = Gtk.Label(
+                label=_("Settings"), halign=Gtk.Align.CENTER
+            )
+            self.settings_title_label.add_css_class("title-2")
+            self.settings_title_label.set_vexpand(True)
+            self.settings_title_label.set_valign(Gtk.Align.END)
+            self.main_box.append(self.settings_title_label)
 
             settings_box = Gtk.Box(
                 orientation=Gtk.Orientation.HORIZONTAL,
@@ -81,6 +83,26 @@ class ThemeView(BaseItemView):
                 self._create_contrast_card(settings_box)
 
         return root_widget
+
+    def _retranslate_ui(self):
+        """Updates all translatable text in the theme view."""
+        super()._retranslate_ui()  # Retranslate the main title from BaseItemView
+
+        if self.jamesdsp_available or self.contrast_available:
+            if hasattr(self, "settings_title_label"):
+                self.settings_title_label.set_label(_("Settings"))
+
+        if self.jamesdsp_available:
+            if hasattr(self, "jamesdsp_title_label"):
+                self.jamesdsp_title_label.set_label(_("JamesDSP Audio"))
+            if hasattr(self, "jamesdsp_subtitle_label"):
+                self.jamesdsp_subtitle_label.set_label(_("Enable audio improvements"))
+
+        if self.contrast_available:
+            if hasattr(self, "contrast_title_label"):
+                self.contrast_title_label.set_label(_("Image quality"))
+            if hasattr(self, "contrast_subtitle_label"):
+                self.contrast_subtitle_label.set_label(_("Enable enhanced contrast"))
 
     def _create_jamesdsp_card(self, parent_box):
         audio_card = Gtk.Box(css_classes=["settings-card"])
@@ -103,10 +125,15 @@ class ThemeView(BaseItemView):
             orientation=Gtk.Orientation.VERTICAL, hexpand=True, spacing=2
         )
         content.append(text_vbox)
-        text_vbox.append(
-            Gtk.Label(label=_("JamesDSP Audio"), xalign=0, css_classes=["title-4"])
+
+        self.jamesdsp_title_label = Gtk.Label(
+            label=_("JamesDSP Audio"), xalign=0, css_classes=["title-4"]
         )
-        text_vbox.append(Gtk.Label(label=_("Enable audio improvements"), xalign=0))
+        self.jamesdsp_subtitle_label = Gtk.Label(
+            label=_("Enable audio improvements"), xalign=0
+        )
+        text_vbox.append(self.jamesdsp_title_label)
+        text_vbox.append(self.jamesdsp_subtitle_label)
 
         self.jamesdsp_switch = Gtk.Switch(
             valign=Gtk.Align.CENTER, active=self.default_jamesdsp_state
@@ -140,10 +167,15 @@ class ThemeView(BaseItemView):
             orientation=Gtk.Orientation.VERTICAL, hexpand=True, spacing=2
         )
         content.append(text_vbox)
-        text_vbox.append(
-            Gtk.Label(label=_("Image quality"), xalign=0, css_classes=["title-4"])
+
+        self.contrast_title_label = Gtk.Label(
+            label=_("Image quality"), xalign=0, css_classes=["title-4"]
         )
-        text_vbox.append(Gtk.Label(label=_("Enable enhanced contrast"), xalign=0))
+        self.contrast_subtitle_label = Gtk.Label(
+            label=_("Enable enhanced contrast"), xalign=0
+        )
+        text_vbox.append(self.contrast_title_label)
+        text_vbox.append(self.contrast_subtitle_label)
 
         self.contrast_switch = Gtk.Switch(
             valign=Gtk.Align.CENTER, active=self.default_contrast_state
