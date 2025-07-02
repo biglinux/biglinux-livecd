@@ -1,0 +1,285 @@
+import gi
+
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
+gi.require_version("GdkPixbuf", "2.0")
+from gi.repository import Gtk, Adw, GdkPixbuf, GLib, Gdk
+from translations import _
+from config import SetupConfig
+from services import SystemService
+from ui.language_view import LanguageView
+from ui.keyboard_view import KeyboardView
+from ui.desktop_view import DesktopView
+from ui.theme_view import ThemeView
+import os
+
+ASSETS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets"))
+LOGO_PATH = os.path.join(ASSETS_DIR, "logo.png")
+
+def load_svg_pixbuf(path, size):
+    try:
+        return GdkPixbuf.Pixbuf.new_from_file_at_size(path, size, size)
+    except GLib.Error as e:
+        print(f"Failed to load SVG {path}: {e}")
+        return GdkPixbuf.Pixbuf.new(GdkPixbuf.Colorspace.RGB, True, 8, size, size)
+
+class AppWindow(Adw.ApplicationWindow):
+    __gtype_name__ = "AppWindow"
+
+    def __init__(self, system_service: SystemService, **kwargs):
+        super().__init__(**kwargs)
+        self.system_service = system_service
+        self.config = SetupConfig()
+        self.completed_steps = set()  # Track completed steps
+        self.set_title("BigLinux Setup")
+        self.fullscreen()
+
+        style_manager = Adw.StyleManager.get_default()
+        style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
+
+        css_provider = Gtk.CssProvider()
+        css_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "style.css"))
+        if os.path.exists(css_path):
+            css_provider.load_from_path(css_path)
+            Gtk.StyleContext.add_provider_for_display(
+                self.get_display(), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            )
+
+        self.set_content(self._build_ui())
+        self._update_header_state()
+
+        # Create and add a Gtk.EventControllerKey for global key events
+        key_controller = Gtk.EventControllerKey.new()
+        key_controller.connect("key-pressed", self._on_key_press_event)
+        self.add_controller(key_controller)
+
+    def _build_ui(self):
+        root_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+
+        # --- Header Area (Full-Width Wrapper) ---
+        header_wrapper = Gtk.CenterBox()
+        header_wrapper.add_css_class("app-header")
+        root_box.append(header_wrapper)
+
+        # --- Centered Header Content ---
+        header_content_box = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            spacing=15,
+            margin_top=15,
+            margin_bottom=15,
+        )
+        header_wrapper.set_center_widget(header_content_box)
+
+        self.steps = [
+            {"name": "language", "file": "headerbar-locale.svg"},
+            {"name": "keyboard", "file": "headerbar-keyboard.svg"},
+            {"name": "desktop", "file": "headerbar-display.svg"},
+            {"name": "theme", "file": "headerbar-theme.svg"},
+        ]
+
+        self._add_step_button(header_content_box, self.steps[0])
+        self._add_step_button(header_content_box, self.steps[1])
+
+        if os.path.exists(LOGO_PATH):
+            logo = Gtk.Image.new_from_file(LOGO_PATH)
+            logo.set_pixel_size(72)
+            logo.set_margin_start(20)
+            logo.set_margin_end(20)
+            header_content_box.append(logo)
+
+        self._add_step_button(header_content_box, self.steps[2])
+        self._add_step_button(header_content_box, self.steps[3])
+
+        # --- Content Area ---
+        content_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, vexpand=True)
+        content_box.add_css_class("app-content")
+        root_box.append(content_box)
+
+        self.stack = Adw.ViewStack()
+        self.stack.set_vexpand(True)
+        self.stack.connect("notify::visible-child", self._on_view_changed)
+        content_box.append(self.stack)
+
+        # --- LAZY LOADING: Only create the first view initially ---
+        self._add_language_view()
+
+        # Set initial view and update header state
+        self.stack.set_visible_child_name("language")
+        GLib.idle_add(self._update_header_state)
+
+        return root_box
+
+    def _ensure_view(self, view_name: str, *args):
+        """Creates and adds a view to the stack if it doesn't exist."""
+        if not self.stack.get_child_by_name(view_name):
+            if view_name == "keyboard":
+                self._add_keyboard_view(*args)
+            elif view_name == "desktop":
+                self._add_desktop_view()
+            elif view_name == "theme":
+                self._add_theme_view()
+
+    def _add_step_button(self, box, step_info):
+        button = Gtk.Button()
+        button.set_focusable(False)
+        path = os.path.join(ASSETS_DIR, step_info["file"])
+        pixbuf = load_svg_pixbuf(path, 32)
+        img = Gtk.Image.new_from_pixbuf(pixbuf)
+        button.set_child(img)
+        button.set_size_request(48, 48)
+        button.connect("clicked", self._on_step_button_clicked, step_info["name"])
+        button.add_css_class("flat")
+        
+        try:
+            cursor = Gdk.Cursor.new_from_name("pointer", None)
+            button.set_cursor(cursor)
+        except Exception:
+            pass
+            
+        step_info["button"] = button
+        if step_info["name"] == "language":
+            step_info["img"] = img
+        box.append(button)
+
+    def _on_view_changed(self, stack, param):
+        GLib.idle_add(self._update_header_state)
+
+    def _on_step_button_clicked(self, button, view_name):
+        # Only allow navigation to completed steps
+        if view_name in self.completed_steps:
+            self.stack.set_visible_child_name(view_name)
+
+    def _update_header_state(self):
+        current_view_name = self.stack.get_visible_child_name()
+        try:
+            current_index = next(
+                i for i, s in enumerate(self.steps) if s["name"] == current_view_name
+            )
+        except StopIteration:
+            current_index = -1
+
+        for i, step in enumerate(self.steps):
+            if button := step.get("button"):
+                # Remove all state classes
+                button.remove_css_class("step-completed")
+                button.remove_css_class("step-current")
+                button.remove_css_class("step-pending")
+                button.remove_css_class("suggested-action")
+
+                step_name = step["name"]
+
+                if step_name in self.completed_steps:
+                    # Completed step - clickable and visually active
+                    button.add_css_class("step-completed")
+                    button.set_sensitive(True)
+                elif i == current_index:
+                    # Current step - most prominent and enabled for bright appearance
+                    button.add_css_class("step-current")
+                    button.set_sensitive(True)  # Keep enabled for bright appearance
+                else:
+                    # Pending step - inactive
+                    button.add_css_class("step-pending")
+                    button.set_sensitive(False)
+
+    def _add_language_view(self):
+        view = LanguageView()
+        view.connect("language-selected", self._on_language_selected)
+        self.stack.add_titled(view, "language", _("Language"))
+
+    def _on_language_selected(self, view, selection):
+        self.config.language = selection
+        params = selection.url_params
+        self.system_service.apply_language_settings(params["language"], params["timezone"])
+
+        # Mark language step as completed
+        self.completed_steps.add("language")
+
+        if lang_code := getattr(selection, "code", None):
+            if step := next((s for s in self.steps if s["name"] == "language"), None):
+                if img := step.get("img"):
+                    candidate = os.path.join(
+                        ASSETS_DIR, f"headerbar-locale-{lang_code}.svg"
+                    )
+                    path = (
+                        candidate
+                        if os.path.exists(candidate)
+                        else os.path.join(ASSETS_DIR, "headerbar-locale.svg")
+                    )
+                    pixbuf = load_svg_pixbuf(path, 32)
+                    img.set_from_pixbuf(pixbuf)
+
+        keyboard_layout = params.get("keyboard", "us")
+        
+        # LAZY LOADING: Ensure keyboard view exists before updating or showing it
+        self._ensure_view("keyboard", keyboard_layout)
+        
+        if keyboard_view := self.stack.get_child_by_name("keyboard"):
+            keyboard_view.update_primary_layout(keyboard_layout)
+
+        if keyboard_layout not in ["us", "latam"]:
+            self.stack.set_visible_child_name("keyboard")
+        else:
+            self._on_keyboard_selected(None, keyboard_layout)
+
+    def _add_keyboard_view(self, primary_layout):
+        view = KeyboardView(primary_layout=primary_layout)
+        view.connect("keyboard-selected", self._on_keyboard_selected)
+        self.stack.add_titled(view, "keyboard", _("Keyboard"))
+
+    def _on_keyboard_selected(self, view, layout):
+        self.config.keyboard_layout = layout
+        self.system_service.apply_keyboard_layout(layout)
+
+        # Mark keyboard step as completed
+        self.completed_steps.add("keyboard")
+
+        # LAZY LOADING: Ensure desktop view exists before showing it
+        self._ensure_view("desktop")
+        self.stack.set_visible_child_name("desktop")
+
+    def _add_desktop_view(self):
+        view = DesktopView(system_service=self.system_service)
+        view.connect("desktop-selected", self._on_desktop_selected)
+        self.stack.add_titled(view, "desktop", _("Desktop Layout"))
+
+    def _on_desktop_selected(self, view, layout):
+        print(f"AppWindow received desktop-selected signal for: {layout}")
+        if layout != "default":
+            self.config.desktop_layout = layout
+            self.system_service.apply_desktop_layout(layout)
+
+        # Mark desktop step as completed
+        self.completed_steps.add("desktop")
+
+        # LAZY LOADING: Ensure theme view exists before showing it
+        self._ensure_view("theme")
+        print("Navigating to theme view...")
+        self.stack.set_visible_child_name("theme")
+
+    def _add_theme_view(self):
+        view = ThemeView(system_service=self.system_service)
+        view.connect("theme-selected", self._on_theme_selected)
+        self.stack.add_titled(view, "theme", _("Theme"))
+
+    def _on_theme_selected(self, view, theme):
+        if theme != "default":
+            self.config.theme = theme
+            self.system_service.apply_theme(theme)
+
+        # Mark theme step as completed
+        self.completed_steps.add("theme")
+
+        # Update config with extra options from the theme view
+        theme_view = self.stack.get_child_by_name("theme")
+        if theme_view:
+            self.config.enable_jamesdsp = theme_view.is_jamesdsp_enabled()
+            self.config.enable_enhanced_contrast = theme_view.is_contrast_enabled()
+
+        self.system_service.finalize_setup(self.config)
+        self.close()
+
+    def _on_key_press_event(self, controller, keyval, keycode, state):
+        current_view = self.stack.get_visible_child()
+        if isinstance(current_view, LanguageView):
+            return current_view.handle_global_key_press(keyval)
+        return False

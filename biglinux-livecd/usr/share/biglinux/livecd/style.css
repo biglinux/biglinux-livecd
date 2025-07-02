@@ -1,0 +1,116 @@
+.app-header {
+    background-color: @window_bg_color;
+}
+.app-header button.step-current image {
+    animation: pulse-icon 2s ease-in-out infinite;
+}
+
+@keyframes pulse-icon {
+    0% {
+        transform: scale(1.0);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+    100% {
+        transform: scale(1.0);
+    }
+}
+.app-content {
+    background-color: @view_bg_color;
+}
+
+.title-2 {
+font-size: 24px;
+color: #fff;
+text-shadow: 0 0px 3px #000, 0px 2px 3px #222;
+font-weight: 300;
+}
+
+
+label {
+font-size: 15px;
+color: #fff;
+font-weight: 200;
+}
+
+.heading {
+font-weight: 400;
+}
+
+/* New Style for Settings Cards */
+.settings-card {
+    background-color: @headerbar_bg_color;
+    margin-top: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 14px;
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+}
+
+.settings-card:hover {
+    outline-color: alpha(@theme_selected_bg_color, 0.5);
+    background-color:  alpha(@theme_selected_bg_color, 0.05);
+}
+
+
+flowbox flowboxchild {
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+    border-radius: 14px;
+    min-height: 15px;
+    min-width: 15px;
+    margin: 10px;
+    padding: 14px;
+}
+
+flowbox flowboxchild:hover,
+flowbox flowboxchild:selected {
+    outline-color: alpha(@theme_selected_bg_color, 0.5);
+    background-color:  alpha(@theme_selected_bg_color, 0.05);
+}
+
+flowbox flowboxchild picture {
+    background-image: linear-gradient(to bottom, #202020 0%, #222222 90%, #191919 100%);
+    box-shadow: 0px 3px 0px #2a2a2a, 0px 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.keyboard-item-card {
+    min-height: 30px;
+    min-width: 100px;
+    border-radius: 9px;
+    margin: 0px;
+    padding: 14px 16px;
+    /* Realistic button gradient */
+    background-image: linear-gradient(to bottom, #2a2a2a 10%, #3a3a3a 100%);
+    /* Light top border and dark bottom border for depth */
+    border-top: 1px solid #444444;
+    border-bottom: 1px solid #585858;
+    box-shadow: 0px 3px 0px #2a2a2a, 0px 4px 10px rgba(0, 0, 0, 0.6);
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* FlowBox hover styled as pressed key */
+flowbox flowboxchild:hover .keyboard-item-card {
+    background-image: linear-gradient(to bottom, #2a2a2a 10%, #3a3a3a 100%);
+    border-top: 1px solid #444444;
+    border-bottom: 1px solid #585858;
+    box-shadow: 0px 3px 0px #2a2a2a, 0px 4px 10px rgba(0, 0, 0, 0.6);
+    transform: translateY(2px);
+}
+
+gridview child {
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+    border-radius: 14px;
+}
+gridview child:hover,
+gridview child:selected {
+    outline-color: alpha(@theme_selected_bg_color, 0.5);
+    background-color:  alpha(@theme_selected_bg_color, 0.05);
+}
