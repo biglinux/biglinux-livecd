@@ -15,31 +15,6 @@ msgstr  "Project-Id-Version: biglinux-livecd\n"
         "Content-Transfer-Encoding: 8bit\n"
 
 #
-msgid   "Choose your keyboard layout:"
-msgstr  ""
-
-#
-msgid   "Choose the desktop configuration:"
-msgstr  ""
-
-#
-msgid   "\n"
-        "<big><big>Oops</big></big>\n"
-        "Integrity check failed, it is necessary to download the system again "
-        "or use another USB drive.\n"
-        "\n"
-        "ERROR: checksum_biglinux\n"
-msgstr  ""
-
-#
-msgid   "ERROR: Integrity check failed."
-msgstr  ""
-
-#
-msgid   "Choose the system appearance:"
-msgstr  ""
-
-#
 msgid   "Error: Integrity Check Failed"
 msgstr  ""
 

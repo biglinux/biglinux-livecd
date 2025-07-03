@@ -16,38 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #
-msgid "Choose your keyboard layout:"
-msgstr "Choose your keyboard layout:"
-
-#
-msgid "Choose the desktop configuration:"
-msgstr "Choose the desktop configuration:"
-
-#
-msgid ""
-"\n"
-"<big><big>Oops</big></big>\n"
-"Integrity check failed, it is necessary to download the system again or use "
-"another USB drive.\n"
-"\n"
-"ERROR: checksum_biglinux\n"
-msgstr ""
-"\n"
-"<big><big>Oops</big></big>\n"
-"Integrity check failed, it is necessary to download the system again or use "
-"another USB drive.\n"
-"\n"
-"ERROR: checksum_biglinux\n"
-
-#
-msgid "ERROR: Integrity check failed."
-msgstr "ERROR: Integrity check failed."
-
-#
-msgid "Choose the system appearance:"
-msgstr "Choose the system appearance:"
-
-#
 msgid "Error: Integrity Check Failed"
 msgstr "Error: Integrity Check Failed"
 
