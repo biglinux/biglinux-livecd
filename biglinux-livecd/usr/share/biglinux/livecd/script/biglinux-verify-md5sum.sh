@@ -22,7 +22,6 @@ fi
 export TEXTDOMAINDIR="/usr/share/locale"
 export TEXTDOMAIN=biglinux-livecd
 
-File="/tmp/checksum_biglinux.html"
 FileVerified="/tmp/checksum_biglinux_ok.html"
 ScriptFolder="${0%/*}"
 
@@ -42,8 +41,6 @@ if [ ! -e $FileVerified ]; then
         cd $(ls -d1 /run/miso/bootmnt/*/ | grep -ve '/efi/' -ve '/boot/')
     fi
     ######
-
-    rm -f $File
 
     md5sum --status -c desktopfs.md5
     if [ "$?" != "0" ] ; then

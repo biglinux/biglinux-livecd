@@ -33,28 +33,60 @@ class SystemService:
         self.tmp_theme_file = "/tmp/big_desktop_theme"
 
     def _run_command(
-        self, command: List[str], as_root: bool = False, read_only: bool = False
+        self,
+        command: List[str],
+        as_root: bool = False,
+        read_only: bool = False,
+        wait_for_completion: bool = False,
     ) -> Tuple[bool, str]:
-        """Helper to run external commands, respecting test mode for non-read-only actions."""
+        """
+        Helper to run external commands.
+        - If wait_for_completion or read_only is True, it runs synchronously and returns output.
+        - Otherwise, it runs in the background (asynchronously) and detaches.
+        """
         if self.test_mode and not read_only:
             print(
                 f"[TEST MODE] Suppressed command: {'sudo ' if as_root else ''}{' '.join(command)}"
             )
             return True, ""
 
+        if read_only:
+            wait_for_completion = True
+
         if as_root:
             command.insert(0, "sudo")
+
         try:
-            result = subprocess.run(
-                command, capture_output=True, text=True, check=True, encoding="utf-8"
-            )
-            return True, result.stdout.strip()
+            if wait_for_completion:
+                # Run synchronously and capture output (for read-only commands)
+                result = subprocess.run(
+                    command,
+                    capture_output=True,
+                    text=True,
+                    check=True,
+                    encoding="utf-8",
+                )
+                return True, result.stdout.strip()
+            else:
+                # Run in the background and detach
+                # Redirect stdout/stderr to /dev/null to prevent terminal clutter
+                subprocess.Popen(
+                    command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+                )
+                return True, ""  # Assume success on launch
         except FileNotFoundError:
-            print(f"Error: Command not found: {command[0]}")
-            return False, f"Command not found: {command[0]}"
+            err_msg = f"Command not found: {command[0]}"
+            print(f"Error: {err_msg}")
+            return False, err_msg
         except subprocess.CalledProcessError as e:
-            print(f"Error running command '{' '.join(e.cmd)}': {e.stderr}")
+            err_msg = f"Error running command '{' '.join(e.cmd)}': {e.stderr}"
+            print(err_msg)
             return False, e.stderr.strip()
+        except Exception as e:
+            err_msg = f"An unexpected error occurred with command '{' '.join(command)}': {e}"
+            print(err_msg)
+            return False, str(e)
+
 
     def _write_tmp_file(self, filepath: str, content: str):
         """Helper to write to a temp file."""
@@ -93,10 +125,7 @@ class SystemService:
         self._run_command(
             ["localectl", "set-locale", f"LANG={lang_code}.UTF-8"], as_root=True
         )
-        self._run_command(["./script/biglinux-verify-md5sum.sh"], as_root=False)
-        
-        
-        
+        self._run_command(["/usr/share/biglinux/livecd/script/biglinux-verify-md5sum.sh"], as_root=False)
 
     def apply_keyboard_layout(self, layout: str):
         """Applies the selected keyboard layout."""
@@ -153,16 +182,20 @@ class SystemService:
         if config.enable_jamesdsp:
             print("JamesDSP enabled, creating flag file.")
             self._run_command(["touch", "/etc/big_enable_jamesdsp"], as_root=True)
+            self._run_command(["sed", "-i", "s|AutoStartEnabled=false|AutoStartEnabled=true|g", "~/.config/jamesdsp/application.conf"], as_root=False)
         else:
             print("JamesDSP not enabled, removing flag file if it exists.")
             self._run_command(["rm", "-f", "/etc/big_enable_jamesdsp"], as_root=True)
+            self._run_command(["sed", "-i", "s|AutoStartEnabled=true|AutoStartEnabled=false|g", "~/.config/jamesdsp/application.conf"], as_root=False)
 
         if config.enable_enhanced_contrast:
             print("Enhanced contrast enabled, creating flag file.")
             self._run_command(["touch", "/etc/big_improve_constrast"], as_root=True)
+            self._run_command(["/usr/share/biglinux/livecd/script/icc_enable.sh"], as_root=False)
         else:
             print("Enhanced contrast not enabled, removing flag file if it exists.")
             self._run_command(["rm", "-f", "/etc/big_improve_constrast"], as_root=True)
+            self._run_command(["/usr/share/biglinux/livecd/script/icc_disable.sh"], as_root=False)
 
         self._run_command(["killall", "kwin_wayland"])
 
@@ -178,7 +211,7 @@ class SystemService:
 
     def check_enhanced_contrast_availability(self) -> bool:
         """Checks for the AppleRGB ICC profile and if kwin_wayland is running."""
-        icc_profile_exists = os.path.exists("/usr/share/color/icc/colord/AppleRGB.icc")
+        icc_profile_exists = os.path.exists("/usr/share/color/icc/colord/ECI-RGBv1.icc")
 
         # Check if kwin_wayland process is running
         try:
