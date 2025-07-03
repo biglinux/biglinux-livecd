@@ -1,6 +1,6 @@
 #!/bin/bash
 
-jaq  'map(
+jaq -i 'map(
   if .data then
     .data |= map(
       if has("edidHash") then
