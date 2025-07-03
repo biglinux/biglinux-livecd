@@ -106,11 +106,6 @@ class ThemeView(BaseItemView):
 
     def _create_jamesdsp_card(self, parent_box):
         audio_card = Gtk.Box(css_classes=["settings-card"])
-        try:
-            cursor = Gdk.Cursor.new_from_name("pointer", None)
-            audio_card.set_cursor(cursor)
-        except Exception:
-            pass
         parent_box.append(audio_card)
 
         content = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15)
@@ -148,11 +143,6 @@ class ThemeView(BaseItemView):
 
     def _create_contrast_card(self, parent_box):
         contrast_card = Gtk.Box(css_classes=["settings-card"])
-        try:
-            cursor = Gdk.Cursor.new_from_name("pointer", None)
-            contrast_card.set_cursor(cursor)
-        except Exception:
-            pass
         parent_box.append(contrast_card)
 
         content = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15)
@@ -213,12 +203,6 @@ class ThemeView(BaseItemView):
         outer_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         outer_box.set_hexpand(True)
         outer_box.set_vexpand(True)
-
-        try:
-            cursor = Gdk.Cursor.new_from_name("pointer", None)
-            outer_box.set_cursor(cursor)
-        except Exception:
-            pass
 
         if os.path.exists(item.image_path):
             try:

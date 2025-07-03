@@ -72,7 +72,7 @@ else
         export XDG_CURRENT_DESKTOP=KDE
         export QT_SCALE_FACTOR_ROUNDING_POLICY=RoundPreferFloor
         systemctl --user start plasma-kglobalaccel.service
-        dbus-run-session kwin_wayland_wrapper --drm --no-lockscreen --xwayland 'python /usr/share/biglinux/livecd/main.py'
+        dbus-run-session kwin_wayland --drm --no-lockscreen --xwayland 'python /usr/share/biglinux/livecd/main.py'
     elif [[ $display_manager == "gdm" ]]; then
         export DESKTOP_SESSION=gnome
         export XDG_SESSION_DESKTOP=gnome

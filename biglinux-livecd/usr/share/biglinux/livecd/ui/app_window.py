@@ -34,7 +34,25 @@ class AppWindow(Adw.ApplicationWindow):
         self.config = SetupConfig()
         self.completed_steps = set()  # Track completed steps
         self.set_title(_("BigLinux Setup"))
-        self.fullscreen()
+
+        # --- Fullscreen for Xorg without compositor ---
+        # This approach makes the window undecorated and sized to the monitor.
+        # It's more reliable in environments without a full-featured window manager.
+        self.set_decorated(False)
+        display = Gdk.Display.get_default()
+        if display:
+            monitors = display.get_monitors()
+            if monitors.get_n_items() > 0:
+                # Use the first monitor as the target
+                monitor = monitors.get_item(0)
+                geometry = monitor.get_geometry()
+                self.set_default_size(geometry.width, geometry.height)
+            else:
+                # Fallback to the standard method if we can't get monitor info
+                self.fullscreen()
+        else:
+            self.fullscreen()
+
 
         style_manager = Adw.StyleManager.get_default()
         style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
@@ -163,12 +181,6 @@ class AppWindow(Adw.ApplicationWindow):
         button.set_size_request(48, 48)
         button.connect("clicked", self._on_step_button_clicked, step_info["name"])
         button.add_css_class("flat")
-
-        try:
-            cursor = Gdk.Cursor.new_from_name("pointer", None)
-            button.set_cursor(cursor)
-        except Exception:
-            pass
 
         step_info["button"] = button
         if step_info["name"] == "language":
