@@ -257,11 +257,11 @@ class AppWindow(Adw.ApplicationWindow):
         # Mark language step as completed
         self.completed_steps.add("language")
 
-        if lang_code := getattr(selection, "code", None):
+        if lang_code_full := getattr(selection, "code", None):
             if step := next((s for s in self.steps if s["name"] == "language"), None):
                 if img := step.get("img"):
                     candidate = os.path.join(
-                        ASSETS_DIR, f"headerbar-locale-{lang_code}.svg"
+                        ASSETS_DIR, f"headerbar-locale-{lang_code_full}.svg"
                     )
                     path = (
                         candidate
@@ -273,6 +273,11 @@ class AppWindow(Adw.ApplicationWindow):
 
         keyboard_layout = params.get("keyboard", "us")
 
+        # If a non-English language is chosen with a 'us' keyboard,
+        # default to the 'us(intl)' variant to support accented characters.
+        if keyboard_layout == "us" and lang_code != "en":
+            keyboard_layout = "us(intl)"
+
         # LAZY LOADING: Ensure keyboard view exists before updating or showing it
         self._ensure_view("keyboard", keyboard_layout)
 
@@ -282,7 +287,12 @@ class AppWindow(Adw.ApplicationWindow):
         if keyboard_layout not in ["us", "latam"]:
             self.stack.set_visible_child_name("keyboard")
         else:
-            self._on_keyboard_selected(None, keyboard_layout)
+            # Also skip for us(intl) if the user doesn't need to see the choice
+            if keyboard_layout == "us(intl)":
+                 self._on_keyboard_selected(None, keyboard_layout)
+            else:
+                 self._on_keyboard_selected(None, keyboard_layout)
+
 
     def _add_keyboard_view(self, primary_layout):
         view = KeyboardView(primary_layout=primary_layout)
