@@ -1,9 +1,9 @@
 [Unit]
-Description=disable mhwd if opensource driver
+Description=Tweaks to better livecd usage
 Before=mhwd-live.service
 
 [Service]
-ExecStart=/usr/bin/mhwd-fix
+ExecStart=/usr/bin/livecd-tweaks
 Type=oneshot
 RemainAfterExit=true
 
