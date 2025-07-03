@@ -132,6 +132,12 @@ class KeyboardView(Adw.Bin):
             css_classes=["keyboard-item-card"],
         )
 
+        try:
+            cursor = Gdk.Cursor.new_from_name("pointer", None)
+            box.set_cursor(cursor)
+        except Exception:
+            pass
+
         label = Gtk.Label(label=name)
         label.add_css_class("title-2")
         box.append(label)

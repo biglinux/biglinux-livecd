@@ -186,6 +186,12 @@ class LanguageView(Adw.Bin):
         root_box.append(content_box)
         list_item.set_child(root_box)
 
+        try:
+            cursor = Gdk.Cursor.new_from_name("pointer", None)
+            root_box.set_cursor(cursor)
+        except Exception:
+            pass
+
         motion_controller = Gtk.EventControllerMotion.new()
         motion_controller.connect("motion", self._on_mouse_motion_item, list_item)
         root_box.add_controller(motion_controller)

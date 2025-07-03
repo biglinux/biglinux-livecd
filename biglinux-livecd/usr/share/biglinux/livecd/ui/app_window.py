@@ -182,6 +182,12 @@ class AppWindow(Adw.ApplicationWindow):
         button.connect("clicked", self._on_step_button_clicked, step_info["name"])
         button.add_css_class("flat")
 
+        try:
+            cursor = Gdk.Cursor.new_from_name("pointer", None)
+            button.set_cursor(cursor)
+        except Exception:
+            pass
+
         step_info["button"] = button
         if step_info["name"] == "language":
             step_info["img"] = img

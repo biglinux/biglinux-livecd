@@ -38,6 +38,11 @@ class DesktopView(BaseItemView):
     def create_item_widget(self, item: DesktopListItem):
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         box.set_can_focus(True)
+        try:
+            cursor = Gdk.Cursor.new_from_name("pointer", None)
+            box.set_cursor(cursor)
+        except Exception:
+            pass
 
         if os.path.exists(item.image_path):
             try:
