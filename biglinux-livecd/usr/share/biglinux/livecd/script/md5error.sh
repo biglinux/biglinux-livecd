@@ -37,7 +37,7 @@ TEXT_CONTENT+="foreground='#c62828'"
 TEXT_CONTENT+="size='14000'> 🔍 $ERROR_CODE </span>"
 
 # --- Modern YAD Dialog with Enhanced Design ---
-yad --title="$TITLE" \
+WAYLAND_DISPLAY= yad --title="$TITLE" \
     --window-icon="$ICON_NAME" \
     --width=640 \
     --borders=20 \
@@ -47,4 +47,3 @@ yad --title="$TITLE" \
     --text-width=40 \
     --text-align=center \
     --button="$BUTTON_TEXT!gtk-close:0"
-
