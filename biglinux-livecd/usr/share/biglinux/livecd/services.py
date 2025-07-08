@@ -249,3 +249,19 @@ class SystemService:
         except FileNotFoundError:
             # Fallback if the command doesn't exist. Assume not a VM for safety.
             return False
+
+    def get_desktop_environment(self) -> str:
+        """Detects the desktop environment by checking specific startup files."""
+        if os.path.exists("/usr/bin/startgnome-community"):
+            return "GNOME"
+        elif os.path.exists("/usr/bin/startcinnamon-community"):
+            return "Cinnamon"
+        elif os.path.exists("/usr/bin/startxfce-community"):
+            return "XFCE"
+        else:
+            return "other"
+
+    def is_simplified_environment(self) -> bool:
+        """Checks if we should use simplified UI (GNOME/XFCE/Cinnamon)."""
+        desktop_env = self.get_desktop_environment()
+        return desktop_env in ["GNOME", "XFCE", "Cinnamon"]

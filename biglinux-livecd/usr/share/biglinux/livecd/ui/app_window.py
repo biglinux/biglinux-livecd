@@ -15,6 +15,7 @@ import os
 
 ASSETS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets"))
 LOGO_PATH = os.path.join(ASSETS_DIR, "logo.png")
+COMM_LOGO_PATH = os.path.join(ASSETS_DIR, "comm-logo.png")
 
 
 def load_svg_pixbuf(path, size):
@@ -33,6 +34,7 @@ class AppWindow(Adw.ApplicationWindow):
         self.system_service = system_service
         self.config = SetupConfig()
         self.completed_steps = set()  # Track completed steps
+        self.is_simplified_env = system_service.is_simplified_environment()
         self.set_title(_("BigLinux Setup"))
 
         # --- Fullscreen for Xorg without compositor ---
@@ -94,25 +96,49 @@ class AppWindow(Adw.ApplicationWindow):
         )
         header_wrapper.set_center_widget(header_content_box)
 
-        self.steps = [
-            {"name": "language", "file": "headerbar-locale.svg"},
-            {"name": "keyboard", "file": "headerbar-keyboard.svg"},
-            {"name": "desktop", "file": "headerbar-display.svg"},
-            {"name": "theme", "file": "headerbar-theme.svg"},
-        ]
+        # Define steps based on environment
+        if self.is_simplified_env:
+            self.steps = [
+                {"name": "language", "file": "headerbar-locale.svg"},
+                {"name": "keyboard", "file": "headerbar-keyboard.svg"},
+            ]
+        else:
+            self.steps = [
+                {"name": "language", "file": "headerbar-locale.svg"},
+                {"name": "keyboard", "file": "headerbar-keyboard.svg"},
+                {"name": "desktop", "file": "headerbar-display.svg"},
+                {"name": "theme", "file": "headerbar-theme.svg"},
+            ]
 
-        self._add_step_button(header_content_box, self.steps[0])
-        self._add_step_button(header_content_box, self.steps[1])
+        # Build header layout based on environment
+        if self.is_simplified_env:
+            # Simplified layout: [Language] [comm-logo.png] [Keyboard]
+            self._add_step_button(header_content_box, self.steps[0])
+            
+            # Use comm-logo.png for simplified environments
+            logo_path = COMM_LOGO_PATH if os.path.exists(COMM_LOGO_PATH) else LOGO_PATH
+            if os.path.exists(logo_path):
+                logo = Gtk.Image.new_from_file(logo_path)
+                logo.set_pixel_size(72)
+                logo.set_margin_start(20)
+                logo.set_margin_end(20)
+                header_content_box.append(logo)
+            
+            self._add_step_button(header_content_box, self.steps[1])
+        else:
+            # Full layout: [Language] [Keyboard] [logo.png] [Desktop] [Theme]
+            self._add_step_button(header_content_box, self.steps[0])
+            self._add_step_button(header_content_box, self.steps[1])
 
-        if os.path.exists(LOGO_PATH):
-            logo = Gtk.Image.new_from_file(LOGO_PATH)
-            logo.set_pixel_size(72)
-            logo.set_margin_start(20)
-            logo.set_margin_end(20)
-            header_content_box.append(logo)
+            if os.path.exists(LOGO_PATH):
+                logo = Gtk.Image.new_from_file(LOGO_PATH)
+                logo.set_pixel_size(72)
+                logo.set_margin_start(20)
+                logo.set_margin_end(20)
+                header_content_box.append(logo)
 
-        self._add_step_button(header_content_box, self.steps[2])
-        self._add_step_button(header_content_box, self.steps[3])
+            self._add_step_button(header_content_box, self.steps[2])
+            self._add_step_button(header_content_box, self.steps[3])
 
         # --- Content Area ---
         content_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, vexpand=True)
@@ -306,9 +332,14 @@ class AppWindow(Adw.ApplicationWindow):
         # Mark keyboard step as completed
         self.completed_steps.add("keyboard")
 
-        # LAZY LOADING: Ensure desktop view exists before showing it
-        self._ensure_view("desktop")
-        self.stack.set_visible_child_name("desktop")
+        if self.is_simplified_env:
+            # Skip desktop and theme for simplified environments (GNOME/XFCE/Cinnamon)
+            self.system_service.finalize_setup(self.config)
+            self.close()
+        else:
+            # LAZY LOADING: Ensure desktop view exists before showing it
+            self._ensure_view("desktop")
+            self.stack.set_visible_child_name("desktop")
 
     def _add_desktop_view(self):
         view = DesktopView(system_service=self.system_service)
