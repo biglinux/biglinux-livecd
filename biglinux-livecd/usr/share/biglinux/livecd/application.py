@@ -4,7 +4,10 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Adw, Gio, Gtk, Gdk
 from ui.app_window import AppWindow
+from logging_config import get_logger
 import os
+
+logger = get_logger()
 
 
 class Application(Adw.Application):
@@ -28,7 +31,7 @@ class Application(Adw.Application):
         if os.path.isdir(flags_dir):
             icon_theme.add_search_path(flags_dir)
         else:
-            print(f"Warning: System flag icon directory not found at {flags_dir}")
+            logger.warning(f"System flag icon directory not found at {flags_dir}")
 
         style_manager = Adw.StyleManager.get_default()
         style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)

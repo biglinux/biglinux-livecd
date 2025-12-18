@@ -11,18 +11,49 @@ from ui.language_view import LanguageView
 from ui.keyboard_view import KeyboardView
 from ui.desktop_view import DesktopView
 from ui.theme_view import ThemeView
+from logging_config import get_logger
 import os
 
+logger = get_logger()
+
 ASSETS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets"))
-LOGO_PATH = os.path.join(ASSETS_DIR, "logo.png")
-COMM_LOGO_PATH = os.path.join(ASSETS_DIR, "comm-logo.png")
+
+# Default BigLinux logo paths
+DEFAULT_LOGO_PATH = os.path.join(ASSETS_DIR, "logo.png")
+DEFAULT_COMM_LOGO_PATH = os.path.join(ASSETS_DIR, "comm-logo.png")
+
+
+def get_logo_path(system_service: SystemService = None):
+    """
+    Returns the appropriate logo path for the current distribution.
+    XivaStudio custom logos take precedence if they exist.
+    """
+    if system_service:
+        xiva_logo = system_service.get_xivastudio_logo_path()
+        if xiva_logo:
+            return xiva_logo
+    # Fallback to default BigLinux logo
+    return DEFAULT_LOGO_PATH
+
+
+def get_comm_logo_path(system_service: SystemService = None):
+    """
+    Returns the appropriate simplified/community logo path.
+    XivaStudio custom logos take precedence if they exist.
+    """
+    if system_service:
+        xiva_logo = system_service.get_xivastudio_logo_path()
+        if xiva_logo:
+            return xiva_logo
+    # Fallback to default BigLinux comm logo
+    return DEFAULT_COMM_LOGO_PATH
 
 
 def load_svg_pixbuf(path, size):
     try:
         return GdkPixbuf.Pixbuf.new_from_file_at_size(path, size, size)
     except GLib.Error as e:
-        print(f"Failed to load SVG {path}: {e}")
+        logger.error(f"Failed to load SVG {path}: {e}")
         return GdkPixbuf.Pixbuf.new(GdkPixbuf.Colorspace.RGB, True, 8, size, size)
 
 
@@ -114,9 +145,9 @@ class AppWindow(Adw.ApplicationWindow):
         if self.is_simplified_env:
             # Simplified layout: [Language] [comm-logo.png] [Keyboard]
             self._add_step_button(header_content_box, self.steps[0])
-            
-            # Use comm-logo.png for simplified environments
-            logo_path = COMM_LOGO_PATH if os.path.exists(COMM_LOGO_PATH) else LOGO_PATH
+
+            # Use comm-logo.png for simplified environments (XivaStudio override if exists)
+            logo_path = get_comm_logo_path(self.system_service)
             if os.path.exists(logo_path):
                 logo = Gtk.Image.new_from_file(logo_path)
                 logo.set_pixel_size(72)
@@ -130,8 +161,10 @@ class AppWindow(Adw.ApplicationWindow):
             self._add_step_button(header_content_box, self.steps[0])
             self._add_step_button(header_content_box, self.steps[1])
 
-            if os.path.exists(LOGO_PATH):
-                logo = Gtk.Image.new_from_file(LOGO_PATH)
+            # Use main logo (XivaStudio override if exists)
+            logo_path = get_logo_path(self.system_service)
+            if os.path.exists(logo_path):
+                logo = Gtk.Image.new_from_file(logo_path)
                 logo.set_pixel_size(72)
                 logo.set_margin_start(20)
                 logo.set_margin_end(20)
@@ -347,7 +380,7 @@ class AppWindow(Adw.ApplicationWindow):
         self.stack.add_titled(view, "desktop", _("Desktop Layout"))
 
     def _on_desktop_selected(self, view, layout):
-        print(f"AppWindow received desktop-selected signal for: {layout}")
+        logger.debug(f"AppWindow received desktop-selected signal for: {layout}")
         if layout != "default":
             self.config.desktop_layout = layout
             self.system_service.apply_desktop_layout(layout)
@@ -357,7 +390,7 @@ class AppWindow(Adw.ApplicationWindow):
 
         # LAZY LOADING: Ensure theme view exists before showing it
         self._ensure_view("theme")
-        print("Navigating to theme view...")
+        logger.debug("Navigating to theme view...")
         self.stack.set_visible_child_name("theme")
 
     def _add_theme_view(self):

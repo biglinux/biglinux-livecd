@@ -3,6 +3,9 @@ Translation utility module to ensure consistent translations throughout the appl
 """
 import gettext
 import os
+from logging_config import get_logger
+
+logger = get_logger()
 
 APP_NAME = "biglinux-livecd"
 # Standard location for locale files on Linux systems
@@ -33,8 +36,8 @@ def set_language(lang_code=None):
         )
     except FileNotFoundError:
         # This happens if the .mo file for the given language doesn't exist at all.
-        print(
-            f"Warning: Translation for '{lang_code}' not found in '{LOCALE_DIR}'. Using default (English)."
+        logger.warning(
+            f"Translation for '{lang_code}' not found in '{LOCALE_DIR}'. Using default (English)."
         )
         _translation_instance = gettext.NullTranslations()
 

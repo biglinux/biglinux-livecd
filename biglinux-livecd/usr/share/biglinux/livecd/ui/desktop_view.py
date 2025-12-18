@@ -8,7 +8,10 @@ from gi.repository import Gtk, GObject, GLib, GdkPixbuf, Gdk
 from translations import _
 from services import SystemService
 from ui.base_view import BaseItemView
+from logging_config import get_logger
 import os
+
+logger = get_logger()
 
 
 class DesktopListItem(GObject.Object):
@@ -56,7 +59,7 @@ class DesktopView(BaseItemView):
                 picture.set_valign(Gtk.Align.CENTER)
                 picture.set_content_fit(Gtk.ContentFit.CONTAIN)
             except GLib.Error as e:
-                print(f"Error loading image {item.image_path}: {e}")
+                logger.error(f"Error loading image {item.image_path}: {e}")
                 picture = Gtk.Picture()
         else:
             picture = Gtk.Picture.new_from_icon_name("image-missing-symbolic")

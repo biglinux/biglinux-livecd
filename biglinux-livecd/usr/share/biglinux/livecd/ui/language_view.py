@@ -8,7 +8,10 @@ import unicodedata
 from urllib.parse import parse_qs, urlparse
 from translations import _
 from config import LanguageSelection
+from logging_config import get_logger
 import os
+
+logger = get_logger()
 
 
 def normalize_string(s: str) -> str:
@@ -114,7 +117,7 @@ class LanguageView(Adw.Bin):
             GLib.idle_add(self._post_load_setup)
 
         except (FileNotFoundError, json.JSONDecodeError) as e:
-            print(f"Error loading languages: {e}")
+            logger.error(f"Error loading languages: {e}")
             self.set_child(Gtk.Label(label=_("Could not load language data.")))
 
         return GLib.SOURCE_REMOVE

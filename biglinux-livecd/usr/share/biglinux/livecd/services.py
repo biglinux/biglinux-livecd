@@ -3,13 +3,18 @@ import os
 import re
 from typing import List, Tuple
 from config import SetupConfig
+from logging_config import get_logger
+
+logger = get_logger()
 
 
 class SystemService:
     def __init__(self, test_mode: bool = False):
         self.test_mode = test_mode
         if self.test_mode:
-            print("--- RUNNING IN TEST MODE: No system changes will be applied. ---")
+            logger.info(
+                "--- RUNNING IN TEST MODE: No system changes will be applied. ---"
+            )
 
         # Base paths from the original scripts
         self.base_themes_path = "/usr/share/bigbashview/apps/biglinux-themes-gui"
@@ -26,11 +31,13 @@ class SystemService:
         self.desktop_image_path = os.path.join(self.base_themes_path, "img/{}.svg")
         self.theme_image_path = os.path.join(self.base_themes_path, "img/{}.png")
 
-        # Temp files for script compatibility
+        # Temp files for live session - Calamares will copy these to /etc/big-default-config/
         self.tmp_lang_file = "/tmp/big_language"
         self.tmp_keyboard_file = "/tmp/big_keyboard"
         self.tmp_desktop_file = "/tmp/big_desktop_changed"
         self.tmp_theme_file = "/tmp/big_desktop_theme"
+        self.tmp_jamesdsp_file = "/tmp/big_enable_jamesdsp"
+        self.tmp_display_profile_file = "/tmp/big_improve_display"
 
     def _run_command(
         self,
@@ -45,7 +52,7 @@ class SystemService:
         - Otherwise, it runs in the background (asynchronously) and detaches.
         """
         if self.test_mode and not read_only:
-            print(
+            logger.debug(
                 f"[TEST MODE] Suppressed command: {'sudo ' if as_root else ''}{' '.join(command)}"
             )
             return True, ""
@@ -76,22 +83,22 @@ class SystemService:
                 return True, ""  # Assume success on launch
         except FileNotFoundError:
             err_msg = f"Command not found: {command[0]}"
-            print(f"Error: {err_msg}")
+            logger.error(err_msg)
             return False, err_msg
         except subprocess.CalledProcessError as e:
             err_msg = f"Error running command '{' '.join(e.cmd)}': {e.stderr}"
-            print(err_msg)
+            logger.error(err_msg)
             return False, e.stderr.strip()
         except Exception as e:
             err_msg = f"An unexpected error occurred with command '{' '.join(command)}': {e}"
-            print(err_msg)
+            logger.error(err_msg)
             return False, str(e)
 
 
     def _write_tmp_file(self, filepath: str, content: str):
         """Helper to write to a temp file."""
         if self.test_mode:
-            print(
+            logger.debug(
                 f"[TEST MODE] Suppressed write to {filepath}: '{content[:50]}{'...' if len(content) > 50 else ''}'"
             )
             return
@@ -99,12 +106,12 @@ class SystemService:
             with open(filepath, "w", encoding="utf-8") as f:
                 f.write(content)
         except IOError as e:
-            print(f"Error writing to {filepath}: {e}")
+            logger.error(f"Error writing to {filepath}: {e}")
 
     def _write_user_config_file(self, filepath: str, content: str):
         """Helper to write a file in the user's home directory."""
         if self.test_mode:
-            print(
+            logger.debug(
                 f"[TEST MODE] Suppressed write to {filepath}: '{content[:50]}{'...' if len(content) > 50 else ''}'"
             )
             return
@@ -113,11 +120,11 @@ class SystemService:
             with open(filepath, "w", encoding="utf-8") as f:
                 f.write(content)
         except IOError as e:
-            print(f"Error writing to {filepath}: {e}")
+            logger.error(f"Error writing to {filepath}: {e}")
 
     def apply_language_settings(self, lang_code: str, timezone: str):
         """Applies language, locale, and timezone settings."""
-        print(f"Setting language to {lang_code} and timezone to {timezone}")
+        logger.info(f"Setting language to {lang_code} and timezone to {timezone}")
         self._write_tmp_file(self.tmp_lang_file, lang_code)
 
         self._run_command(["timedatectl", "set-timezone", timezone], as_root=True)
@@ -129,7 +136,7 @@ class SystemService:
 
     def apply_keyboard_layout(self, layout: str):
         """Applies the selected keyboard layout."""
-        print(f"Setting keyboard layout to: {layout}")
+        logger.info(f"Setting keyboard layout to: {layout}")
         layout_cleaned = layout.replace("\\", "")
         self._write_tmp_file(self.tmp_keyboard_file, layout_cleaned)
         self._run_command(["setxkbmap", layout_cleaned])
@@ -142,60 +149,92 @@ class SystemService:
     def get_available_desktops(self) -> List[str]:
         """Returns a list of available desktop layout names."""
         if not os.path.exists(self.desktop_list_script):
-            print(f"Warning: Desktop script not found at {self.desktop_list_script}")
+            logger.warning(f"Desktop script not found at {self.desktop_list_script}")
             return []
         success, output = self._run_command([self.desktop_list_script], read_only=True)
         return output.splitlines() if success else []
 
     def apply_desktop_layout(self, layout: str):
         """Applies the selected desktop layout."""
-        print(f"Applying desktop layout: {layout}")
+        logger.info(f"Applying desktop layout: {layout}")
         self._write_tmp_file(self.tmp_desktop_file, layout)
         self._run_command([self.desktop_apply_script, layout, "quiet"])
 
     def get_available_themes(self) -> List[str]:
         """Returns a list of available theme names."""
         if not os.path.exists(self.theme_list_script):
-            print(f"Warning: Theme script not found at {self.theme_list_script}")
+            logger.warning(f"Theme script not found at {self.theme_list_script}")
             return []
         success, output = self._run_command([self.theme_list_script], read_only=True)
         return output.splitlines() if success else []
 
     def apply_theme(self, theme: str):
         """Applies the selected theme."""
-        print(f"Applying theme: {theme}")
+        logger.info(f"Applying theme: {theme}")
         self._write_tmp_file(self.tmp_theme_file, theme)
         self._run_command([self.theme_apply_script, theme])
 
     def finalize_setup(self, config: SetupConfig):
-        """Performs final setup steps, including creating flag files."""
-        print("Finalizing setup...")
-        self._run_command(
-            ["cp", "-f", self.tmp_theme_file, "/etc/default-theme-biglinux"],
-            as_root=True,
-        )
-        self._run_command(
-            ["cp", "-f", self.tmp_desktop_file, "/etc/big_desktop_changed"],
-            as_root=True,
-        )
+        """
+        Performs final setup steps, including creating flag files.
 
+        All config files are saved to /tmp during the live session.
+        Calamares will copy them to /etc/big-default-config/ on the installed system.
+        """
+        logger.info("Finalizing setup...")
+
+        # JamesDSP configuration - save flag to /tmp
         if config.enable_jamesdsp:
-            print("JamesDSP enabled, creating flag file.")
-            self._run_command(["touch", "/etc/big_enable_jamesdsp"], as_root=True)
-            self._run_command(["sed", "-i", "s|AutoStartEnabled=false|AutoStartEnabled=true|g", "~/.config/jamesdsp/application.conf"], as_root=False)
+            logger.info("JamesDSP enabled, creating flag file.")
+            self._run_command(["touch", self.tmp_jamesdsp_file], as_root=False)
+            # Configure JamesDSP in live session
+            home = os.path.expanduser("~")
+            jamesdsp_conf = os.path.join(home, ".config/jamesdsp/application.conf")
+            if os.path.exists(jamesdsp_conf):
+                self._run_command(
+                    [
+                        "sed",
+                        "-i",
+                        "s|AutoStartEnabled=false|AutoStartEnabled=true|g",
+                        jamesdsp_conf,
+                    ],
+                    as_root=False,
+                )
         else:
-            print("JamesDSP not enabled, removing flag file if it exists.")
-            self._run_command(["rm", "-f", "/etc/big_enable_jamesdsp"], as_root=True)
-            self._run_command(["sed", "-i", "s|AutoStartEnabled=true|AutoStartEnabled=false|g", "~/.config/jamesdsp/application.conf"], as_root=False)
+            logger.info("JamesDSP not enabled, removing flag file if it exists.")
+            self._run_command(["rm", "-f", self.tmp_jamesdsp_file], as_root=False)
+            home = os.path.expanduser("~")
+            jamesdsp_conf = os.path.join(home, ".config/jamesdsp/application.conf")
+            if os.path.exists(jamesdsp_conf):
+                self._run_command(
+                    [
+                        "sed",
+                        "-i",
+                        "s|AutoStartEnabled=true|AutoStartEnabled=false|g",
+                        jamesdsp_conf,
+                    ],
+                    as_root=False,
+                )
 
+        # Display profile/ICC configuration - save flag to /tmp
         if config.enable_enhanced_contrast:
-            print("Enhanced contrast enabled, creating flag file.")
-            self._run_command(["touch", "/etc/big_improve_constrast"], as_root=True)
-            self._run_command(["/usr/share/biglinux/livecd/script/icc_enable.sh"], as_root=False)
+            logger.info("Enhanced contrast enabled, creating flag file.")
+            self._run_command(["touch", self.tmp_display_profile_file], as_root=False)
+            self._run_command(
+                ["/usr/share/biglinux/livecd/script/icc_profile.sh", "enable"],
+                as_root=False,
+            )
         else:
-            print("Enhanced contrast not enabled, removing flag file if it exists.")
-            self._run_command(["rm", "-f", "/etc/big_improve_constrast"], as_root=True)
-            self._run_command(["/usr/share/biglinux/livecd/script/icc_disable.sh"], as_root=False)
+            logger.info(
+                "Enhanced contrast not enabled, removing flag file if it exists."
+            )
+            self._run_command(
+                ["rm", "-f", self.tmp_display_profile_file], as_root=False
+            )
+            self._run_command(
+                ["/usr/share/biglinux/livecd/script/icc_profile.sh", "disable"],
+                as_root=False,
+            )
 
         self._run_command(["killall", "kwin_wayland"])
 
@@ -235,7 +274,7 @@ class SystemService:
                 gb = kb / (1024 * 1024)
                 return gb
         except (FileNotFoundError, ValueError, IndexError) as e:
-            print(f"Could not read or parse /proc/meminfo: {e}")
+            logger.warning(f"Could not read or parse /proc/meminfo: {e}")
         return 0.0  # Safe fallback
 
     def is_virtual_machine(self) -> bool:
@@ -265,3 +304,32 @@ class SystemService:
         """Checks if we should use simplified UI (GNOME/XFCE/Cinnamon)."""
         desktop_env = self.get_desktop_environment()
         return desktop_env in ["GNOME", "XFCE", "Cinnamon"]
+
+    # XivaStudio detection with caching
+    _xivastudio_cache: bool | None = None
+
+    # XivaStudio custom logo paths
+    XIVASTUDIO_LOGO_PNG = "/usr/share/pixmaps/icon-logo-xivastudio.png"
+    XIVASTUDIO_LOGO_GIF = "/usr/share/pixmaps/icon-logo-xivastudio.gif"
+
+    def is_xivastudio(self) -> bool:
+        """
+        Checks if running on XivaStudio variant.
+        Result is cached after first check.
+        """
+        if SystemService._xivastudio_cache is None:
+            SystemService._xivastudio_cache = os.path.exists(
+                self.XIVASTUDIO_LOGO_PNG
+            ) or os.path.exists(self.XIVASTUDIO_LOGO_GIF)
+        return SystemService._xivastudio_cache
+
+    def get_xivastudio_logo_path(self) -> str | None:
+        """
+        Returns XivaStudio logo path if available.
+        PNG is preferred over GIF.
+        """
+        if os.path.exists(self.XIVASTUDIO_LOGO_PNG):
+            return self.XIVASTUDIO_LOGO_PNG
+        if os.path.exists(self.XIVASTUDIO_LOGO_GIF):
+            return self.XIVASTUDIO_LOGO_GIF
+        return None
