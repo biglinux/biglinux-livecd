@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the biglinux-livecd package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
@@ -15,18 +14,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-#: NEEDS WORK
 msgid "Error: Integrity Check Failed"
 msgstr "Hata: Bütünlük Kontrolü Başarısız oldu"
-#: NEEDS WORK
 msgid "Oops!"
 msgstr "Oops!"
-#: NEEDS WORK
 msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
 msgstr ""
 "Bütünlük kontrolü başarısız oldu. Sistemi tekrar indirmek veya başka bir USB sürücü kullanmak "
 "gereklidir."
-#: NEEDS WORK
 msgid ""
 "<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
 "package was damaged during download, or the USB drive itself is faulty and is damaging the file."
@@ -34,82 +29,66 @@ msgstr ""
 "<b>Neden?</b> Kurulum dosyasını hassas bir dijital paket olarak düşünün. Bu hata, paketin indirme "
 "sırasında hasar gördüğü veya USB sürücüsünün kendisinin arızalı olduğu ve dosyayı bozduğu anlamına "
 "gelir."
-#: NEEDS WORK
 msgid "Close"
 msgstr "Kapat"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
-#: NEEDS WORK
 msgid "BigLinux Setup"
 msgstr "BigLinux Kurulumu"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
-#: NEEDS WORK
 msgid "Language"
 msgstr "Dil"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
-#: NEEDS WORK
 msgid "Keyboard"
 msgstr "Klavye"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
-#: NEEDS WORK
 msgid "Desktop Layout"
 msgstr "Masaüstü Düzeni"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
-#: NEEDS WORK
 msgid "Theme"
 msgstr "Tema"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
-#: NEEDS WORK
 msgid "Search for a language..."
 msgstr "Bir dil ara..."
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
-#: NEEDS WORK
 msgid "Could not load language data."
 msgstr "Dil verisi yüklenemedi."
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
-#: NEEDS WORK
 msgid "Choose Your Keyboard Layout"
 msgstr "Klavye Düzeni Seçin"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
-#: NEEDS WORK
 msgid "Choose a Desktop Layout"
 msgstr "Bir Masaüstü Düzeni Seçin"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
-#: NEEDS WORK
 msgid "Settings"
 msgstr "Ayarlar"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
-#: NEEDS WORK
 msgid "JamesDSP Audio"
 msgstr "JamesDSP Ses"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
-#: NEEDS WORK
 msgid "Enable audio improvements"
 msgstr "Ses iyileştirmelerini etkinleştir"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
-#: NEEDS WORK
 msgid "Image quality"
 msgstr "Görüntü kalitesi"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
-#: NEEDS WORK
 msgid "Enable enhanced contrast"
 msgstr "Geliştirilmiş kontrastı etkinleştir"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
-#: NEEDS WORK
 msgid "Choose a System Theme"
 msgstr "Bir Sistem Teması Seçin"

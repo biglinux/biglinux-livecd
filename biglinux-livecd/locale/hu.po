@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the biglinux-livecd package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
@@ -15,100 +14,80 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-#: NEEDS WORK
 msgid "Error: Integrity Check Failed"
 msgstr "Hiba: Integritásellenőrzés meghiúsult"
-#: NEEDS WORK
 msgid "Oops!"
 msgstr "Hoppá!"
-#: NEEDS WORK
 msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
 msgstr ""
 "Az integritásellenőrzés meghiúsult. Szükséges a rendszer újra letöltése vagy egy másik USB meghajtó "
 "használata."
-#: NEEDS WORK
 msgid ""
 "<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
 "package was damaged during download, or the USB drive itself is faulty and is damaging the file."
 msgstr ""
 "<b>Miért?</b> Gondolj az telepítőfájlra, mint egy pontos digitális csomagra. Ez a hiba azt jelenti, "
 "hogy a csomag megsérült a letöltés során, vagy az USB meghajtó maga hibás, és károsítja a fájlt."
-#: NEEDS WORK
 msgid "Close"
 msgstr "Bezárás"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
-#: NEEDS WORK
 msgid "BigLinux Setup"
 msgstr "BigLinux Telepítés"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
-#: NEEDS WORK
 msgid "Language"
 msgstr "Nyelv"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
-#: NEEDS WORK
 msgid "Keyboard"
 msgstr "Billentyűzet"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
-#: NEEDS WORK
 msgid "Desktop Layout"
 msgstr "Asztali elrendezés"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
-#: NEEDS WORK
 msgid "Theme"
 msgstr "Téma"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
-#: NEEDS WORK
 msgid "Search for a language..."
 msgstr "Keresés egy nyelv után..."
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
-#: NEEDS WORK
 msgid "Could not load language data."
 msgstr "Nem sikerült betölteni a nyelvi adatokat."
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
-#: NEEDS WORK
 msgid "Choose Your Keyboard Layout"
 msgstr "Válaszd ki a billentyűzetkiosztást"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
-#: NEEDS WORK
 msgid "Choose a Desktop Layout"
 msgstr "Válasszon egy Asztali Elrendezést"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
-#: NEEDS WORK
 msgid "Settings"
 msgstr "Beállítások"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
-#: NEEDS WORK
 msgid "JamesDSP Audio"
 msgstr "JamesDSP Hangzás"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
-#: NEEDS WORK
 msgid "Enable audio improvements"
 msgstr "Hangjavítások engedélyezése"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
-#: NEEDS WORK
 msgid "Image quality"
 msgstr "Képminőség"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
-#: NEEDS WORK
 msgid "Enable enhanced contrast"
 msgstr "Javított kontraszt engedélyezése"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
-#: NEEDS WORK
 msgid "Choose a System Theme"
 msgstr "Válasszon egy Rendszertémát"

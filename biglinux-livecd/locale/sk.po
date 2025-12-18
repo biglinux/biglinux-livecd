@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the biglinux-livecd package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
@@ -15,98 +14,78 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-#: NEEDS WORK
 msgid "Error: Integrity Check Failed"
 msgstr "Chyba: Kontrola integrity zlyhala"
-#: NEEDS WORK
 msgid "Oops!"
 msgstr "Prepáč!"
-#: NEEDS WORK
 msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
 msgstr "Kontrola integrity zlyhala. Je potrebné systém znova stiahnuť alebo použiť iný USB disk."
-#: NEEDS WORK
 msgid ""
 "<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
 "package was damaged during download, or the USB drive itself is faulty and is damaging the file."
 msgstr ""
 "<b>Prečo?</b> Myslite na inštalačný súbor ako na presný digitálny balík. Táto chyba znamená, že "
 "balík bol poškodený počas sťahovania, alebo samotný USB disk je chybný a poškodzuje súbor."
-#: NEEDS WORK
 msgid "Close"
 msgstr "Zavrieť"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
-#: NEEDS WORK
 msgid "BigLinux Setup"
 msgstr "Nastavenie BigLinux"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
-#: NEEDS WORK
 msgid "Language"
 msgstr "Jazyk"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
-#: NEEDS WORK
 msgid "Keyboard"
 msgstr "Klávesnica"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
-#: NEEDS WORK
 msgid "Desktop Layout"
 msgstr "Rozloženie plochy"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
-#: NEEDS WORK
 msgid "Theme"
 msgstr "Téma"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
-#: NEEDS WORK
 msgid "Search for a language..."
 msgstr "Hľadať jazyk..."
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
-#: NEEDS WORK
 msgid "Could not load language data."
 msgstr "Nepodarilo sa načítať jazykové údaje."
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
-#: NEEDS WORK
 msgid "Choose Your Keyboard Layout"
 msgstr "Vyberte si rozloženie klávesnice"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
-#: NEEDS WORK
 msgid "Choose a Desktop Layout"
 msgstr "Vyberte rozloženie pracovnej plochy"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
-#: NEEDS WORK
 msgid "Settings"
 msgstr "Nastavenia"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
-#: NEEDS WORK
 msgid "JamesDSP Audio"
 msgstr "JamesDSP Audio"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
-#: NEEDS WORK
 msgid "Enable audio improvements"
 msgstr "Povoliť vylepšenia zvuku"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
-#: NEEDS WORK
 msgid "Image quality"
 msgstr "Kvalita obrázku"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
-#: NEEDS WORK
 msgid "Enable enhanced contrast"
 msgstr "Povoliť vylepšený kontrast"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
-#: NEEDS WORK
 msgid "Choose a System Theme"
 msgstr "Vyberte systémovú tému"
