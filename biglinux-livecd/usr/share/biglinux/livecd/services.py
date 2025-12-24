@@ -221,7 +221,7 @@ class SystemService:
             logger.info("Enhanced contrast enabled, creating flag file.")
             self._run_command(["touch", self.tmp_display_profile_file], as_root=False)
             self._run_command(
-                ["/usr/share/biglinux/livecd/script/icc_profile.sh", "enable"],
+                ["/usr/bin/icc_profile_apply", "enable"],
                 as_root=False,
             )
         else:
@@ -232,7 +232,7 @@ class SystemService:
                 ["rm", "-f", self.tmp_display_profile_file], as_root=False
             )
             self._run_command(
-                ["/usr/share/biglinux/livecd/script/icc_profile.sh", "disable"],
+                ["/usr/bin/icc_profile_apply", "disable"],
                 as_root=False,
             )
 
