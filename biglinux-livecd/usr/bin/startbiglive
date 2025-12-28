@@ -97,7 +97,7 @@ echo -e "[Formats]\nLANG=$(</tmp/big_language).UTF-8" > $HOME/.config/plasma-loc
 # Make folders in home
 xdg-user-dirs-update
 . ~/.config/user-dirs.dirs
-cp -f "/usr/share/applications/calamares-biglinux.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
+cp -f "/usr/share/applications/com.biglinux.calamares-config.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 
 cd ~
