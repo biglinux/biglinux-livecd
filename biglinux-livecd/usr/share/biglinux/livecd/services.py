@@ -279,6 +279,28 @@ class SystemService:
                     as_root=False,
                 )
 
+    def apply_icc_profile_settings(self, enabled: bool):
+        """
+        Applies ICC profile configuration immediately.
+        This is called when a theme is selected, based on the switch state.
+        """
+        if enabled:
+            logger.info("Applying ICC profile enabled settings...")
+            self._run_command(["touch", self.tmp_display_profile_file], as_root=False)
+            self._run_command(
+                ["/usr/bin/icc_profile_apply", "enable"],
+                as_root=False,
+            )
+        else:
+            logger.info("Applying ICC profile disabled settings...")
+            self._run_command(
+                ["rm", "-f", self.tmp_display_profile_file], as_root=False
+            )
+            self._run_command(
+                ["/usr/bin/icc_profile_apply", "disable"],
+                as_root=False,
+            )
+
     def check_jamesdsp_availability(self) -> bool:
         """Checks if JamesDSP executable exists."""
         return os.path.exists("/usr/bin/jamesdsp")

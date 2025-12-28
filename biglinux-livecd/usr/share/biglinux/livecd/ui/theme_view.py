@@ -32,6 +32,7 @@ class ThemeView(BaseItemView):
     def __init__(self, system_service: SystemService, **kwargs):
         self.jamesdsp_switch = None
         self.contrast_switch = None
+        self._system_service = system_service  # Store reference for ICC callbacks
 
         self.jamesdsp_available = system_service.check_jamesdsp_availability()
         self.contrast_available = system_service.check_enhanced_contrast_availability()
@@ -183,6 +184,8 @@ class ThemeView(BaseItemView):
         self.contrast_switch = Gtk.Switch(
             valign=Gtk.Align.CENTER, active=self.default_contrast_state
         )
+        # Connect callback to apply ICC profile immediately when switch state changes
+        self.contrast_switch.connect("notify::active", self._on_contrast_switch_toggled)
         content.append(self.contrast_switch)
 
         controller = Gtk.GestureClick.new()
@@ -262,3 +265,9 @@ class ThemeView(BaseItemView):
         if self.contrast_switch:
             return self.contrast_switch.get_active()
         return False
+
+    def _on_contrast_switch_toggled(self, switch, param):
+        """Called immediately when the ICC profile switch state changes."""
+        enabled = switch.get_active()
+        logger.info(f"ICC profile switch toggled: {'enabled' if enabled else 'disabled'}")
+        self._system_service.apply_icc_profile_settings(enabled)
