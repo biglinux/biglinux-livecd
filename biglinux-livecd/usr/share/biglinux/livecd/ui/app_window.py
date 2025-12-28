@@ -49,12 +49,16 @@ def get_comm_logo_path(system_service: SystemService = None):
     return DEFAULT_COMM_LOGO_PATH
 
 
-def load_svg_pixbuf(path, size):
+def load_svg_texture(path, size):
+    """Load SVG as Gdk.Texture for better GTK4 scaling."""
     try:
-        return GdkPixbuf.Pixbuf.new_from_file_at_size(path, size, size)
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(path, size, size)
+        return Gdk.Texture.new_for_pixbuf(pixbuf)
     except GLib.Error as e:
         logger.error(f"Failed to load SVG {path}: {e}")
-        return GdkPixbuf.Pixbuf.new(GdkPixbuf.Colorspace.RGB, True, 8, size, size)
+        # Create a fallback empty pixbuf and convert to texture
+        pixbuf = GdkPixbuf.Pixbuf.new(GdkPixbuf.Colorspace.RGB, True, 8, size, size)
+        return Gdk.Texture.new_for_pixbuf(pixbuf)
 
 
 class AppWindow(Adw.ApplicationWindow):
@@ -234,10 +238,11 @@ class AppWindow(Adw.ApplicationWindow):
         button = Gtk.Button()
         button.set_focusable(False)
         path = os.path.join(ASSETS_DIR, step_info["file"])
-        pixbuf = load_svg_pixbuf(path, 32)
-        img = Gtk.Image.new_from_pixbuf(pixbuf)
+        texture = load_svg_texture(path, 48)
+        img = Gtk.Image.new_from_paintable(texture)
+        img.set_pixel_size(64)
         button.set_child(img)
-        button.set_size_request(48, 48)
+        button.set_size_request(64, 64)
         button.connect("clicked", self._on_step_button_clicked, step_info["name"])
         button.add_css_class("flat")
 
@@ -327,8 +332,9 @@ class AppWindow(Adw.ApplicationWindow):
                         if os.path.exists(candidate)
                         else os.path.join(ASSETS_DIR, "headerbar-locale.svg")
                     )
-                    pixbuf = load_svg_pixbuf(path, 32)
-                    img.set_from_pixbuf(pixbuf)
+                    texture = load_svg_texture(path, 48)
+                    img.set_from_paintable(texture)
+                    img.set_pixel_size(48)
 
         keyboard_layout = params.get("keyboard", "us")
 

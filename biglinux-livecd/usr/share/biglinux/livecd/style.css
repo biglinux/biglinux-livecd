@@ -16,6 +16,11 @@
         transform: scale(1.0);
     }
 }
+
+.step-pending, .step-current, .step-completed {
+	transform: scale(0.5);
+}
+
 .app-content {
     background-color: @view_bg_color;
 }
