@@ -417,6 +417,9 @@ class AppWindow(Adw.ApplicationWindow):
         if theme_view:
             self.config.enable_jamesdsp = theme_view.is_jamesdsp_enabled()
             self.config.enable_enhanced_contrast = theme_view.is_contrast_enabled()
+            
+            # Apply JamesDSP settings immediately when theme is selected
+            self.system_service.apply_jamesdsp_settings(self.config.enable_jamesdsp)
 
         self.system_service.finalize_setup(self.config)
         self.close()

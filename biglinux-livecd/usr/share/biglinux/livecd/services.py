@@ -244,6 +244,41 @@ class SystemService:
     def get_theme_image_path(self, theme_name: str) -> str:
         return self.theme_image_path.format(theme_name)
 
+    def apply_jamesdsp_settings(self, enabled: bool):
+        """
+        Applies JamesDSP configuration immediately.
+        This is called when a theme is selected, based on the switch state.
+        """
+        home = os.path.expanduser("~")
+        jamesdsp_conf = os.path.join(home, ".config/jamesdsp/application.conf")
+        
+        if enabled:
+            logger.info("Applying JamesDSP enabled settings...")
+            self._run_command(["touch", self.tmp_jamesdsp_file], as_root=False)
+            if os.path.exists(jamesdsp_conf):
+                self._run_command(
+                    [
+                        "sed",
+                        "-i",
+                        "s|AutoStartEnabled=false|AutoStartEnabled=true|g",
+                        jamesdsp_conf,
+                    ],
+                    as_root=False,
+                )
+        else:
+            logger.info("Applying JamesDSP disabled settings...")
+            self._run_command(["rm", "-f", self.tmp_jamesdsp_file], as_root=False)
+            if os.path.exists(jamesdsp_conf):
+                self._run_command(
+                    [
+                        "sed",
+                        "-i",
+                        "s|AutoStartEnabled=true|AutoStartEnabled=false|g",
+                        jamesdsp_conf,
+                    ],
+                    as_root=False,
+                )
+
     def check_jamesdsp_availability(self) -> bool:
         """Checks if JamesDSP executable exists."""
         return os.path.exists("/usr/bin/jamesdsp")
