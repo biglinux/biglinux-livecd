@@ -206,25 +206,32 @@ class SystemService:
 
         # Set GTK theme for each desktop environment
         if desktop_env == "Cinnamon":
-            logger.info("Setting Cinnamon GTK theme to Big-Orange")
+            logger.info("Setting Cinnamon GTK theme to Adw-gtk3-dark")
             self._run_command([
                 "dconf", "write",
                 "/org/cinnamon/desktop/interface/gtk-theme",
-                "'Big-Orange'"
+                "'Adw-gtk3-dark'"
             ])
         elif desktop_env == "GNOME":
-            logger.info("Setting GNOME GTK theme to Big-Blue")
+            logger.info("Setting GNOME GTK theme to Adw-gtk3-dark")
             self._run_command([
                 "dconf", "write",
                 "/org/gnome/desktop/interface/gtk-theme",
+                "'Adw-gtk3-dark'"
+            ])
+            # Set GNOME Shell theme
+            logger.info("Setting GNOME Shell theme to Big-Blue")
+            self._run_command([
+                "dconf", "write",
+                "/org/gnome/shell/extensions/user-theme/name",
                 "'Big-Blue'"
             ])
         elif desktop_env == "XFCE":
-            logger.info("Setting XFCE GTK theme to Big-Blue")
+            logger.info("Setting XFCE GTK theme to Adw-gtk3-dark")
             self._run_command([
                 "xfconf-query", "-c", "xsettings",
                 "-p", "/Net/ThemeName",
-                "-s", "Big-Blue"
+                "-s", "Adw-gtk3-dark"
             ])
 
         # Configure Kvantum theme
@@ -260,25 +267,32 @@ class SystemService:
 
         # Set GTK theme for each desktop environment
         if desktop_env == "Cinnamon":
-            logger.info("Setting Cinnamon GTK theme to Big-Orange-Light")
+            logger.info("Setting Cinnamon GTK theme to Adw-gtk3")
             self._run_command([
                 "dconf", "write",
                 "/org/cinnamon/desktop/interface/gtk-theme",
-                "'Big-Orange-Light'"
+                "'Adw-gtk3'"
             ])
         elif desktop_env == "GNOME":
-            logger.info("Setting GNOME GTK theme to Big-Blue-Light")
+            logger.info("Setting GNOME GTK theme to Adw-gtk3")
             self._run_command([
                 "dconf", "write",
                 "/org/gnome/desktop/interface/gtk-theme",
-                "'Big-Blue-Light'"
+                "'Adw-gtk3'"
+            ])
+            # Set GNOME Shell theme
+            logger.info("Setting GNOME Shell theme to Big-Blue")
+            self._run_command([
+                "dconf", "write",
+                "/org/gnome/shell/extensions/user-theme/name",
+                "'Big-Blue'"
             ])
         elif desktop_env == "XFCE":
-            logger.info("Setting XFCE GTK theme to Big-Blue-Light")
+            logger.info("Setting XFCE GTK theme to Adw-gtk3")
             self._run_command([
                 "xfconf-query", "-c", "xsettings",
                 "-p", "/Net/ThemeName",
-                "-s", "Big-Blue-Light"
+                "-s", "Adw-gtk3"
             ])
 
         # Configure Kvantum theme
@@ -302,9 +316,19 @@ class SystemService:
 
     def _apply_icon_theme_variant(self, desktop_env: str, dark: bool):
         """Applies appropriate icon theme variant (dark or light)."""
-        logger.debug(f"Applying {'dark' if dark else 'light'} icon theme variant")
+        logger.debug(f"Applying {'dark' if dark else 'light'} icon theme variant for {desktop_env}")
 
-        # Get current icon theme
+        # GNOME: sempre usa bigicons-papient-dark no escuro, bigicons-papient no claro
+        if desktop_env == "GNOME":
+            if dark:
+                new_theme = "bigicons-papient-dark"
+            else:
+                new_theme = "bigicons-papient"
+            logger.info(f"Setting GNOME icon theme to: {new_theme}")
+            self._set_icon_theme(desktop_env, new_theme)
+            return
+
+        # Para outros desktops, detectar tema atual e modificar
         icon_theme = ""
         if desktop_env == "XFCE":
             success, icon_theme = self._run_command([
@@ -313,19 +337,11 @@ class SystemService:
             ], read_only=True)
             if success:
                 icon_theme = icon_theme.strip()
-        else:
-            # GNOME or Cinnamon
-            if desktop_env == "Cinnamon":
-                success, icon_theme = self._run_command([
-                    "dconf", "read",
-                    "/org/cinnamon/desktop/interface/icon-theme"
-                ], read_only=True)
-            else:
-                success, icon_theme = self._run_command([
-                    "dconf", "read",
-                    "/org/gnome/desktop/interface/icon-theme"
-                ], read_only=True)
-
+        elif desktop_env == "Cinnamon":
+            success, icon_theme = self._run_command([
+                "dconf", "read",
+                "/org/cinnamon/desktop/interface/icon-theme"
+            ], read_only=True)
             if success:
                 icon_theme = icon_theme.strip("'\"")
 
