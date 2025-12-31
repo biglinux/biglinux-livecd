@@ -53,6 +53,10 @@ msgstr "Διάταξη Επιφάνειας Εργασίας"
 msgid "Theme"
 msgstr "Θέμα"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
+msgid "Choose Your Keyboard Layout"
+msgstr "Επιλέξτε τη διάταξη του πληκτρολογίου σας"
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
 msgid "Search for a language..."
 msgstr "Αναζητήστε μια γλώσσα..."
@@ -60,10 +64,6 @@ msgstr "Αναζητήστε μια γλώσσα..."
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
 msgid "Could not load language data."
 msgstr "Δεν ήταν δυνατή η φόρτωση των δεδομένων γλώσσας."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
-msgid "Choose Your Keyboard Layout"
-msgstr "Επιλέξτε τη διάταξη του πληκτρολογίου σας"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
 msgid "Choose a Desktop Layout"
@@ -89,6 +89,18 @@ msgstr "Ποιότητα εικόνας"
 msgid "Enable enhanced contrast"
 msgstr "Ενεργοποιήστε την ενισχυμένη αντίθεση"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 227
+msgid "Choose a Theme Style"
+msgstr "Επιλέξτε στυλ θέματος"
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
 msgid "Choose a System Theme"
 msgstr "Επιλέξτε ένα Θέμα Συστήματος"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 258
+msgid "Dark Theme"
+msgstr "Σκοτεινή Θέμα"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 261
+msgid "Light Theme"
+msgstr "Θέμα Φωτός"

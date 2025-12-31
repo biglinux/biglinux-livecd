@@ -53,6 +53,10 @@ msgstr "Layout Desktop"
 msgid "Theme"
 msgstr "Tema"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
+msgid "Choose Your Keyboard Layout"
+msgstr "Scegli il tuo layout di tastiera"
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
 msgid "Search for a language..."
 msgstr "Cerca una lingua..."
@@ -60,10 +64,6 @@ msgstr "Cerca una lingua..."
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
 msgid "Could not load language data."
 msgstr "Impossibile caricare i dati della lingua."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
-msgid "Choose Your Keyboard Layout"
-msgstr "Scegli il tuo layout di tastiera"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
 msgid "Choose a Desktop Layout"
@@ -89,6 +89,18 @@ msgstr "Qualità dell'immagine"
 msgid "Enable enhanced contrast"
 msgstr "Abilita il contrasto migliorato"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 227
+msgid "Choose a Theme Style"
+msgstr "Scegli uno Stile di Tema"
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
 msgid "Choose a System Theme"
 msgstr "Scegli un tema di sistema"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 258
+msgid "Dark Theme"
+msgstr "Tema scuro"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 261
+msgid "Light Theme"
+msgstr "Tema chiaro"

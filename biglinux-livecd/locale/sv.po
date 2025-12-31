@@ -52,6 +52,10 @@ msgstr "Skrivbordslayout"
 msgid "Theme"
 msgstr "Tema"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
+msgid "Choose Your Keyboard Layout"
+msgstr "Välj ditt tangentbordslayout"
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
 msgid "Search for a language..."
 msgstr "Sök efter ett språk..."
@@ -59,10 +63,6 @@ msgstr "Sök efter ett språk..."
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
 msgid "Could not load language data."
 msgstr "Kunde inte ladda språkdatan."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
-msgid "Choose Your Keyboard Layout"
-msgstr "Välj ditt tangentbordslayout"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
 msgid "Choose a Desktop Layout"
@@ -88,6 +88,18 @@ msgstr "Bildkvalitet"
 msgid "Enable enhanced contrast"
 msgstr "Aktivera förbättrad kontrast"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 227
+msgid "Choose a Theme Style"
+msgstr "Välj en temastil"
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
 msgid "Choose a System Theme"
 msgstr "Välj ett systemtema"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 258
+msgid "Dark Theme"
+msgstr "Mörkt tema"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 261
+msgid "Light Theme"
+msgstr "Ljustema"

@@ -52,6 +52,10 @@ msgstr "Töölaua paigutus"
 msgid "Theme"
 msgstr "Teema"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
+msgid "Choose Your Keyboard Layout"
+msgstr "Vali oma klaviatuuri paigutus"
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
 msgid "Search for a language..."
 msgstr "Otsi keelt..."
@@ -59,10 +63,6 @@ msgstr "Otsi keelt..."
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
 msgid "Could not load language data."
 msgstr "Keelt ei õnnestunud laadida."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
-msgid "Choose Your Keyboard Layout"
-msgstr "Vali oma klaviatuuri paigutus"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
 msgid "Choose a Desktop Layout"
@@ -88,6 +88,18 @@ msgstr "Pildi kvaliteet"
 msgid "Enable enhanced contrast"
 msgstr "Luba paranenud kontrastsus"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 227
+msgid "Choose a Theme Style"
+msgstr "Vali teema stiil"
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
 msgid "Choose a System Theme"
 msgstr "Vali süsteemi teema"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 258
+msgid "Dark Theme"
+msgstr "Tumeema teema"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 261
+msgid "Light Theme"
+msgstr "Heled teema"
