@@ -38,6 +38,7 @@ class SystemService:
         self.tmp_theme_file = "/tmp/big_desktop_theme"
         self.tmp_jamesdsp_file = "/tmp/big_enable_jamesdsp"
         self.tmp_display_profile_file = "/tmp/big_improve_display"
+        self.tmp_simple_theme_file = "/tmp/big_simple_theme"
 
     def _run_command(
         self,
@@ -174,6 +175,167 @@ class SystemService:
         self._write_tmp_file(self.tmp_theme_file, theme)
         self._run_command([self.theme_apply_script, theme])
 
+    def apply_simple_theme(self, theme: str):
+        """
+        Applies light or dark theme for simplified environments (GNOME/XFCE/Cinnamon).
+
+        Args:
+            theme: Either "light" or "dark"
+        """
+        logger.info(f"Applying simple theme: {theme}")
+        self._write_tmp_file(self.tmp_simple_theme_file, theme)
+
+        desktop_env = self.get_desktop_environment()
+
+        if theme == "dark":
+            self._apply_dark_theme(desktop_env)
+        else:
+            self._apply_light_theme(desktop_env)
+
+    def _apply_dark_theme(self, desktop_env: str):
+        """Applies dark theme configuration."""
+        logger.info("Applying dark theme configuration")
+
+        # Set GTK4 color scheme for GNOME/Cinnamon
+        if desktop_env in ["GNOME", "Cinnamon"]:
+            self._run_command([
+                "dconf", "write",
+                "/org/gnome/desktop/interface/color-scheme",
+                "'prefer-dark'"
+            ])
+
+        # Configure Kvantum theme
+        home = os.path.expanduser("~")
+        kvantum_dir = os.path.join(home, ".config", "Kvantum")
+        kvantum_conf = os.path.join(kvantum_dir, "kvantum.kvconfig")
+
+        kvantum_content = "[General]\ntheme=BigAdwaitaRoundGtkDark\n"
+        self._write_user_config_file(kvantum_conf, kvantum_content)
+
+        # Copy kdeglobals for dark theme
+        kdeglobals_source = "/usr/share/sync-kde-and-gtk-places/biglinux-dark"
+        kdeglobals_dest = os.path.join(home, ".config", "kdeglobals")
+        if os.path.exists(kdeglobals_source):
+            self._run_command(["cp", "-f", kdeglobals_source, kdeglobals_dest])
+        else:
+            logger.warning(f"Dark theme kdeglobals not found at {kdeglobals_source}")
+
+        # Apply dark icon theme
+        self._apply_icon_theme_variant(desktop_env, dark=True)
+
+    def _apply_light_theme(self, desktop_env: str):
+        """Applies light theme configuration."""
+        logger.info("Applying light theme configuration")
+
+        # Set GTK4 color scheme for GNOME/Cinnamon
+        if desktop_env in ["GNOME", "Cinnamon"]:
+            self._run_command([
+                "dconf", "write",
+                "/org/gnome/desktop/interface/color-scheme",
+                "'default'"
+            ])
+
+        # Configure Kvantum theme
+        home = os.path.expanduser("~")
+        kvantum_dir = os.path.join(home, ".config", "Kvantum")
+        kvantum_conf = os.path.join(kvantum_dir, "kvantum.kvconfig")
+
+        kvantum_content = "[General]\ntheme=BigAdwaitaRoundGtk\n"
+        self._write_user_config_file(kvantum_conf, kvantum_content)
+
+        # Copy kdeglobals for light theme
+        kdeglobals_source = "/usr/share/sync-kde-and-gtk-places/biglinux"
+        kdeglobals_dest = os.path.join(home, ".config", "kdeglobals")
+        if os.path.exists(kdeglobals_source):
+            self._run_command(["cp", "-f", kdeglobals_source, kdeglobals_dest])
+        else:
+            logger.warning(f"Light theme kdeglobals not found at {kdeglobals_source}")
+
+        # Apply light icon theme
+        self._apply_icon_theme_variant(desktop_env, dark=False)
+
+    def _apply_icon_theme_variant(self, desktop_env: str, dark: bool):
+        """Applies appropriate icon theme variant (dark or light)."""
+        logger.debug(f"Applying {'dark' if dark else 'light'} icon theme variant")
+
+        # Get current icon theme
+        icon_theme = ""
+        if desktop_env == "XFCE":
+            success, icon_theme = self._run_command([
+                "xfconf-query", "-c", "xsettings",
+                "-p", "/Net/IconThemeName"
+            ], read_only=True)
+            if success:
+                icon_theme = icon_theme.strip()
+        else:
+            # GNOME or Cinnamon
+            if desktop_env == "Cinnamon":
+                success, icon_theme = self._run_command([
+                    "dconf", "read",
+                    "/org/cinnamon/desktop/interface/icon-theme"
+                ], read_only=True)
+            else:
+                success, icon_theme = self._run_command([
+                    "dconf", "read",
+                    "/org/gnome/desktop/interface/icon-theme"
+                ], read_only=True)
+
+            if success:
+                icon_theme = icon_theme.strip("'\"")
+
+        if not icon_theme:
+            logger.warning("Could not detect current icon theme")
+            return
+
+        # Find appropriate variant
+        home = os.path.expanduser("~")
+        search_paths = [
+            "/usr/share/icons",
+            os.path.join(home, ".local/share/icons")
+        ]
+
+        new_theme = icon_theme
+        if dark:
+            # Look for dark variant
+            for base_path in search_paths:
+                if os.path.exists(base_path):
+                    # Try adding -dark suffix
+                    dark_icon_path = os.path.join(base_path, f"{icon_theme}-dark")
+                    if os.path.isdir(dark_icon_path):
+                        new_theme = f"{icon_theme}-dark"
+                        logger.debug(f"Found dark icon theme: {new_theme}")
+                        break
+        else:
+            # Remove -dark suffix if present
+            new_theme = icon_theme.replace("-dark", "").replace("-Dark", "")
+            logger.debug(f"Using light icon theme: {new_theme}")
+
+        # Apply the icon theme
+        self._set_icon_theme(desktop_env, new_theme)
+
+    def _set_icon_theme(self, desktop_env: str, theme_name: str):
+        """Sets the icon theme for the desktop environment."""
+        logger.info(f"Setting icon theme to: {theme_name}")
+
+        if desktop_env == "Cinnamon":
+            self._run_command([
+                "dconf", "write",
+                "/org/cinnamon/desktop/interface/icon-theme",
+                f"'{theme_name}'"
+            ])
+        elif desktop_env == "XFCE":
+            self._run_command([
+                "xfconf-query", "-c", "xsettings",
+                "-p", "/Net/IconThemeName",
+                "-s", theme_name
+            ])
+        else:  # GNOME
+            self._run_command([
+                "dconf", "write",
+                "/org/gnome/desktop/interface/icon-theme",
+                f"'{theme_name}'"
+            ])
+
     def finalize_setup(self, config: SetupConfig):
         """
         Performs final setup steps, including creating flag files.
@@ -306,19 +468,38 @@ class SystemService:
         return os.path.exists("/usr/bin/jamesdsp")
 
     def check_enhanced_contrast_availability(self) -> bool:
-        """Checks for the AppleRGB ICC profile and if kwin_wayland is running."""
+        """Checks for the AppleRGB ICC profile and if running on Wayland."""
         icc_profile_exists = os.path.exists("/usr/share/color/icc/colord/ECI-RGBv1.icc")
+        logger.debug(f"ICC profile exists: {icc_profile_exists}")
 
-        # Check if kwin_wayland process is running
-        try:
-            result = subprocess.run(
-                ["pgrep", "-x", "kwin_wayland"], capture_output=True, check=False
-            )
-            kwin_running = result.returncode == 0
-        except FileNotFoundError:
-            kwin_running = False  # pgrep not found
+        # Check if running on Wayland (works for GNOME, KDE, etc)
+        wayland_running = False
 
-        return icc_profile_exists and kwin_running
+        # Method 1: Check XDG_SESSION_TYPE environment variable
+        session_type = os.environ.get("XDG_SESSION_TYPE", "").lower()
+        logger.debug(f"XDG_SESSION_TYPE: {session_type}")
+        if session_type == "wayland":
+            wayland_running = True
+
+        # Method 2: Check if WAYLAND_DISPLAY is set
+        wayland_display = os.environ.get("WAYLAND_DISPLAY", "")
+        logger.debug(f"WAYLAND_DISPLAY: {wayland_display}")
+        if not wayland_running and wayland_display:
+            wayland_running = True
+
+        # Method 3: Check for compositor processes (fallback)
+        if not wayland_running:
+            try:
+                # Check for kwin_wayland (KDE) or gnome-shell on Wayland
+                result = subprocess.run(
+                    ["pgrep", "-x", "kwin_wayland"], capture_output=True, check=False
+                )
+                wayland_running = result.returncode == 0
+            except FileNotFoundError:
+                pass
+
+        logger.info(f"Enhanced contrast availability: ICC={icc_profile_exists}, Wayland={wayland_running}, Result={icc_profile_exists and wayland_running}")
+        return icc_profile_exists and wayland_running
 
     def get_total_memory_gb(self) -> float:
         """Gets total system memory in Gigabytes from /proc/meminfo."""

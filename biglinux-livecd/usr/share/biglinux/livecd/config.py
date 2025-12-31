@@ -15,5 +15,6 @@ class SetupConfig:
     keyboard_layout: Optional[str] = None
     desktop_layout: Optional[str] = None
     theme: Optional[str] = None
+    simple_theme: Optional[str] = None  # "light" or "dark" for simplified environments
     enable_jamesdsp: bool = False
     enable_enhanced_contrast: bool = False

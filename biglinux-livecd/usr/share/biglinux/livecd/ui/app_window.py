@@ -136,6 +136,7 @@ class AppWindow(Adw.ApplicationWindow):
             self.steps = [
                 {"name": "language", "file": "headerbar-locale.svg"},
                 {"name": "keyboard", "file": "headerbar-keyboard.svg"},
+                {"name": "theme", "file": "headerbar-theme.svg"},
             ]
         else:
             self.steps = [
@@ -147,9 +148,7 @@ class AppWindow(Adw.ApplicationWindow):
 
         # Build header layout based on environment
         if self.is_simplified_env:
-            # Simplified layout: [Language] [comm-logo.png] [Keyboard]
-            self._add_step_button(header_content_box, self.steps[0])
-
+            # Simplified layout: [comm-logo.png] [Language] [Keyboard] [Theme]
             # Use comm-logo.png for simplified environments (XivaStudio override if exists)
             logo_path = get_comm_logo_path(self.system_service)
             if os.path.exists(logo_path):
@@ -158,8 +157,10 @@ class AppWindow(Adw.ApplicationWindow):
                 logo.set_margin_start(20)
                 logo.set_margin_end(20)
                 header_content_box.append(logo)
-            
+
+            self._add_step_button(header_content_box, self.steps[0])
             self._add_step_button(header_content_box, self.steps[1])
+            self._add_step_button(header_content_box, self.steps[2])
         else:
             # Full layout: [Language] [Keyboard] [logo.png] [Desktop] [Theme]
             self._add_step_button(header_content_box, self.steps[0])
@@ -219,6 +220,8 @@ class AppWindow(Adw.ApplicationWindow):
                 page.set_title(_("Desktop Layout"))
             elif view_name == "theme":
                 page.set_title(_("Theme"))
+            elif view_name == "simple_theme":
+                page.set_title(_("Theme"))
 
             # Trigger re-translation within the view itself
             if hasattr(view, "_retranslate_ui"):
@@ -233,6 +236,8 @@ class AppWindow(Adw.ApplicationWindow):
                 self._add_desktop_view()
             elif view_name == "theme":
                 self._add_theme_view()
+            elif view_name == "simple_theme":
+                self._add_simple_theme_view()
 
     def _add_step_button(self, box, step_info):
         button = Gtk.Button()
@@ -267,9 +272,16 @@ class AppWindow(Adw.ApplicationWindow):
 
     def _update_header_state(self):
         current_view_name = self.stack.get_visible_child_name()
+
+        # Map simple_theme to theme for header state
+        if current_view_name == "simple_theme":
+            search_name = "theme"
+        else:
+            search_name = current_view_name
+
         try:
             current_index = next(
-                i for i, s in enumerate(self.steps) if s["name"] == current_view_name
+                i for i, s in enumerate(self.steps) if s["name"] == search_name
             )
         except StopIteration:
             current_index = -1
@@ -372,9 +384,9 @@ class AppWindow(Adw.ApplicationWindow):
         self.completed_steps.add("keyboard")
 
         if self.is_simplified_env:
-            # Skip desktop and theme for simplified environments (GNOME/XFCE/Cinnamon)
-            self.system_service.finalize_setup(self.config)
-            self.close()
+            # Navigate to simple theme view for simplified environments (GNOME/XFCE/Cinnamon)
+            self._ensure_view("simple_theme")
+            self.stack.set_visible_child_name("simple_theme")
         else:
             # LAZY LOADING: Ensure desktop view exists before showing it
             self._ensure_view("desktop")
@@ -421,6 +433,35 @@ class AppWindow(Adw.ApplicationWindow):
             # Apply JamesDSP settings immediately when theme is selected
             self.system_service.apply_jamesdsp_settings(self.config.enable_jamesdsp)
 
+        self.system_service.finalize_setup(self.config)
+        self.close()
+
+    def _add_simple_theme_view(self):
+        """Creates and adds the simplified theme view for GNOME/XFCE/Cinnamon."""
+        view = ThemeView(system_service=self.system_service, simplified_mode=True)
+        view.connect("theme-selected", self._on_simple_theme_selected)
+        self.stack.add_titled(view, "simple_theme", _("Theme"))
+
+    def _on_simple_theme_selected(self, view, theme):
+        """Handle theme selection from simplified theme view."""
+        logger.info(f"Simple theme selected: {theme}")
+
+        # Mark theme step as completed
+        self.completed_steps.add("theme")
+
+        # Save to config
+        self.config.simple_theme = theme
+
+        # Apply simple theme (light or dark)
+        self.system_service.apply_simple_theme(theme)
+
+        # Get JamesDSP and contrast settings from the theme view
+        theme_view = self.stack.get_child_by_name("simple_theme")
+        if theme_view:
+            self.config.enable_jamesdsp = theme_view.is_jamesdsp_enabled()
+            self.config.enable_enhanced_contrast = theme_view.is_contrast_enabled()
+
+        # Finalize and close
         self.system_service.finalize_setup(self.config)
         self.close()
 
