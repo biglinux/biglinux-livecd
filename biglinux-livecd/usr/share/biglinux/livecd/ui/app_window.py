@@ -444,26 +444,41 @@ class AppWindow(Adw.ApplicationWindow):
 
     def _on_simple_theme_selected(self, view, theme):
         """Handle theme selection from simplified theme view."""
-        logger.info(f"Simple theme selected: {theme}")
+        logger.info(f"========== SIMPLE THEME SELECTED: {theme} ==========")
 
-        # Mark theme step as completed
-        self.completed_steps.add("theme")
+        try:
+            # Mark theme step as completed
+            self.completed_steps.add("theme")
+            logger.debug(f"Marked theme step as completed. Completed steps: {self.completed_steps}")
 
-        # Save to config
-        self.config.simple_theme = theme
+            # Save to config
+            self.config.simple_theme = theme
+            logger.debug(f"Saved theme to config: {theme}")
 
-        # Apply simple theme (light or dark)
-        self.system_service.apply_simple_theme(theme)
+            # Apply simple theme (light or dark)
+            logger.info(f"Applying simple theme: {theme}")
+            self.system_service.apply_simple_theme(theme)
+            logger.info(f"Simple theme applied successfully")
 
-        # Get JamesDSP and contrast settings from the theme view
-        theme_view = self.stack.get_child_by_name("simple_theme")
-        if theme_view:
-            self.config.enable_jamesdsp = theme_view.is_jamesdsp_enabled()
-            self.config.enable_enhanced_contrast = theme_view.is_contrast_enabled()
+            # Get JamesDSP and contrast settings from the theme view
+            theme_view = self.stack.get_child_by_name("simple_theme")
+            if theme_view:
+                jamesdsp = theme_view.is_jamesdsp_enabled()
+                contrast = theme_view.is_contrast_enabled()
+                self.config.enable_jamesdsp = jamesdsp
+                self.config.enable_enhanced_contrast = contrast
+                logger.info(f"JamesDSP: {jamesdsp}, Enhanced Contrast: {contrast}")
+            else:
+                logger.warning("Could not get theme_view from stack")
 
-        # Finalize and close
-        self.system_service.finalize_setup(self.config)
-        self.close()
+            # Finalize and close
+            logger.info("Finalizing setup...")
+            self.system_service.finalize_setup(self.config)
+            logger.info("Setup finalized. Closing application...")
+            self.close()
+            logger.info("Application closed successfully")
+        except Exception as e:
+            logger.error(f"ERROR in _on_simple_theme_selected: {e}", exc_info=True)
 
     def _on_key_press_event(self, controller, keyval, keycode, state):
         current_view = self.stack.get_visible_child()

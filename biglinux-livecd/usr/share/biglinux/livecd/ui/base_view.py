@@ -8,6 +8,9 @@ from gi.repository import Gtk, Adw, GObject, GLib, Gdk
 from services import SystemService
 from abc import ABCMeta, abstractmethod
 from translations import _
+from logging_config import get_logger
+
+logger = get_logger()
 
 
 class GObjectMeta(type(GObject.Object), ABCMeta):
@@ -142,7 +145,11 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
 
     def _on_child_activated(self, flow_box, child):
         if hasattr(child, "item_data"):
-            self.emit_signal(child.item_data.name)
+            item_name = child.item_data.name
+            logger.info(f"BaseItemView: child activated - emitting signal for: {item_name}")
+            self.emit_signal(item_name)
+        else:
+            logger.warning(f"BaseItemView: child activated but no item_data found")
 
     def _on_flow_leave(self, controller, *args):
         self.flow_box.unselect_all()

@@ -204,6 +204,29 @@ class SystemService:
                 "'prefer-dark'"
             ])
 
+        # Set GTK theme for each desktop environment
+        if desktop_env == "Cinnamon":
+            logger.info("Setting Cinnamon GTK theme to Big-Orange")
+            self._run_command([
+                "dconf", "write",
+                "/org/cinnamon/desktop/interface/gtk-theme",
+                "'Big-Orange'"
+            ])
+        elif desktop_env == "GNOME":
+            logger.info("Setting GNOME GTK theme to Big-Blue")
+            self._run_command([
+                "dconf", "write",
+                "/org/gnome/desktop/interface/gtk-theme",
+                "'Big-Blue'"
+            ])
+        elif desktop_env == "XFCE":
+            logger.info("Setting XFCE GTK theme to Big-Blue")
+            self._run_command([
+                "xfconf-query", "-c", "xsettings",
+                "-p", "/Net/ThemeName",
+                "-s", "Big-Blue"
+            ])
+
         # Configure Kvantum theme
         home = os.path.expanduser("~")
         kvantum_dir = os.path.join(home, ".config", "Kvantum")
@@ -233,6 +256,29 @@ class SystemService:
                 "dconf", "write",
                 "/org/gnome/desktop/interface/color-scheme",
                 "'default'"
+            ])
+
+        # Set GTK theme for each desktop environment
+        if desktop_env == "Cinnamon":
+            logger.info("Setting Cinnamon GTK theme to Big-Orange-Light")
+            self._run_command([
+                "dconf", "write",
+                "/org/cinnamon/desktop/interface/gtk-theme",
+                "'Big-Orange-Light'"
+            ])
+        elif desktop_env == "GNOME":
+            logger.info("Setting GNOME GTK theme to Big-Blue-Light")
+            self._run_command([
+                "dconf", "write",
+                "/org/gnome/desktop/interface/gtk-theme",
+                "'Big-Blue-Light'"
+            ])
+        elif desktop_env == "XFCE":
+            logger.info("Setting XFCE GTK theme to Big-Blue-Light")
+            self._run_command([
+                "xfconf-query", "-c", "xsettings",
+                "-p", "/Net/ThemeName",
+                "-s", "Big-Blue-Light"
             ])
 
         # Configure Kvantum theme
