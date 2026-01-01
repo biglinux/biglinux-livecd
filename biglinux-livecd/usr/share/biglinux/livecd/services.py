@@ -178,25 +178,13 @@ class SystemService:
     def apply_simple_theme(self, theme: str):
         """
         Applies light or dark theme for simplified environments (GNOME/XFCE/Cinnamon).
+        Modifies the settings file directly instead of using dconf write.
 
         Args:
             theme: Either "light" or "dark"
         """
         logger.info(f"Applying simple theme: {theme}")
         self._write_tmp_file(self.tmp_simple_theme_file, theme)
-
-        # Wait for dconf to be ready
-        import time
-        max_retries = 5
-        for i in range(max_retries):
-            success, _ = self._run_command(["dconf", "list", "/"], read_only=True)
-            if success:
-                logger.info("dconf is ready")
-                break
-            logger.warning(f"dconf not ready, waiting... (attempt {i+1}/{max_retries})")
-            time.sleep(1)
-        else:
-            logger.error("dconf failed to become ready after 5 attempts")
 
         desktop_env = self.get_desktop_environment()
 
@@ -205,63 +193,48 @@ class SystemService:
         else:
             self._apply_light_theme(desktop_env)
 
-        # Save dconf settings to the appropriate file so they persist after dconf reset
-        self._save_dconf_settings(desktop_env)
-
     def _apply_dark_theme(self, desktop_env: str):
-        """Applies dark theme configuration."""
+        """Applies dark theme configuration by modifying settings file directly."""
         logger.info("Applying dark theme configuration")
 
-        # Set GTK4 color scheme for GNOME/Cinnamon
-        if desktop_env in ["GNOME", "Cinnamon"]:
-            self._run_command([
-                "dconf", "write",
-                "/org/gnome/desktop/interface/color-scheme",
-                "'prefer-dark'"
-            ])
+        home = os.path.expanduser("~")
+        settings_file = self._get_settings_file_path(desktop_env)
 
-        # Set GTK theme for each desktop environment
         if desktop_env == "Cinnamon":
-            logger.info("Setting Cinnamon GTK theme to adw-gtk3-dark")
-            self._run_command([
-                "dconf", "write",
-                "/org/cinnamon/desktop/interface/gtk-theme",
-                "'adw-gtk3-dark'"
-            ])
-            # Set Cinnamon Shell theme
-            logger.info("Setting Cinnamon Shell theme to Big-Orange")
-            self._run_command([
-                "dconf", "write",
-                "/org/cinnamon/theme/name",
-                "'Big-Orange'"
-            ])
+            logger.info("Setting Cinnamon themes to dark mode")
+            self._modify_settings_file(settings_file, {
+                "org/gnome/desktop/interface": {
+                    "color-scheme": "'prefer-dark'"
+                },
+                "org/cinnamon/desktop/interface": {
+                    "gtk-theme": "'adw-gtk3-dark'"
+                },
+                "org/cinnamon/theme": {
+                    "name": "'Big-Orange'"
+                }
+            })
         elif desktop_env == "GNOME":
-            logger.info("Setting GNOME GTK theme to adw-gtk3-dark")
-            self._run_command([
-                "dconf", "write",
-                "/org/gnome/desktop/interface/gtk-theme",
-                "'adw-gtk3-dark'"
-            ])
-            # Set GNOME Shell theme
-            logger.info("Setting GNOME Shell theme to Big-Blue")
-            self._run_command([
-                "dconf", "write",
-                "/org/gnome/shell/extensions/user-theme/name",
-                "'Big-Blue'"
-            ])
+            logger.info("Setting GNOME themes to dark mode")
+            self._modify_settings_file(settings_file, {
+                "org/gnome/desktop/interface": {
+                    "color-scheme": "'prefer-dark'",
+                    "gtk-theme": "'adw-gtk3-dark'"
+                },
+                "org/gnome/shell/extensions/user-theme": {
+                    "name": "'Big-Blue'"
+                }
+            })
         elif desktop_env == "XFCE":
-            logger.info("Setting XFCE GTK theme to adw-gtk3-dark")
-            self._run_command([
-                "xfconf-query", "-c", "xsettings",
-                "-p", "/Net/ThemeName",
-                "-s", "adw-gtk3-dark"
-            ])
+            logger.info("Setting XFCE themes to dark mode")
+            self._modify_settings_file(settings_file, {
+                "xsettings": {
+                    "Net/ThemeName": "'adw-gtk3-dark'"
+                }
+            })
 
         # Configure Kvantum theme
-        home = os.path.expanduser("~")
         kvantum_dir = os.path.join(home, ".config", "Kvantum")
         kvantum_conf = os.path.join(kvantum_dir, "kvantum.kvconfig")
-
         kvantum_content = "[General]\ntheme=BigAdwaitaRoundGtkDark\n"
         self._write_user_config_file(kvantum_conf, kvantum_content)
 
@@ -273,63 +246,48 @@ class SystemService:
         else:
             logger.warning(f"Dark theme kdeglobals not found at {kdeglobals_source}")
 
-        # Apply dark icon theme
-        self._apply_icon_theme_variant(desktop_env, dark=True)
-
     def _apply_light_theme(self, desktop_env: str):
-        """Applies light theme configuration."""
+        """Applies light theme configuration by modifying settings file directly."""
         logger.info("Applying light theme configuration")
 
-        # Set GTK4 color scheme for GNOME/Cinnamon
-        if desktop_env in ["GNOME", "Cinnamon"]:
-            self._run_command([
-                "dconf", "write",
-                "/org/gnome/desktop/interface/color-scheme",
-                "'default'"
-            ])
+        home = os.path.expanduser("~")
+        settings_file = self._get_settings_file_path(desktop_env)
 
-        # Set GTK theme for each desktop environment
         if desktop_env == "Cinnamon":
-            logger.info("Setting Cinnamon GTK theme to adw-gtk3")
-            self._run_command([
-                "dconf", "write",
-                "/org/cinnamon/desktop/interface/gtk-theme",
-                "'adw-gtk3'"
-            ])
-            # Set Cinnamon Shell theme
-            logger.info("Setting Cinnamon Shell theme to Big-Orange-Light")
-            self._run_command([
-                "dconf", "write",
-                "/org/cinnamon/theme/name",
-                "'Big-Orange-Light'"
-            ])
+            logger.info("Setting Cinnamon themes to light mode")
+            self._modify_settings_file(settings_file, {
+                "org/gnome/desktop/interface": {
+                    "color-scheme": "'default'"
+                },
+                "org/cinnamon/desktop/interface": {
+                    "gtk-theme": "'adw-gtk3'"
+                },
+                "org/cinnamon/theme": {
+                    "name": "'Big-Orange-Light'"
+                }
+            })
         elif desktop_env == "GNOME":
-            logger.info("Setting GNOME GTK theme to adw-gtk3")
-            self._run_command([
-                "dconf", "write",
-                "/org/gnome/desktop/interface/gtk-theme",
-                "'adw-gtk3'"
-            ])
-            # Set GNOME Shell theme
-            logger.info("Setting GNOME Shell theme to Big-Blue")
-            self._run_command([
-                "dconf", "write",
-                "/org/gnome/shell/extensions/user-theme/name",
-                "'Big-Blue'"
-            ])
+            logger.info("Setting GNOME themes to light mode")
+            self._modify_settings_file(settings_file, {
+                "org/gnome/desktop/interface": {
+                    "color-scheme": "'default'",
+                    "gtk-theme": "'adw-gtk3'"
+                },
+                "org/gnome/shell/extensions/user-theme": {
+                    "name": "'Big-Blue'"
+                }
+            })
         elif desktop_env == "XFCE":
-            logger.info("Setting XFCE GTK theme to adw-gtk3")
-            self._run_command([
-                "xfconf-query", "-c", "xsettings",
-                "-p", "/Net/ThemeName",
-                "-s", "adw-gtk3"
-            ])
+            logger.info("Setting XFCE themes to light mode")
+            self._modify_settings_file(settings_file, {
+                "xsettings": {
+                    "Net/ThemeName": "'adw-gtk3'"
+                }
+            })
 
         # Configure Kvantum theme
-        home = os.path.expanduser("~")
         kvantum_dir = os.path.join(home, ".config", "Kvantum")
         kvantum_conf = os.path.join(kvantum_dir, "kvantum.kvconfig")
-
         kvantum_content = "[General]\ntheme=BigAdwaitaRoundGtk\n"
         self._write_user_config_file(kvantum_conf, kvantum_content)
 
@@ -341,127 +299,135 @@ class SystemService:
         else:
             logger.warning(f"Light theme kdeglobals not found at {kdeglobals_source}")
 
-        # Apply light icon theme
-        self._apply_icon_theme_variant(desktop_env, dark=False)
-
-    def _apply_icon_theme_variant(self, desktop_env: str, dark: bool):
-        """Applies appropriate icon theme variant (dark or light)."""
-        logger.debug(f"Applying {'dark' if dark else 'light'} icon theme variant for {desktop_env}")
-
-        # GNOME: sempre usa bigicons-papient-dark no escuro, bigicons-papient no claro
-        if desktop_env == "GNOME":
-            if dark:
-                new_theme = "bigicons-papient-dark"
-            else:
-                new_theme = "bigicons-papient"
-            logger.info(f"Setting GNOME icon theme to: {new_theme}")
-            self._set_icon_theme(desktop_env, new_theme)
-            return
-
-        # Para outros desktops, detectar tema atual e modificar
-        icon_theme = ""
-        if desktop_env == "XFCE":
-            success, icon_theme = self._run_command([
-                "xfconf-query", "-c", "xsettings",
-                "-p", "/Net/IconThemeName"
-            ], read_only=True)
-            if success:
-                icon_theme = icon_theme.strip()
-        elif desktop_env == "Cinnamon":
-            success, icon_theme = self._run_command([
-                "dconf", "read",
-                "/org/cinnamon/desktop/interface/icon-theme"
-            ], read_only=True)
-            if success:
-                icon_theme = icon_theme.strip("'\"")
-
-        if not icon_theme:
-            logger.warning("Could not detect current icon theme")
-            return
-
-        # Find appropriate variant
-        home = os.path.expanduser("~")
-        search_paths = [
-            "/usr/share/icons",
-            os.path.join(home, ".local/share/icons")
-        ]
-
-        new_theme = icon_theme
-        if dark:
-            # Look for dark variant
-            for base_path in search_paths:
-                if os.path.exists(base_path):
-                    # Try adding -dark suffix
-                    dark_icon_path = os.path.join(base_path, f"{icon_theme}-dark")
-                    if os.path.isdir(dark_icon_path):
-                        new_theme = f"{icon_theme}-dark"
-                        logger.debug(f"Found dark icon theme: {new_theme}")
-                        break
-        else:
-            # Remove -dark suffix if present
-            new_theme = icon_theme.replace("-dark", "").replace("-Dark", "")
-            logger.debug(f"Using light icon theme: {new_theme}")
-
-        # Apply the icon theme
-        self._set_icon_theme(desktop_env, new_theme)
-
-    def _set_icon_theme(self, desktop_env: str, theme_name: str):
-        """Sets the icon theme for the desktop environment."""
-        logger.info(f"Setting icon theme to: {theme_name}")
-
-        if desktop_env == "Cinnamon":
-            self._run_command([
-                "dconf", "write",
-                "/org/cinnamon/desktop/interface/icon-theme",
-                f"'{theme_name}'"
-            ])
-        elif desktop_env == "XFCE":
-            self._run_command([
-                "xfconf-query", "-c", "xsettings",
-                "-p", "/Net/IconThemeName",
-                "-s", theme_name
-            ])
-        else:  # GNOME
-            self._run_command([
-                "dconf", "write",
-                "/org/gnome/desktop/interface/icon-theme",
-                f"'{theme_name}'"
-            ])
-
-    def _save_dconf_settings(self, desktop_env: str):
-        """
-        Saves current dconf settings to the appropriate file for the desktop environment.
-        This ensures settings persist even after the start scripts do 'dconf reset -f /'.
-        """
+    def _get_settings_file_path(self, desktop_env: str) -> str:
+        """Returns the path to the settings file for the given desktop environment."""
         home = os.path.expanduser("~")
         dconf_dir = os.path.join(home, ".config", "dconf")
 
-        # Determine the correct settings file based on desktop environment
         if desktop_env == "Cinnamon":
-            settings_file = os.path.join(dconf_dir, "settings.cinnamon")
+            return os.path.join(dconf_dir, "settings.cinnamon")
         elif desktop_env == "GNOME":
-            settings_file = os.path.join(dconf_dir, "settings.gnome")
+            return os.path.join(dconf_dir, "settings.gnome")
         elif desktop_env == "XFCE":
-            settings_file = os.path.join(dconf_dir, "settings.xfce")
+            return os.path.join(dconf_dir, "settings.xfce")
         else:
-            logger.warning(f"Unknown desktop environment: {desktop_env}, not saving dconf settings")
+            return ""
+
+    def _modify_settings_file(self, settings_file: str, modifications: dict):
+        """
+        Modifies a dconf settings file with the given key-value pairs.
+
+        Args:
+            settings_file: Path to the settings file
+            modifications: Dict of {section: {key: value}}
+                          Example: {"org/cinnamon/theme": {"name": "'Big-Orange'"}}
+        """
+        if self.test_mode:
+            logger.debug(f"[TEST MODE] Would modify {settings_file} with: {modifications}")
             return
 
-        logger.info(f"Saving dconf settings to: {settings_file}")
+        if not os.path.exists(settings_file):
+            logger.error(f"Settings file does not exist: {settings_file}")
+            return
 
-        # Ensure dconf directory exists
-        if not self.test_mode:
-            os.makedirs(dconf_dir, exist_ok=True)
+        logger.info(f"Modifying settings file: {settings_file}")
 
-        # Dump current dconf settings
-        success, dconf_dump = self._run_command(["dconf", "dump", "/"], read_only=True)
+        # Read current content
+        try:
+            with open(settings_file, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+        except Exception as e:
+            logger.error(f"Failed to read settings file: {e}")
+            return
 
-        if success and dconf_dump:
-            # Write to settings file
-            self._write_user_config_file(settings_file, dconf_dump)
-            logger.info(f"Successfully saved dconf settings for {desktop_env}")
-        else:
-            logger.error(f"Failed to dump dconf settings for {desktop_env}")
+        # Process modifications
+        modified_lines = []
+        current_section = None
+        sections_found = set()
+
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            stripped = line.strip()
+
+            # Check if this is a section header
+            if stripped.startswith('[') and stripped.endswith(']'):
+                current_section = stripped[1:-1]
+                modified_lines.append(line)
+
+                # If this section needs modifications, apply them
+                if current_section in modifications:
+                    sections_found.add(current_section)
+                    # Look ahead to see which keys already exist in this section
+                    section_keys = set()
+                    j = i + 1
+                    while j < len(lines):
+                        next_line = lines[j].strip()
+                        if next_line.startswith('['):
+                            break
+                        if '=' in next_line and not next_line.startswith('#'):
+                            key = next_line.split('=')[0].strip()
+                            section_keys.add(key)
+                        j += 1
+
+                    # Process lines in this section
+                    i += 1
+                    while i < len(lines):
+                        line = lines[i]
+                        stripped = line.strip()
+
+                        # Next section starts
+                        if stripped.startswith('['):
+                            i -= 1  # Go back one line
+                            break
+
+                        # Empty line or comment
+                        if not stripped or stripped.startswith('#'):
+                            modified_lines.append(line)
+                            i += 1
+                            continue
+
+                        # Key-value line
+                        if '=' in stripped:
+                            key = stripped.split('=')[0].strip()
+                            if key in modifications[current_section]:
+                                # Replace with new value
+                                new_value = modifications[current_section][key]
+                                modified_lines.append(f"{key}={new_value}\n")
+                                logger.debug(f"Updated [{current_section}] {key} = {new_value}")
+                            else:
+                                # Keep original
+                                modified_lines.append(line)
+                        else:
+                            modified_lines.append(line)
+
+                        i += 1
+
+                    # Add any keys that didn't exist in the section
+                    for key, value in modifications[current_section].items():
+                        if key not in section_keys:
+                            modified_lines.append(f"{key}={value}\n")
+                            logger.debug(f"Added [{current_section}] {key} = {value}")
+            else:
+                modified_lines.append(line)
+
+            i += 1
+
+        # Add sections that didn't exist
+        for section, keys in modifications.items():
+            if section not in sections_found:
+                modified_lines.append(f"\n[{section}]\n")
+                for key, value in keys.items():
+                    modified_lines.append(f"{key}={value}\n")
+                    logger.debug(f"Added new section [{section}] {key} = {value}")
+
+        # Write modified content
+        try:
+            with open(settings_file, 'w', encoding='utf-8') as f:
+                f.writelines(modified_lines)
+            logger.info(f"Successfully modified {settings_file}")
+        except Exception as e:
+            logger.error(f"Failed to write settings file: {e}")
 
     def finalize_setup(self, config: SetupConfig):
         """
