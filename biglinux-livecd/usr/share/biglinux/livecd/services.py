@@ -206,18 +206,25 @@ class SystemService:
 
         # Set GTK theme for each desktop environment
         if desktop_env == "Cinnamon":
-            logger.info("Setting Cinnamon GTK theme to Adw-gtk3-dark")
+            logger.info("Setting Cinnamon GTK theme to adw-gtk3-dark")
             self._run_command([
                 "dconf", "write",
                 "/org/cinnamon/desktop/interface/gtk-theme",
-                "'Adw-gtk3-dark'"
+                "'adw-gtk3-dark'"
+            ])
+            # Set Cinnamon Shell theme
+            logger.info("Setting Cinnamon Shell theme to Big-Orange")
+            self._run_command([
+                "dconf", "write",
+                "/org/cinnamon/theme/name",
+                "'Big-Orange'"
             ])
         elif desktop_env == "GNOME":
-            logger.info("Setting GNOME GTK theme to Adw-gtk3-dark")
+            logger.info("Setting GNOME GTK theme to adw-gtk3-dark")
             self._run_command([
                 "dconf", "write",
                 "/org/gnome/desktop/interface/gtk-theme",
-                "'Adw-gtk3-dark'"
+                "'adw-gtk3-dark'"
             ])
             # Set GNOME Shell theme
             logger.info("Setting GNOME Shell theme to Big-Blue")
@@ -227,11 +234,11 @@ class SystemService:
                 "'Big-Blue'"
             ])
         elif desktop_env == "XFCE":
-            logger.info("Setting XFCE GTK theme to Adw-gtk3-dark")
+            logger.info("Setting XFCE GTK theme to adw-gtk3-dark")
             self._run_command([
                 "xfconf-query", "-c", "xsettings",
                 "-p", "/Net/ThemeName",
-                "-s", "Adw-gtk3-dark"
+                "-s", "adw-gtk3-dark"
             ])
 
         # Configure Kvantum theme
@@ -267,18 +274,25 @@ class SystemService:
 
         # Set GTK theme for each desktop environment
         if desktop_env == "Cinnamon":
-            logger.info("Setting Cinnamon GTK theme to Adw-gtk3")
+            logger.info("Setting Cinnamon GTK theme to adw-gtk3")
             self._run_command([
                 "dconf", "write",
                 "/org/cinnamon/desktop/interface/gtk-theme",
-                "'Adw-gtk3'"
+                "'adw-gtk3'"
+            ])
+            # Set Cinnamon Shell theme
+            logger.info("Setting Cinnamon Shell theme to Big-Orange-Light")
+            self._run_command([
+                "dconf", "write",
+                "/org/cinnamon/theme/name",
+                "'Big-Orange-Light'"
             ])
         elif desktop_env == "GNOME":
-            logger.info("Setting GNOME GTK theme to Adw-gtk3")
+            logger.info("Setting GNOME GTK theme to adw-gtk3")
             self._run_command([
                 "dconf", "write",
                 "/org/gnome/desktop/interface/gtk-theme",
-                "'Adw-gtk3'"
+                "'adw-gtk3'"
             ])
             # Set GNOME Shell theme
             logger.info("Setting GNOME Shell theme to Big-Blue")
@@ -288,11 +302,11 @@ class SystemService:
                 "'Big-Blue'"
             ])
         elif desktop_env == "XFCE":
-            logger.info("Setting XFCE GTK theme to Adw-gtk3")
+            logger.info("Setting XFCE GTK theme to adw-gtk3")
             self._run_command([
                 "xfconf-query", "-c", "xsettings",
                 "-p", "/Net/ThemeName",
-                "-s", "Adw-gtk3"
+                "-s", "adw-gtk3"
             ])
 
         # Configure Kvantum theme
