@@ -185,12 +185,28 @@ class SystemService:
         logger.info(f"Applying simple theme: {theme}")
         self._write_tmp_file(self.tmp_simple_theme_file, theme)
 
+        # Wait for dconf to be ready
+        import time
+        max_retries = 5
+        for i in range(max_retries):
+            success, _ = self._run_command(["dconf", "list", "/"], read_only=True)
+            if success:
+                logger.info("dconf is ready")
+                break
+            logger.warning(f"dconf not ready, waiting... (attempt {i+1}/{max_retries})")
+            time.sleep(1)
+        else:
+            logger.error("dconf failed to become ready after 5 attempts")
+
         desktop_env = self.get_desktop_environment()
 
         if theme == "dark":
             self._apply_dark_theme(desktop_env)
         else:
             self._apply_light_theme(desktop_env)
+
+        # Save dconf settings to the appropriate file so they persist after dconf reset
+        self._save_dconf_settings(desktop_env)
 
     def _apply_dark_theme(self, desktop_env: str):
         """Applies dark theme configuration."""
@@ -411,6 +427,41 @@ class SystemService:
                 "/org/gnome/desktop/interface/icon-theme",
                 f"'{theme_name}'"
             ])
+
+    def _save_dconf_settings(self, desktop_env: str):
+        """
+        Saves current dconf settings to the appropriate file for the desktop environment.
+        This ensures settings persist even after the start scripts do 'dconf reset -f /'.
+        """
+        home = os.path.expanduser("~")
+        dconf_dir = os.path.join(home, ".config", "dconf")
+
+        # Determine the correct settings file based on desktop environment
+        if desktop_env == "Cinnamon":
+            settings_file = os.path.join(dconf_dir, "settings.cinnamon")
+        elif desktop_env == "GNOME":
+            settings_file = os.path.join(dconf_dir, "settings.gnome")
+        elif desktop_env == "XFCE":
+            settings_file = os.path.join(dconf_dir, "settings.xfce")
+        else:
+            logger.warning(f"Unknown desktop environment: {desktop_env}, not saving dconf settings")
+            return
+
+        logger.info(f"Saving dconf settings to: {settings_file}")
+
+        # Ensure dconf directory exists
+        if not self.test_mode:
+            os.makedirs(dconf_dir, exist_ok=True)
+
+        # Dump current dconf settings
+        success, dconf_dump = self._run_command(["dconf", "dump", "/"], read_only=True)
+
+        if success and dconf_dump:
+            # Write to settings file
+            self._write_user_config_file(settings_file, dconf_dump)
+            logger.info(f"Successfully saved dconf settings for {desktop_env}")
+        else:
+            logger.error(f"Failed to dump dconf settings for {desktop_env}")
 
     def finalize_setup(self, config: SetupConfig):
         """
