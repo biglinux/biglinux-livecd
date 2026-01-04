@@ -1,3 +1,7 @@
 #!/bin/bash
+#===============================================================================
+# Description: Live CD Welcome Screen Launcher (GNOME/GTK4)
+#              Launches the GTK4/Libadwaita welcome interface for Live CD.
+#===============================================================================
 
 python /usr/share/biglinux/livecd/main.py

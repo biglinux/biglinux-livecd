@@ -2,7 +2,7 @@
 Translation utility module to ensure consistent translations throughout the application
 """
 import gettext
-import os
+
 from logging_config import get_logger
 
 logger = get_logger()

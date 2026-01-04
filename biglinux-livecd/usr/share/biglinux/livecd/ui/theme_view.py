@@ -4,12 +4,13 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, GObject, GLib, Gdk, GdkPixbuf
-from translations import _
-from services import SystemService
-from ui.base_view import BaseItemView
-from logging_config import get_logger
 import os
+
+from gi.repository import Gdk, GdkPixbuf, GLib, GObject, Gtk
+from logging_config import get_logger
+from services import SystemService
+from translations import _
+from ui.base_view import BaseItemView
 
 logger = get_logger()
 

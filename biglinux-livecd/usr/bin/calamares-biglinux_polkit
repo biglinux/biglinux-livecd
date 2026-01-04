@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# calamares-biglinux_polkit - PolicyKit wrapper for Calamares Installer
+#
+# Launches Calamares with elevated privileges while respecting the
+# user's desktop color scheme preference (light/dark mode).
+#
+# This wrapper is called by the PolicyKit action to ensure proper
+# theme detection when launching Calamares from the live session.
+#
+
+# Detect user's color scheme preference (prefer-light or prefer-dark)
+colorScheme=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
+
+# Launch Calamares with preserved environment and color scheme override
+sudo -E env ADW_DEBUG_COLOR_SCHEME=$colorScheme /usr/bin/calamares "$@"

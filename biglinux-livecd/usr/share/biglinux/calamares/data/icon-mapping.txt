@@ -1,0 +1,14 @@
+ufw gufw
+rustdesk-bin rustdesk
+pavucontrol-qt multimedia-volume-control
+pamac-updates-menu update-manager
+manjaro-printer printer
+libreoffice-fresh libreoffice-main
+libreoffice-still libreoffice
+ksystemlog utilities-log-viewer
+helvum org.pipewire.Helvum
+gnome-sound-recorder org.gnome.SoundRecorder
+brave-browser brave-desktop
+gnome-calculator org.gnome.Calculator
+system-config-printer printer
+pamac-updates-menu icon-update

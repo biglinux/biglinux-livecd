@@ -1,10 +1,14 @@
+# BigLinux LiveCD Tweaks Service
+# Applies system optimizations during LiveCD boot for better performance
+
 [Unit]
-Description=Tweaks to better livecd usage
+Description=BigLinux LiveCD System Tweaks and Optimizations
+Documentation=https://github.com/biglinux
 Before=mhwd-live.service
 
 [Service]
-ExecStart=/usr/bin/livecd-tweaks
 Type=oneshot
+ExecStart=/usr/bin/livecd-tweaks
 RemainAfterExit=true
 
 [Install]

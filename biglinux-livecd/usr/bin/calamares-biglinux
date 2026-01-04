@@ -1,0 +1,504 @@
+#!/bin/bash
+#===============================================================================
+# Script Name: calamares-biglinux
+# Description: BigLinux System Installer Launcher
+#              Prepares the system for installation, runs integrity checks,
+#              configures Calamares, and handles post-installation tasks.
+# Package:     biglinux-livecd
+#
+# Dependencies:
+#   - zenity (GUI dialogs)
+#   - python3 (installer interface)
+#   - calamares-manjaro (installation backend)
+#   - curl (log upload)
+#===============================================================================
+
+#-------------------------------------------------------------------------------
+# Translation Setup
+#-------------------------------------------------------------------------------
+export TEXTDOMAINDIR="/usr/share/locale"
+export TEXTDOMAIN=calamares-biglinux
+
+user=$(ls /home)
+
+#-------------------------------------------------------------------------------
+# Detect Available Text Editor
+#-------------------------------------------------------------------------------
+if [[ -f /usr/bin/kate ]]; then
+    text_editor="kate"
+elif [[ -f /usr/bin/xed ]]; then
+    text_editor="xed"
+elif [[ -f /usr/bin/gnome-text-editor ]]; then
+    text_editor="gnome-text-editor"
+fi
+
+#-------------------------------------------------------------------------------
+# Wait for MD5 Verification (if running)
+#-------------------------------------------------------------------------------
+if [[ -n "$(ps -e | grep biglinux-verify)" ]]; then
+    windowID="$(xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f 2)"
+    sleep 600 | zenity --attach="$windowID" --width=300 --progress --title=$"Please wait..." --pulsate --no-cancel --auto-close --text $"Checking the integrity of the download and storage device..." &
+fi
+
+while [[ -n "$(ps -e | grep biglinux-verify)" ]]; do
+    sleep 1
+done
+
+killall zenity
+
+#-------------------------------------------------------------------------------
+# Verify ISO Checksum
+#-------------------------------------------------------------------------------
+if [[ ! -f /tmp/checksum_biglinux_ok.html ]]; then
+    /usr/bin/biglinux-verify-md5sum
+    if [[ -f /tmp/md5sum_big_fail ]]; then
+        exit 1
+    fi
+fi
+
+#-------------------------------------------------------------------------------
+# Alert if ISO is Older Than 30 Days
+#-------------------------------------------------------------------------------
+if [[ "$(echo $(( $(date +%s) / 86400 )))" -gt "$(( $(cat /etc/big-release | grep UNIX_TIMESTAMP= | cut -d "=" -f2) + 30 ))" ]] && ! grep -qi community /etc/os-release; then
+    zenity --question \
+        --icon-name=emblem-warning \
+        --width=500 \
+        --title=$"Outdated Version" \
+        --text=$"<b>Do you want to proceed with the installation of this old version anyway?</b>\n\nBigLinux is a system with weekly updates and this version was released more than a month ago.\nWe recommend downloading a more recent version." \
+        --ok-label=$"Continue" \
+        --cancel-label=$"Close"
+
+    if [[ "$?" != "0" ]]; then
+        exit 1
+    fi
+fi
+
+#-------------------------------------------------------------------------------
+# Disable Non-ZRAM Swap Partitions
+# Prevents interference with installation partition operations
+#-------------------------------------------------------------------------------
+for diskswap in $(blkid | grep 'TYPE="swap"' | grep -v zram | cut -f1 -d:); do
+    swapoff "$diskswap"
+done
+
+#-------------------------------------------------------------------------------
+# Configure Calamares Installer
+#-------------------------------------------------------------------------------
+if [[ ! -f /etc/calamares/biglinux ]]; then
+
+    # Generate welcome.conf with system requirements
+    echo '---
+showSupportUrl:         false
+showKnownIssuesUrl:     false
+showReleaseNotesUrl:    false
+
+requirements:
+    internetCheckUrl: https://google.com
+    requiredStorage:    4
+    requiredRam:        0.5
+    check:
+      - storage
+      - ram
+      - power
+      - internet
+      - root
+    required:
+      - storage
+      - ram
+      - root
+
+geoip:
+    style:    "none"
+    url:      "https://geoip.kde.org/v1/ubiquity"
+    selector: "CountryCode"
+      ' > /etc/calamares/modules/welcome.conf
+
+    # Force btrfs compression using zstd
+    sed -i '/filesystem: btrfs/!b; :a; n; /^\s\{6\}options:/ s/defaults.*/defaults, noatime, compress-force=zstd ]\n      ssdOptions: [ discard=async ]\n      hddOptions: [ autodefrag ]/; ta' /usr/share/calamares/modules/mount.conf
+
+    # Set btrfs as default filesystem instead of ext4
+    sed -i 's|defaultFileSystemType.*"ext4"|defaultFileSystemType:  "btrfs"|g' /usr/share/calamares/modules/partition.conf
+
+    # Use recursive package removal (-Rcs instead of -Rs)
+    sed -i 's|"-Rs",|"-Rcs",|g' /usr/lib/calamares/modules/packages/main.py
+
+    # Ensure services.conf has the necessary entries
+    if [[ "$(cat /etc/calamares/modules/services.conf | wc -l)" -lt "15" ]]; then
+
+    echo 'services:
+    - name: bluetooth
+      mandatory: false
+
+    - name: cronie
+      mandatory: false
+
+    - name: ModemManager
+      mandatory: false
+
+    - name: NetworkManager
+      mandatory: false
+
+    - name: cups
+      mandatory: false
+
+    - name: haveged
+      mandatory: false
+
+    - name: fstrim.timer
+      mandatory: false
+
+    - name: pkgfile-update.timer
+      mandatory: false
+
+    - name: vboxservice
+      mandatory: false
+
+    - name: ufw
+      mandatory: false
+
+    - name: nmb
+      mandatory: false
+
+    - name: smb
+      mandatory: false
+
+    - name: set-cfs-tweaks
+      mandatory: false
+
+    - name: dnsmasq
+      mandatory: false
+
+    - name: cups-browsed
+      mandatory: false
+
+    - name: sddm
+      mandatory: false
+
+targets:
+    - name: "graphical"
+      mandatory: true
+
+disable:
+    - name: pacman-init
+      mandatory: false' > /etc/calamares/modules/services.conf
+
+    fi
+
+    # Remove any 'timers:' lines from services.conf
+    sed -i 's|timers:||g' /etc/calamares/modules/services.conf
+
+    # Configure user settings
+    echo "
+---
+defaultGroups:
+    - cdrom
+    - floppy
+    - audio
+    - dip
+    - video
+    - plugdev
+    - netdev
+    - lpadmin
+    - scanner
+    - bluetooth
+    - vboxsf
+    - sambashare
+    - input
+    - scard
+    - lp
+    - network
+    - power
+    - sys
+    - wheel
+autologinGroup:  autologin
+doAutologin:     false
+sudoersGroup:    wheel
+setRootPassword: false
+doReusePassword: false
+availableShells: /bin/bash, /bin/zsh
+avatarFilePath:  ~/.face
+userShell:       /bin/bash
+passwordRequirements:
+    nonempty: true" > /etc/calamares/modules/users.conf
+
+    # Clean postcfg
+    echo '---
+keyrings:' > /etc/calamares/modules/postcfg.conf
+
+    # Add all keys except puring and trustdb in postcfg
+    cd /usr/share/pacman/keyrings
+    for keyfile in $(ls -1 *.gpg | grep -v -e pubring.gpg -e trustdb.gpg); do
+        echo "    - ${keyfile%%.gpg}" >> /etc/calamares/modules/postcfg.conf
+    done
+    cd -
+
+    # General Calamares settings
+    echo '---
+modules-search: [ local ]
+
+sequence:
+    - show:
+        - welcome
+        - locale
+        - keyboard
+        - partition
+        - users
+        - summary
+    - exec:
+        - partition
+        - mount
+        - unpackfs
+        - networkcfg
+        - machineid
+        - fstab
+        - locale
+        - keyboard
+        - localecfg
+        - luksopenswaphookcfg
+        - luksbootkeyfile
+        - initcpiocfg
+        - initcpio
+        - users
+        - displaymanager
+        - mhwdcfg
+        - hwclock
+        - services
+        - grubcfg
+        - bootloader
+        - grubcfg-fix
+        - postcfg
+        - btrfs-fix
+        - umount
+    - show:
+        - finished   
+
+branding: biglinux
+
+prompt-install: true
+
+dont-chroot: false
+oem-setup: false
+disable-cancel: false
+disable-cancel-during-exec: false
+quit-at-end: false' > /etc/calamares/settings.conf
+
+    # Remove mhwdcfg if using free drivers
+    if grep -q driver=free /proc/cmdline; then
+        sed -i '/- mhwdcfg/d' /etc/calamares/settings.conf
+    fi
+
+    # Mark Calamares as configured
+    > /etc/calamares/biglinux
+fi
+
+# Disable pacman-key population in postcfg
+sed -i '/init_keyring/s/^/#/' /usr/lib/calamares/modules/postcfg/main.py
+sed -i '/self.populate_keyring/s/^/#/' /usr/lib/calamares/modules/postcfg/main.py
+
+#-------------------------------------------------------------------------------
+# Prepare EFI Partition Detection
+#-------------------------------------------------------------------------------
+rm -f /tmp/efi-partitions
+mkdir -p /boot/efi
+
+# Determine the live boot device (handle dm-crypt/LVM)
+DEVICE_LIVE_BOOT_TMP="$(readlink -f "$(df -h /run/miso/bootmnt/ | awk '{ print $1 }' | grep '/dev/')" | sed 's|/dev/||'g)"
+if [[ "$(echo "$DEVICE_LIVE_BOOT_TMP" | grep dm)" != "" ]]; then
+    DEVICE_LIVE_BOOT="$(ls /sys/block/$DEVICE_LIVE_BOOT_TMP/slaves | sed 's|[0-9]||g')"
+else
+    DEVICE_LIVE_BOOT="$DEVICE_LIVE_BOOT_TMP"
+fi
+
+# Identify EFI partitions (excluding the live boot device)
+for i in $(LANGUAGE=C fdisk -l | grep -e "EFI System" -e "FAT" | cut -f1 -d" " | grep -v "$DEVICE_LIVE_BOOT"); do
+    umount -l /boot/efi
+    mount "$i" /boot/efi
+    if [[ -d /boot/efi/EFI ]]; then
+        echo "$i" >> /tmp/efi-partitions
+    fi
+    umount -l /boot/efi
+done
+
+#-------------------------------------------------------------------------------
+# Unmount Non-Essential Partitions
+# Clean up mounts before installation (skip swap, squashfs, CD-ROM)
+#-------------------------------------------------------------------------------
+for i in $(blkid | grep -v 'TYPE="swap"'| grep -v 'TYPE="squashfs"' | grep -v '^/dev/sr0' | cut -f1 -d":"); do
+    umount "$i"
+done
+
+#-------------------------------------------------------------------------------
+# EFI/Legacy Boot Mode Compatibility Check
+#-------------------------------------------------------------------------------
+
+# Case 1: EFI boot without EFI partition detected
+if [[ -d /sys/firmware/efi ]] && [[ "$(cat /tmp/efi-partitions)" = "" ]]; then
+    LIVEBOOT=EFI
+    PARTITION=LEGACY
+
+    TEXT_01=$"Do you want to proceed with the installation in EFI mode?"
+    TEXT_02=$"The current boot is using <span color='#CC2222'>EFI</span> mode, but I did not find any EFI partition on this computer.
+
+If this computer already has another system installed and you intend 
+to keep it installed, you will probably need to change the 
+configuration in the BIOS to boot in Legacy mode, also 
+called BIOS mode."
+    zenity --question \
+        --icon-name=drive-harddisk \
+        --width=500 \
+        --title=$"Install the system" \
+        --text="<b>$TEXT_01</b>\n\n$TEXT_02" \
+        --ok-label=$"Continue" \
+        --cancel-label=$"Close"
+
+    if [[ "$?" != "0" ]]; then
+        exit
+    fi
+fi
+
+# Case 2: Legacy boot with EFI partition detected
+if [[ ! -d /sys/firmware/efi ]] && [[ "$(cat /tmp/efi-partitions)" != "" ]]; then
+    LIVEBOOT=LEGACY
+    PARTITION=EFI
+    TEXT_03=$"Do you want to proceed with the installation in Legacy/BIOS mode?"
+    TEXT_04=$"The current boot is using <span color='#CC2222'>Legacy/BIOS</span> mode, but I found at least one EFI partition on this computer. 
+
+For the installation to be successful, you will probably need to 
+change the configuration in the BIOS to boot in EFI or UEFI mode."
+    zenity --question \
+        --icon-name=drive-harddisk \
+        --width=500 \
+        --title=$"Install the system" \
+        --text="<b>$TEXT_03</b>\n\n$TEXT_04" \
+        --ok-label=$"Continue" \
+        --cancel-label=$"Close"
+
+    if [[ "$?" != "0" ]]; then
+        exit
+    fi
+fi
+
+#-------------------------------------------------------------------------------
+# Kernel 6.14+ CRC32C Compatibility Fix
+#-------------------------------------------------------------------------------
+kernel_ver=$(uname -r | sed -E 's/([0-9]+).([0-9]+).*/\1\2/g')
+if [[ "$kernel_ver" -gt "613" ]]; then
+    # Intel crc32c module renamed in kernel 6.14+
+    sed -i 's/crc32c-intel/crc32c/' /usr/lib/calamares/modules/initcpiocfg/main.py
+fi
+
+#-------------------------------------------------------------------------------
+# Launch Installer Interface
+#-------------------------------------------------------------------------------
+rm -f /tmp/start_calamares
+
+# Launch the GTK4/Adwaita interface for installation options
+python3 /usr/share/biglinux/calamares/main.py
+
+#-------------------------------------------------------------------------------
+# Start Calamares Installation (if user confirmed)
+#-------------------------------------------------------------------------------
+if [[ -e "/tmp/start_calamares" ]]; then
+    # Copy KDE theme settings to root for Calamares Qt theming
+    if [[ -e /usr/share/biglinux/themes/biglinux/.config/kdeglobals ]]; then
+        cp -f /usr/share/biglinux/themes/biglinux/.config/kdeglobals /root/.config/kdeglobals
+        cp -Rf /usr/share/biglinux/themes/biglinux/.config/Kvantum /root/.config/Kvantum
+    else
+        cp -f /etc/skel/.config/kdeglobals /root/.config/kdeglobals
+        cp -Rf /etc/skel/.config/Kvantum /root/.config/Kvantum
+    fi
+
+    # Run Calamares with Qt KDE platform theme
+    sudo QT_QPA_PLATFORMTHEME=kde QT_QUICK_BACKEND=software dbus-launch /usr/bin/calamares-manjaro
+
+    # Copy installation log to user's home directory
+    cp /root/.cache/calamares/session.log /home/$user/calamares_complete.log
+    chown $user:$user /home/$user/calamares_complete.log
+
+    #---------------------------------------------------------------------------
+    # Installation Result Handling
+    #---------------------------------------------------------------------------
+    if [[ "$(grep -w completion /root/.cache/calamares/session.log | grep -v bash-completion | rev | cut -d ":" -f1 | rev | sed 's/^[ \t]*//;s/[ \t]*$//')" != "succeeded" ]]; then
+        # Installation failed - save error log
+        cp /root/.cache/calamares/session.log /home/$user/calamares_error.log
+        chown $user:$user /home/$user/calamares_error.log
+
+        #-----------------------------------------------------------------------
+        # send_log: Upload error log to cloud for support
+        #-----------------------------------------------------------------------
+        send_log() {
+            # Generate a unique bin ID for filebin.net
+            binId="biglinux-$(date +%Y%m%d%H%M%S)-$(head -c 8 /dev/urandom | xxd -p)"
+            fileName="calamares_error.log"
+            
+            # Upload the file to filebin.net (API: POST /{bin}/{filename})
+            sudo -u $user curl -X POST --data-binary "@/home/$user/calamares_error.log" \
+                -H "Content-Type: application/octet-stream" \
+                "https://filebin.net/$binId/$fileName" 2>/dev/null | tee "/home/$user/transfer.url" | \
+                zenity --modal --progress --pulsate --no-cancel --auto-close --text $"Sending, please wait..."
+            
+            # Extract bin ID from response and construct URL
+            responseBin=$(cat "/home/$user/transfer.url" | grep -o '"bin":"[^"]*"' | cut -d'"' -f4)
+            if [[ -n "$responseBin" ]]; then
+                fileUrl="https://filebin.net/$responseBin"
+            else
+                # Fallback to generated bin ID
+                fileUrl="https://filebin.net/$binId"
+            fi
+            
+            # Open URL in available browser (priority order)
+            if [[ -f /usr/bin/firefox ]]; then
+                sudo -u $user firefox "$fileUrl"
+            elif [[ -f /usr/bin/brave ]]; then
+                sudo -u $user brave --new-window "$fileUrl"
+            elif [[ -f /usr/bin/google-chrome ]]; then
+                sudo -u $user google-chrome --new-window "$fileUrl"
+            elif [[ -f /usr/bin/chromium ]]; then
+                sudo -u $user chromium --new-window "$fileUrl"
+            elif [[ -f /usr/bin/falkon ]]; then
+                sudo -u $user falkon "$fileUrl"
+            else
+                # No browser found - display URL to user
+                zenity --info \
+                    --title=$"Log Sent" \
+                    --text=$"Log successfully sent!\n\nURL: $fileUrl\n\nYou can use this URL to share the log." \
+                    --width=400
+            fi
+        }
+
+        # Handle specific efibootmgr error (EFI entry write failure)
+        if grep -q 'grub-install: error: efibootmgr failed to register the boot entry: Input/output error.' /home/$user/calamares_error.log; then
+            zenity --question \
+                --width=480 \
+                --title=$"calamares LOG" \
+                --text=$"It was not possible to write the EFI entry to the motherboard, likely due to insufficient space.\n\nCheck the EFI manager for any entries that can be deleted and try installing the system again." \
+                --ok-label=$"Open the EFI manager" \
+                --cancel-label=$"Close"
+                
+            if [[ "$?" = "0" ]]; then
+                QEFIEntryManager
+            fi
+        fi
+
+        # Prompt user for log action (view/send/close)
+        log_action=$(zenity --list \
+            --width=480 \
+            --height=350 \
+            --title="Calamares LOG" \
+            --text=$"Do you want to view or send the installation log file to the cloud?\nGenerate a link to send in support groups." \
+            --radiolist \
+            --hide-column=2 \
+            --print-column=2 \
+            --column="" --column="ID" --column=$"Action" \
+            TRUE "open" $"Open" \
+            FALSE "send" $"Send to the cloud" \
+            FALSE "close" $"Close")
+
+        echo "log action: $log_action"
+        case "$log_action" in
+            "open") sudo -u $user $text_editor /home/$user/calamares_error.log ;;
+            "send") send_log ;;
+            *) echo "Closing file..." ;;
+        esac
+    fi
+fi

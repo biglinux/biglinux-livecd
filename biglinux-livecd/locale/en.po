@@ -130,3 +130,424 @@ msgstr "Enable enhanced contrast"
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 204
 msgid "Choose a System Theme"
 msgstr "Choose a System Theme"
+
+#
+msgid "Please wait..."
+msgstr "Please wait..."
+
+#
+msgid "Checking the integrity of the download and storage device..."
+msgstr "Checking the integrity of the download and storage device..."
+
+#
+msgid "Outdated Version"
+msgstr "Outdated Version"
+
+#
+msgid ""
+"<b>Do you want to proceed with the installation of this old version anyway?</"
+"b>\\n\\nBigLinux is a system with weekly updates and this version was "
+"released more than a month ago.\\nWe recommend downloading a more recent "
+"version."
+msgstr ""
+"<b>Do you want to proceed with the installation of this old version anyway?</"
+"b>\\n\\nBigLinux is a system with weekly updates and this version was "
+"released more than a month ago.\\nWe recommend downloading a more recent "
+"version."
+
+#
+# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
+#
+# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 181
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 202
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 122
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 235
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 244
+msgid "Continue"
+msgstr "Continue"
+
+#
+msgid "Do you want to proceed with the installation in EFI mode?"
+msgstr "Do you want to proceed with the installation in EFI mode?"
+
+#
+msgid ""
+"The current boot is using <span color='#CC2222'>EFI</span> mode, but I did "
+"not find any EFI partition on this computer.\n"
+"\n"
+"If this computer already has another system installed and you intend \n"
+"to keep it installed, you will probably need to change the \n"
+"configuration in the BIOS to boot in Legacy mode, also \n"
+"called BIOS mode."
+msgstr ""
+"The current boot is using <span color='#CC2222'>EFI</span> mode, but I did "
+"not find any EFI partition on this computer.\n"
+"\n"
+"If this computer already has another system installed and you intend \n"
+"to keep it installed, you will probably need to change the \n"
+"configuration in the BIOS to boot in Legacy mode, also \n"
+"called BIOS mode."
+
+#
+msgid "Install the system"
+msgstr "Install the system"
+
+#
+msgid "Do you want to proceed with the installation in Legacy/BIOS mode?"
+msgstr "Do you want to proceed with the installation in Legacy/BIOS mode?"
+
+#
+msgid ""
+"The current boot is using <span color='#CC2222'>Legacy/BIOS</span> mode, but "
+"I found at least one EFI partition on this computer. \n"
+"\n"
+"For the installation to be successful, you will probably need to \n"
+"change the configuration in the BIOS to boot in EFI or UEFI mode."
+msgstr ""
+"The current boot is using <span color='#CC2222'>Legacy/BIOS</span> mode, but "
+"I found at least one EFI partition on this computer. \n"
+"\n"
+"For the installation to be successful, you will probably need to \n"
+"change the configuration in the BIOS to boot in EFI or UEFI mode."
+
+#
+msgid "Sending, please wait..."
+msgstr "Sending, please wait..."
+
+#
+msgid "Log Sent"
+msgstr "Log Sent"
+
+#
+msgid ""
+"Log successfully sent!\\n\\nURL: $fileUrl\\n\\nYou can use this URL to share "
+"the log."
+msgstr ""
+"Log successfully sent!\\n\\nURL: $fileUrl\\n\\nYou can use this URL to share "
+"the log."
+
+#
+msgid "calamares LOG"
+msgstr "calamares LOG"
+
+#
+msgid ""
+"It was not possible to write the EFI entry to the motherboard, likely due to "
+"insufficient space.\\n\\nCheck the EFI manager for any entries that can be "
+"deleted and try installing the system again."
+msgstr ""
+"It was not possible to write the EFI entry to the motherboard, likely due to "
+"insufficient space.\\n\\nCheck the EFI manager for any entries that can be "
+"deleted and try installing the system again."
+
+#
+msgid "Open the EFI manager"
+msgstr "Open the EFI manager"
+
+#
+msgid ""
+"Do you want to view or send the installation log file to the cloud?"
+"\\nGenerate a link to send in support groups."
+msgstr ""
+"Do you want to view or send the installation log file to the cloud?"
+"\\nGenerate a link to send in support groups."
+
+#
+msgid "Action"
+msgstr "Action"
+
+#
+msgid "Open"
+msgstr "Open"
+
+#
+msgid "Send to the cloud"
+msgstr "Send to the cloud"
+
+#
+msgid "Checking the file:"
+msgstr "Checking the file:"
+
+#
+msgid ""
+"Checking for download or USB drive errors, this may take a few minutes..."
+msgstr ""
+"Checking for download or USB drive errors, this may take a few minutes..."
+
+#
+msgid "Checking system integrity"
+msgstr "Checking system integrity"
+
+#
+msgid "Error found, please download the system again or use another USB drive."
+msgstr ""
+"Error found, please download the system again or use another USB drive."
+
+#
+msgid "The files are intact."
+msgstr "The files are intact."
+
+#
+msgid "Verification canceled."
+msgstr "Verification canceled."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 58
+msgid "Loading packages..."
+msgstr "Loading packages..."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 145
+msgid "Failed to load packages: {}"
+msgstr "Failed to load packages: {}"
+
+#
+# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 177
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 233
+msgid "Starting..."
+msgstr "Starting..."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 121
+msgid "Snapshot and backups"
+msgstr "Snapshot and backups"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 122
+msgid "Restore restore points of the installed system."
+msgstr "Restore restore points of the installed system."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 123
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 133
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 144
+msgid "Start"
+msgstr "Start"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 131
+msgid "Restore system settings"
+msgstr "Restore system settings"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 132
+msgid ""
+"Utility that facilitates the restoration of the installed system, especially "
+"the restoration of the system boot (Grub).\n"
+"\n"
+"It can also be used to access the package manager and terminal of the "
+"installed system."
+msgstr ""
+"Utility that facilitates the restoration of the installed system, especially "
+"the restoration of the system boot (Grub).\n"
+"\n"
+"It can also be used to access the package manager and terminal of the "
+"installed system."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 142
+msgid "EFI Entry Manager"
+msgstr "EFI Entry Manager"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 143
+msgid ""
+"Advanced tool to add, remove, or change boot entries in the UEFI firmware."
+msgstr ""
+"Advanced tool to add, remove, or change boot entries in the UEFI firmware."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 147
+msgid ""
+"<a href=\"https://forum.biglinux.com.br\">This is a collaborative system, if "
+"you need help consult our forum.</a>"
+msgstr ""
+"<a href=\"https://forum.biglinux.com.br\">This is a collaborative system, if "
+"you need help consult our forum.</a>"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 179
+msgid "Maintenance"
+msgstr "Maintenance"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 180
+msgid "Tools that facilitate the maintenance of the installed system."
+msgstr "Tools that facilitate the maintenance of the installed system."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 181
+msgid "Restore"
+msgstr "Restore"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 189
+msgid "Installation"
+msgstr "Installation"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 190
+msgid "The system is in live mode, which has limitations."
+msgstr "The system is in live mode, which has limitations."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 191
+msgid "Install it for a complete experience."
+msgstr "Install it for a complete experience."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 192
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 240
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 264
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 268
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 282
+msgid "Install"
+msgstr "Install"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 200
+msgid "Minimal"
+msgstr "Minimal"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 201
+msgid "Remove pre-selected software to create a lean, personalized system."
+msgstr "Remove pre-selected software to create a lean, personalized system."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 247
+msgid "Checking connection..."
+msgstr "Checking connection..."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 256
+msgid "Configuring..."
+msgstr "Configuring..."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 39
+msgid "Important Tips"
+msgstr "Important Tips"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 48
+msgid "Manual Partitioning Recommendations"
+msgstr "Manual Partitioning Recommendations"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 49
+msgid ""
+"If you opt for automatic partitioning, these tips will be applied by default."
+msgstr ""
+"If you opt for automatic partitioning, these tips will be applied by default."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 54
+msgid "Use BTRFS"
+msgstr "Use BTRFS"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 54
+msgid "This file system allows for automatic compression and restore points."
+msgstr "This file system allows for automatic compression and restore points."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 55
+msgid "Keep /boot within the / partition"
+msgstr "Keep /boot within the / partition"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 55
+msgid "Placing it in a separate partition hampers BTRFS snapshots."
+msgstr "Placing it in a separate partition hampers BTRFS snapshots."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
+msgid "Do not create a SWAP partition"
+msgstr "Do not create a SWAP partition"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
+msgid ""
+"We have implemented dynamic virtual memory management with Zram and SWAP "
+"files. SWAP partitions will not be used."
+msgstr ""
+"We have implemented dynamic virtual memory management with Zram and SWAP "
+"files. SWAP partitions will not be used."
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 212
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 217
+#, python-brace-format
+msgid "{distro} Installation"
+msgstr "{distro} Installation"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 113
+msgid "Back"
+msgstr "Back"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 116
+msgid "Keep All"
+msgstr "Keep All"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 119
+msgid "Remove All"
+msgstr "Remove All"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 213
+msgid "System Maintenance"
+msgstr "System Maintenance"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 214
+msgid "Uncheck the programs you want to remove"
+msgstr "Uncheck the programs you want to remove"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 215
+msgid "Installation Tips"
+msgstr "Installation Tips"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 104
+msgid "BigLinux Calamares Config"
+msgstr "BigLinux Calamares Config"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 121
+msgid "Forum"
+msgstr "Forum"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 123
+msgid "Documentation"
+msgstr "Documentation"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 135
+msgid "Preferences not implemented yet"
+msgstr "Preferences not implemented yet"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 151
+msgid "OK"
+msgstr "OK"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 166
+msgid "Cancel"
+msgstr "Cancel"
+
+#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 167
+msgid "Confirm"
+msgstr "Confirm"

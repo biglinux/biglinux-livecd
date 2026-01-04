@@ -2,10 +2,11 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Adw, Gio, Gtk, Gdk
-from ui.app_window import AppWindow
-from logging_config import get_logger
 import os
+
+from gi.repository import Adw, Gdk, Gtk
+from logging_config import get_logger
+from ui.app_window import AppWindow
 
 logger = get_logger()
 

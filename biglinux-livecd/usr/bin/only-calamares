@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# only-calamares - Direct Calamares Installer Launch Mode
+#
+# Minimal live session mode that launches Calamares directly with
+# network configuration support. Used for automated or headless installs.
+#
+# This mode bypasses the normal desktop session and provides:
+# - Network configuration via nmtui
+# - Direct access to Calamares installer
+#
+
+# Set default language and theme for Calamares
+echo 'en_US' > /tmp/big_language
+echo "breeze" > /tmp/big_desktop_theme
+echo "startkde-biglinux classic" > /tmp/biglightdm
+
+# Legacy support for older detection methods
+echo "startkde-biglinux classic" > /tmp/big_desktop_changed-calamares
+echo "startkde-biglinux classic" > /tmp/big_desktop_changed
+
+# Apply settings for Calamares detection
+sudo cp -f /tmp/big_desktop_theme /etc/default-theme-biglinux
+sudo cp -f /tmp/big_desktop_changed /etc/big_desktop_changed
+
+# Launch network configuration and Calamares in terminal
+if [[ -e "/usr/bin/konsole" ]]; then
+    konsole -e nmtui-connect
+    konsole -e sudo calamares
+elif [[ -e "/usr/bin/urxvt" ]]; then
+    urxvt -e nmtui-connect
+    urxvt -e sudo calamares
+else
+    sudo calamares
+fi

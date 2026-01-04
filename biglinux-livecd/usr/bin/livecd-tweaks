@@ -1,17 +1,36 @@
 #!/bin/bash
+#===============================================================================
+# Script Name: livecd-tweaks
+# Description: Live CD Runtime Optimizations
+#              Applies kernel cmdline-based tweaks for Live CD boot,
+#              handling driver modes and optional SSH access.
+# Package:     biglinux-livecd
+#===============================================================================
 
-if [ -e "/livefs-pkgs.txt" -a -n "$(grep 'driver=free' /proc/cmdline)" ]; then
-echo '#!/bin/sh
+#-------------------------------------------------------------------------------
+# Free Driver Mode: Disable proprietary hardware detection
+# When booting with 'driver=free', skip mhwd-live
+#-------------------------------------------------------------------------------
+if [[ -e "/livefs-pkgs.txt" ]] && [[ -n "$(grep 'driver=free' /proc/cmdline)" ]]; then
+    echo '#!/bin/sh
     echo "Disable mhwd-live"' > /usr/bin/mhwd-live
 fi
 
-if [ -e "/livefs-pkgs.txt" -a -n "$(grep 'driver=nonfree' /proc/cmdline)" ]; then
-echo '#!/bin/sh
+#-------------------------------------------------------------------------------
+# Non-Free Driver Mode: Skip mkinitcpio during boot
+# When booting with 'driver=nonfree', prevent initramfs regeneration
+#-------------------------------------------------------------------------------
+if [[ -e "/livefs-pkgs.txt" ]] && [[ -n "$(grep 'driver=nonfree' /proc/cmdline)" ]]; then
+    echo '#!/bin/sh
     true' > /usr/bin/mkinitcpio
 fi
 
-# Enable ssh if cmdline have sshenable
-if [ "$(grep sshenable /proc/cmdline)" != "" ]; then
+#-------------------------------------------------------------------------------
+# SSH Access Mode: Enable remote access for debugging
+# When 'sshenable' is present in kernel cmdline, start sshd
+#-------------------------------------------------------------------------------
+if [[ "$(grep sshenable /proc/cmdline)" != "" ]]; then
+    # Set default password for live session
     echo "biglinux:biglinux" | chpasswd
     systemctl start sshd
 fi

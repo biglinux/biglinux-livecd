@@ -1,0 +1,4 @@
+#!/bin/bash
+  
+btrfs filesystem defragment --nocomp -r $1/usr/share/grub
+btrfs filesystem defragment --nocomp -r $1/boot

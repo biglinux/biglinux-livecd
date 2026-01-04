@@ -1,3 +1,6 @@
-post_install() { 
+#!/usr/bin/env bash
+
+post_install() {
+    # Enable livecd-tweaks service for boot optimizations
     systemctl enable livecd-tweaks.service
 }

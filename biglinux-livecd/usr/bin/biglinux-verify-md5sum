@@ -1,0 +1,100 @@
+#!/bin/sh
+#===============================================================================
+# Script Name: biglinux-verify-md5sum
+# Description: ISO Integrity Verification Tool
+#              Checks MD5 checksums of Live CD squashfs files to detect
+#              download corruption or USB drive errors before installation.
+# Package:     biglinux-livecd
+#
+# Dependencies:
+#   - zenity (GUI dialogs)
+#   - md5sum (checksum verification)
+#===============================================================================
+
+#-------------------------------------------------------------------------------
+# Translation Setup
+#-------------------------------------------------------------------------------
+LANGUAGE=$LANG:en
+export TEXTDOMAINDIR="/usr/share/locale"
+export TEXTDOMAIN=calamares-biglinux
+
+#-------------------------------------------------------------------------------
+# Detect ISO Mount Location
+# Supports multiple boot folder naming conventions
+#-------------------------------------------------------------------------------
+
+# Try standard Manjaro folder structure
+if [[ -e /run/miso/bootmnt/manjaro/x86_64/ ]]; then
+    cd /run/miso/bootmnt/manjaro/x86_64/
+
+# Try folder named same as system hostname
+elif [[ -e /run/miso/bootmnt/$HOSTNAME/x86_64/ ]]; then
+    cd /run/miso/bootmnt/$HOSTNAME/x86_64/
+
+# Try any folder excluding /efi/ and /boot/
+elif [[ -e $(ls -d1 /run/miso/bootmnt/*/ | grep -ve '/efi/' -ve '/boot/') ]]; then
+    cd $(ls -d1 /run/miso/bootmnt/*/ | grep -ve '/efi/' -ve '/boot/')
+fi
+
+#-------------------------------------------------------------------------------
+# Initialize Verification
+#-------------------------------------------------------------------------------
+rm -f /tmp/md5sum_big_fail
+
+Message=$"Checking the file:"
+Message2=$"Checking for download or USB drive errors, this may take a few minutes..."
+
+#-------------------------------------------------------------------------------
+# Verify Each Squashfs File
+# Progress is shown via zenity progress dialog
+#-------------------------------------------------------------------------------
+(
+    echo "10"
+    echo "# $Message2 \n\n $Message desktopfs.sfs"
+    md5sum --status -c desktopfs.md5
+    if [[ "$?" != "0" ]]; then
+        echo 1 > /tmp/md5sum_big_fail
+    fi
+
+    echo "50"
+    echo "# $Message2 \n\n $Message livefs.sfs"
+    md5sum --status -c livefs.md5
+    if [[ "$?" != "0" ]]; then
+        echo 1 > /tmp/md5sum_big_fail
+    fi
+
+    echo "60"
+    echo "# $Message2 \n\n $Message mhwdfs.sfs"
+    md5sum --status -c mhwdfs.md5
+    if [[ "$?" != "0" ]]; then
+        echo 1 > /tmp/md5sum_big_fail
+    fi
+
+    echo "80"
+    echo "# $Message2 \n\n $Message rootfs.sfs"
+    md5sum --status -c rootfs.md5
+    if [[ "$?" != "0" ]]; then
+        echo 1 > /tmp/md5sum_big_fail
+    fi
+) |
+zenity --auto-close --progress \
+    --title=$"Checking system integrity" \
+    --text="$Message2" \
+    --percentage=0
+
+verify=$?
+
+#-------------------------------------------------------------------------------
+# Display Verification Result
+#-------------------------------------------------------------------------------
+if [[ "$verify" = -1 ]] || [[ "$(cat /tmp/md5sum_big_fail 2>/dev/null)" = "1" ]]; then
+    zenity --error \
+        --text=$"Error found, please download the system again or use another USB drive."
+elif [[ "$verify" = 0 ]]; then
+    zenity --info \
+        --text=$"The files are intact."
+else
+    zenity --info \
+        --text=$"Verification canceled."
+    echo 1 > /tmp/md5sum_big_fail
+fi

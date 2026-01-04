@@ -6,32 +6,46 @@ pkgrel=$(date +%H%M)
 arch=('any')
 license=('GPL')
 url="https://github.com/biglinux/biglinux-livecd"
-pkgdesc="Complete control center to use in BigLinux with KDE"
-depends=('python' 'python-gobject' 'gtk4' 'libadwaita' 'circle-flags')
+pkgdesc="Complete control center to use in BigLinux with KDE - includes initial setup wizard and Calamares installer interface"
+depends=(
+    # Original biglinux-livecd dependencies
+    'python'
+    'python-gobject'
+    'gtk4'
+    'libadwaita'
+    'circle-flags'
+    # Dependencies from calamares-biglinux (merged)
+    'qefientrymanager'
+    'calamares'
+    'btrfs-progs'
+    'zenity'
+    'gettext'
+    'curl'
+)
 source=("git+https://github.com/biglinux/biglinux-livecd.git")
 md5sums=(SKIP)
-install=${pkgname}.install
+install=$pkgname.install
 
 package() {
     # Verify default folder
-    if [ -d "${srcdir}/${pkgname}/${pkgname}" ]; then
-        InternalDir="${srcdir}/${pkgname}/${pkgname}"
+    if [ -d "$srcdir/$pkgname/$pkgname" ]; then
+        InternalDir="$srcdir/$pkgname/$pkgname"
     else
-        InternalDir="${srcdir}/${pkgname}"
+        InternalDir="$srcdir/$pkgname"
     fi
 
 
     # Copy files
-    if [ -d "${InternalDir}/usr" ]; then
-        cp -r "${InternalDir}/usr" "${pkgdir}/"
+    if [ -d "$InternalDir/usr" ]; then
+        cp -r "$InternalDir/usr" "$pkgdir/"
     fi
 
-    if [ -d "${InternalDir}/etc" ]; then
-        cp -r "${InternalDir}/etc" "${pkgdir}/"
+    if [ -d "$InternalDir/etc" ]; then
+        cp -r "$InternalDir/etc" "$pkgdir/"
     fi
 
-    if [ -d "${InternalDir}/opt" ]; then
-        cp -r "${InternalDir}/opt" "${pkgdir}/"
+    if [ -d "$InternalDir/opt" ]; then
+        cp -r "$InternalDir/opt" "$pkgdir/"
     fi
 }
 

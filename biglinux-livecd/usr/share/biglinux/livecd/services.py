@@ -1,7 +1,8 @@
-import subprocess
 import os
 import re
+import subprocess
 from typing import List, Tuple
+
 from config import SetupConfig
 from logging_config import get_logger
 
@@ -17,7 +18,7 @@ class SystemService:
             )
 
         # Base paths from the original scripts
-        self.base_themes_path = "/usr/share/bigbashview/apps/biglinux-themes-gui"
+        self.base_themes_path = "/usr/share/biglinux/biglinux-themes-gui"
         self.desktop_list_script = os.path.join(
             self.base_themes_path, "list-desktops.sh"
         )

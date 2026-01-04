@@ -4,10 +4,10 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, GObject, GLib, Gdk
-from services import SystemService
 from abc import ABCMeta, abstractmethod
-from translations import _
+
+from gi.repository import Adw, Gdk, GLib, GObject, Gtk
+from services import SystemService
 
 
 class GObjectMeta(type(GObject.Object), ABCMeta):

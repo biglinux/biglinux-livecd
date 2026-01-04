@@ -33,17 +33,12 @@ TEXT_CONTENT="<span size='28000' weight='bold' foreground='#d32f2f'>⚠ $HEADING
 TEXT_CONTENT+="<span size='14000' >$BODY</span>\n\n"
 TEXT_CONTENT+="<span size='12000' style='italic' >$EXPLANATION</span>\n\n"
 TEXT_CONTENT+="<span font_family='monospace'"
-TEXT_CONTENT+="foreground='#c62828'"
-TEXT_CONTENT+="size='14000'> 🔍 $ERROR_CODE </span>"
+TEXT_CONTENT+=" foreground='#c62828'"
+TEXT_CONTENT+=" size='14000'> 🔍 $ERROR_CODE </span>"
 
-# --- Modern YAD Dialog with Enhanced Design ---
-WAYLAND_DISPLAY= yad --title="$TITLE" \
-    --window-icon="$ICON_NAME" \
+# --- Modern Zenity Dialog (replaced YAD) ---
+zenity --error \
+    --title="$TITLE" \
     --width=640 \
-    --borders=20 \
-    --center \
-    --on-top \
     --text="$TEXT_CONTENT" \
-    --text-width=40 \
-    --text-align=center \
-    --button="$BUTTON_TEXT!gtk-close:0"
+    --ok-label="$BUTTON_TEXT"
