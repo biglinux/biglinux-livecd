@@ -634,6 +634,10 @@ msgid "Preferences not implemented yet"
 msgstr "Præferencer ikke implementeret endnu"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 151
+msgid "OK"
+msgstr "OK"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 151
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 151
 # 
