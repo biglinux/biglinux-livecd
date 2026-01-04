@@ -5,7 +5,7 @@
 **The Ultimate Live Environment & Installer for BigLinux**
 
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg?style=for-the-badge)](LICENSE)
-[![Arch Linux](https://img.shields.io/badge/Arch_Linux-1793D1?style=for-the-badge&logo=arch-linux&logoColor=white)](https://archlinux.org/)
+[![Arch Linux](https://img.shields.io/badge/BigLinux-1793D1?style=for-the-badge&logo=biglinux&logoColor=white)](https://www.biglinux.com.br/)
 [![GTK4](https://img.shields.io/badge/GTK4-Libadwaita-4A86CF?style=for-the-badge&logo=gtk&logoColor=white)](https://gtk.org/)
 [![Python](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org/)
 
