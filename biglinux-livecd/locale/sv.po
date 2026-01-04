@@ -14,20 +14,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid "Error: Integrity Check Failed"
 msgstr "Fel: Integritetskontroll misslyckades"
-
 msgid "Oops!"
 msgstr "Oj då!"
-
 msgid ""
 "The integrity check failed. It is necessary to download the system again or "
 "use another USB drive."
 msgstr ""
 "Integritetskontrollen misslyckades. Det är nödvändigt att ladda ner systemet "
 "igen eller använda en annan USB-enhet."
-
 msgid ""
 "<b>Why?</b> Think of the installation file as a precise digital package. "
 "This error means the package was damaged during download, or the USB drive "
@@ -36,95 +32,75 @@ msgstr ""
 "<b>Varför?</b> Tänk på installationsfilen som ett exakt digitalt paket. "
 "Detta fel betyder att paketet skadades under nedladdningen, eller att USB-"
 "enheten i sig är defekt och skadar filen."
-
 msgid "Close"
 msgstr "Stäng"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
 msgid "BigLinux Setup"
 msgstr "BigLinux-installation"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
 msgid "Language"
 msgstr "Språk"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
 msgid "Keyboard"
 msgstr "Tangentbord"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
 msgid "Desktop Layout"
 msgstr "Skrivbordslayout"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
 msgid "Theme"
 msgstr "Tema"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
 msgid "Search for a language..."
 msgstr "Sök efter ett språk..."
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
 msgid "Could not load language data."
 msgstr "Kunde inte ladda språkdatan."
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
 msgid "Choose Your Keyboard Layout"
 msgstr "Välj ditt tangentbordslayout"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
 msgid "Choose a Desktop Layout"
 msgstr "Välj en skrivbordslayout"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
 msgid "Settings"
 msgstr "Inställningar"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
 msgid "JamesDSP Audio"
 msgstr "JamesDSP Ljud"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
 msgid "Enable audio improvements"
 msgstr "Aktivera ljudförbättringar"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
 msgid "Image quality"
 msgstr "Bildkvalitet"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
 msgid "Enable enhanced contrast"
 msgstr "Aktivera förbättrad kontrast"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
 msgid "Choose a System Theme"
 msgstr "Välj ett systemtema"
-
 msgid "Please wait..."
 msgstr "Vänta..."
-
 msgid "Checking the integrity of the download and storage device..."
 msgstr "Kontrollera integriteten hos nedladdningen och lagringsenheten..."
-
 msgid "Outdated Version"
 msgstr "Inaktuell version"
-
 msgid ""
 "<b>Do you want to proceed with the installation of this old version anyway?</"
 "b>\\n\\nBigLinux is a system with weekly updates and this version was "
@@ -135,7 +111,6 @@ msgstr ""
 "b>\\n\\nBigLinux är ett system med veckovisa uppdateringar och denna version "
 "släpptes för mer än en månad sedan.\\nVi rekommenderar att du laddar ner en "
 "nyare version."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -157,10 +132,8 @@ msgstr ""
 #
 msgid "Continue"
 msgstr "Fortsätt"
-
 msgid "Do you want to proceed with the installation in EFI mode?"
 msgstr "Vill du fortsätta med installationen i EFI-läge?"
-
 msgid ""
 "The current boot is using <span color='#CC2222'>EFI</span> mode, but I did "
 "not find any EFI partition on this computer.\n"
@@ -176,13 +149,10 @@ msgstr ""
 "Om den här datorn redan har ett annat system installerat och du avser att "
 "behålla det installerat, behöver du förmodligen ändra konfigurationen i BIOS "
 "för att starta i Legacy-läge, även kallat BIOS-läge."
-
 msgid "Install the system"
 msgstr "Installera systemet"
-
 msgid "Do you want to proceed with the installation in Legacy/BIOS mode?"
 msgstr "Vill du fortsätta med installationen i Legacy/BIOS-läge?"
-
 msgid ""
 "The current boot is using <span color='#CC2222'>Legacy/BIOS</span> mode, but "
 "I found at least one EFI partition on this computer. \n"
@@ -195,23 +165,18 @@ msgstr ""
 "\n"
 "För att installationen ska lyckas behöver du förmodligen ändra "
 "konfigurationen i BIOS för att starta i EFI- eller UEFI-läge."
-
 msgid "Sending, please wait..."
 msgstr "Skickar, var god vänta..."
-
 msgid "Log Sent"
 msgstr "Logg skickad"
-
 msgid ""
 "Log successfully sent!\\n\\nURL: $fileUrl\\n\\nYou can use this URL to share "
 "the log."
 msgstr ""
 "Logg skickad framgångsrikt!\\n\\nURL: $fileUrl\\n\\nDu kan använda denna URL "
 "för att dela loggen."
-
 msgid "calamares LOG"
 msgstr "Calamares LOG"
-
 msgid ""
 "It was not possible to write the EFI entry to the motherboard, likely due to "
 "insufficient space.\\n\\nCheck the EFI manager for any entries that can be "
@@ -220,58 +185,44 @@ msgstr ""
 "Det var inte möjligt att skriva EFI-posten till moderkortet, troligtvis på "
 "grund av otillräckligt utrymme.\\n\\nKontrollera EFI-hanteraren för "
 "eventuella poster som kan raderas och försök installera systemet igen."
-
 msgid "Open the EFI manager"
 msgstr "Öppna EFI-hanteraren"
-
 msgid ""
 "Do you want to view or send the installation log file to the cloud?"
 "\\nGenerate a link to send in support groups."
 msgstr ""
 "Vill du visa eller skicka installationsloggfilen till molnet?\\nGenerera en "
 "länk att skicka i supportgrupper."
-
 msgid "Action"
 msgstr "Åtgärd"
-
 msgid "Open"
 msgstr "Öppna"
-
 msgid "Send to the cloud"
 msgstr "Skicka till molnet"
-
 msgid "Checking the file:"
 msgstr "Kontrollerar filen:"
-
 msgid ""
 "Checking for download or USB drive errors, this may take a few minutes..."
 msgstr ""
 "Kontrollerar nedladdnings- eller USB-enhetsfel, detta kan ta några minuter..."
-
 msgid "Checking system integrity"
 msgstr "Kontrollera systemets integritet"
-
 msgid "Error found, please download the system again or use another USB drive."
 msgstr ""
 "Fel hittades, vänligen ladda ner systemet igen eller använd en annan USB-"
 "enhet."
-
 msgid "The files are intact."
 msgstr "Filerna är intakta."
-
 msgid "Verification canceled."
 msgstr "Verifiering avbruten."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 123
 msgid "Loading packages..."
 msgstr "Laddar paket..."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 242
 msgid "Failed to load packages: {}"
 msgstr "Misslyckades med att ladda paket: {}"
-
 #
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -286,7 +237,6 @@ msgstr "Misslyckades med att ladda paket: {}"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 259
 msgid "Starting..."
 msgstr "Startar..."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -308,7 +258,6 @@ msgstr "Startar..."
 #
 msgid "Snapshot and backups"
 msgstr "Ögonblicksbild och säkerhetskopior"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -330,7 +279,6 @@ msgstr "Ögonblicksbild och säkerhetskopior"
 #
 msgid "Restore restore points of the installed system."
 msgstr "Återställ återställningspunkter för det installerade systemet."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -352,7 +300,6 @@ msgstr "Återställ återställningspunkter för det installerade systemet."
 #
 msgid "Start"
 msgstr "Börja"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -374,7 +321,6 @@ msgstr "Börja"
 #
 msgid "Restore system settings"
 msgstr "Återställ systeminställningar"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 78
 msgid ""
@@ -389,13 +335,11 @@ msgstr ""
 "\n"
 "Det kan också användas för att få åtkomst till paketförvaltaren och "
 "terminalen för det installerade systemet."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
 msgid "EFI Entry Manager"
 msgstr "EFI Inmatningshanterare"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 90
 msgid ""
@@ -403,7 +347,6 @@ msgid ""
 msgstr ""
 "Avancerat verktyg för att lägga till, ta bort eller ändra startposter i UEFI-"
 "firmware."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 147
 msgid ""
@@ -412,7 +355,6 @@ msgid ""
 msgstr ""
 "<a href=\"https://forum.biglinux.com.br\">Detta är ett samarbetsystem, om du "
 "behöver hjälp, konsultera vårt forum.</a>"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -434,7 +376,6 @@ msgstr ""
 #
 msgid "Maintenance"
 msgstr "Underhåll"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -456,7 +397,6 @@ msgstr "Underhåll"
 #
 msgid "Tools that facilitate the maintenance of the installed system."
 msgstr "Verktyg som underlättar underhållet av det installerade systemet."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -478,7 +418,6 @@ msgstr "Verktyg som underlättar underhållet av det installerade systemet."
 #
 msgid "Restore"
 msgstr "Återställ"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -500,7 +439,6 @@ msgstr "Återställ"
 #
 msgid "Installation"
 msgstr "Installation"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -522,7 +460,6 @@ msgstr "Installation"
 #
 msgid "The system is in live mode, which has limitations."
 msgstr "Systemet är i live-läge, vilket har begränsningar."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -544,7 +481,6 @@ msgstr "Systemet är i live-läge, vilket har begränsningar."
 #
 msgid "Install it for a complete experience."
 msgstr "Installera det för en komplett upplevelse."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -566,7 +502,6 @@ msgstr "Installera det för en komplett upplevelse."
 #
 msgid "Install"
 msgstr "Installera"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -588,32 +523,26 @@ msgstr "Installera"
 #
 msgid "Minimal"
 msgstr "Minimal"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 99
 msgid "Remove pre-selected software to create a lean, personalized system."
 msgstr "Ta bort förvalda program för att skapa ett smidigt, personligt system."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 206
 msgid "Checking connection..."
 msgstr "Kontrollerar anslutning..."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 218
 msgid "Configuring..."
 msgstr "Konfigurerar..."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 39
 msgid "Important Tips"
 msgstr "Viktiga tips"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 48
 msgid "Manual Partitioning Recommendations"
 msgstr "Rekommendationer för manuell partitionering"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 49
 msgid ""
@@ -621,12 +550,10 @@ msgid ""
 msgstr ""
 "Om du väljer automatisk partitionering kommer dessa tips att tillämpas som "
 "standard."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 54
 msgid "Use BTRFS"
 msgstr "Använd BTRFS"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -649,12 +576,10 @@ msgstr "Använd BTRFS"
 msgid "This file system allows for automatic compression and restore points."
 msgstr ""
 "Detta filsystem tillåter automatisk komprimering och återställningspunkter."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 55
 msgid "Keep /boot within the / partition"
 msgstr "Håll /boot inom / partitionen"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -676,12 +601,10 @@ msgstr "Håll /boot inom / partitionen"
 #
 msgid "Placing it in a separate partition hampers BTRFS snapshots."
 msgstr "Att placera den i en separat partition hindrar BTRFS-ögonblicksbilder."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
 msgid "Do not create a SWAP partition"
 msgstr "Skapa inte en SWAP-partition."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
 msgid ""
@@ -690,7 +613,6 @@ msgid ""
 msgstr ""
 "Vi har implementerat dynamisk virtuell minneshantering med Zram och SWAP-"
 "filer. SWAP-partitioner kommer inte att användas."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
@@ -698,7 +620,6 @@ msgstr ""
 #, python-brace-format
 msgid "{distro} Installation"
 msgstr "{distro} Installation"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -720,17 +641,14 @@ msgstr "{distro} Installation"
 #
 msgid "Back"
 msgstr "Tillbaka"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 96
 msgid "Keep All"
 msgstr "Behåll allt"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 99
 msgid "Remove All"
 msgstr "Ta bort allt"
-
 #
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -738,7 +656,6 @@ msgstr "Ta bort allt"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 76
 msgid "System Maintenance"
 msgstr "Systemunderhåll"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -760,12 +677,10 @@ msgstr "Systemunderhåll"
 #
 msgid "Uncheck the programs you want to remove"
 msgstr "Avmarkera programmen du vill ta bort"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 159
 msgid "Installation Tips"
 msgstr "Installations tips"
-
 #
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -775,27 +690,22 @@ msgstr "Installations tips"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 99
 msgid "BigLinux Calamares Config"
 msgstr "BigLinux Calamares Konfiguration"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 116
 msgid "Forum"
 msgstr "Forum"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 117
 msgid "Documentation"
 msgstr "Dokumentation"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 128
 msgid "Preferences not implemented yet"
 msgstr "Inställningar har ännu inte implementerats."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 151
 msgid "OK"
 msgstr "Okej"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 147
 #
@@ -820,7 +730,6 @@ msgstr "Okej"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 167
 msgid "Cancel"
 msgstr "Avbryt"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 168
 msgid "Confirm"

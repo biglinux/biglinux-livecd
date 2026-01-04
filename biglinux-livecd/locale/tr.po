@@ -14,20 +14,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid "Error: Integrity Check Failed"
 msgstr "Hata: Bütünlük Kontrolü Başarısız oldu"
-
 msgid "Oops!"
 msgstr "Oops!"
-
 msgid ""
 "The integrity check failed. It is necessary to download the system again or "
 "use another USB drive."
 msgstr ""
 "Bütünlük kontrolü başarısız oldu. Sistemi tekrar indirmek veya başka bir USB "
 "sürücü kullanmak gereklidir."
-
 msgid ""
 "<b>Why?</b> Think of the installation file as a precise digital package. "
 "This error means the package was damaged during download, or the USB drive "
@@ -36,95 +32,75 @@ msgstr ""
 "<b>Neden?</b> Kurulum dosyasını hassas bir dijital paket olarak düşünün. Bu "
 "hata, paketin indirme sırasında hasar gördüğü veya USB sürücüsünün "
 "kendisinin arızalı olduğu ve dosyayı bozduğu anlamına gelir."
-
 msgid "Close"
 msgstr "Kapat"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
 msgid "BigLinux Setup"
 msgstr "BigLinux Kurulumu"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
 msgid "Language"
 msgstr "Dil"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
 msgid "Keyboard"
 msgstr "Klavye"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
 msgid "Desktop Layout"
 msgstr "Masaüstü Düzeni"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
 msgid "Theme"
 msgstr "Tema"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
 msgid "Search for a language..."
 msgstr "Bir dil ara..."
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
 msgid "Could not load language data."
 msgstr "Dil verisi yüklenemedi."
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
 msgid "Choose Your Keyboard Layout"
 msgstr "Klavye Düzeni Seçin"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
 msgid "Choose a Desktop Layout"
 msgstr "Bir Masaüstü Düzeni Seçin"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
 msgid "Settings"
 msgstr "Ayarlar"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
 msgid "JamesDSP Audio"
 msgstr "JamesDSP Ses"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
 msgid "Enable audio improvements"
 msgstr "Ses iyileştirmelerini etkinleştir"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
 msgid "Image quality"
 msgstr "Görüntü kalitesi"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
 msgid "Enable enhanced contrast"
 msgstr "Geliştirilmiş kontrastı etkinleştir"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
 msgid "Choose a System Theme"
 msgstr "Bir Sistem Teması Seçin"
-
 msgid "Please wait..."
 msgstr "Lütfen bekleyin..."
-
 msgid "Checking the integrity of the download and storage device..."
 msgstr "İndirme ve depolama cihazının bütünlüğünü kontrol ediliyor..."
-
 msgid "Outdated Version"
 msgstr "Eski Sürüm"
-
 msgid ""
 "<b>Do you want to proceed with the installation of this old version anyway?</"
 "b>\\n\\nBigLinux is a system with weekly updates and this version was "
@@ -135,7 +111,6 @@ msgstr ""
 "b>\\n\\nBigLinux, haftalık güncellemeleri olan bir sistemdir ve bu sürüm bir "
 "aydan daha uzun bir süre önce yayımlandı.\\nDaha güncel bir sürüm "
 "indirmenizi öneririz."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -157,10 +132,8 @@ msgstr ""
 #
 msgid "Continue"
 msgstr "Devam et"
-
 msgid "Do you want to proceed with the installation in EFI mode?"
 msgstr "EFI modunda kurulumu devam ettirmek istiyor musunuz?"
-
 msgid ""
 "The current boot is using <span color='#CC2222'>EFI</span> mode, but I did "
 "not find any EFI partition on this computer.\n"
@@ -176,13 +149,10 @@ msgstr ""
 "Bu bilgisayarda zaten başka bir sistem yüklü ise ve yüklü tutmayı "
 "düşünüyorsanız, muhtemelen BIOS'ta Legacy modunda, ayrıca BIOS modu olarak "
 "da adlandırılan bir önyükleme yapılandırması değiştirmeniz gerekecektir."
-
 msgid "Install the system"
 msgstr "Sistemi yükle"
-
 msgid "Do you want to proceed with the installation in Legacy/BIOS mode?"
 msgstr "Kurulumu Legacy/BIOS modunda devam etmek istiyor musunuz?"
-
 msgid ""
 "The current boot is using <span color='#CC2222'>Legacy/BIOS</span> mode, but "
 "I found at least one EFI partition on this computer. \n"
@@ -196,23 +166,18 @@ msgstr ""
 "Kurulumun başarılı olması için muhtemelen BIOS'ta yapılandırmayı "
 "değiştirmeniz gerekecek ve EFI veya UEFI modunda önyükleme yapmanız "
 "gerekecek."
-
 msgid "Sending, please wait..."
 msgstr "Gönderiliyor, lütfen bekleyin..."
-
 msgid "Log Sent"
 msgstr "Günlük Gönderildi"
-
 msgid ""
 "Log successfully sent!\\n\\nURL: $fileUrl\\n\\nYou can use this URL to share "
 "the log."
 msgstr ""
 "Günlük başarıyla gönderildi!\\n\\nURL: $fileUrl\\n\\nBu URL'yi günlük "
 "paylaşmak için kullanabilirsiniz."
-
 msgid "calamares LOG"
 msgstr "calamares GÜNLÜK KAYDI"
-
 msgid ""
 "It was not possible to write the EFI entry to the motherboard, likely due to "
 "insufficient space.\\n\\nCheck the EFI manager for any entries that can be "
@@ -221,59 +186,45 @@ msgstr ""
 "Anakartın EFI girişini yazmak mümkün olmadı, muhtemelen yetersiz alan "
 "nedeniyle.\\n\\nSilinebilecek herhangi bir giriş için EFI yöneticisini "
 "kontrol edin ve sistemi tekrar kurmayı deneyin."
-
 msgid "Open the EFI manager"
 msgstr "EFI yöneticisini açın"
-
 msgid ""
 "Do you want to view or send the installation log file to the cloud?"
 "\\nGenerate a link to send in support groups."
 msgstr ""
 "Kurulum günlük dosyasını buluta görüntülemek veya göndermek ister misiniz?"
 "\\nDestek gruplarında göndermek için bir bağlantı oluşturun."
-
 msgid "Action"
 msgstr "Eylem"
-
 msgid "Open"
 msgstr "Açık"
-
 msgid "Send to the cloud"
 msgstr "Buluta gönder"
-
 msgid "Checking the file:"
 msgstr "Dosyayı kontrol ediliyor:"
-
 msgid ""
 "Checking for download or USB drive errors, this may take a few minutes..."
 msgstr ""
 "İndirme veya USB sürücü hataları kontrol ediliyor, bu birkaç dakika "
 "sürebilir..."
-
 msgid "Checking system integrity"
 msgstr "Sistem bütünlüğünü kontrol etme"
-
 msgid "Error found, please download the system again or use another USB drive."
 msgstr ""
 "Hata bulundu, lütfen sistemi tekrar indirin veya başka bir USB sürücü "
 "kullanın."
-
 msgid "The files are intact."
 msgstr "Dosyalar sağlam."
-
 msgid "Verification canceled."
 msgstr "Doğrulama iptal edildi."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 123
 msgid "Loading packages..."
 msgstr "Paketler yükleniyor..."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 242
 msgid "Failed to load packages: {}"
 msgstr "Paketler yüklenemedi: {}"
-
 #
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -288,7 +239,6 @@ msgstr "Paketler yüklenemedi: {}"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 259
 msgid "Starting..."
 msgstr "Başlatılıyor..."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -310,7 +260,6 @@ msgstr "Başlatılıyor..."
 #
 msgid "Snapshot and backups"
 msgstr "Anlık görüntü ve yedeklemeler"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -332,7 +281,6 @@ msgstr "Anlık görüntü ve yedeklemeler"
 #
 msgid "Restore restore points of the installed system."
 msgstr "Yüklü sistem geri yükleme noktalarını geri yükle."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -354,7 +302,6 @@ msgstr "Yüklü sistem geri yükleme noktalarını geri yükle."
 #
 msgid "Start"
 msgstr "Başlat"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -376,7 +323,6 @@ msgstr "Başlat"
 #
 msgid "Restore system settings"
 msgstr "Sistem ayarlarını geri yükle"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 78
 msgid ""
@@ -391,13 +337,11 @@ msgstr ""
 "\n"
 "Ayrıca, yüklenmiş sistemin paket yöneticisine ve terminaline erişmek için de "
 "kullanılabilir."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
 msgid "EFI Entry Manager"
 msgstr "EFI Giriş Yöneticisi"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 90
 msgid ""
@@ -405,7 +349,6 @@ msgid ""
 msgstr ""
 "UEFI yazılımında önyükleme girişlerini eklemek, kaldırmak veya değiştirmek "
 "için gelişmiş araç."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 147
 msgid ""
@@ -414,7 +357,6 @@ msgid ""
 msgstr ""
 "<a href=\"https://forum.biglinux.com.br\">Bu bir işbirlikçi sistemdir, "
 "yardıma ihtiyacınız varsa forumumuzu kontrol edin.</a>"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -436,7 +378,6 @@ msgstr ""
 #
 msgid "Maintenance"
 msgstr "Bakım"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -458,7 +399,6 @@ msgstr "Bakım"
 #
 msgid "Tools that facilitate the maintenance of the installed system."
 msgstr "Yüklü sistem bakımını kolaylaştıran araçlar."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -480,7 +420,6 @@ msgstr "Yüklü sistem bakımını kolaylaştıran araçlar."
 #
 msgid "Restore"
 msgstr "Geri Yükle"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -502,7 +441,6 @@ msgstr "Geri Yükle"
 #
 msgid "Installation"
 msgstr "Kurulum"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -524,7 +462,6 @@ msgstr "Kurulum"
 #
 msgid "The system is in live mode, which has limitations."
 msgstr "Sistem canlı modda, kısıtlamaları bulunmaktadır."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -546,7 +483,6 @@ msgstr "Sistem canlı modda, kısıtlamaları bulunmaktadır."
 #
 msgid "Install it for a complete experience."
 msgstr "Tam bir deneyim için yükleyin."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -568,7 +504,6 @@ msgstr "Tam bir deneyim için yükleyin."
 #
 msgid "Install"
 msgstr "Yükle"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -590,34 +525,28 @@ msgstr "Yükle"
 #
 msgid "Minimal"
 msgstr "Minimum"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 99
 msgid "Remove pre-selected software to create a lean, personalized system."
 msgstr ""
 "Önceden seçilmiş yazılımları kaldırarak daha sade, kişiselleştirilmiş bir "
 "sistem oluşturun."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 206
 msgid "Checking connection..."
 msgstr "Bağlantı kontrol ediliyor..."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 218
 msgid "Configuring..."
 msgstr "Yapılandırılıyor..."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 39
 msgid "Important Tips"
 msgstr "Önemli İpuçları"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 48
 msgid "Manual Partitioning Recommendations"
 msgstr "Manuel Bölümlendirme Önerileri"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 49
 msgid ""
@@ -625,12 +554,10 @@ msgid ""
 msgstr ""
 "Otomatik bölümleme seçeneğini tercih ederseniz, bu ipuçları varsayılan "
 "olarak uygulanacaktır."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 54
 msgid "Use BTRFS"
 msgstr "BTRFS kullanın"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -653,12 +580,10 @@ msgstr "BTRFS kullanın"
 msgid "This file system allows for automatic compression and restore points."
 msgstr ""
 "Bu dosya sistemi otomatik sıkıştırma ve geri yükleme noktalarına izin verir."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 55
 msgid "Keep /boot within the / partition"
 msgstr "/boot'u / bölümünde tutun"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -680,12 +605,10 @@ msgstr "/boot'u / bölümünde tutun"
 #
 msgid "Placing it in a separate partition hampers BTRFS snapshots."
 msgstr "Ayrı bir bölümde saklamak, BTRFS anlık görüntülerini engeller."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
 msgid "Do not create a SWAP partition"
 msgstr "SWAP bölümü oluşturmayın."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
 msgid ""
@@ -694,7 +617,6 @@ msgid ""
 msgstr ""
 "Zram ve SWAP dosyaları ile dinamik sanal bellek yönetimi uyguladık. SWAP "
 "bölümleri kullanılmayacaktır."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
@@ -702,7 +624,6 @@ msgstr ""
 #, python-brace-format
 msgid "{distro} Installation"
 msgstr "{distro} Kurulumu"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -724,17 +645,14 @@ msgstr "{distro} Kurulumu"
 #
 msgid "Back"
 msgstr "Geri"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 96
 msgid "Keep All"
 msgstr "Hepsini Sakla"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 99
 msgid "Remove All"
 msgstr "Tümünü Kaldır"
-
 #
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -742,7 +660,6 @@ msgstr "Tümünü Kaldır"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 76
 msgid "System Maintenance"
 msgstr "Sistem Bakımı"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -764,12 +681,10 @@ msgstr "Sistem Bakımı"
 #
 msgid "Uncheck the programs you want to remove"
 msgstr "Kaldırmak istediğiniz programları işaretlemeyin"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 159
 msgid "Installation Tips"
 msgstr "Kurulum İpuçları"
-
 #
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -779,27 +694,22 @@ msgstr "Kurulum İpuçları"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 99
 msgid "BigLinux Calamares Config"
 msgstr "BigLinux Calamares Yapılandırması"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 116
 msgid "Forum"
 msgstr "Forum"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 117
 msgid "Documentation"
 msgstr "Dokümantasyon"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 128
 msgid "Preferences not implemented yet"
 msgstr "Tercihler henüz uygulanmadı."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 147
 msgid "OK"
 msgstr "Evet"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 149
 #
@@ -808,7 +718,6 @@ msgstr "Evet"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 167
 msgid "Cancel"
 msgstr "İptal et"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 168
 msgid "Confirm"

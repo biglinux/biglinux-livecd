@@ -14,19 +14,15 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-
 msgid "Error: Integrity Check Failed"
 msgstr "שגיאה: בדיקת שלמות נכשלה"
-
 msgid "Oops!"
 msgstr "אופס!"
-
 msgid ""
 "The integrity check failed. It is necessary to download the system again or "
 "use another USB drive."
 msgstr ""
 "בדיקת השלמות נכשלה. יש צורך להוריד את המערכת שוב או להשתמש בכונן USB אחר."
-
 msgid ""
 "<b>Why?</b> Think of the installation file as a precise digital package. "
 "This error means the package was damaged during download, or the USB drive "
@@ -34,95 +30,75 @@ msgid ""
 msgstr ""
 "<b>למה?</b> חשבו על קובץ ההתקנה כעל חבילה דיגיטלית מדויקת. שגיאה זו משמעותה "
 "שהחבילה נפגעה במהלך ההורדה, או שהכונן USB עצמו פגום ופוגע בקובץ."
-
 msgid "Close"
 msgstr "סגור"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
 msgid "BigLinux Setup"
 msgstr "הגדרת BigLinux"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
 msgid "Language"
 msgstr "שפה"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
 msgid "Keyboard"
 msgstr "מקלדת"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
 msgid "Desktop Layout"
 msgstr "פריסת שולחן עבודה"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
 msgid "Theme"
 msgstr "נושא"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
 msgid "Search for a language..."
 msgstr "חפש שפה..."
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
 msgid "Could not load language data."
 msgstr "לא ניתן לטעון את נתוני השפה."
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
 msgid "Choose Your Keyboard Layout"
 msgstr "בחר את פריסת המקלדת שלך"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
 msgid "Choose a Desktop Layout"
 msgstr "בחר פריסת שולחן עבודה"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
 msgid "Settings"
 msgstr "הגדרות"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
 msgid "JamesDSP Audio"
 msgstr "ג'יימסDSP אודיו"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
 msgid "Enable audio improvements"
 msgstr "אפשר שיפורי שמע"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
 msgid "Image quality"
 msgstr "איכות תמונה"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
 msgid "Enable enhanced contrast"
 msgstr "אפשר להפעיל ניגודיות משופרת"
-
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
 msgid "Choose a System Theme"
 msgstr "בחר נושא מערכת"
-
 msgid "Please wait..."
 msgstr "המתן בבקשה..."
-
 msgid "Checking the integrity of the download and storage device..."
 msgstr "בדיקת תקינות ההורדה והתקן אחסון..."
-
 msgid "Outdated Version"
 msgstr "גרסה מיושנת"
-
 msgid ""
 "<b>Do you want to proceed with the installation of this old version anyway?</"
 "b>\\n\\nBigLinux is a system with weekly updates and this version was "
@@ -132,7 +108,6 @@ msgstr ""
 "<b>האם אתה רוצה להמשיך בהתקנה של גרסה ישנה זו בכל מקרה?</b>\\n\\nBigLinux "
 "הוא מערכת עם עדכונים שבועיים וגרסה זו שוחררה לפני יותר מחודש.\\nאנו ממליצים "
 "להוריד גרסה עדכנית יותר."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -154,10 +129,8 @@ msgstr ""
 #
 msgid "Continue"
 msgstr "המשך"
-
 msgid "Do you want to proceed with the installation in EFI mode?"
 msgstr "האם ברצונך להמשיך עם ההתקנה במצב EFI?"
-
 msgid ""
 "The current boot is using <span color='#CC2222'>EFI</span> mode, but I did "
 "not find any EFI partition on this computer.\n"
@@ -172,13 +145,10 @@ msgstr ""
 "\n"
 "אם במחשב זה כבר מותקן מערכת אחרת ותכוון לשמור על ההתקנה, כנראה תצטרך לשנות "
 "את ההגדרות ב-BIOS כדי להפעיל במצב לגססי, המכונה גם מצב BIOS."
-
 msgid "Install the system"
 msgstr "התקן את המערכת"
-
 msgid "Do you want to proceed with the installation in Legacy/BIOS mode?"
 msgstr "האם ברצונך להמשיך עם ההתקנה במצב לגסי/BIOS?"
-
 msgid ""
 "The current boot is using <span color='#CC2222'>Legacy/BIOS</span> mode, but "
 "I found at least one EFI partition on this computer. \n"
@@ -191,23 +161,18 @@ msgstr ""
 "\n"
 "כדי שההתקנה תצליח, כנראה תצטרך \n"
 "לשנות את ההגדרות ב-BIOS כך שההפעלה תתבצע במצב EFI או UEFI."
-
 msgid "Sending, please wait..."
 msgstr "שולח, אנא המתן..."
-
 msgid "Log Sent"
 msgstr "יומן נשלח"
-
 msgid ""
 "Log successfully sent!\\n\\nURL: $fileUrl\\n\\nYou can use this URL to share "
 "the log."
 msgstr ""
 "היומן נשלח בהצלחה!\\n\\nכתובת URL: $fileUrl\\n\\nאתה יכול להשתמש בכתובת URL "
 "זו כדי לשתף את היומן."
-
 msgid "calamares LOG"
 msgstr "יומן Calamares"
-
 msgid ""
 "It was not possible to write the EFI entry to the motherboard, likely due to "
 "insufficient space.\\n\\nCheck the EFI manager for any entries that can be "
@@ -216,55 +181,41 @@ msgstr ""
 "לא היה אפשר לכתוב את כניסת ה-EFI ללוח האם, כנראה בגלל חוסר מקום מספיק."
 "\\n\\nבדוק את מנהל ה-EFI עבור כל כניסות שניתן למחוק ונסה להתקין את המערכת "
 "שוב."
-
 msgid "Open the EFI manager"
 msgstr "פתח את מנהל EFI"
-
 msgid ""
 "Do you want to view or send the installation log file to the cloud?"
 "\\nGenerate a link to send in support groups."
 msgstr ""
 "האם אתה רוצה לצפות או לשלוח את קובץ יומן ההתקנה לענן?\\nצור קישור לשליחה "
 "בקבוצות תמיכה."
-
 msgid "Action"
 msgstr "פעולה"
-
 msgid "Open"
 msgstr "פתח"
-
 msgid "Send to the cloud"
 msgstr "שלח לענן"
-
 msgid "Checking the file:"
 msgstr "בודק את הקובץ:"
-
 msgid ""
 "Checking for download or USB drive errors, this may take a few minutes..."
 msgstr "בודק תקלות בהורדה או בכונן USB, זה עשוי לקחת כמה דקות..."
-
 msgid "Checking system integrity"
 msgstr "בדיקת תקינות המערכת"
-
 msgid "Error found, please download the system again or use another USB drive."
 msgstr "שגיאה נמצאה, אנא הורד את המערכת שוב או השתמש בכונן USB אחר."
-
 msgid "The files are intact."
 msgstr "הקבצים שלמים."
-
 msgid "Verification canceled."
 msgstr "האימות בוטל."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 123
 msgid "Loading packages..."
 msgstr "טוען חבילות..."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 242
 msgid "Failed to load packages: {}"
 msgstr "כישלון בטעינת חבילות: {}"
-
 #
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -279,7 +230,6 @@ msgstr "כישלון בטעינת חבילות: {}"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 259
 msgid "Starting..."
 msgstr "מתחיל..."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -301,7 +251,6 @@ msgstr "מתחיל..."
 #
 msgid "Snapshot and backups"
 msgstr "צילום מסך וגיבויים"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -323,7 +272,6 @@ msgstr "צילום מסך וגיבויים"
 #
 msgid "Restore restore points of the installed system."
 msgstr "שחזור נקודות שחזור של המערכת שמותקנת."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -345,7 +293,6 @@ msgstr "שחזור נקודות שחזור של המערכת שמותקנת."
 #
 msgid "Start"
 msgstr "התחלה"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -367,7 +314,6 @@ msgstr "התחלה"
 #
 msgid "Restore system settings"
 msgstr "שחזור הגדרות המערכת"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 78
 msgid ""
@@ -380,19 +326,16 @@ msgstr ""
 "כלי שמקל על שחזור המערכת המותקנת, במיוחד שחזור אתחול המערכת (Grub).\n"
 "\n"
 "ניתן גם להשתמש בו כדי לגשת למנהל החבילות ולטרמינל של המערכת המותקנת."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
 msgid "EFI Entry Manager"
 msgstr "מנהל כניסת EFI"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 90
 msgid ""
 "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
 msgstr "כלי מתקדם להוספה, הסרה או שינוי של רשומות אתחול בקושחת UEFI."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 147
 msgid ""
@@ -401,7 +344,6 @@ msgid ""
 msgstr ""
 "<a href=\"https://forum.biglinux.com.br\">זהו מערכת שיתופית, אם אתה זקוק "
 "לעזרה התייעץ בפורום שלנו.</a>"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -423,7 +365,6 @@ msgstr ""
 #
 msgid "Maintenance"
 msgstr "תחזוקה"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -445,7 +386,6 @@ msgstr "תחזוקה"
 #
 msgid "Tools that facilitate the maintenance of the installed system."
 msgstr "כלים שמקלים על תחזוקת המערכת שמותקנת."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -467,7 +407,6 @@ msgstr "כלים שמקלים על תחזוקת המערכת שמותקנת."
 #
 msgid "Restore"
 msgstr "שחזור"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -489,7 +428,6 @@ msgstr "שחזור"
 #
 msgid "Installation"
 msgstr "התקנה"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -511,7 +449,6 @@ msgstr "התקנה"
 #
 msgid "The system is in live mode, which has limitations."
 msgstr "המערכת פועלת במצב חי, שיש לו הגבלות."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -533,7 +470,6 @@ msgstr "המערכת פועלת במצב חי, שיש לו הגבלות."
 #
 msgid "Install it for a complete experience."
 msgstr "התקן אותו עבור חוויית משתמש מלאה."
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -555,7 +491,6 @@ msgstr "התקן אותו עבור חוויית משתמש מלאה."
 #
 msgid "Install"
 msgstr "התקן"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -577,43 +512,35 @@ msgstr "התקן"
 #
 msgid "Minimal"
 msgstr "מינימלי"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 99
 msgid "Remove pre-selected software to create a lean, personalized system."
 msgstr "הסר תוכנה שנבחרה מראש כדי ליצור מערכת רזה ואישית."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 206
 msgid "Checking connection..."
 msgstr "בודק חיבור..."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 218
 msgid "Configuring..."
 msgstr "מגדיר..."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 39
 msgid "Important Tips"
 msgstr "טיפים חשובים"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 48
 msgid "Manual Partitioning Recommendations"
 msgstr "המלצות על חלוקה ידנית"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 49
 msgid ""
 "If you opt for automatic partitioning, these tips will be applied by default."
 msgstr "אם תבחר בפרטנציה אוטומטית, טיפים אלה ייושמו כברירת מחדל."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 54
 msgid "Use BTRFS"
 msgstr "השתמש ב-BTRFS"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -635,12 +562,10 @@ msgstr "השתמש ב-BTRFS"
 #
 msgid "This file system allows for automatic compression and restore points."
 msgstr "מערכת הקבצים הזו מאפשרת דחיסה אוטומטית ונקודות שחזור."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 55
 msgid "Keep /boot within the / partition"
 msgstr "שמור את /boot בתוך מחיצת /"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -662,12 +587,10 @@ msgstr "שמור את /boot בתוך מחיצת /"
 #
 msgid "Placing it in a separate partition hampers BTRFS snapshots."
 msgstr "שימוש במחיצה נפרדת מונע צילומי BTRFS."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
 msgid "Do not create a SWAP partition"
 msgstr "אל תיצור מחיצת SWAP"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
 msgid ""
@@ -675,7 +598,6 @@ msgid ""
 "files. SWAP partitions will not be used."
 msgstr ""
 "יישמנו ניהול זיכרון וירטואלי דינמי עם Zram וקבצי SWAP. מחיצות SWAP לא ישמשו."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
@@ -683,7 +605,6 @@ msgstr ""
 #, python-brace-format
 msgid "{distro} Installation"
 msgstr "התקנת {distro}"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -705,17 +626,14 @@ msgstr "התקנת {distro}"
 #
 msgid "Back"
 msgstr "אחורה"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 96
 msgid "Keep All"
 msgstr "שמור הכל"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 99
 msgid "Remove All"
 msgstr "הסר הכל"
-
 #
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -723,7 +641,6 @@ msgstr "הסר הכל"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 76
 msgid "System Maintenance"
 msgstr "תחזוקת מערכת"
-
 #
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -745,12 +662,10 @@ msgstr "תחזוקת מערכת"
 #
 msgid "Uncheck the programs you want to remove"
 msgstr "בטל את התוכניות שתרצה להסיר"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 159
 msgid "Installation Tips"
 msgstr "טיפים להתקנה"
-
 #
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 #
@@ -760,32 +675,26 @@ msgstr "טיפים להתקנה"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 99
 msgid "BigLinux Calamares Config"
 msgstr "הגדרות קלמרס של ביגלינוקס"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 116
 msgid "Forum"
 msgstr "פורום"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 117
 msgid "Documentation"
 msgstr "תיעוד"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 128
 msgid "Preferences not implemented yet"
 msgstr "העדפות עדיין לא מיועדות."
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 149
 msgid "OK"
 msgstr "אוקי"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 167
 msgid "Cancel"
 msgstr "ביטול"
-
 #
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 168
 msgid "Confirm"
