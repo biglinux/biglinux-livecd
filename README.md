@@ -96,6 +96,7 @@ BigLinux supports multiple desktop environments, automatically detected by the l
 | Variant | Detection Trigger |
 |---------|-------------------|
 | **BigLinux (KDE)** | Default fallback |
+| **XivaStudio (KDE)** | Default fallback |
 | **Community GNOME** | `/usr/bin/startgnome-community` |
 | **Community Cinnamon** | `/usr/bin/startcinnamon-community` |
 | **Community XFCE** | `/usr/bin/startxfce-community` |
