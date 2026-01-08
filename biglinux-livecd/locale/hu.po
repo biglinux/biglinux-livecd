@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the biglinux-livecd package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
@@ -14,87 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-msgid "Error: Integrity Check Failed"
-msgstr "Hiba: Integritásellenőrzés meghiúsult"
-msgid "Oops!"
-msgstr "Hoppá!"
-msgid ""
-"The integrity check failed. It is necessary to download the system again or "
-"use another USB drive."
-msgstr ""
-"Az integritásellenőrzés meghiúsult. Szükséges a rendszer újra letöltése vagy "
-"egy másik USB meghajtó használata."
-msgid ""
-"<b>Why?</b> Think of the installation file as a precise digital package. "
-"This error means the package was damaged during download, or the USB drive "
-"itself is faulty and is damaging the file."
-msgstr ""
-"<b>Miért?</b> Gondolj az telepítőfájlra, mint egy pontos digitális csomagra. "
-"Ez a hiba azt jelenti, hogy a csomag megsérült a letöltés során, vagy az USB "
-"meghajtó maga hibás, és károsítja a fájlt."
-msgid "Close"
-msgstr "Bezárás"
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
-msgid "BigLinux Setup"
-msgstr "BigLinux Telepítés"
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
-msgid "Language"
-msgstr "Nyelv"
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
-msgid "Keyboard"
-msgstr "Billentyűzet"
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
-msgid "Desktop Layout"
-msgstr "Asztali elrendezés"
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
-msgid "Theme"
-msgstr "Téma"
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
-msgid "Search for a language..."
-msgstr "Keresés egy nyelv után..."
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
-msgid "Could not load language data."
-msgstr "Nem sikerült betölteni a nyelvi adatokat."
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
-msgid "Choose Your Keyboard Layout"
-msgstr "Válaszd ki a billentyűzetkiosztást"
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
-msgid "Choose a Desktop Layout"
-msgstr "Válasszon egy Asztali Elrendezést"
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
-msgid "Settings"
-msgstr "Beállítások"
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
-msgid "JamesDSP Audio"
-msgstr "JamesDSP Hangzás"
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
-msgid "Enable audio improvements"
-msgstr "Hangjavítások engedélyezése"
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
-msgid "Image quality"
-msgstr "Képminőség"
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
-msgid "Enable enhanced contrast"
-msgstr "Javított kontraszt engedélyezése"
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
-msgid "Choose a System Theme"
-msgstr "Válasszon egy Rendszertémát"
 msgid "Please wait..."
 msgstr "Kérem, várjon..."
 msgid "Checking the integrity of the download and storage device..."
@@ -102,96 +21,106 @@ msgstr "A letöltés és a tárolóeszköz integritásának ellenőrzése..."
 msgid "Outdated Version"
 msgstr "Elavult verzió"
 msgid ""
-"<b>Do you want to proceed with the installation of this old version anyway?</"
-"b>\\n\\nBigLinux is a system with weekly updates and this version was "
-"released more than a month ago.\\nWe recommend downloading a more recent "
-"version."
+"<b>Do you want to proceed with the installation of this old version anyway?</b>\\n"
+"\\n"
+"BigLinux is a system with weekly updates and this version was released more than a month ago.\\n"
+"We recommend downloading a more recent version."
 msgstr ""
-"<b>Biztosan folytatni szeretné az ezen régi verzió telepítését?</b>\\n\\nA "
-"BigLinux egy heti frissítésekkel rendelkező rendszer, és ez a verzió több "
-"mint egy hónapja jelent meg.\\nAjánljuk, hogy töltsön le egy újabb verziót."
-#
+"<b>Biztosan folytatni szeretné az ezen régi verzió telepítését?</b>\\n"
+"\\n"
+"A BigLinux egy heti frissítésekkel rendelkező rendszer, és ez a verzió több mint egy hónapja jelent "
+"meg.\\n"
+"Ajánljuk, hogy töltsön le egy újabb verziót."
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Continue"
 msgstr "Folytatás"
+msgid "Close"
+msgstr "Bezárás"
 msgid "Do you want to proceed with the installation in EFI mode?"
 msgstr "Szeretné folytatni az EFI módban történő telepítést?"
 msgid ""
-"The current boot is using <span color='#CC2222'>EFI</span> mode, but I did "
-"not find any EFI partition on this computer.\n"
+"The current boot is using <span color='#CC2222'>EFI</span> mode, but I did not find any EFI "
+"partition on this computer.\n"
 "\n"
 "If this computer already has another system installed and you intend \n"
 "to keep it installed, you will probably need to change the \n"
 "configuration in the BIOS to boot in Legacy mode, also \n"
 "called BIOS mode."
 msgstr ""
-"A jelenlegi indítás <span color='#CC2222'>EFI</span> módban történik, de nem "
-"találtam EFI partíciót ezen a számítógépen.\n"
+"A jelenlegi indítás <span color='#CC2222'>EFI</span> módban történik, de nem találtam EFI partíciót "
+"ezen a számítógépen.\n"
 "\n"
-"Ha már van egy másik rendszer telepítve a számítógépre, és azt szeretné "
-"megtartani, valószínűleg meg kell változtatnia a BIOS beállításait, hogy a "
-"Legacy módban, azaz BIOS módban induljon el."
+"Ha már van egy másik rendszer telepítve a számítógépre, és azt szeretné megtartani, valószínűleg "
+"meg kell változtatnia a BIOS beállításait, hogy a Legacy módban, azaz BIOS módban induljon el."
 msgid "Install the system"
 msgstr "Telepítse a rendszert"
 msgid "Do you want to proceed with the installation in Legacy/BIOS mode?"
 msgstr "Szeretné folytatni a telepítést Legacy/BIOS módban?"
 msgid ""
-"The current boot is using <span color='#CC2222'>Legacy/BIOS</span> mode, but "
-"I found at least one EFI partition on this computer. \n"
+"The current boot is using <span color='#CC2222'>Legacy/BIOS</span> mode, but I found at least one "
+"EFI partition on this computer. \n"
 "\n"
 "For the installation to be successful, you will probably need to \n"
 "change the configuration in the BIOS to boot in EFI or UEFI mode."
 msgstr ""
-"A jelenlegi boot <span color='#CC2222'>Legacy/BIOS</span> módot használ, de "
-"legalább egy EFI partíciót találtam ezen a számítógépen.\n"
+"A jelenlegi boot <span color='#CC2222'>Legacy/BIOS</span> módot használ, de legalább egy EFI "
+"partíciót találtam ezen a számítógépen.\n"
 "\n"
-"A telepítés sikeréhez valószínűleg meg kell változtatnia a BIOS "
-"konfigurációját az EFI vagy UEFI módba való bootoláshoz."
+"A telepítés sikeréhez valószínűleg meg kell változtatnia a BIOS konfigurációját az EFI vagy UEFI "
+"módba való bootoláshoz."
 msgid "Sending, please wait..."
 msgstr "Küldés, kérjük várjon..."
 msgid "Log Sent"
 msgstr "Napló elküldve"
 msgid ""
-"Log successfully sent!\\n\\nURL: $fileUrl\\n\\nYou can use this URL to share "
-"the log."
+"Log successfully sent!\\n"
+"\\n"
+"URL: $fileUrl\\n"
+"\\n"
+"You can use this URL to share the log."
 msgstr ""
-"A napló sikeresen elküldve!\\n\\nURL: $fileUrl\\n\\nEzt az URL-t "
-"használhatja a napló megosztásához."
+"A napló sikeresen elküldve!\\n"
+"\\n"
+"URL: $fileUrl\\n"
+"\\n"
+"Ezt az URL-t használhatja a napló megosztásához."
 msgid "calamares LOG"
 msgstr "Calamares napló"
 msgid ""
-"It was not possible to write the EFI entry to the motherboard, likely due to "
-"insufficient space.\\n\\nCheck the EFI manager for any entries that can be "
-"deleted and try installing the system again."
+"It was not possible to write the EFI entry to the motherboard, likely due to insufficient space.\\n"
+"\\n"
+"Check the EFI manager for any entries that can be deleted and try installing the system again."
 msgstr ""
-"Nem volt lehetséges az EFI bejegyzést a alaplapra írni, valószínűleg a "
-"helyhiány miatt.\\n\\nEllenőrizze az EFI kezelőt, hogy vannak-e törölhető "
-"bejegyzések, és próbálja meg újra telepíteni a rendszert."
+"Nem volt lehetséges az EFI bejegyzést a alaplapra írni, valószínűleg a helyhiány miatt.\\n"
+"\\n"
+"Ellenőrizze az EFI kezelőt, hogy vannak-e törölhető bejegyzések, és próbálja meg újra telepíteni a "
+"rendszert."
 msgid "Open the EFI manager"
 msgstr "Nyissa meg az EFI menedzsert"
 msgid ""
-"Do you want to view or send the installation log file to the cloud?"
-"\\nGenerate a link to send in support groups."
+"Do you want to view or send the installation log file to the cloud?\\n"
+"Generate a link to send in support groups."
 msgstr ""
-"Szeretné megtekinteni vagy elküldeni az telepítési naplófájlt a felhőbe?"
-"\\nGeneráljon egy linket, amelyet támogató csoportokban küldhet el."
+"Szeretné megtekinteni vagy elküldeni az telepítési naplófájlt a felhőbe?\\n"
+"Generáljon egy linket, amelyet támogató csoportokban küldhet el."
 msgid "Action"
 msgstr "Akció"
 msgid "Open"
@@ -200,36 +129,45 @@ msgid "Send to the cloud"
 msgstr "Küldés a felhőbe"
 msgid "Checking the file:"
 msgstr "A fájl ellenőrzése:"
-msgid ""
-"Checking for download or USB drive errors, this may take a few minutes..."
-msgstr ""
-"A letöltési vagy USB meghajtó hibák ellenőrzése, ez néhány percig is "
-"eltarthat..."
+msgid "Checking for download or USB drive errors, this may take a few minutes..."
+msgstr "A letöltési vagy USB meghajtó hibák ellenőrzése, ez néhány percig is eltarthat..."
 msgid "Checking system integrity"
 msgstr "Rendszer integritásának ellenőrzése"
 msgid "Error found, please download the system again or use another USB drive."
-msgstr ""
-"Hiba található, kérjük töltsd le újra a rendszert, vagy használj másik USB "
-"meghajtót."
+msgstr "Hiba található, kérjük töltsd le újra a rendszert, vagy használj másik USB meghajtót."
 msgid "The files are intact."
 msgstr "A fájlok épek."
 msgid "Verification canceled."
 msgstr "Ellenőrzés megszakítva."
-#
+msgid "Error: Integrity Check Failed"
+msgstr "Hiba: Integritásellenőrzés meghiúsult"
+msgid "Oops!"
+msgstr "Hoppá!"
+msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
+msgstr ""
+"Az integritásellenőrzés meghiúsult. Szükséges a rendszer újra letöltése vagy egy másik USB meghajtó "
+"használata."
+msgid ""
+"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
+"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
+msgstr ""
+"<b>Miért?</b> Gondolj az telepítőfájlra, mint egy pontos digitális csomagra. Ez a hiba azt jelenti, "
+"hogy a csomag megsérült a letöltés során, vagy az USB meghajtó maga hibás, és károsítja a fájlt."
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 123
 msgid "Loading packages..."
 msgstr "Csomagok betöltése..."
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 242
 msgid "Failed to load packages: {}"
 msgstr "A csomagok betöltése nem sikerült: {}"
-#
+# 
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/widgets/system_info.py, line: 169
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 320
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 226
@@ -237,483 +175,550 @@ msgstr "A csomagok betöltése nem sikerült: {}"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 259
 msgid "Starting..."
 msgstr "Indulás..."
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Snapshot and backups"
 msgstr "Képernyőkép és biztonsági másolatok"
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Restore restore points of the installed system."
 msgstr "Visszaállítja a telepített rendszer visszaállítási pontjait."
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Start"
 msgstr "Indítás"
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Restore system settings"
 msgstr "Rendszerbeállítások visszaállítása"
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 78
 msgid ""
-"Utility that facilitates the restoration of the installed system, especially "
-"the restoration of the system boot (Grub).\n"
+"Utility that facilitates the restoration of the installed system, especially the restoration of the "
+"system boot (Grub).\n"
 "\n"
-"It can also be used to access the package manager and terminal of the "
-"installed system."
+"It can also be used to access the package manager and terminal of the installed system."
 msgstr ""
-"Olyan segédprogram, amely megkönnyíti a telepített rendszer helyreállítását, "
-"különösen a rendszerindítás (Grub) helyreállítását.\n"
+"Olyan segédprogram, amely megkönnyíti a telepített rendszer helyreállítását, különösen a "
+"rendszerindítás (Grub) helyreállítását.\n"
 "\n"
-"A telepített rendszer csomagkezelőjéhez és termináljához való hozzáférésre "
-"is használható."
-#
+"A telepített rendszer csomagkezelőjéhez és termináljához való hozzáférésre is használható."
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "EFI Entry Manager"
 msgstr "EFI Bejegyzéskezelő"
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 90
-msgid ""
-"Advanced tool to add, remove, or change boot entries in the UEFI firmware."
+msgid "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
 msgstr ""
-"Fejlett eszköz a rendszerindító bejegyzések hozzáadására, eltávolítására "
-"vagy módosítására az UEFI firmware-ben."
-#
+"Fejlett eszköz a rendszerindító bejegyzések hozzáadására, eltávolítására vagy módosítására az UEFI "
+"firmware-ben."
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 147
 msgid ""
-"<a href=\"https://forum.biglinux.com.br\">This is a collaborative system, if "
-"you need help consult our forum.</a>"
+"<a href=\"https://forum.biglinux.com.br\">This is a collaborative system, if you need help consult "
+"our forum.</a>"
 msgstr ""
-"<a href=\"https://forum.biglinux.com.br\">Ez egy együttműködő rendszer, ha "
-"segítségre van szükséged, nézd meg a fórumunkat.</a>"
-#
+"<a href=\"https://forum.biglinux.com.br\">Ez egy együttműködő rendszer, ha segítségre van "
+"szükséged, nézd meg a fórumunkat.</a>"
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Maintenance"
 msgstr "Karbantartás"
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Tools that facilitate the maintenance of the installed system."
 msgstr "Az telepített rendszer karbantartását segítő eszközök."
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Restore"
 msgstr "Visszaállítás"
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Installation"
 msgstr "Telepítés"
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "The system is in live mode, which has limitations."
 msgstr "A rendszer élő módban van, amely korlátozásokkal jár."
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Install it for a complete experience."
 msgstr "Telepítse a teljes élményért."
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Install"
 msgstr "Telepítés"
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Minimal"
 msgstr "Minimális"
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 99
 msgid "Remove pre-selected software to create a lean, personalized system."
 msgstr ""
-"Távolítsa el az előre kiválasztott szoftvereket, hogy egy karcsú, személyre "
-"szabott rendszert hozzon létre."
-#
+"Távolítsa el az előre kiválasztott szoftvereket, hogy egy karcsú, személyre szabott rendszert "
+"hozzon létre."
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 206
 msgid "Checking connection..."
 msgstr "Kapcsolat ellenőrzése..."
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 218
 msgid "Configuring..."
 msgstr "Konfigurálás..."
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 39
 msgid "Important Tips"
 msgstr "Fontos tippek"
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 48
 msgid "Manual Partitioning Recommendations"
 msgstr "Kézi partícionálási ajánlások"
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 49
-msgid ""
-"If you opt for automatic partitioning, these tips will be applied by default."
+msgid "If you opt for automatic partitioning, these tips will be applied by default."
 msgstr ""
-"Ha az automatikus partícionálást választja, ezek a tippek alapértelmezés "
-"szerint alkalmazásra kerülnek."
-#
+"Ha az automatikus partícionálást választja, ezek a tippek alapértelmezés szerint alkalmazásra "
+"kerülnek."
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 54
 msgid "Use BTRFS"
 msgstr "Használj BTRFS-t"
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "This file system allows for automatic compression and restore points."
-msgstr ""
-"Ez a fájlrendszer automatikus tömörítést és visszaállítási pontokat tesz "
-"lehetővé."
-#
+msgstr "Ez a fájlrendszer automatikus tömörítést és visszaállítási pontokat tesz lehetővé."
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 55
 msgid "Keep /boot within the / partition"
 msgstr "Tartsd a /boot-ot a / partíción belül"
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Placing it in a separate partition hampers BTRFS snapshots."
 msgstr "A BTRFS snapshotokat külön partícióba helyezve akadályozza."
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
 msgid "Do not create a SWAP partition"
 msgstr "Ne hozz létre SWAP partíciót."
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
 msgid ""
-"We have implemented dynamic virtual memory management with Zram and SWAP "
-"files. SWAP partitions will not be used."
+"We have implemented dynamic virtual memory management with Zram and SWAP files. SWAP partitions "
+"will not be used."
 msgstr ""
-"Dinamikus virtuális memória kezelését valósítottuk meg Zram és SWAP "
-"fájlokkal. SWAP partíciók nem lesznek használva."
-#
+"Dinamikus virtuális memória kezelését valósítottuk meg Zram és SWAP fájlokkal. SWAP partíciók nem "
+"lesznek használva."
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 213
 #, python-brace-format
 msgid "{distro} Installation"
 msgstr "{distro} Telepítés"
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Back"
 msgstr "Vissza"
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 96
 msgid "Keep All"
 msgstr "Mindent megőrizni"
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 99
 msgid "Remove All"
 msgstr "Összes eltávolítása"
-#
+# 
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 157
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 76
 msgid "System Maintenance"
 msgstr "Rendszerkarbantartás"
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 msgid "Uncheck the programs you want to remove"
 msgstr "Jelölje be azokat a programokat, amelyeket el szeretne távolítani."
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 159
 msgid "Installation Tips"
 msgstr "Telepítési tippek"
-#
+# 
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 46
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 156
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 162
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 99
 msgid "BigLinux Calamares Config"
 msgstr "BigLinux Calamares Beállítás"
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 116
 msgid "Forum"
 msgstr "Fórum"
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 117
 msgid "Documentation"
 msgstr "Dokumentáció"
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 128
 msgid "Preferences not implemented yet"
 msgstr "A beállítások még nincsenek megvalósítva."
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 149
 msgid "OK"
 msgstr "Rendben"
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 167
 msgid "Cancel"
 msgstr "Mégse"
-#
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 168
 msgid "Confirm"
 msgstr "Megerősítjük"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
+msgid "BigLinux Setup"
+msgstr "BigLinux Telepítés"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
+msgid "Language"
+msgstr "Nyelv"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
+msgid "Keyboard"
+msgstr "Billentyűzet"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
+msgid "Desktop Layout"
+msgstr "Asztali elrendezés"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
+msgid "Theme"
+msgstr "Téma"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
+msgid "Choose Your Keyboard Layout"
+msgstr "Válaszd ki a billentyűzetkiosztást"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
+msgid "Search for a language..."
+msgstr "Keresés egy nyelv után..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
+msgid "Could not load language data."
+msgstr "Nem sikerült betölteni a nyelvi adatokat."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
+msgid "Choose a Desktop Layout"
+msgstr "Válasszon egy Asztali Elrendezést"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
+msgid "Settings"
+msgstr "Beállítások"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
+msgid "JamesDSP Audio"
+msgstr "JamesDSP Hangzás"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
+msgid "Enable audio improvements"
+msgstr "Hangjavítások engedélyezése"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
+msgid "Image quality"
+msgstr "Képminőség"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
+msgid "Enable enhanced contrast"
+msgstr "Javított kontraszt engedélyezése"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 228
+msgid "Choose a Theme Style"
+msgstr "Válasszon egy téma stílust"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
+msgid "Choose a System Theme"
+msgstr "Válasszon egy Rendszertémát"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 259
+msgid "Dark Theme"
+msgstr "Sötét téma"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 262
+msgid "Light Theme"
+msgstr "Világos téma"
