@@ -750,6 +750,18 @@ msgstr "Ποιότητα εικόνας"
 msgid "Enable enhanced contrast"
 msgstr "Ενεργοποιήστε την ενισχυμένη αντίθεση"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 227
+msgid "Choose a Theme Style"
+msgstr "Επιλέξτε στυλ θέματος"
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
 msgid "Choose a System Theme"
 msgstr "Επιλέξτε ένα Θέμα Συστήματος"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 258
+msgid "Dark Theme"
+msgstr "Σκοτεινή Θέμα"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 261
+msgid "Light Theme"
+msgstr "Θέμα Φωτός"

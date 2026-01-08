@@ -30,13 +30,24 @@ class ThemeView(BaseItemView):
     __gtype_name__ = "ThemeView"
     sig_theme_selected = GObject.Signal("theme-selected", arg_types=[str])
 
-    def __init__(self, system_service: SystemService, **kwargs):
+    def __init__(self, system_service: SystemService, simplified_mode: bool = False, **kwargs):
         self.jamesdsp_switch = None
         self.contrast_switch = None
         self._system_service = system_service  # Store reference for ICC callbacks
+        self.simplified_mode = simplified_mode
 
         self.jamesdsp_available = system_service.check_jamesdsp_availability()
-        self.contrast_available = system_service.check_enhanced_contrast_availability()
+
+        # Contrast toggle only for GNOME in simplified environments
+        if simplified_mode:
+            desktop_env = system_service.get_desktop_environment()
+            logger.info(f"ThemeView simplified mode - Desktop: {desktop_env}")
+            contrast_check = system_service.check_enhanced_contrast_availability()
+            self.contrast_available = (desktop_env == "GNOME" and contrast_check)
+            logger.info(f"Contrast available in simplified mode: {self.contrast_available} (desktop={desktop_env}, check={contrast_check})")
+        else:
+            self.contrast_available = system_service.check_enhanced_contrast_availability()
+            logger.info(f"Contrast available in full mode: {self.contrast_available}")
 
         total_ram_gb = system_service.get_total_memory_gb()
         self.default_jamesdsp_state = total_ram_gb > 7.0
@@ -53,12 +64,23 @@ class ThemeView(BaseItemView):
 
         # The parent _build_ui created self.main_box and self.flow_box.
         # We can now modify them or add other widgets to the main_box.
-        self.flow_box.set_max_children_per_line(8)
-        self.flow_box.set_min_children_per_line(4)
-        self.flow_box.set_column_spacing(0)
-        self.flow_box.set_row_spacing(12)
-        self.flow_box.set_vexpand(True)
-        self.flow_box.set_valign(Gtk.Align.END)
+        if self.simplified_mode:
+            # Simplified mode: larger cards, centered
+            self.flow_box.set_max_children_per_line(2)
+            self.flow_box.set_min_children_per_line(2)
+            self.flow_box.set_column_spacing(24)
+            self.flow_box.set_row_spacing(24)
+            self.flow_box.set_vexpand(False)
+            self.flow_box.set_halign(Gtk.Align.CENTER)
+            self.flow_box.set_valign(Gtk.Align.CENTER)
+        else:
+            # Full mode: many small cards
+            self.flow_box.set_max_children_per_line(8)
+            self.flow_box.set_min_children_per_line(4)
+            self.flow_box.set_column_spacing(0)
+            self.flow_box.set_row_spacing(12)
+            self.flow_box.set_vexpand(True)
+            self.flow_box.set_valign(Gtk.Align.END)
 
         # --- Settings Section (Bottom) ---
         if self.jamesdsp_available or self.contrast_available:
@@ -202,9 +224,13 @@ class ThemeView(BaseItemView):
     # --- Implementation of BaseItemView abstract methods ---
 
     def get_title(self) -> str:
+        if self.simplified_mode:
+            return _("Choose a Theme Style")
         return _("Choose a System Theme")
 
     def get_items(self) -> list:
+        if self.simplified_mode:
+            return ["light", "dark"]
         return self.system_service.get_available_themes()
 
     def create_item_gobject(self, name: str) -> GObject.Object:
@@ -214,48 +240,84 @@ class ThemeView(BaseItemView):
         self.sig_theme_selected.emit(name)
 
     def create_item_widget(self, item: ThemeListItem):
-        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-        box.set_can_focus(True)
+        if self.simplified_mode:
+            # Simplified mode: large theme cards with icons
+            box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+            box.set_can_focus(True)
+            box.add_css_class("theme-card")
+            box.set_size_request(300, 250)
 
-        outer_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        outer_box.set_hexpand(True)
-        outer_box.set_vexpand(True)
-
-        try:
-            cursor = Gdk.Cursor.new_from_name("pointer", None)
-            outer_box.set_cursor(cursor)
-        except Exception:
-            pass
-
-        if os.path.exists(item.image_path):
             try:
-                pixbuf = GdkPixbuf.Pixbuf.new_from_file(item.image_path)
-                picture = Gtk.Picture.new_for_pixbuf(pixbuf)
-                picture.set_keep_aspect_ratio(True)
-                picture.set_hexpand(True)
-                picture.set_vexpand(True)
-                picture.set_can_shrink(True)
-                picture.set_halign(Gtk.Align.CENTER)
-                picture.set_valign(Gtk.Align.CENTER)
-                picture.set_content_fit(Gtk.ContentFit.CONTAIN)
-            except GLib.Error as e:
-                logger.error(f"Error loading image {item.image_path}: {e}")
-                picture = Gtk.Picture()
+                cursor = Gdk.Cursor.new_from_name("pointer", None)
+                box.set_cursor(cursor)
+            except Exception:
+                pass
+
+            # Icon based on theme type
+            if item.name == "dark":
+                icon_name = "weather-clear-night-symbolic"
+                label_text = _("Dark Theme")
+            else:
+                icon_name = "weather-clear-symbolic"
+                label_text = _("Light Theme")
+
+            icon = Gtk.Image.new_from_icon_name(icon_name)
+            icon.set_pixel_size(120)
+            icon.set_halign(Gtk.Align.CENTER)
+            icon.set_valign(Gtk.Align.CENTER)
+            icon.set_vexpand(True)
+            box.append(icon)
+
+            label = Gtk.Label(label=label_text)
+            label.add_css_class("title-4")
+            label.set_halign(Gtk.Align.CENTER)
+            box.append(label)
+
+            return box
         else:
-            picture = Gtk.Picture.new_from_icon_name("image-missing-symbolic")
+            # Full mode: standard small theme cards
+            box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+            box.set_can_focus(True)
 
-        outer_box.append(picture)
-        box.append(outer_box)
+            outer_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+            outer_box.set_hexpand(True)
+            outer_box.set_vexpand(True)
 
-        label = Gtk.Label()
-        label.set_label(item.name.replace("-", " ").title())
-        label.set_halign(Gtk.Align.CENTER)
-        label.set_margin_top(6)
-        label.set_ellipsize(True)
-        label.set_max_width_chars(25)
-        box.append(label)
+            try:
+                cursor = Gdk.Cursor.new_from_name("pointer", None)
+                outer_box.set_cursor(cursor)
+            except Exception:
+                pass
 
-        return box
+            if os.path.exists(item.image_path):
+                try:
+                    pixbuf = GdkPixbuf.Pixbuf.new_from_file(item.image_path)
+                    picture = Gtk.Picture.new_for_pixbuf(pixbuf)
+                    picture.set_keep_aspect_ratio(True)
+                    picture.set_hexpand(True)
+                    picture.set_vexpand(True)
+                    picture.set_can_shrink(True)
+                    picture.set_halign(Gtk.Align.CENTER)
+                    picture.set_valign(Gtk.Align.CENTER)
+                    picture.set_content_fit(Gtk.ContentFit.CONTAIN)
+                except GLib.Error as e:
+                    logger.error(f"Error loading image {item.image_path}: {e}")
+                    picture = Gtk.Picture()
+            else:
+                picture = Gtk.Picture()
+
+            outer_box.append(picture)
+            box.append(outer_box)
+
+            label = Gtk.Label()
+            label.set_label(item.name.replace("-", " ").title())
+            label.set_halign(Gtk.Align.CENTER)
+            label.set_margin_top(6)
+            label.set_ellipsize(True)
+            label.set_max_width_chars(25)
+            box.append(label)
+
+            return box
 
     def is_jamesdsp_enabled(self) -> bool:
         if self.jamesdsp_switch:
