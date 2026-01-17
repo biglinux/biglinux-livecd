@@ -242,8 +242,10 @@ class SystemService:
         elif desktop_env == "XFCE":
             logger.info("Setting XFCE themes to dark mode")
             self._modify_settings_file(settings_file, {
-                "xsettings": {
-                    "Net/ThemeName": "'adw-gtk3-dark'"
+                "org/gnome/desktop/interface": {
+                    "color-scheme": "'prefer-dark'",
+                    "gtk-theme": "'adw-gtk3-dark'",
+                    "icon-theme": "'bigicons-papient-dark'"
                 }
             })
 
@@ -295,8 +297,10 @@ class SystemService:
         elif desktop_env == "XFCE":
             logger.info("Setting XFCE themes to light mode")
             self._modify_settings_file(settings_file, {
-                "xsettings": {
-                    "Net/ThemeName": "'adw-gtk3'"
+                "org/gnome/desktop/interface": {
+                    "color-scheme": "'default'",
+                    "gtk-theme": "'adw-gtk3'",
+                    "icon-theme": "'bigicons-papient'"
                 }
             })
 
