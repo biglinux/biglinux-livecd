@@ -3,4 +3,12 @@
 post_install() {
     # Enable livecd-tweaks service for boot optimizations
     systemctl enable livecd-tweaks.service
+
+    # Save to compare date of iso creation and date of installation
+    echo $(( $(date +%s) / 86400 )) > /usr/share/bigbashview/bcc/apps/bigbashview-calamares/install_date
 }
+
+pre_remove() {
+    mv -f /usr/bin/calamares-manjaro /usr/bin/calamares
+    mv -f /usr/bin/calamares-manjaro_polkit /usr/bin/calamares_polkit
+} 
