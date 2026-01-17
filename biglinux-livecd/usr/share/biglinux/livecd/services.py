@@ -39,7 +39,6 @@ class SystemService:
         self.tmp_theme_file = "/tmp/big_desktop_theme"
         self.tmp_jamesdsp_file = "/tmp/big_enable_jamesdsp"
         self.tmp_display_profile_file = "/tmp/big_improve_display"
-        self.tmp_simple_theme_file = "/tmp/big_simple_theme"
 
     def _run_command(
         self,
@@ -144,9 +143,24 @@ class SystemService:
         self._run_command(["setxkbmap", layout_cleaned])
 
         home = os.path.expanduser("~")
-        kxkbrc_path = os.path.join(home, ".config", "kxkbrc")
-        kxkbrc_content = f"[Layout]\nLayoutList={layout_cleaned}\nUse=true\n"
-        self._write_user_config_file(kxkbrc_path, kxkbrc_content)
+        desktop_env = self.get_desktop_environment()
+
+        if desktop_env == "Cinnamon":
+            # Configure keyboard layout via dconf settings file for Cinnamon
+            settings_file = self._get_settings_file_path(desktop_env)
+            if settings_file:
+                sources_value = f"[('xkb', '{layout_cleaned}')]"
+                self._modify_settings_file(settings_file, {
+                    "org/gnome/desktop/input-sources": {
+                        "sources": sources_value
+                    }
+                })
+                logger.info(f"Configured keyboard layout '{layout_cleaned}' in settings.cinnamon")
+        else:
+            # KDE/Plasma uses kxkbrc
+            kxkbrc_path = os.path.join(home, ".config", "kxkbrc")
+            kxkbrc_content = f"[Layout]\nLayoutList={layout_cleaned}\nUse=true\n"
+            self._write_user_config_file(kxkbrc_path, kxkbrc_content)
 
     def get_available_desktops(self) -> List[str]:
         """Returns a list of available desktop layout names."""
@@ -185,7 +199,7 @@ class SystemService:
             theme: Either "light" or "dark"
         """
         logger.info(f"Applying simple theme: {theme}")
-        self._write_tmp_file(self.tmp_simple_theme_file, theme)
+        self._write_tmp_file(self.tmp_theme_file, theme)
 
         desktop_env = self.get_desktop_environment()
 
@@ -228,10 +242,15 @@ class SystemService:
         elif desktop_env == "XFCE":
             logger.info("Setting XFCE themes to dark mode")
             self._modify_settings_file(settings_file, {
-                "xsettings": {
-                    "Net/ThemeName": "'adw-gtk3-dark'"
+                "org/gnome/desktop/interface": {
+                    "color-scheme": "'prefer-dark'",
+                    "gtk-theme": "'adw-gtk3-dark'",
+                    "icon-theme": "'bigicons-papient-dark'"
                 }
             })
+            # Apply theme immediately via xfconf-query
+            self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName", "-s", "adw-gtk3-dark"])
+            self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/IconThemeName", "-s", "bigicons-papient-dark"])
 
         # Configure Kvantum theme
         kvantum_dir = os.path.join(home, ".config", "Kvantum")
@@ -281,10 +300,15 @@ class SystemService:
         elif desktop_env == "XFCE":
             logger.info("Setting XFCE themes to light mode")
             self._modify_settings_file(settings_file, {
-                "xsettings": {
-                    "Net/ThemeName": "'adw-gtk3'"
+                "org/gnome/desktop/interface": {
+                    "color-scheme": "'default'",
+                    "gtk-theme": "'adw-gtk3'",
+                    "icon-theme": "'bigicons-papient'"
                 }
             })
+            # Apply theme immediately via xfconf-query
+            self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName", "-s", "adw-gtk3"])
+            self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/IconThemeName", "-s", "bigicons-papient"])
 
         # Configure Kvantum theme
         kvantum_dir = os.path.join(home, ".config", "Kvantum")

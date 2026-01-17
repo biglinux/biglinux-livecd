@@ -3,6 +3,7 @@ Type = File
 Operation = Install
 Operation = Upgrade
 Target = usr/bin/calamares
+Target = usr/bin/calamares-biglinux
 
 [Action]
 Description = Change calamares to biglinux
