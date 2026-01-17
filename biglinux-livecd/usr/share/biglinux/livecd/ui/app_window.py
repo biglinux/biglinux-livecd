@@ -468,6 +468,9 @@ class AppWindow(Adw.ApplicationWindow):
                 self.config.enable_jamesdsp = jamesdsp
                 self.config.enable_enhanced_contrast = contrast
                 logger.info(f"JamesDSP: {jamesdsp}, Enhanced Contrast: {contrast}")
+
+                # Apply JamesDSP settings immediately when theme is selected
+                self.system_service.apply_jamesdsp_settings(jamesdsp)
             else:
                 logger.warning("Could not get theme_view from stack")
 
