@@ -248,6 +248,9 @@ class SystemService:
                     "icon-theme": "'bigicons-papient-dark'"
                 }
             })
+            # Apply theme immediately via xfconf-query
+            self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName", "-s", "adw-gtk3-dark"])
+            self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/IconThemeName", "-s", "bigicons-papient-dark"])
 
         # Configure Kvantum theme
         kvantum_dir = os.path.join(home, ".config", "Kvantum")
@@ -303,6 +306,9 @@ class SystemService:
                     "icon-theme": "'bigicons-papient'"
                 }
             })
+            # Apply theme immediately via xfconf-query
+            self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName", "-s", "adw-gtk3"])
+            self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/IconThemeName", "-s", "bigicons-papient"])
 
         # Configure Kvantum theme
         kvantum_dir = os.path.join(home, ".config", "Kvantum")
