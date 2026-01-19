@@ -9,7 +9,7 @@ from pathlib import Path
 # Application Information
 APP_NAME = "BigLinux Calamares Config"
 APP_ID = "com.biglinux.calamares-config"
-APP_VERSION = "1.0.6"
+APP_VERSION = "1.0.7"
 
 # Paths and Directories
 BASE_DIR = Path(__file__).parent.parent.parent
