@@ -103,6 +103,7 @@ else
         export GDMSESSION=gnome
         export XDG_CURRENT_DESKTOP=gnome
         export QT_SCALE_FACTOR_ROUNDING_POLICY=RoundPreferFloor
+        gsettings set org.gnome.desktop.interface icon-theme bigicons-papient
         gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Classic
         mutter --wayland /usr/bin/gnome-bbv-live-session
     fi
