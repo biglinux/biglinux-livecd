@@ -21,19 +21,15 @@ class Application(Adw.Application):
         """Called once when the application starts."""
         Adw.Application.do_startup(self)
 
-        # Get the default icon theme
+        # Add icon search paths
         icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
 
-        # Add bigicons-papient as the primary search path for icons
-        icon_theme.add_search_path("/usr/share/icons/bigicons-papient/48x48/apps")
-        icon_theme.add_search_path("/usr/share/icons/bigicons-papient/scalable/apps")
-        icon_theme.add_search_path("/usr/share/icons/bigicons-papient/22x22/panel")
-        icon_theme.add_search_path("/usr/share/icons/bigicons-papient/16x16/panel")
-        icon_theme.add_search_path("/usr/share/icons/bigicons-papient-dark/48x48/apps")
-        icon_theme.add_search_path("/usr/share/icons/bigicons-papient-dark/scalable/apps")
-        logger.info("Icon theme search paths configured for bigicons-papient")
+        # Local icons (theme icons)
+        icons_dir = "/usr/share/biglinux/livecd/assets/icons/"
+        if os.path.isdir(icons_dir):
+            icon_theme.add_search_path(icons_dir)
 
-        # Add circle flags path
+        # Circle flags
         flags_dir = "/usr/share/circle-flags-svg/"
         if os.path.isdir(flags_dir):
             icon_theme.add_search_path(flags_dir)

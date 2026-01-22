@@ -255,10 +255,10 @@ class ThemeView(BaseItemView):
 
             # Icon based on theme type
             if item.name == "dark":
-                icon_name = "weather-clear-night-symbolic"
+                icon_name = "weather-clear-night"
                 label_text = _("Dark Theme")
             else:
-                icon_name = "weather-clear-symbolic"
+                icon_name = "weather-clear"
                 label_text = _("Light Theme")
 
             icon = Gtk.Image.new_from_icon_name(icon_name)
