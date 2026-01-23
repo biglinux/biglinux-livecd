@@ -38,13 +38,12 @@ class ThemeView(BaseItemView):
 
         self.jamesdsp_available = system_service.check_jamesdsp_availability()
 
-        # Contrast toggle only for GNOME in simplified environments
+        # Contrast toggle disabled in simplified mode (GNOME/XFCE/Cinnamon)
         if simplified_mode:
             desktop_env = system_service.get_desktop_environment()
             logger.info(f"ThemeView simplified mode - Desktop: {desktop_env}")
-            contrast_check = system_service.check_enhanced_contrast_availability()
-            self.contrast_available = (desktop_env == "GNOME" and contrast_check)
-            logger.info(f"Contrast available in simplified mode: {self.contrast_available} (desktop={desktop_env}, check={contrast_check})")
+            self.contrast_available = False
+            logger.info(f"Contrast disabled in simplified mode for {desktop_env}")
         else:
             self.contrast_available = system_service.check_enhanced_contrast_availability()
             logger.info(f"Contrast available in full mode: {self.contrast_available}")
