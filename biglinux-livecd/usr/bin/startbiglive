@@ -108,6 +108,8 @@ else
         export GDMSESSION=gnome
         export XDG_CURRENT_DESKTOP=gnome
         export QT_SCALE_FACTOR_ROUNDING_POLICY=RoundPreferFloor
+        gsettings set org.gnome.desktop.interface icon-theme bigicons-papient
+        gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Classic
         mutter --wayland /usr/bin/gnome-bbv-live-session
     fi
 fi
@@ -146,7 +148,7 @@ elif [[ "$display_manager" == "gdm" ]]; then
     # GNOME: Clean up and start gnome-session
     rm -f "$HOME/Empty Bash" "$HOME/Empty Desktop File.desktop" "$HOME/Empty File"
     xdg-user-dirs-update
-    /usr/bin/gnome-session
+    startgnome-community
 
 elif [[ -e /usr/share/wayland-sessions/hyprland.desktop ]]; then
     # Hyprland detected

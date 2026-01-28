@@ -21,14 +21,16 @@ class Application(Adw.Application):
         """Called once when the application starts."""
         Adw.Application.do_startup(self)
 
-        # --- PERFORMANCE: Add system-wide icon theme path ---
-        # 1. Get the default icon theme
+        # Add icon search paths
         icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
-        
-        # 2. Define the system path for circle flags
+
+        # Local icons (theme icons)
+        icons_dir = "/usr/share/biglinux/livecd/assets/icons/"
+        if os.path.isdir(icons_dir):
+            icon_theme.add_search_path(icons_dir)
+
+        # Circle flags
         flags_dir = "/usr/share/circle-flags-svg/"
-        
-        # 3. Add the directory to the icon theme's search path
         if os.path.isdir(flags_dir):
             icon_theme.add_search_path(flags_dir)
         else:
