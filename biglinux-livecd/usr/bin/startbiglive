@@ -99,7 +99,6 @@ else
     elif [[ "$display_manager" == "gdm" ]]; then
         export DESKTOP_SESSION=gnome
         export XDG_SESSION_DESKTOP=gnome
-        export QT_QPA_PLATFORMTHEME=kvantum
         export GDMSESSION=gnome
         export XDG_CURRENT_DESKTOP=gnome
         export QT_SCALE_FACTOR_ROUNDING_POLICY=RoundPreferFloor
@@ -162,7 +161,6 @@ elif [[ -e /usr/share/xsessions/xfce.desktop ]]; then
     export XDG_MENU_PREFIX=xfce-
     export DESKTOP_SESSION=xfce
     export XDG_SESSION_DESKTOP=xfce
-    export QT_QPA_PLATFORMTHEME=xfce
     export GDMSESSION=xfce
     export XDG_CURRENT_DESKTOP=XFCE
     startxfce4
