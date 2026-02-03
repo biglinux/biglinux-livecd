@@ -150,8 +150,11 @@ class SystemService:
     def get_efi_manager_command(self) -> Optional[str]:
         """Get the command to manage EFI entries if available."""
         command_name = COMMANDS.get("efi_manager")
-        if command_name and check_command_exists(command_name):
-            return command_name
+        if command_name:
+            # Check availability of the main executable
+            executable = command_name.split()[0]
+            if check_command_exists(executable):
+                return command_name
         return None
 
     def can_manage_efi_entries(self) -> bool:
