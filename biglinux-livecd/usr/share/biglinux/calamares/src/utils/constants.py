@@ -49,7 +49,7 @@ COMMANDS = {
     "efi_check": "[ -d /sys/firmware/efi ]",
     "grub_restore": "biglinux-grub-restore",
     "timeshift": "timeshift-launcher",
-    "efi_manager": "qefientrymanager-launcher",
+    "efi_manager": "bigsudo QEFIEntryManager",
     "calamares": "calamares",
 }
 
