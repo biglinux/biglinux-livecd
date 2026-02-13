@@ -165,13 +165,11 @@ elif [[ -e /usr/share/xsessions/xfce.desktop ]]; then
     export XDG_CURRENT_DESKTOP=XFCE
     startxfce4
 
-elif [[ -e /usr/bin/cinnamon-session-cinnamon ]]; then
-    # Cinnamon
-    export DESKTOP_SESSION=cinnamon
-    export XDG_SESSION_DESKTOP=cinnamon
-    export XDG_CURRENT_DESKTOP=X-Cinnamon
-    export GDMSESSION=cinnamon
-    cinnamon-session-cinnamon
+elif [[ -e /usr/bin/startcinnamon-community ]]; then
+    # Cinnamon: Clean up and start cinnamon-session
+    rm -f "$HOME/Empty Bash" "$HOME/Empty Desktop File.desktop" "$HOME/Empty File"
+    xdg-user-dirs-update
+    startcinnamon-community
 fi
 
 # Restart display manager to apply changes
