@@ -141,6 +141,10 @@ class SystemService:
         layout_cleaned = layout.replace("\\", "")
         self._write_tmp_file(self.tmp_keyboard_file, layout_cleaned)
         self._run_command(["setxkbmap", layout_cleaned])
+        self._run_command(
+            ["localectl", "set-x11-keymap", layout_cleaned, "pc105+inet", "", "terminate:ctrl_alt_bksp"],
+            as_root=True
+        )
 
         home = os.path.expanduser("~")
         desktop_env = self.get_desktop_environment()
@@ -151,6 +155,9 @@ class SystemService:
             if settings_file:
                 sources_value = f"[('xkb', '{layout_cleaned}')]"
                 self._modify_settings_file(settings_file, {
+                    "org/cinnamon/desktop/input-sources": {
+                        "sources": sources_value
+                    },
                     "org/gnome/desktop/input-sources": {
                         "sources": sources_value
                     }
