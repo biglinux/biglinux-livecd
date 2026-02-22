@@ -487,6 +487,11 @@ class SystemService:
                     ],
                     as_root=False,
                 )
+                # Restart the systemd service so JamesDSP actually starts
+                self._run_command(
+                    ["systemctl", "--user", "restart", "jamesdsp-autostart.service"],
+                    as_root=False,
+                )
         else:
             logger.info("JamesDSP not enabled, removing flag file if it exists.")
             self._run_command(["rm", "-f", self.tmp_jamesdsp_file], as_root=False)
@@ -500,6 +505,11 @@ class SystemService:
                         "s|AutoStartEnabled=true|AutoStartEnabled=false|g",
                         jamesdsp_conf,
                     ],
+                    as_root=False,
+                )
+                # Stop the systemd service so JamesDSP actually stops
+                self._run_command(
+                    ["systemctl", "--user", "stop", "jamesdsp-autostart.service"],
                     as_root=False,
                 )
 
@@ -552,6 +562,11 @@ class SystemService:
                     ],
                     as_root=False,
                 )
+                # Restart the systemd service so JamesDSP actually starts
+                self._run_command(
+                    ["systemctl", "--user", "restart", "jamesdsp-autostart.service"],
+                    as_root=False,
+                )
         else:
             logger.info("Applying JamesDSP disabled settings...")
             self._run_command(["rm", "-f", self.tmp_jamesdsp_file], as_root=False)
@@ -563,6 +578,11 @@ class SystemService:
                         "s|AutoStartEnabled=true|AutoStartEnabled=false|g",
                         jamesdsp_conf,
                     ],
+                    as_root=False,
+                )
+                # Stop the systemd service so JamesDSP actually stops
+                self._run_command(
+                    ["systemctl", "--user", "stop", "jamesdsp-autostart.service"],
                     as_root=False,
                 )
 
