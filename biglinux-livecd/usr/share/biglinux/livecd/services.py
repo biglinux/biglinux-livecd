@@ -141,6 +141,10 @@ class SystemService:
         layout_cleaned = layout.replace("\\", "")
         self._write_tmp_file(self.tmp_keyboard_file, layout_cleaned)
         self._run_command(["setxkbmap", layout_cleaned])
+        self._run_command(
+            ["localectl", "set-x11-keymap", layout_cleaned, "pc105+inet", "", "terminate:ctrl_alt_bksp"],
+            as_root=True
+        )
 
         home = os.path.expanduser("~")
         desktop_env = self.get_desktop_environment()
@@ -151,6 +155,9 @@ class SystemService:
             if settings_file:
                 sources_value = f"[('xkb', '{layout_cleaned}')]"
                 self._modify_settings_file(settings_file, {
+                    "org/cinnamon/desktop/input-sources": {
+                        "sources": sources_value
+                    },
                     "org/gnome/desktop/input-sources": {
                         "sources": sources_value
                     }
@@ -480,6 +487,11 @@ class SystemService:
                     ],
                     as_root=False,
                 )
+                # Restart the systemd service so JamesDSP actually starts
+                self._run_command(
+                    ["systemctl", "--user", "restart", "jamesdsp-autostart.service"],
+                    as_root=False,
+                )
         else:
             logger.info("JamesDSP not enabled, removing flag file if it exists.")
             self._run_command(["rm", "-f", self.tmp_jamesdsp_file], as_root=False)
@@ -493,6 +505,11 @@ class SystemService:
                         "s|AutoStartEnabled=true|AutoStartEnabled=false|g",
                         jamesdsp_conf,
                     ],
+                    as_root=False,
+                )
+                # Stop the systemd service so JamesDSP actually stops
+                self._run_command(
+                    ["systemctl", "--user", "stop", "jamesdsp-autostart.service"],
                     as_root=False,
                 )
 
@@ -545,6 +562,11 @@ class SystemService:
                     ],
                     as_root=False,
                 )
+                # Restart the systemd service so JamesDSP actually starts
+                self._run_command(
+                    ["systemctl", "--user", "restart", "jamesdsp-autostart.service"],
+                    as_root=False,
+                )
         else:
             logger.info("Applying JamesDSP disabled settings...")
             self._run_command(["rm", "-f", self.tmp_jamesdsp_file], as_root=False)
@@ -556,6 +578,11 @@ class SystemService:
                         "s|AutoStartEnabled=true|AutoStartEnabled=false|g",
                         jamesdsp_conf,
                     ],
+                    as_root=False,
+                )
+                # Stop the systemd service so JamesDSP actually stops
+                self._run_command(
+                    ["systemctl", "--user", "stop", "jamesdsp-autostart.service"],
                     as_root=False,
                 )
 

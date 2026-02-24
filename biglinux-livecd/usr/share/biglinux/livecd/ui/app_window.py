@@ -156,6 +156,9 @@ class AppWindow(Adw.ApplicationWindow):
                 logo.set_pixel_size(72)
                 logo.set_margin_start(20)
                 logo.set_margin_end(20)
+                logo.update_property(
+                    [Gtk.AccessibleProperty.LABEL], [_("BigLinux Logo")]
+                )
                 header_content_box.append(logo)
 
             self._add_step_button(header_content_box, self.steps[0])
@@ -173,6 +176,9 @@ class AppWindow(Adw.ApplicationWindow):
                 logo.set_pixel_size(72)
                 logo.set_margin_start(20)
                 logo.set_margin_end(20)
+                logo.update_property(
+                    [Gtk.AccessibleProperty.LABEL], [_("BigLinux Logo")]
+                )
                 header_content_box.append(logo)
 
             self._add_step_button(header_content_box, self.steps[2])
@@ -200,6 +206,15 @@ class AppWindow(Adw.ApplicationWindow):
     def _retranslate_ui(self):
         """Updates all visible text in the application to the new language."""
         self.set_title(_("BigLinux Setup"))
+
+        # Update step button accessible labels
+        for step in self.steps:
+            if button := step.get("button"):
+                label_fn = self._STEP_LABELS.get(step["name"])
+                if label_fn:
+                    button.update_property(
+                        [Gtk.AccessibleProperty.LABEL], [label_fn()]
+                    )
 
         # Iterate through all pages in the stack, even non-visible ones
         pages = self.stack.get_pages()
@@ -239,9 +254,16 @@ class AppWindow(Adw.ApplicationWindow):
             elif view_name == "simple_theme":
                 self._add_simple_theme_view()
 
+    _STEP_LABELS = {
+        "language": lambda: _("Language"),
+        "keyboard": lambda: _("Keyboard"),
+        "desktop": lambda: _("Desktop Layout"),
+        "theme": lambda: _("Theme"),
+    }
+
     def _add_step_button(self, box, step_info):
         button = Gtk.Button()
-        button.set_focusable(False)
+        button.set_focusable(True)
         path = os.path.join(ASSETS_DIR, step_info["file"])
         texture = load_svg_texture(path, 48)
         img = Gtk.Image.new_from_paintable(texture)
@@ -250,6 +272,13 @@ class AppWindow(Adw.ApplicationWindow):
         button.set_size_request(64, 64)
         button.connect("clicked", self._on_step_button_clicked, step_info["name"])
         button.add_css_class("flat")
+
+        # Accessible label for screen readers
+        label_fn = self._STEP_LABELS.get(step_info["name"])
+        if label_fn:
+            button.update_property(
+                [Gtk.AccessibleProperty.LABEL], [label_fn()]
+            )
 
         try:
             cursor = Gdk.Cursor.new_from_name("pointer", None)

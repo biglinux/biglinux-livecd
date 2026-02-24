@@ -88,6 +88,10 @@ class KeyboardView(Adw.Bin):
             gfile = Gio.File.new_for_path(image_path)
             img = Gtk.Picture.new_for_file(gfile)
             img.set_content_fit(Gtk.ContentFit.SCALE_DOWN)
+            img.update_property(
+                [Gtk.AccessibleProperty.LABEL],
+                [_("Keyboard layout preview")],
+            )
             center_box.append(img)
 
         return root_box
@@ -124,6 +128,12 @@ class KeyboardView(Adw.Bin):
         """Create a FlowBoxChild with a keyboard layout card."""
         flow_child = Gtk.FlowBoxChild()
         flow_child.layout_data = {"name": name, "layout_id": layout_id}
+
+        # Accessible label for screen readers
+        flow_child.update_property(
+            [Gtk.AccessibleProperty.LABEL],
+            [_("Keyboard layout: %s") % name],
+        )
 
         box = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,

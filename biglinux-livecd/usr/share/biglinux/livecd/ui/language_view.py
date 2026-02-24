@@ -68,6 +68,9 @@ class LanguageView(Adw.Bin):
             placeholder_text=_("Search for a language...")
         )
         self.search_entry.set_focusable(False)
+        self.search_entry.update_property(
+            [Gtk.AccessibleProperty.LABEL], [_("Search for a language...")]
+        )
         self.search_entry.connect("search-changed", self._on_search_changed)
         search_clamp.set_child(self.search_entry)
         root_box.append(search_clamp)
@@ -100,6 +103,9 @@ class LanguageView(Adw.Bin):
     def _retranslate_ui(self):
         """Updates translatable text within the language view."""
         self.search_entry.set_placeholder_text(_("Search for a language..."))
+        self.search_entry.update_property(
+            [Gtk.AccessibleProperty.LABEL], [_("Search for a language...")]
+        )
 
     def _load_languages(self):
         try:
@@ -215,6 +221,12 @@ class LanguageView(Adw.Bin):
         while child:
             content_box.remove(child)
             child = content_box.get_first_child()
+
+        # Accessible label for screen readers
+        root_box.update_property(
+            [Gtk.AccessibleProperty.LABEL],
+            [f"{item.name} ({item.name_orig})"],
+        )
 
         flag_widget = Gtk.Image.new_from_icon_name(item.flag_icon_name)
         flag_widget.set_pixel_size(36)

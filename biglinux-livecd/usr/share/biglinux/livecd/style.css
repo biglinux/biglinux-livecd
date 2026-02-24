@@ -63,6 +63,12 @@ font-weight: 400;
     background-color:  alpha(@theme_selected_bg_color, 0.05);
 }
 
+.settings-card:focus-within,
+.settings-card:focus-visible {
+    outline-color: alpha(@theme_selected_bg_color, 0.7);
+    background-color:  alpha(@theme_selected_bg_color, 0.05);
+}
+
 
 flowbox flowboxchild {
     outline: 2px solid transparent;

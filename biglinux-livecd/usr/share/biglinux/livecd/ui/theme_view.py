@@ -132,6 +132,7 @@ class ThemeView(BaseItemView):
 
     def _create_jamesdsp_card(self, parent_box):
         audio_card = Gtk.Box(css_classes=["settings-card"])
+        audio_card.set_focusable(True)
         try:
             cursor = Gdk.Cursor.new_from_name("pointer", None)
             audio_card.set_cursor(cursor)
@@ -164,6 +165,10 @@ class ThemeView(BaseItemView):
         self.jamesdsp_switch = Gtk.Switch(
             valign=Gtk.Align.CENTER, active=self.default_jamesdsp_state
         )
+        self.jamesdsp_switch.update_relation(
+            [Gtk.AccessibleRelation.LABELLED_BY],
+            [self.jamesdsp_title_label],
+        )
         content.append(self.jamesdsp_switch)
 
         controller = Gtk.GestureClick.new()
@@ -174,6 +179,7 @@ class ThemeView(BaseItemView):
 
     def _create_contrast_card(self, parent_box):
         contrast_card = Gtk.Box(css_classes=["settings-card"])
+        contrast_card.set_focusable(True)
         try:
             cursor = Gdk.Cursor.new_from_name("pointer", None)
             contrast_card.set_cursor(cursor)
@@ -205,6 +211,10 @@ class ThemeView(BaseItemView):
 
         self.contrast_switch = Gtk.Switch(
             valign=Gtk.Align.CENTER, active=self.default_contrast_state
+        )
+        self.contrast_switch.update_relation(
+            [Gtk.AccessibleRelation.LABELLED_BY],
+            [self.contrast_title_label],
         )
         # Connect callback to apply ICC profile immediately when switch state changes
         self.contrast_switch.connect("notify::active", self._on_contrast_switch_toggled)
@@ -259,6 +269,11 @@ class ThemeView(BaseItemView):
             else:
                 icon_name = "weather-clear"
                 label_text = _("Light Theme")
+
+            # Accessible label for screen readers
+            box.update_property(
+                [Gtk.AccessibleProperty.LABEL], [label_text]
+            )
 
             icon = Gtk.Image.new_from_icon_name(icon_name)
             icon.set_pixel_size(120)

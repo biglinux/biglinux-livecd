@@ -1,0 +1,712 @@
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/main.py:17:1
+   |
+15 | gi.require_version("Adw", "1")
+16 |
+17 | from gi.repository import Adw, Gdk, Gtk
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+18 | from src.app import CalamaresApp
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/main.py:18:1
+   |
+17 | from gi.repository import Adw, Gdk, Gtk
+18 | from src.app import CalamaresApp
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/app.py:11:1
+   |
+ 9 | gi.require_version("Adw", "1")
+10 |
+11 | from gi.repository import Gtk, Adw, Gio, GLib
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from .window import CalamaresWindow
+13 | from .utils.i18n import _
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/app.py:12:1
+   |
+11 | from gi.repository import Gtk, Adw, Gio, GLib
+12 | from .window import CalamaresWindow
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 | from .utils.i18n import _
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/app.py:13:1
+   |
+11 | from gi.repository import Gtk, Adw, Gio, GLib
+12 | from .window import CalamaresWindow
+13 | from .utils.i18n import _
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:16:1
+   |
+14 | gi.require_version('Adw', '1')
+15 |
+16 | from gi.repository import Gtk, Adw, GObject
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+17 | from ..utils.i18n import _
+18 | from ..utils.widgets import create_option_card
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:17:1
+   |
+16 | from gi.repository import Gtk, Adw, GObject
+17 | from ..utils.i18n import _
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+18 | from ..utils.widgets import create_option_card
+19 | from ..services import get_system_service, get_install_service
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:18:1
+   |
+16 | from gi.repository import Gtk, Adw, GObject
+17 | from ..utils.i18n import _
+18 | from ..utils.widgets import create_option_card
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+19 | from ..services import get_system_service, get_install_service
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:19:1
+   |
+17 | from ..utils.i18n import _
+18 | from ..utils.widgets import create_option_card
+19 | from ..services import get_system_service, get_install_service
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:14:1
+   |
+12 | gi.require_version('Adw', '1')
+13 |
+14 | from gi.repository import Gtk, Adw, GObject
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+15 | from ..utils.i18n import _
+16 | from ..services import get_system_service, get_install_service
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:15:1
+   |
+14 | from gi.repository import Gtk, Adw, GObject
+15 | from ..utils.i18n import _
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+16 | from ..services import get_system_service, get_install_service
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:16:1
+   |
+14 | from gi.repository import Gtk, Adw, GObject
+15 | from ..utils.i18n import _
+16 | from ..services import get_system_service, get_install_service
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:14:1
+   |
+12 | gi.require_version('Adw', '1')
+13 |
+14 | from gi.repository import Gtk, Adw, GObject, GLib
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+15 | from ..utils.i18n import _
+16 | from ..services import get_package_service, get_install_service
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:15:1
+   |
+14 | from gi.repository import Gtk, Adw, GObject, GLib
+15 | from ..utils.i18n import _
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+16 | from ..services import get_package_service, get_install_service
+17 | from ..services.package_service import Package
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:16:1
+   |
+14 | from gi.repository import Gtk, Adw, GObject, GLib
+15 | from ..utils.i18n import _
+16 | from ..services import get_package_service, get_install_service
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+17 | from ..services.package_service import Package
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:17:1
+   |
+15 | from ..utils.i18n import _
+16 | from ..services import get_package_service, get_install_service
+17 | from ..services.package_service import Package
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:14:1
+   |
+12 | gi.require_version('Adw', '1')
+13 |
+14 | from gi.repository import Gtk, Adw, GObject
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+15 | from ..utils.i18n import _
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:15:1
+   |
+14 | from gi.repository import Gtk, Adw, GObject
+15 | from ..utils.i18n import _
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/utils/widgets.py:13:1
+   |
+11 | gi.require_version('Adw', '1')
+12 |
+13 | from gi.repository import Gtk, Adw
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/window.py:15:1
+   |
+13 | gi.require_version('Adw', '1')
+14 |
+15 | from gi.repository import Gtk, Adw
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+16 | from .utils.i18n import _
+17 | from .utils.constants import DEFAULTS
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/window.py:16:1
+   |
+15 | from gi.repository import Gtk, Adw
+16 | from .utils.i18n import _
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^
+17 | from .utils.constants import DEFAULTS
+18 | from .pages import MainPage, MaintenancePage, MinimalPage, TipsPage
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/window.py:17:1
+   |
+15 | from gi.repository import Gtk, Adw
+16 | from .utils.i18n import _
+17 | from .utils.constants import DEFAULTS
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+18 | from .pages import MainPage, MaintenancePage, MinimalPage, TipsPage
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/calamares/src/window.py:18:1
+   |
+16 | from .utils.i18n import _
+17 | from .utils.constants import DEFAULTS
+18 | from .pages import MainPage, MaintenancePage, MinimalPage, TipsPage
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+
+E402 Module level import not at top of file
+ --> biglinux-livecd/usr/share/biglinux/livecd/application.py:5:1
+  |
+3 | gi.require_version("Gtk", "4.0")
+4 | gi.require_version("Adw", "1")
+5 | import os
+  | ^^^^^^^^^
+6 |
+7 | from gi.repository import Adw, Gdk, Gtk
+  |
+
+E402 Module level import not at top of file
+ --> biglinux-livecd/usr/share/biglinux/livecd/application.py:7:1
+  |
+5 | import os
+6 |
+7 | from gi.repository import Adw, Gdk, Gtk
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+8 | from logging_config import get_logger
+9 | from ui.app_window import AppWindow
+  |
+
+E402 Module level import not at top of file
+ --> biglinux-livecd/usr/share/biglinux/livecd/application.py:8:1
+  |
+7 | from gi.repository import Adw, Gdk, Gtk
+8 | from logging_config import get_logger
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+9 | from ui.app_window import AppWindow
+  |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/application.py:9:1
+   |
+ 7 | from gi.repository import Adw, Gdk, Gtk
+ 8 | from logging_config import get_logger
+ 9 | from ui.app_window import AppWindow
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 |
+11 | logger = get_logger()
+   |
+
+E402 Module level import not at top of file
+ --> biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:6:1
+  |
+4 | gi.require_version("Adw", "1")
+5 | gi.require_version("GdkPixbuf", "2.0")
+6 | from gi.repository import Gtk, Adw, GdkPixbuf, GLib, Gdk
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+7 | from translations import _, set_language
+8 | from config import SetupConfig
+  |
+
+E402 Module level import not at top of file
+ --> biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:7:1
+  |
+5 | gi.require_version("GdkPixbuf", "2.0")
+6 | from gi.repository import Gtk, Adw, GdkPixbuf, GLib, Gdk
+7 | from translations import _, set_language
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+8 | from config import SetupConfig
+9 | from services import SystemService
+  |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:8:1
+   |
+ 6 | from gi.repository import Gtk, Adw, GdkPixbuf, GLib, Gdk
+ 7 | from translations import _, set_language
+ 8 | from config import SetupConfig
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 9 | from services import SystemService
+10 | from ui.language_view import LanguageView
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:9:1
+   |
+ 7 | from translations import _, set_language
+ 8 | from config import SetupConfig
+ 9 | from services import SystemService
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from ui.language_view import LanguageView
+11 | from ui.keyboard_view import KeyboardView
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:10:1
+   |
+ 8 | from config import SetupConfig
+ 9 | from services import SystemService
+10 | from ui.language_view import LanguageView
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from ui.keyboard_view import KeyboardView
+12 | from ui.desktop_view import DesktopView
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:11:1
+   |
+ 9 | from services import SystemService
+10 | from ui.language_view import LanguageView
+11 | from ui.keyboard_view import KeyboardView
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from ui.desktop_view import DesktopView
+13 | from ui.theme_view import ThemeView
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:12:1
+   |
+10 | from ui.language_view import LanguageView
+11 | from ui.keyboard_view import KeyboardView
+12 | from ui.desktop_view import DesktopView
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 | from ui.theme_view import ThemeView
+14 | from logging_config import get_logger
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:13:1
+   |
+11 | from ui.keyboard_view import KeyboardView
+12 | from ui.desktop_view import DesktopView
+13 | from ui.theme_view import ThemeView
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+14 | from logging_config import get_logger
+15 | import os
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:14:1
+   |
+12 | from ui.desktop_view import DesktopView
+13 | from ui.theme_view import ThemeView
+14 | from logging_config import get_logger
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+15 | import os
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:15:1
+   |
+13 | from ui.theme_view import ThemeView
+14 | from logging_config import get_logger
+15 | import os
+   | ^^^^^^^^^
+16 |
+17 | logger = get_logger()
+   |
+
+F541 [*] f-string without any placeholders
+   --> biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:461:25
+    |
+459 |             logger.info(f"Applying simple theme: {theme}")
+460 |             self.system_service.apply_simple_theme(theme)
+461 |             logger.info(f"Simple theme applied successfully")
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+462 |
+463 |             # Get JamesDSP and contrast settings from the theme view
+    |
+help: Remove extraneous `f` prefix
+
+E402 Module level import not at top of file
+ --> biglinux-livecd/usr/share/biglinux/livecd/ui/base_view.py:7:1
+  |
+5 | gi.require_version("Gtk", "4.0")
+6 | gi.require_version("Adw", "1")
+7 | from abc import ABCMeta, abstractmethod
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+8 |
+9 | from gi.repository import Adw, Gdk, GLib, GObject, Gtk
+  |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/base_view.py:9:1
+   |
+ 7 | from abc import ABCMeta, abstractmethod
+ 8 |
+ 9 | from gi.repository import Adw, Gdk, GLib, GObject, Gtk
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from services import SystemService
+11 | from translations import _
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/base_view.py:10:1
+   |
+ 9 | from gi.repository import Adw, Gdk, GLib, GObject, Gtk
+10 | from services import SystemService
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from translations import _
+12 | from logging_config import get_logger
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/base_view.py:11:1
+   |
+ 9 | from gi.repository import Adw, Gdk, GLib, GObject, Gtk
+10 | from services import SystemService
+11 | from translations import _
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from logging_config import get_logger
+   |
+
+F401 [*] `translations._` imported but unused
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/base_view.py:11:26
+   |
+ 9 | from gi.repository import Adw, Gdk, GLib, GObject, Gtk
+10 | from services import SystemService
+11 | from translations import _
+   |                          ^
+12 | from logging_config import get_logger
+   |
+help: Remove unused import: `translations._`
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/base_view.py:12:1
+   |
+10 | from services import SystemService
+11 | from translations import _
+12 | from logging_config import get_logger
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 |
+14 | logger = get_logger()
+   |
+
+F541 [*] f-string without any placeholders
+   --> biglinux-livecd/usr/share/biglinux/livecd/ui/base_view.py:153:28
+    |
+151 |             self.emit_signal(item_name)
+152 |         else:
+153 |             logger.warning(f"BaseItemView: child activated but no item_data found")
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+154 |
+155 |     def _on_flow_leave(self, controller, *args):
+    |
+help: Remove extraneous `f` prefix
+
+E402 Module level import not at top of file
+ --> biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:7:1
+  |
+5 | gi.require_version("Gtk", "4.0")
+6 | gi.require_version("Adw", "1")
+7 | from gi.repository import Gtk, GObject, GLib, GdkPixbuf, Gdk
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+8 | from translations import _
+9 | from services import SystemService
+  |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:8:1
+   |
+ 6 | gi.require_version("Adw", "1")
+ 7 | from gi.repository import Gtk, GObject, GLib, GdkPixbuf, Gdk
+ 8 | from translations import _
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 9 | from services import SystemService
+10 | from ui.base_view import BaseItemView
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:9:1
+   |
+ 7 | from gi.repository import Gtk, GObject, GLib, GdkPixbuf, Gdk
+ 8 | from translations import _
+ 9 | from services import SystemService
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from ui.base_view import BaseItemView
+11 | from logging_config import get_logger
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:10:1
+   |
+ 8 | from translations import _
+ 9 | from services import SystemService
+10 | from ui.base_view import BaseItemView
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from logging_config import get_logger
+12 | import os
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:11:1
+   |
+ 9 | from services import SystemService
+10 | from ui.base_view import BaseItemView
+11 | from logging_config import get_logger
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | import os
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:12:1
+   |
+10 | from ui.base_view import BaseItemView
+11 | from logging_config import get_logger
+12 | import os
+   | ^^^^^^^^^
+13 |
+14 | logger = get_logger()
+   |
+
+E402 Module level import not at top of file
+ --> biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:7:1
+  |
+5 | gi.require_version("Gtk", "4.0")
+6 | gi.require_version("Adw", "1")
+7 | from gi.repository import Gtk, Adw, GObject, GLib, Gdk
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+8 | from translations import _
+9 | import os
+  |
+
+E402 Module level import not at top of file
+ --> biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:8:1
+  |
+6 | gi.require_version("Adw", "1")
+7 | from gi.repository import Gtk, Adw, GObject, GLib, Gdk
+8 | from translations import _
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+9 | import os
+  |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:9:1
+   |
+ 7 | from gi.repository import Gtk, Adw, GObject, GLib, Gdk
+ 8 | from translations import _
+ 9 | import os
+   | ^^^^^^^^^
+10 |
+11 | ASSETS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets"))
+   |
+
+E402 Module level import not at top of file
+ --> biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:5:1
+  |
+3 | gi.require_version("Gtk", "4.0")
+4 | gi.require_version("Adw", "1")
+5 | from gi.repository import Gtk, Adw, Gio, GObject, Gdk, GLib
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+6 | import json
+7 | import unicodedata
+  |
+
+E402 Module level import not at top of file
+ --> biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:6:1
+  |
+4 | gi.require_version("Adw", "1")
+5 | from gi.repository import Gtk, Adw, Gio, GObject, Gdk, GLib
+6 | import json
+  | ^^^^^^^^^^^
+7 | import unicodedata
+8 | from urllib.parse import parse_qs, urlparse
+  |
+
+E402 Module level import not at top of file
+ --> biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:7:1
+  |
+5 | from gi.repository import Gtk, Adw, Gio, GObject, Gdk, GLib
+6 | import json
+7 | import unicodedata
+  | ^^^^^^^^^^^^^^^^^^
+8 | from urllib.parse import parse_qs, urlparse
+9 | from translations import _
+  |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:8:1
+   |
+ 6 | import json
+ 7 | import unicodedata
+ 8 | from urllib.parse import parse_qs, urlparse
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 9 | from translations import _
+10 | from config import LanguageSelection
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:9:1
+   |
+ 7 | import unicodedata
+ 8 | from urllib.parse import parse_qs, urlparse
+ 9 | from translations import _
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from config import LanguageSelection
+11 | from logging_config import get_logger
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:10:1
+   |
+ 8 | from urllib.parse import parse_qs, urlparse
+ 9 | from translations import _
+10 | from config import LanguageSelection
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from logging_config import get_logger
+12 | import os
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:11:1
+   |
+ 9 | from translations import _
+10 | from config import LanguageSelection
+11 | from logging_config import get_logger
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | import os
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:12:1
+   |
+10 | from config import LanguageSelection
+11 | from logging_config import get_logger
+12 | import os
+   | ^^^^^^^^^
+13 |
+14 | logger = get_logger()
+   |
+
+E402 Module level import not at top of file
+ --> biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:7:1
+  |
+5 | gi.require_version("Gtk", "4.0")
+6 | gi.require_version("Adw", "1")
+7 | import os
+  | ^^^^^^^^^
+8 |
+9 | from gi.repository import Gdk, GdkPixbuf, GLib, GObject, Gtk
+  |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:9:1
+   |
+ 7 | import os
+ 8 |
+ 9 | from gi.repository import Gdk, GdkPixbuf, GLib, GObject, Gtk
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+10 | from logging_config import get_logger
+11 | from services import SystemService
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:10:1
+   |
+ 9 | from gi.repository import Gdk, GdkPixbuf, GLib, GObject, Gtk
+10 | from logging_config import get_logger
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+11 | from services import SystemService
+12 | from translations import _
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:11:1
+   |
+ 9 | from gi.repository import Gdk, GdkPixbuf, GLib, GObject, Gtk
+10 | from logging_config import get_logger
+11 | from services import SystemService
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+12 | from translations import _
+13 | from ui.base_view import BaseItemView
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:12:1
+   |
+10 | from logging_config import get_logger
+11 | from services import SystemService
+12 | from translations import _
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+13 | from ui.base_view import BaseItemView
+   |
+
+E402 Module level import not at top of file
+  --> biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:13:1
+   |
+11 | from services import SystemService
+12 | from translations import _
+13 | from ui.base_view import BaseItemView
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+14 |
+15 | logger = get_logger()
+   |
+
+Found 68 errors.
+[*] 3 fixable with the `--fix` option.

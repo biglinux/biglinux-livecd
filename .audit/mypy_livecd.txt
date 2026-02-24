@@ -1,0 +1,78 @@
+--- biglinux-livecd/usr/share/biglinux/livecd/application.py ---
+biglinux-livecd/usr/share/biglinux/livecd/ui/base_view.py:17: error: Unsupported dynamic base class "type"  [misc]
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:26: error: Incompatible default for argument "system_service" (default has type "None", argument has type "SystemService")  [assignment]
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:26: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:26: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:39: error: Incompatible default for argument "system_service" (default has type "None", argument has type "SystemService")  [assignment]
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:39: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:39: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:71: error: Need type annotation for "completed_steps" (hint: "completed_steps: set[<type>] = ...")  [var-annotated]
+Found 4 errors in 2 files (checked 1 source file)
+--- biglinux-livecd/usr/share/biglinux/livecd/config.py ---
+Success: no issues found in 1 source file
+--- biglinux-livecd/usr/share/biglinux/livecd/logging_config.py ---
+Success: no issues found in 1 source file
+--- biglinux-livecd/usr/share/biglinux/livecd/main.py ---
+biglinux-livecd/usr/share/biglinux/livecd/ui/base_view.py:17: error: Unsupported dynamic base class "type"  [misc]
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:26: error: Incompatible default for argument "system_service" (default has type "None", argument has type "SystemService")  [assignment]
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:26: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:26: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:39: error: Incompatible default for argument "system_service" (default has type "None", argument has type "SystemService")  [assignment]
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:39: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:39: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:71: error: Need type annotation for "completed_steps" (hint: "completed_steps: set[<type>] = ...")  [var-annotated]
+Found 4 errors in 2 files (checked 1 source file)
+--- biglinux-livecd/usr/share/biglinux/livecd/services.py ---
+Success: no issues found in 1 source file
+--- biglinux-livecd/usr/share/biglinux/livecd/translations.py ---
+Success: no issues found in 1 source file
+]633;E;for f in biglinux-livecd/usr/lib/calamares/modules/*/main.py\x3b do   echo "--- $f ---" >> .audit/mypy.txt\x3b   mypy --ignore-missing-imports "$f" 2>&1 >> .audit/mypy.txt\x3b done;bd624398-2ea5-45e8-a3a5-a919ee863a7e]633;C--- biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py ---
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:71: error: Need type annotation for "completed_steps" (hint: "completed_steps: set[<type>] = ...")  [var-annotated]
+Found 1 error in 1 file (checked 1 source file)
+--- biglinux-livecd/usr/share/biglinux/livecd/ui/base_view.py ---
+biglinux-livecd/usr/share/biglinux/livecd/ui/base_view.py:17: error: Unsupported dynamic base class "type"  [misc]
+Found 1 error in 1 file (checked 1 source file)
+--- biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py ---
+Success: no issues found in 1 source file
+--- biglinux-livecd/usr/share/biglinux/livecd/ui/init.py ---
+Traceback (most recent call last):
+  File "/usr/sbin/mypy", line 5, in <module>
+    from mypy.__main__ import console_entry
+  File "/usr/lib/python3.14/site-packages/mypy/__main__.py", line 9, in <module>
+    from mypy.main import main, process_options
+  File "/usr/lib/python3.14/site-packages/mypy/main.py", line 17, in <module>
+    from mypy import build, defaults, state, util
+  File "/usr/lib/python3.14/site-packages/mypy/build.py", line 33, in <module>
+    import mypy.semanal_main
+  File "/usr/lib/python3.14/site-packages/mypy/semanal_main.py", line 37, in <module>
+    from mypy.checker import FineGrainedDeferredNode
+  File "/usr/lib/python3.14/site-packages/mypy/checker.py", line 23, in <module>
+    import mypy.checkexpr
+  File "/usr/lib/python3.14/site-packages/mypy/checkexpr.py", line 16, in <module>
+    from mypy import applytype, erasetype, join, message_registry, nodes, operators, types
+  File "/usr/lib/python3.14/site-packages/mypy/applytype.py", line 6, in <module>
+    import mypy.subtypes
+  File "/usr/lib/python3.14/site-packages/mypy/subtypes.py", line 9, in <module>
+    import mypy.constraints
+  File "/usr/lib/python3.14/site-packages/mypy/constraints.py", line 10, in <module>
+    import mypy.typeops
+  File "/usr/lib/python3.14/site-packages/mypy/typeops.py", line 14, in <module>
+    from mypy.checker_state import checker_state
+  File "/usr/lib/python3.14/site-packages/mypy/checker_state.py", line 7, in <module>
+    from mypy.checker_shared import TypeCheckerSharedApi
+  File "/usr/lib/python3.14/site-packages/mypy/checker_shared.py", line 13, in <module>
+    from mypy.errors import ErrorWatcher
+  File "/usr/lib/python3.14/site-packages/mypy/errors.py", line 18, in <module>
+    from mypy.types import Type
+  File "/usr/lib/python3.14/site-packages/mypy/types.py", line 4425, in <module>
+    from mypy.expandtype import ExpandTypeVisitor
+  File "/usr/lib/python3.14/site-packages/mypy/expandtype.py", line 44, in <module>
+    from mypy.typevartuples import split_with_instance
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1333, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1267, in _find_spec
+  File "<frozen importlib._bootstrap_external>", line 1292, in find_spec
+  File "<frozen importlib._bootstrap_external>", line 1266, in _get_spec
+  File "<frozen importlib._bootstrap_external>", line 1372, in find_spec
+  File "<frozen importlib._bootstrap_external>", line 71, in _relax_case
+KeyboardInterrupt

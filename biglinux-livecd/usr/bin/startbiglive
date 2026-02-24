@@ -113,12 +113,14 @@ wait
 #-------------------------------------------------------------------------------
 # Apply language and locale settings from user selection
 #-------------------------------------------------------------------------------
-export LANGUAGE=$(</tmp/big_language).UTF-8
-export LANG=$(</tmp/big_language).UTF-8
-export LC_MESSAGES=$(</tmp/big_language).UTF-8
-export LC_ALL=$(</tmp/big_language).UTF-8
-echo "$(</tmp/big_language)" > "$HOME/.config/user-dirs.locale"
-echo -e "[Formats]\nLANG=$(</tmp/big_language).UTF-8" > "$HOME/.config/plasma-localerc"
+if [[ -f /tmp/big_language ]]; then
+    export LANGUAGE=$(</tmp/big_language).UTF-8
+    export LANG=$(</tmp/big_language).UTF-8
+    export LC_MESSAGES=$(</tmp/big_language).UTF-8
+    export LC_ALL=$(</tmp/big_language).UTF-8
+    echo "$(</tmp/big_language)" > "$HOME/.config/user-dirs.locale"
+    echo -e "[Formats]\nLANG=$(</tmp/big_language).UTF-8" > "$HOME/.config/plasma-localerc"
+fi
 
 #-------------------------------------------------------------------------------
 # Create user directories and installer shortcut on desktop
@@ -131,29 +133,51 @@ chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
 cd ~
 
 #-------------------------------------------------------------------------------
+# Wait for user manager and D-Bus session bus to be ready
+# This prevents cinnamon-session/gnome-session from crashing due to missing D-Bus
+#-------------------------------------------------------------------------------
+_wait_for_user_session() {
+    local max_wait=60
+    local count=0
+    while [[ $count -lt $max_wait ]]; do
+        if systemctl --user is-active default.target &>/dev/null 2>&1; then
+            break
+        fi
+        sleep 1
+        ((count++))
+    done
+    if [[ $count -ge $max_wait ]]; then
+        logger "startbiglive: WARNING - user session not ready after ${max_wait}s, proceeding anyway"
+    fi
+}
+
+_wait_for_user_session
+
+#-------------------------------------------------------------------------------
 # Start appropriate desktop session based on detected environment
+# Using exec to prevent fallthrough to systemctl restart
 #-------------------------------------------------------------------------------
 
 # BigCommunity Core: Launch Calamares directly
 if grep -iq 'BigCommunity-Core.iso' /proc/cmdline; then
-    sudo calamares_polkit
+    exec sudo calamares_polkit
 
 elif [[ "$display_manager" == "gdm" ]]; then
     # GNOME: Clean up and start gnome-session
     rm -f "$HOME/Empty Bash" "$HOME/Empty Desktop File.desktop" "$HOME/Empty File"
     xdg-user-dirs-update
-    startgnome-community
+    exec startgnome-community
 
 elif [[ -e /usr/share/wayland-sessions/hyprland.desktop ]]; then
     # Hyprland detected
-    Hyprland
+    exec Hyprland
 
 elif [[ "$display_manager" == "sddm" || "$display_manager" == "lxdm" ]]; then
     # KDE Plasma
     if [[ "$XDG_SESSION_TYPE" == "x11" ]]; then
-        startkde-biglinux
+        exec startkde-biglinux
     else
-        startkde-biglinux wayland
+        exec startkde-biglinux wayland
     fi
 
 elif [[ -e /usr/share/xsessions/xfce.desktop ]]; then
@@ -163,14 +187,14 @@ elif [[ -e /usr/share/xsessions/xfce.desktop ]]; then
     export XDG_SESSION_DESKTOP=xfce
     export GDMSESSION=xfce
     export XDG_CURRENT_DESKTOP=XFCE
-    startxfce4
+    exec startxfce4
 
 elif [[ -e /usr/bin/startcinnamon-community ]]; then
     # Cinnamon: Clean up and start cinnamon-session
     rm -f "$HOME/Empty Bash" "$HOME/Empty Desktop File.desktop" "$HOME/Empty File"
     xdg-user-dirs-update
-    startcinnamon-community
+    exec startcinnamon-community
 fi
 
-# Restart display manager to apply changes
+# Fallback: restart display manager only if no session starter was found
 sudo systemctl restart "$display_manager"

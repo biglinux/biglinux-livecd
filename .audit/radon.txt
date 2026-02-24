@@ -1,0 +1,8 @@
+biglinux-livecd/usr/share/biglinux/livecd/services.py
+    M 348:4 SystemService._modify_settings_file - D (24)
+biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py
+    M 317:4 AppWindow._on_language_selected - C (12)
+biglinux-livecd/usr/share/biglinux/calamares/src/services/install_service.py
+    M 95:4 InstallService.configure_installation - C (11)
+biglinux-livecd/usr/share/biglinux/calamares/src/utils/shell.py
+    M 43:4 ShellExecutor.execute - C (19)

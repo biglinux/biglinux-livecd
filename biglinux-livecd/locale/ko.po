@@ -642,6 +642,11 @@ msgstr "확인"
 msgid "BigLinux Setup"
 msgstr "빅리눅스 설정"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 160
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 180
+msgid "BigLinux Logo"
+msgstr "빅리눅스 로고"
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
 msgid "Language"
 msgstr "언어"
@@ -661,6 +666,15 @@ msgstr "테마"
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
 msgid "Choose Your Keyboard Layout"
 msgstr "키보드 레이아웃 선택"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 93
+msgid "Keyboard layout preview"
+msgstr "키보드 레이아웃 미리보기"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 135
+#, python-format
+msgid "Keyboard layout: %s"
+msgstr "키보드 레이아웃: %s"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
 msgid "Search for a language..."
