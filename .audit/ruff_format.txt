@@ -1,0 +1,24 @@
+Would reformat: biglinux-livecd/usr/lib/calamares/modules/btrfs/main.py
+Would reformat: biglinux-livecd/usr/lib/calamares/modules/grubcfg-fix/main.py
+Would reformat: biglinux-livecd/usr/share/biglinux/calamares/main.py
+Would reformat: biglinux-livecd/usr/share/biglinux/calamares/src/app.py
+Would reformat: biglinux-livecd/usr/share/biglinux/calamares/src/pages/__init__.py
+Would reformat: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py
+Would reformat: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py
+Would reformat: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py
+Would reformat: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py
+Would reformat: biglinux-livecd/usr/share/biglinux/calamares/src/services/__init__.py
+Would reformat: biglinux-livecd/usr/share/biglinux/calamares/src/services/install_service.py
+Would reformat: biglinux-livecd/usr/share/biglinux/calamares/src/utils/i18n.py
+Would reformat: biglinux-livecd/usr/share/biglinux/calamares/src/utils/widgets.py
+Would reformat: biglinux-livecd/usr/share/biglinux/calamares/src/window.py
+Would reformat: biglinux-livecd/usr/share/biglinux/livecd/config.py
+Would reformat: biglinux-livecd/usr/share/biglinux/livecd/logging_config.py
+Would reformat: biglinux-livecd/usr/share/biglinux/livecd/main.py
+Would reformat: biglinux-livecd/usr/share/biglinux/livecd/services.py
+Would reformat: biglinux-livecd/usr/share/biglinux/livecd/translations.py
+Would reformat: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py
+Would reformat: biglinux-livecd/usr/share/biglinux/livecd/ui/base_view.py
+Would reformat: biglinux-livecd/usr/share/biglinux/livecd/ui/init.py
+Would reformat: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py
+23 files would be reformatted, 11 files already formatted

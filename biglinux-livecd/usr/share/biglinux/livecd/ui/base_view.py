@@ -116,6 +116,11 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
             flow_child.set_can_focus(True)
             flow_child.item_data = item_obj
 
+            # Accessible label for screen readers
+            flow_child.update_property(
+                [Gtk.AccessibleProperty.LABEL], [item_obj.name]
+            )
+
             # Hover-to-select functionality
             item_motion_controller = Gtk.EventControllerMotion.new()
             item_motion_controller.connect("enter", self._on_item_enter, flow_child)

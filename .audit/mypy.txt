@@ -1,0 +1,19 @@
+=== LIVECD ===
+biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py: error: Source file found twice under different module names: "language_view" and "ui.language_view"
+biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#mapping-file-paths-to-modules for more info
+biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py: note: Common resolutions include: a) adding `__init__.py` somewhere, b) using `--explicit-package-bases` or adjusting MYPYPATH
+Found 1 error in 1 file (errors prevented further checking)
+
+=== CALAMARES ===
+biglinux-livecd/usr/share/biglinux/calamares/src/app.py: error: Source file found twice under different module names: "app" and "src.app"
+biglinux-livecd/usr/share/biglinux/calamares/src/app.py: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#mapping-file-paths-to-modules for more info
+biglinux-livecd/usr/share/biglinux/calamares/src/app.py: note: Common resolutions include: a) adding `__init__.py` somewhere, b) using `--explicit-package-bases` or adjusting MYPYPATH
+Found 1 error in 1 file (errors prevented further checking)
+
+=== CALAMARES MODULES ===
+--- biglinux-livecd/usr/lib/calamares/modules/btrfs-fix/main.py ---
+Interrupted
+--- biglinux-livecd/usr/lib/calamares/modules/btrfs/main.py ---
+Interrupted
+--- biglinux-livecd/usr/lib/calamares/modules/grubcfg-fix/main.py ---
+Interrupted
