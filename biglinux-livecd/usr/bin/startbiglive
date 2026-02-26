@@ -153,6 +153,9 @@ _wait_for_user_session() {
 
 _wait_for_user_session
 
+# Fix to KDE Plasma using en_US
+rm ~/.cache/ksycoca*
+
 #-------------------------------------------------------------------------------
 # Start appropriate desktop session based on detected environment
 # Using exec to prevent fallthrough to systemctl restart
