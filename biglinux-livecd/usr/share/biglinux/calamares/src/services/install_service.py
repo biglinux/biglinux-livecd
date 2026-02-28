@@ -226,9 +226,9 @@ unpack:
 
 backend: pacman
 
-skip_if_no_internet: false
-update_db: true
-update_system: true
+skip_if_no_internet: true
+update_db: false
+update_system: false
 
 pacman:
     num_retries: 10
