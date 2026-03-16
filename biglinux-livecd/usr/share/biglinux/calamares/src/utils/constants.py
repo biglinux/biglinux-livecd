@@ -33,7 +33,7 @@ TEMP_FILES = {
     "wait_install": TEMP_DIR / "biglinux-wait-install",
     "start_calamares": TEMP_DIR / "start_calamares",
     "installed_packages": TEMP_DIR / "big-installed-packages.txt",
-    "available_to_remove": TEMP_DIR / "pkgAvaliableToRemove.txt",
+    "available_to_remove": TEMP_DIR / "pkgAvailableToRemove.txt",
     "packages_to_remove": TEMP_DIR / "listPkgsRemove",
     "packages_no_remove": TEMP_DIR / "listPkgsNoRemove.txt",
     "package_remove_list": TEMP_DIR / "packageRemove",
