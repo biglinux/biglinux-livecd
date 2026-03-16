@@ -14,7 +14,317 @@
 #===============================================================================
 
 #-------------------------------------------------------------------------------
-# Detect active display manager
+# Logging helper
+#-------------------------------------------------------------------------------
+_log() {
+    logger -t "startbiglive" "$*"
+}
+
+#-------------------------------------------------------------------------------
+# Anti-loop protection: prevent infinite SDDM restart loops
+# Tracks how many times startbiglive has been invoked. If the session keeps
+# failing and SDDM's Relogin=true restarts it, we stop after a few attempts
+# to avoid burning CPU and confusing the user.
+#-------------------------------------------------------------------------------
+_ATTEMPT_FILE="/tmp/startbiglive-attempts"
+_MAX_ATTEMPTS=3
+_ATTEMPT_COOLDOWN=120  # reset counter if last attempt was this many seconds ago
+
+_check_loop_protection() {
+    local now attempts last_time
+    now=$(date +%s)
+
+    if [[ -f "$_ATTEMPT_FILE" ]]; then
+        read -r attempts last_time < "$_ATTEMPT_FILE" 2>/dev/null
+        attempts=${attempts:-0}
+        last_time=${last_time:-0}
+        local elapsed=$(( now - last_time ))
+
+        # Reset counter if enough time has passed (system may have recovered)
+        if [[ $elapsed -gt $_ATTEMPT_COOLDOWN ]]; then
+            attempts=0
+        fi
+
+        if [[ $attempts -ge $_MAX_ATTEMPTS ]]; then
+            _log "ERROR - Session failed $_MAX_ATTEMPTS times in a row. Stopping to prevent loop."
+            echo ""
+            echo "╔══════════════════════════════════════════════════════════════╗"
+            echo "║  BigLinux Live - Failed to start graphical session           ║"
+            echo "╠══════════════════════════════════════════════════════════════╣"
+            echo "║                                                              ║"
+            echo "║  The system tried to start $_MAX_ATTEMPTS times without success.     ║"
+            echo "║                                                              ║"
+            echo "║  This may be caused by graphics hardware/driver              ║"
+            echo "║  incompatibility. Possible solutions:                        ║"
+            echo "║                                                              ║"
+            echo "║  1. Restart the session manager:                             ║"
+            echo "║     sudo systemctl restart $display_manager                  ║"
+            echo "║                                                              ║"
+            echo "║  2. Check the error logs:                                    ║"
+            echo "║     journalctl -b -t startbiglive                            ║"
+            echo "║                                                              ║"
+            echo "║  3. Reboot and try the free drivers boot option              ║"
+            echo "║                                                              ║"
+            echo "║  To access a terminal, press Ctrl+Alt+F2                     ║"
+            echo "╚══════════════════════════════════════════════════════════════╝"
+            echo ""
+            # Keep the process alive so SDDM doesn't restart it
+            sleep infinity
+            exit 1
+        fi
+    else
+        attempts=0
+    fi
+
+    echo "$(( attempts + 1 )) $now" > "$_ATTEMPT_FILE"
+    _log "Session attempt $(( attempts + 1 ))/$_MAX_ATTEMPTS"
+}
+
+# Clear loop counter (called when session starts successfully)
+_clear_loop_counter() {
+    rm -f "$_ATTEMPT_FILE"
+}
+
+#-------------------------------------------------------------------------------
+# Wait for GPU/DRM device to be available
+# On some hardware, the GPU takes a moment after boot to become accessible
+#-------------------------------------------------------------------------------
+_wait_for_gpu() {
+    local max_wait=15
+    local count=0
+    while [[ $count -lt $max_wait ]]; do
+        if ls /dev/dri/card* &>/dev/null; then
+            _log "GPU device ready after ${count}s"
+            return 0
+        fi
+        sleep 1
+        ((count++))
+    done
+    _log "WARNING - GPU device not found after ${max_wait}s"
+    return 1
+}
+
+#-------------------------------------------------------------------------------
+# Detect multi-GPU configuration (any combination: NVIDIA+Intel, NVIDIA+AMD,
+# Intel+AMD, etc.) and identify the primary (boot) GPU for fallback
+#-------------------------------------------------------------------------------
+_MULTI_GPU=0
+_PRIMARY_CARD=""
+_HAS_NVIDIA_PROPRIETARY=0
+
+_detect_multi_gpu() {
+    local cards=()
+    local card
+
+    # Enumerate only base card devices (card0, card1, ...) not outputs (card0-HDMI-1)
+    for card in /sys/class/drm/card[0-9]; do
+        [[ -e "$card/device/boot_vga" ]] && cards+=("$card")
+    done
+
+    if [[ ${#cards[@]} -lt 2 ]]; then
+        _log "Single GPU detected"
+        return
+    fi
+
+    _MULTI_GPU=1
+
+    # Check for NVIDIA proprietary driver (needs special EGL handling)
+    if lsmod | grep -q '^nvidia '; then
+        _HAS_NVIDIA_PROPRIETARY=1
+    fi
+
+    # Find the primary (boot) GPU — this is the integrated one in hybrid setups
+    # boot_vga=1 indicates the GPU selected by firmware for initial display
+    for card in "${cards[@]}"; do
+        if [[ "$(cat "$card/device/boot_vga" 2>/dev/null)" == "1" ]]; then
+            local card_name
+            card_name=$(basename "$card")
+            _PRIMARY_CARD="/dev/dri/${card_name}"
+            local driver_name
+            driver_name=$(basename "$(readlink "$card/device/driver" 2>/dev/null)" 2>/dev/null)
+            _log "Multi-GPU detected: primary=$card_name ($driver_name), nvidia_proprietary=$_HAS_NVIDIA_PROPRIETARY"
+            return
+        fi
+    done
+
+    # Fallback: if no boot_vga found, try switcherooctl
+    if command -v switcherooctl &>/dev/null; then
+        local default_gpu
+        default_gpu=$(switcherooctl list 2>/dev/null | grep -B1 'Default:.*yes' | head -1 | grep -oP '/dev/dri/card\d+')
+        if [[ -n "$default_gpu" ]]; then
+            _PRIMARY_CARD="$default_gpu"
+            _log "Multi-GPU: primary GPU from switcherooctl: $_PRIMARY_CARD"
+            return
+        fi
+    fi
+
+    # Last resort: use card0 (which is typically the primary/integrated GPU)
+    _PRIMARY_CARD="/dev/dri/card0"
+    _log "Multi-GPU detected: using card0 as primary (could not determine boot_vga)"
+}
+
+#-------------------------------------------------------------------------------
+# Start kwin_wayland compositor with health check and multi-stage fallback
+# Fallback chain:
+#   1. Default hardware rendering
+#   2. Multi-GPU: primary (integrated) GPU only, with Mesa EGL if NVIDIA present
+#   3. Software rendering via llvmpipe
+# Returns 0 if the wizard completed, 1 if kwin could not start at all
+#-------------------------------------------------------------------------------
+_start_kwin_wizard() {
+    local wizard_cmd="python /usr/share/biglinux/livecd/main.py"
+    local kwin_args="--drm --no-lockscreen --xwayland"
+    local kwin_pid
+
+    _detect_multi_gpu
+
+    # Attempt 1: hardware-accelerated rendering (default GPU selection)
+    _log "Starting kwin_wayland (hardware rendering)..."
+    dbus-run-session kwin_wayland $kwin_args "$wizard_cmd" &
+    kwin_pid=$!
+
+    # Give kwin a few seconds to initialize; check it didn't crash immediately
+    sleep 3
+    if kill -0 "$kwin_pid" 2>/dev/null; then
+        _log "kwin_wayland started successfully (PID=$kwin_pid)"
+        wait "$kwin_pid"
+        return 0
+    fi
+
+    # Attempt 2: Multi-GPU — force primary (integrated) GPU only
+    if [[ $_MULTI_GPU -eq 1 && -n "$_PRIMARY_CARD" ]]; then
+        _log "WARNING - kwin_wayland (default) exited early, trying primary GPU only ($_PRIMARY_CARD)..."
+
+        local env_vars=()
+        env_vars+=("KWIN_DRM_DEVICES=$_PRIMARY_CARD")
+
+        # If NVIDIA proprietary driver is present, force Mesa EGL to avoid
+        # the NVIDIA EGL driver being selected for the integrated GPU
+        if [[ $_HAS_NVIDIA_PROPRIETARY -eq 1 && -e /usr/share/glvnd/egl_vendor.d/50_mesa.json ]]; then
+            env_vars+=("__EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json")
+        fi
+
+        env "${env_vars[@]}" \
+        dbus-run-session kwin_wayland $kwin_args "$wizard_cmd" &
+        kwin_pid=$!
+
+        sleep 3
+        if kill -0 "$kwin_pid" 2>/dev/null; then
+            _log "kwin_wayland started on primary GPU (PID=$kwin_pid)"
+            wait "$kwin_pid"
+            return 0
+        fi
+
+        _log "WARNING - kwin_wayland on primary GPU also failed"
+    else
+        _log "WARNING - kwin_wayland (hardware) exited early"
+    fi
+
+    # Attempt 3: software rendering via llvmpipe
+    _log "Retrying with software rendering..."
+
+    LIBGL_ALWAYS_SOFTWARE=1 \
+    GALLIUM_DRIVER=llvmpipe \
+    dbus-run-session kwin_wayland $kwin_args "$wizard_cmd" &
+    kwin_pid=$!
+
+    sleep 3
+    if kill -0 "$kwin_pid" 2>/dev/null; then
+        _log "kwin_wayland started with software rendering (PID=$kwin_pid)"
+        wait "$kwin_pid"
+        return 0
+    fi
+
+    _log "ERROR - kwin_wayland failed with both hardware and software rendering"
+    return 1
+}
+
+#-------------------------------------------------------------------------------
+# Start mutter compositor (GNOME) with health check and multi-stage fallback
+# Fallback chain:
+#   1. Default hardware rendering
+#   2. Multi-GPU: force copy mode + simple KMS + Mesa EGL if NVIDIA present
+#   3. Software rendering via llvmpipe
+# Returns 0 if the wizard completed, 1 if mutter could not start at all
+#-------------------------------------------------------------------------------
+_start_mutter_wizard() {
+    local wizard_cmd="/usr/bin/gnome-bbv-live-session"
+    local mutter_pid
+
+    _detect_multi_gpu
+
+    # Attempt 1: hardware-accelerated rendering (default)
+    _log "Starting mutter (hardware rendering)..."
+    mutter --wayland "$wizard_cmd" &
+    mutter_pid=$!
+
+    sleep 3
+    if kill -0 "$mutter_pid" 2>/dev/null; then
+        _log "mutter started successfully (PID=$mutter_pid)"
+        wait "$mutter_pid"
+        return 0
+    fi
+
+    # Attempt 2: Multi-GPU — force simple KMS and copy mode
+    if [[ $_MULTI_GPU -eq 1 ]]; then
+        _log "WARNING - mutter (default) exited early, trying multi-GPU workarounds..."
+
+        local env_vars=()
+        env_vars+=("MUTTER_DEBUG_FORCE_KMS_MODE=simple")
+        env_vars+=("MUTTER_DEBUG_MULTI_GPU_FORCE_COPY_MODE=1")
+
+        # If NVIDIA proprietary driver is present, force Mesa EGL
+        if [[ $_HAS_NVIDIA_PROPRIETARY -eq 1 && -e /usr/share/glvnd/egl_vendor.d/50_mesa.json ]]; then
+            env_vars+=("__EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json")
+        fi
+
+        env "${env_vars[@]}" \
+        mutter --wayland "$wizard_cmd" &
+        mutter_pid=$!
+
+        sleep 3
+        if kill -0 "$mutter_pid" 2>/dev/null; then
+            _log "mutter started with multi-GPU workarounds (PID=$mutter_pid)"
+            wait "$mutter_pid"
+            return 0
+        fi
+
+        _log "WARNING - mutter with multi-GPU workarounds also failed"
+    else
+        _log "WARNING - mutter (hardware) exited early"
+    fi
+
+    # Attempt 3: software rendering via llvmpipe
+    _log "Retrying mutter with software rendering..."
+
+    LIBGL_ALWAYS_SOFTWARE=1 \
+    GALLIUM_DRIVER=llvmpipe \
+    mutter --wayland "$wizard_cmd" &
+    mutter_pid=$!
+
+    sleep 3
+    if kill -0 "$mutter_pid" 2>/dev/null; then
+        _log "mutter started with software rendering (PID=$mutter_pid)"
+        wait "$mutter_pid"
+        return 0
+    fi
+
+    _log "ERROR - mutter failed with both hardware and software rendering"
+    return 1
+}
+
+#-------------------------------------------------------------------------------
+# Apply default configuration when wizard could not run
+# This ensures the system can still boot to a desktop even if the wizard fails
+#-------------------------------------------------------------------------------
+_apply_default_config() {
+    _log "Applying default configuration (wizard was skipped)"
+    echo 'en_US' > /tmp/big_language
+    echo "breeze" > /tmp/big_desktop_theme
+}
+
+#-------------------------------------------------------------------------------
+# Detect active display manager (must run before loop protection for messages)
 #-------------------------------------------------------------------------------
 for dm in sddm gdm lightdm lxdm; do
     if systemctl status "$dm" &>/dev/null; then
@@ -23,6 +333,8 @@ for dm in sddm gdm lightdm lxdm; do
     fi
 done
 display_manager="${display_manager:-unknown}"
+
+_check_loop_protection
 
 #-------------------------------------------------------------------------------
 # X11: Configure multi-monitor mirroring
@@ -83,7 +395,9 @@ fi
 # Different launch methods depending on session type and display manager
 #-------------------------------------------------------------------------------
 if [[ "$XDG_SESSION_TYPE" == "x11" ]]; then
-    systemctl --user start plasma-kglobalaccel.service
+    if [[ "$display_manager" == "sddm" ]]; then
+        systemctl --user start plasma-kglobalaccel.service 2>/dev/null
+    fi
     python /usr/share/biglinux/livecd/main.py
 else
     # Wayland session: launch appropriate compositor with setup wizard
@@ -94,8 +408,16 @@ else
         export GDMSESSION=KDE
         export XDG_CURRENT_DESKTOP=KDE
         export QT_SCALE_FACTOR_ROUNDING_POLICY=RoundPreferFloor
-        systemctl --user start plasma-kglobalaccel.service
-        dbus-run-session kwin_wayland --drm --no-lockscreen --xwayland 'python /usr/share/biglinux/livecd/main.py'
+        systemctl --user start plasma-kglobalaccel.service 2>/dev/null
+
+        # Wait for GPU to be ready before starting compositor
+        _wait_for_gpu
+
+        # Start kwin_wayland with health check and software rendering fallback
+        if ! _start_kwin_wizard; then
+            _log "Wizard could not start, applying defaults and continuing to desktop"
+            _apply_default_config
+        fi
     elif [[ "$display_manager" == "gdm" ]]; then
         export DESKTOP_SESSION=gnome
         export XDG_SESSION_DESKTOP=gnome
@@ -104,7 +426,15 @@ else
         export QT_SCALE_FACTOR_ROUNDING_POLICY=RoundPreferFloor
         gsettings set org.gnome.desktop.interface icon-theme bigicons-papient
         gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Classic
-        mutter --wayland /usr/bin/gnome-bbv-live-session
+
+        # Wait for GPU to be ready before starting compositor
+        _wait_for_gpu
+
+        # Start mutter with health check and software rendering fallback
+        if ! _start_mutter_wizard; then
+            _log "Wizard could not start (GNOME), applying defaults and continuing to desktop"
+            _apply_default_config
+        fi
     fi
 fi
 
@@ -139,16 +469,45 @@ cd ~
 _wait_for_user_session() {
     local max_wait=60
     local count=0
+
+    # Ensure XDG_RUNTIME_DIR is set (needed for systemctl --user)
+    if [[ -z "$XDG_RUNTIME_DIR" ]]; then
+        export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+        _log "Set XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR"
+    fi
+
+    # Ensure D-Bus session bus address is available
+    if [[ -z "$DBUS_SESSION_BUS_ADDRESS" && -S "$XDG_RUNTIME_DIR/bus" ]]; then
+        export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+        _log "Set DBUS_SESSION_BUS_ADDRESS from runtime dir"
+    fi
+
     while [[ $count -lt $max_wait ]]; do
         if systemctl --user is-active default.target &>/dev/null 2>&1; then
-            break
+            _log "User session ready after ${count}s"
+            return 0
         fi
         sleep 1
         ((count++))
     done
-    if [[ $count -ge $max_wait ]]; then
-        logger "startbiglive: WARNING - user session not ready after ${max_wait}s, proceeding anyway"
-    fi
+
+    _log "WARNING - user session not ready after ${max_wait}s, attempting rescue..."
+
+    # Rescue attempt: try to explicitly start the user target
+    systemctl --user start default.target 2>/dev/null
+
+    # Give it a few more seconds
+    local rescue_wait=10
+    for (( i=0; i<rescue_wait; i++ )); do
+        if systemctl --user is-active default.target &>/dev/null 2>&1; then
+            _log "User session recovered after rescue attempt"
+            return 0
+        fi
+        sleep 1
+    done
+
+    _log "WARNING - user session could not be started, proceeding anyway"
+    return 1
 }
 
 _wait_for_user_session

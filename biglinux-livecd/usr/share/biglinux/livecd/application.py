@@ -13,7 +13,7 @@ logger = get_logger()
 
 class Application(Adw.Application):
     def __init__(self, system_service, **kwargs):
-        super().__init__(application_id="biglinux-livecd", **kwargs)
+        super().__init__(application_id="br.com.biglinux.livecd", **kwargs)
         self.system_service = system_service
         self.win = None
 
