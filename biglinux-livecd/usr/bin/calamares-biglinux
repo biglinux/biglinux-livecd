@@ -17,7 +17,7 @@
 # Translation Setup
 #-------------------------------------------------------------------------------
 export TEXTDOMAINDIR="/usr/share/locale"
-export TEXTDOMAIN=calamares-biglinux
+export TEXTDOMAIN=biglinux-livecd
 
 user=$(ls /home)
 
@@ -108,7 +108,7 @@ requirements:
       - root
 
 geoip:
-    style:    "none"
+    style:    "xml"
     url:      "https://geoip.kde.org/v1/ubiquity"
     selector: "CountryCode"
       ' > /etc/calamares/modules/welcome.conf
