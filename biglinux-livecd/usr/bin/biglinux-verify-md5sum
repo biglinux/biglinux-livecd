@@ -16,7 +16,7 @@
 #-------------------------------------------------------------------------------
 LANGUAGE=$LANG:en
 export TEXTDOMAINDIR="/usr/share/locale"
-export TEXTDOMAIN=calamares-biglinux
+export TEXTDOMAIN=biglinux-livecd
 
 #-------------------------------------------------------------------------------
 # Detect ISO Mount Location
