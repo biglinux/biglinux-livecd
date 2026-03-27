@@ -14,6 +14,22 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
+msgid "Error: Integrity Check Failed"
+msgstr "Błąd: Sprawdzenie integralności nie powiodło się"
+msgid "Oops!"
+msgstr "Przepraszam!"
+msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
+msgstr ""
+"Sprawdzenie integralności nie powiodło się. Należy pobrać system ponownie lub użyć innego napędu "
+"USB."
+msgid ""
+"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
+"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
+msgstr ""
+"<b>Dlaczego?</b> Pomyśl o pliku instalacyjnym jako o precyzyjnej paczce cyfrowej. Ten błąd oznacza, "
+"że paczka została uszkodzona podczas pobierania lub sam napęd USB jest wadliwy i uszkadza plik."
+msgid "Close"
+msgstr "Zamknij"
 msgid "Please wait..."
 msgstr "Proszę czekać..."
 msgid "Checking the integrity of the download and storage device..."
@@ -51,8 +67,6 @@ msgstr ""
 # 
 msgid "Continue"
 msgstr "Kontynuuj"
-msgid "Close"
-msgstr "Zamknij"
 msgid "Do you want to proceed with the installation in EFI mode?"
 msgstr "Czy chcesz kontynuować instalację w trybie EFI?"
 msgid ""
@@ -139,20 +153,192 @@ msgid "The files are intact."
 msgstr "Pliki są nietknięte."
 msgid "Verification canceled."
 msgstr "Weryfikacja anulowana."
-msgid "Error: Integrity Check Failed"
-msgstr "Błąd: Sprawdzenie integralności nie powiodło się"
-msgid "Oops!"
-msgstr "Przepraszam!"
-msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
-msgstr ""
-"Sprawdzenie integralności nie powiodło się. Należy pobrać system ponownie lub użyć innego napędu "
-"USB."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
+msgid "Settings"
+msgstr "Ustawienia"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
+msgid "JamesDSP Audio"
+msgstr "JamesDSP Audio"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
+msgid "Enable audio improvements"
+msgstr "Włącz ulepszenia audio"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
+msgid "Image quality"
+msgstr "Jakość obrazu"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
+msgid "Enable enhanced contrast"
+msgstr "Włącz ulepszony kontrast"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 143
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 203
+msgid "press Enter or Space to toggle"
+msgstr "naciśnij Enter lub Spację, aby przełączyć"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 269
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 282
+msgid "enabled"
+msgstr "włączony"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 269
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 282
+msgid "disabled"
+msgstr "wyłączony"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 228
+msgid "Choose a Theme Style"
+msgstr "Wybierz styl motywu"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
+msgid "Choose a System Theme"
+msgstr "Wybierz motyw systemu"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 259
+msgid "Dark Theme"
+msgstr "Ciemny motyw"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 262
+msgid "Light Theme"
+msgstr "Jasny motyw"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
+msgid "Choose Your Keyboard Layout"
+msgstr "Wybierz układ klawiatury"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 93
+msgid "Keyboard layout preview"
+msgstr "Podgląd układu klawiatury"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 135
+#, python-format
+msgid "Keyboard layout: %s"
+msgstr "Układ klawiatury: %s"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
+msgid "BigLinux Setup"
+msgstr "Konfiguracja BigLinux"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 80
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 223
+msgid "press Super+Alt+S to start the screen reader"
+msgstr "naciśnij Super+Alt+S, aby uruchomić czytnik ekranu"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 160
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 180
+msgid "BigLinux Logo"
+msgstr "Logo BigLinux"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
+msgid "Language"
+msgstr "Język"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
+msgid "Keyboard"
+msgstr "Klawiatura"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
+msgid "Desktop Layout"
+msgstr "Układ pulpitu"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
+msgid "Theme"
+msgstr "Motyw"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
+msgid "Choose a Desktop Layout"
+msgstr "Wybierz układ pulpitu"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
+msgid "Search for a language..."
+msgstr "Szukaj języka..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
+msgid "Could not load language data."
+msgstr "Nie można załadować danych językowych."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 167
+#, python-format
+msgid "%d results"
+msgstr "%d wyników"
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 39
+msgid "Important Tips"
+msgstr "Ważne wskazówki"
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 48
+msgid "Manual Partitioning Recommendations"
+msgstr "Zalecenia dotyczące ręcznego partycjonowania"
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 49
+msgid "If you opt for automatic partitioning, these tips will be applied by default."
+msgstr "Jeśli wybierzesz automatyczne partycjonowanie, te wskazówki zostaną zastosowane domyślnie."
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 54
+msgid "Use BTRFS"
+msgstr "Użyj BTRFS"
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "This file system allows for automatic compression and restore points."
+msgstr "Ten system plików umożliwia automatyczną kompresję i punkty przywracania."
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 55
+msgid "Keep /boot within the / partition"
+msgstr "Zachowaj /boot w partycji /"
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "Placing it in a separate partition hampers BTRFS snapshots."
+msgstr "Umieszczenie go w osobnej partycji utrudnia tworzenie migawek BTRFS."
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
+msgid "Do not create a SWAP partition"
+msgstr "Nie twórz partycji SWAP."
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
 msgid ""
-"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
-"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
+"We have implemented dynamic virtual memory management with Zram and SWAP files. SWAP partitions "
+"will not be used."
 msgstr ""
-"<b>Dlaczego?</b> Pomyśl o pliku instalacyjnym jako o precyzyjnej paczce cyfrowej. Ten błąd oznacza, "
-"że paczka została uszkodzona podczas pobierania lub sam napęd USB jest wadliwy i uszkadza plik."
+"Wdrożyliśmy dynamiczne zarządzanie pamięcią wirtualną z użyciem Zram i plików SWAP. Partycje SWAP "
+"nie będą używane."
 # 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 123
 msgid "Loading packages..."
@@ -175,114 +361,6 @@ msgstr "Nie udało się załadować pakietów: {}"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 259
 msgid "Starting..."
 msgstr "Rozpoczynanie..."
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Snapshot and backups"
-msgstr "Zrzut ekranu i kopie zapasowe"
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Restore restore points of the installed system."
-msgstr "Przywróć punkty przywracania zainstalowanego systemu."
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Start"
-msgstr "Rozpocznij"
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Restore system settings"
-msgstr "Przywróć ustawienia systemu"
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 78
-msgid ""
-"Utility that facilitates the restoration of the installed system, especially the restoration of the "
-"system boot (Grub).\n"
-"\n"
-"It can also be used to access the package manager and terminal of the installed system."
-msgstr ""
-"Narzędzie, które ułatwia przywracanie zainstalowanego systemu, szczególnie przywracanie rozruchu "
-"systemu (Grub).\n"
-"\n"
-"Może być również używane do uzyskiwania dostępu do menedżera pakietów i terminala zainstalowanego "
-"systemu."
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "EFI Entry Manager"
-msgstr "Menadżer wejść EFI"
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 90
-msgid "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
-msgstr ""
-"Zaawansowane narzędzie do dodawania, usuwania lub zmieniania wpisów rozruchowych w oprogramowaniu "
-"UEFI."
 # 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 147
 msgid ""
@@ -472,21 +550,26 @@ msgstr "Sprawdzanie połączenia..."
 msgid "Configuring..."
 msgstr "Konfigurowanie..."
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 39
-msgid "Important Tips"
-msgstr "Ważne wskazówki"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 48
-msgid "Manual Partitioning Recommendations"
-msgstr "Zalecenia dotyczące ręcznego partycjonowania"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 49
-msgid "If you opt for automatic partitioning, these tips will be applied by default."
-msgstr "Jeśli wybierzesz automatyczne partycjonowanie, te wskazówki zostaną zastosowane domyślnie."
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 54
-msgid "Use BTRFS"
-msgstr "Użyj BTRFS"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "Snapshot and backups"
+msgstr "Zrzut ekranu i kopie zapasowe"
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -506,12 +589,8 @@ msgstr "Użyj BTRFS"
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
-msgid "This file system allows for automatic compression and restore points."
-msgstr "Ten system plików umożliwia automatyczną kompresję i punkty przywracania."
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 55
-msgid "Keep /boot within the / partition"
-msgstr "Zachowaj /boot w partycji /"
+msgid "Restore restore points of the installed system."
+msgstr "Przywróć punkty przywracania zainstalowanego systemu."
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -531,20 +610,53 @@ msgstr "Zachowaj /boot w partycji /"
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
-msgid "Placing it in a separate partition hampers BTRFS snapshots."
-msgstr "Umieszczenie go w osobnej partycji utrudnia tworzenie migawek BTRFS."
+msgid "Start"
+msgstr "Rozpocznij"
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
-msgid "Do not create a SWAP partition"
-msgstr "Nie twórz partycji SWAP."
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "Restore system settings"
+msgstr "Przywróć ustawienia systemu"
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 78
 msgid ""
-"We have implemented dynamic virtual memory management with Zram and SWAP files. SWAP partitions "
-"will not be used."
+"Utility that facilitates the restoration of the installed system, especially the restoration of the "
+"system boot (Grub).\n"
+"\n"
+"It can also be used to access the package manager and terminal of the installed system."
 msgstr ""
-"Wdrożyliśmy dynamiczne zarządzanie pamięcią wirtualną z użyciem Zram i plików SWAP. Partycje SWAP "
-"nie będą używane."
+"Narzędzie, które ułatwia przywracanie zainstalowanego systemu, szczególnie przywracanie rozruchu "
+"systemu (Grub).\n"
+"\n"
+"Może być również używane do uzyskiwania dostępu do menedżera pakietów i terminala zainstalowanego "
+"systemu."
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "EFI Entry Manager"
+msgstr "Menadżer wejść EFI"
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 90
+msgid "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
+msgstr ""
+"Zaawansowane narzędzie do dodawania, usuwania lub zmieniania wpisów rozruchowych w oprogramowaniu "
+"UEFI."
 # 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
@@ -646,90 +758,3 @@ msgstr "Anuluj"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 168
 msgid "Confirm"
 msgstr "Potwierdź"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
-msgid "BigLinux Setup"
-msgstr "Konfiguracja BigLinux"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 160
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 180
-msgid "BigLinux Logo"
-msgstr "Logo BigLinux"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 187
-msgid "Language"
-msgstr "Język"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 227
-msgid "Keyboard"
-msgstr "Klawiatura"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
-msgid "Desktop Layout"
-msgstr "Układ pulpitu"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
-msgid "Theme"
-msgstr "Motyw"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
-msgid "Choose Your Keyboard Layout"
-msgstr "Wybierz układ klawiatury"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 93
-msgid "Keyboard layout preview"
-msgstr "Podgląd układu klawiatury"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 135
-#, python-format
-msgid "Keyboard layout: %s"
-msgstr "Układ klawiatury: %s"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
-msgid "Search for a language..."
-msgstr "Szukaj języka..."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
-msgid "Could not load language data."
-msgstr "Nie można załadować danych językowych."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
-msgid "Choose a Desktop Layout"
-msgstr "Wybierz układ pulpitu"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
-msgid "Settings"
-msgstr "Ustawienia"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 107
-msgid "JamesDSP Audio"
-msgstr "JamesDSP Audio"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 109
-msgid "Enable audio improvements"
-msgstr "Włącz ulepszenia audio"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
-msgid "Image quality"
-msgstr "Jakość obrazu"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 146
-msgid "Enable enhanced contrast"
-msgstr "Włącz ulepszony kontrast"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 228
-msgid "Choose a Theme Style"
-msgstr "Wybierz styl motywu"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 166
-msgid "Choose a System Theme"
-msgstr "Wybierz motyw systemu"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 259
-msgid "Dark Theme"
-msgstr "Ciemny motyw"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 262
-msgid "Light Theme"
-msgstr "Jasny motyw"
