@@ -1,6 +1,7 @@
 import sys
 import argparse
 import logging
+
 from logging_config import setup_logging
 from application import Application
 from services import SystemService

@@ -10,6 +10,7 @@ from gi.repository import Gdk, GdkPixbuf, GLib, GObject, Gtk
 from logging_config import get_logger
 from services import SystemService
 from translations import _
+from accessibility import announce
 from ui.base_view import BaseItemView
 
 logger = get_logger()
@@ -133,11 +134,24 @@ class ThemeView(BaseItemView):
     def _create_jamesdsp_card(self, parent_box):
         audio_card = Gtk.Box(css_classes=["settings-card"])
         audio_card.set_focusable(True)
+        audio_card.update_property(
+            [Gtk.AccessibleProperty.LABEL, Gtk.AccessibleProperty.DESCRIPTION],
+            [
+                _("JamesDSP Audio"),
+                _("Enable audio improvements")
+                + " — "
+                + _("press Enter or Space to toggle"),
+            ],
+        )
         try:
             cursor = Gdk.Cursor.new_from_name("pointer", None)
             audio_card.set_cursor(cursor)
         except Exception:
             pass
+        # Keyboard activation: Enter / Space toggles switch
+        card_key_ctl = Gtk.EventControllerKey.new()
+        card_key_ctl.connect("key-pressed", self._on_settings_card_key, None)
+        audio_card.add_controller(card_key_ctl)
         parent_box.append(audio_card)
 
         content = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15)
@@ -180,11 +194,24 @@ class ThemeView(BaseItemView):
     def _create_contrast_card(self, parent_box):
         contrast_card = Gtk.Box(css_classes=["settings-card"])
         contrast_card.set_focusable(True)
+        contrast_card.update_property(
+            [Gtk.AccessibleProperty.LABEL, Gtk.AccessibleProperty.DESCRIPTION],
+            [
+                _("Image quality"),
+                _("Enable enhanced contrast")
+                + " — "
+                + _("press Enter or Space to toggle"),
+            ],
+        )
         try:
             cursor = Gdk.Cursor.new_from_name("pointer", None)
             contrast_card.set_cursor(cursor)
         except Exception:
             pass
+        # Keyboard activation: Enter / Space toggles switch
+        card_key_ctl = Gtk.EventControllerKey.new()
+        card_key_ctl.connect("key-pressed", self._on_settings_card_key, None)
+        contrast_card.add_controller(card_key_ctl)
         parent_box.append(contrast_card)
 
         content = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=15)
@@ -229,6 +256,36 @@ class ThemeView(BaseItemView):
     def _on_settings_card_clicked(self, gesture, n_press, x, y, switch):
         if n_press == 1:
             switch.set_active(not switch.get_active())
+
+    def _on_settings_card_key(self, controller, keyval, keycode, state, _data):
+        """Toggle the switch inside a settings card via Enter or Space."""
+        if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter, Gdk.KEY_space):
+            card = controller.get_widget()
+            # Find the Gtk.Switch inside the card
+            child = card.get_first_child()
+            while child:
+                if isinstance(child, Gtk.Switch):
+                    child.set_active(not child.get_active())
+                    state_msg = _("enabled") if child.get_active() else _("disabled")
+                    announce(self, state_msg)
+                    return True
+                # Search inside nested containers
+                inner = (
+                    child.get_first_child()
+                    if hasattr(child, "get_first_child")
+                    else None
+                )
+                while inner:
+                    if isinstance(inner, Gtk.Switch):
+                        inner.set_active(not inner.get_active())
+                        state_msg = (
+                            _("enabled") if inner.get_active() else _("disabled")
+                        )
+                        announce(self, state_msg)
+                        return True
+                    inner = inner.get_next_sibling()
+                child = child.get_next_sibling()
+        return False
 
     # --- Implementation of BaseItemView abstract methods ---
 

@@ -6,6 +6,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, GObject, GLib, Gdk
 from translations import _
+from accessibility import announce
 import os
 
 ASSETS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets"))
@@ -63,6 +64,10 @@ class KeyboardView(Adw.Bin):
         )
         self.flow_box.set_can_focus(True)
         self.flow_box.set_halign(Gtk.Align.CENTER)
+        self.flow_box.update_property(
+            [Gtk.AccessibleProperty.LABEL],
+            [_("Choose Your Keyboard Layout")],
+        )
 
         # Connect to FlowBox-level signals
         self.flow_box.connect("child-activated", self._on_child_activated)

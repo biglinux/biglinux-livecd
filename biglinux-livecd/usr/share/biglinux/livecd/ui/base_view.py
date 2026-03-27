@@ -9,6 +9,7 @@ from abc import ABCMeta, abstractmethod
 from gi.repository import Adw, Gdk, GLib, GObject, Gtk
 from services import SystemService
 from translations import _
+from accessibility import announce
 from logging_config import get_logger
 
 logger = get_logger()
@@ -80,6 +81,9 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
         )
         self.flow_box.set_can_focus(True)
         self.flow_box.set_halign(Gtk.Align.CENTER)
+        self.flow_box.update_property(
+            [Gtk.AccessibleProperty.LABEL], [self.get_title()]
+        )
 
         self.flow_box.connect("child-activated", self._on_child_activated)
         self.flow_box.connect("activate-cursor-child", self._on_activate_cursor_child)
@@ -100,6 +104,10 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
         """Updates the view's title to the current language."""
         if hasattr(self, "title_label"):
             self.title_label.set_label(self.get_title())
+        if hasattr(self, "flow_box"):
+            self.flow_box.update_property(
+                [Gtk.AccessibleProperty.LABEL], [self.get_title()]
+            )
 
     def load_items(self):
         items = self.get_items()
