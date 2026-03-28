@@ -13,6 +13,7 @@ gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Adw, GObject
 from ..utils.i18n import _
+from ..utils.accessibility import announce, set_label, set_description
 from ..services import get_system_service, get_install_service
 
 
@@ -98,7 +99,12 @@ class MaintenancePage(Gtk.Box):
         button.add_css_class("pill")
         button.connect("clicked", callback)
         content_box.append(button)
-        
+
+        # Accessible labels for screen readers
+        set_label(card_box, f"{title}: {description}")
+        set_label(button, button_text)
+        set_description(button, f"{button_text} - {title}")
+
         return card_box
 
     def create_content(self):
@@ -161,6 +167,9 @@ class MaintenancePage(Gtk.Box):
 
     def on_page_activated(self):
         self.logger.debug("MaintenancePage activated")
+        announce(
+            self, _("System Maintenance: choose Snapshot, Restore, or EFI Manager")
+        )
 
     def cleanup(self):
         self.logger.debug("MaintenancePage cleanup")

@@ -1,100 +1,397 @@
-#!/bin/sh
-#===============================================================================
-# Script Name: biglinux-verify-md5sum
-# Description: ISO Integrity Verification Tool
-#              Checks MD5 checksums of Live CD squashfs files to detect
-#              download corruption or USB drive errors before installation.
-# Package:     biglinux-livecd
-#
-# Dependencies:
-#   - zenity (GUI dialogs)
-#   - md5sum (checksum verification)
-#===============================================================================
+#!/usr/bin/env python3
+"""
+BigLinux ISO Integrity Verification Tool (GTK4/Adwaita)
 
-#-------------------------------------------------------------------------------
-# Translation Setup
-#-------------------------------------------------------------------------------
-LANGUAGE=$LANG:en
-export TEXTDOMAINDIR="/usr/share/locale"
-export TEXTDOMAIN=biglinux-livecd
+Checks MD5 checksums of Live CD squashfs files to detect
+download corruption or USB drive errors before installation.
+Fully accessible to ORCA screen reader via AT-SPI2.
+"""
 
-#-------------------------------------------------------------------------------
-# Detect ISO Mount Location
-# Supports multiple boot folder naming conventions
-#-------------------------------------------------------------------------------
+import gettext
+import os
+import signal
+import subprocess
+import sys
+import threading
 
-# Try standard Manjaro folder structure
-if [[ -e /run/miso/bootmnt/manjaro/x86_64/ ]]; then
-    cd /run/miso/bootmnt/manjaro/x86_64/
+import gi
 
-# Try folder named same as system hostname
-elif [[ -e /run/miso/bootmnt/$HOSTNAME/x86_64/ ]]; then
-    cd /run/miso/bootmnt/$HOSTNAME/x86_64/
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
 
-# Try any folder excluding /efi/ and /boot/
-elif [[ -e $(ls -d1 /run/miso/bootmnt/*/ | grep -ve '/efi/' -ve '/boot/') ]]; then
-    cd $(ls -d1 /run/miso/bootmnt/*/ | grep -ve '/efi/' -ve '/boot/')
-fi
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
-#-------------------------------------------------------------------------------
-# Initialize Verification
-#-------------------------------------------------------------------------------
-rm -f /tmp/md5sum_big_fail
+# ── i18n ──────────────────────────────────────────────────────────────────────
+gettext.bindtextdomain("biglinux-livecd", "/usr/share/locale")
+gettext.textdomain("biglinux-livecd")
+_ = gettext.gettext
 
-Message=$"Checking the file:"
-Message2=$"Checking for download or USB drive errors, this may take a few minutes..."
+# ── Accessibility helper ──────────────────────────────────────────────────────
+_HAS_ANNOUNCE = hasattr(Gtk.Accessible, "announce")
 
-#-------------------------------------------------------------------------------
-# Verify Each Squashfs File
-# Progress is shown via zenity progress dialog
-#-------------------------------------------------------------------------------
-(
-    echo "10"
-    echo "# $Message2 \n\n $Message desktopfs.sfs"
-    md5sum --status -c desktopfs.md5
-    if [[ "$?" != "0" ]]; then
-        echo 1 > /tmp/md5sum_big_fail
-    fi
 
-    echo "50"
-    echo "# $Message2 \n\n $Message livefs.sfs"
-    md5sum --status -c livefs.md5
-    if [[ "$?" != "0" ]]; then
-        echo 1 > /tmp/md5sum_big_fail
-    fi
+def announce(widget: Gtk.Accessible, message: str, assertive: bool = False) -> None:
+    """Announce a message to screen readers via AT-SPI2."""
+    if not message or not widget:
+        return
+    if _HAS_ANNOUNCE:
+        try:
+            priority = (
+                Gtk.AccessibleAnnouncementPriority.HIGH
+                if assertive
+                else Gtk.AccessibleAnnouncementPriority.MEDIUM
+            )
+            widget.announce(message, priority)
+        except Exception:
+            pass
 
-    echo "60"
-    echo "# $Message2 \n\n $Message mhwdfs.sfs"
-    md5sum --status -c mhwdfs.md5
-    if [[ "$?" != "0" ]]; then
-        echo 1 > /tmp/md5sum_big_fail
-    fi
 
-    echo "80"
-    echo "# $Message2 \n\n $Message rootfs.sfs"
-    md5sum --status -c rootfs.md5
-    if [[ "$?" != "0" ]]; then
-        echo 1 > /tmp/md5sum_big_fail
-    fi
-) |
-zenity --auto-close --progress \
-    --title=$"Checking system integrity" \
-    --text="$Message2" \
-    --percentage=0
+def set_label(widget: Gtk.Accessible, label: str) -> None:
+    """Set the accessible label for a widget."""
+    if widget and label:
+        try:
+            widget.update_property(
+                [Gtk.AccessibleProperty.LABEL], [label]
+            )
+        except Exception:
+            pass
 
-verify=$?
 
-#-------------------------------------------------------------------------------
-# Display Verification Result
-#-------------------------------------------------------------------------------
-if [[ "$verify" = -1 ]] || [[ "$(cat /tmp/md5sum_big_fail 2>/dev/null)" = "1" ]]; then
-    zenity --error \
-        --text=$"Error found, please download the system again or use another USB drive."
-elif [[ "$verify" = 0 ]]; then
-    zenity --info \
-        --text=$"The files are intact."
-else
-    zenity --info \
-        --text=$"Verification canceled."
-    echo 1 > /tmp/md5sum_big_fail
-fi
+# ── Constants ─────────────────────────────────────────────────────────────────
+VERIFIED_FLAG = "/tmp/checksum_biglinux_ok.html"
+FAIL_FLAG = "/tmp/md5sum_big_fail"
+
+SQUASHFS_FILES = [
+    ("desktopfs.md5", "desktopfs.sfs", 10),
+    ("livefs.md5", "livefs.sfs", 50),
+    ("mhwdfs.md5", "mhwdfs.sfs", 60),
+    ("rootfs.md5", "rootfs.sfs", 80),
+]
+
+
+def detect_iso_mount() -> str:
+    """Detect the ISO mount directory (same logic as the original shell script)."""
+    hostname = os.environ.get("HOSTNAME", "")
+    candidates = [
+        "/run/miso/bootmnt/manjaro/x86_64/",
+        f"/run/miso/bootmnt/{hostname}/x86_64/",
+    ]
+    for path in candidates:
+        if os.path.isdir(path):
+            return path
+
+    # Fallback: any folder excluding /efi/ and /boot/
+    base = "/run/miso/bootmnt/"
+    if os.path.isdir(base):
+        for entry in os.listdir(base):
+            full = os.path.join(base, entry, "x86_64")
+            if entry not in ("efi", "boot") and os.path.isdir(full):
+                return full + "/"
+    return ""
+
+
+def verify_md5_file(md5_file: str) -> bool:
+    """Run md5sum --status -c on a .md5 file. Returns True if OK."""
+    try:
+        result = subprocess.run(
+            ["md5sum", "--status", "-c", md5_file],
+            capture_output=True,
+            timeout=600,
+        )
+        return result.returncode == 0
+    except Exception:
+        return False
+
+
+def load_custom_css() -> None:
+    """Load custom CSS matching the calamares pre-installer style."""
+    css_provider = Gtk.CssProvider()
+    css_data = b"""
+    window.background {
+        background-color: alpha(@theme_bg_color, 0.97);
+    }
+    .verify-progress {
+        min-height: 8px;
+    }
+    """
+    css_provider.load_from_data(css_data)
+    display = Gdk.Display.get_default()
+    if display:
+        Gtk.StyleContext.add_provider_for_display(
+            display, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        )
+
+
+# ── Application ───────────────────────────────────────────────────────────────
+class VerifyApp(Adw.Application):
+    """GTK4/Adw application for ISO integrity verification."""
+
+    def __init__(self):
+        super().__init__(
+            application_id="com.biglinux.verify-md5sum",
+            flags=Gio.ApplicationFlags.NON_UNIQUE,
+        )
+        self.connect("activate", self._on_activate)
+        self._cancelled = False
+        self._has_failure = False
+
+    def _on_activate(self, _app):
+        load_custom_css()
+        self._build_ui()
+        self._start_verification()
+
+    def _build_ui(self):
+        self._title = _("Checking system integrity")
+
+        self.win = Adw.ApplicationWindow(
+            application=self,
+            title=self._title,
+            default_width=700,
+            default_height=500,
+        )
+        self.win.set_size_request(500, 380)
+        self.win.set_deletable(True)
+        self.win.connect("close-request", self._on_close_request)
+
+        # ToolbarView + HeaderBar (same pattern as calamares window)
+        toolbar_view = Adw.ToolbarView()
+        self.win.set_content(toolbar_view)
+
+        header_bar = Adw.HeaderBar()
+        toolbar_view.add_top_bar(header_bar)
+
+        # Stack for animated transitions between progress and result
+        self.stack = Gtk.Stack()
+        self.stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+        self.stack.set_transition_duration(300)
+        toolbar_view.set_content(self.stack)
+
+        # ── Progress page ─────────────────────────────────────────────
+        self._build_progress_page()
+
+        # ── Result pages (added dynamically) ──────────────────────────
+
+        set_label(self.win, self._title)
+        announce(self.win, self._title, assertive=True)
+        self.win.present()
+
+    def _build_progress_page(self):
+        """Build the progress/checking page using Adw.StatusPage + ProgressBar."""
+        progress_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+
+        self.status_page = Adw.StatusPage()
+        self.status_page.set_icon_name("drive-optical-symbolic")
+        self.status_page.set_title(self._title)
+        self.status_page.set_description(
+            _("Checking for download or USB drive errors, this may take a few minutes...")
+        )
+        set_label(self.status_page, self._title)
+        progress_box.append(self.status_page)
+
+        # ProgressBar inside Adw.Clamp for consistent width
+        clamp = Adw.Clamp()
+        clamp.set_maximum_size(460)
+        clamp.set_margin_start(24)
+        clamp.set_margin_end(24)
+        clamp.set_margin_bottom(32)
+
+        progress_inner = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
+
+        self.file_label = Gtk.Label(label="", halign=Gtk.Align.CENTER)
+        self.file_label.add_css_class("dim-label")
+        self.file_label.add_css_class("caption")
+        progress_inner.append(self.file_label)
+
+        self.progress = Gtk.ProgressBar(show_text=True, hexpand=True)
+        self.progress.add_css_class("verify-progress")
+        set_label(self.progress, _("Verification progress"))
+        progress_inner.append(self.progress)
+
+        clamp.set_child(progress_inner)
+        progress_box.append(clamp)
+
+        self.stack.add_named(progress_box, "progress")
+        self.stack.set_visible_child_name("progress")
+
+    def _build_result_page(self, icon_name: str, title: str, description: str,
+                           is_error: bool) -> str:
+        """Build a result page using Adw.StatusPage and return its stack name."""
+        page_name = "result-error" if is_error else "result-ok"
+
+        result_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+
+        status_page = Adw.StatusPage()
+        status_page.set_icon_name(icon_name)
+        status_page.set_title(title)
+        status_page.set_description(description)
+        set_label(status_page, f"{title}. {description}")
+        result_box.append(status_page)
+
+        # Close button inside Adw.Clamp
+        btn_clamp = Adw.Clamp()
+        btn_clamp.set_maximum_size(200)
+        btn_clamp.set_margin_bottom(24)
+
+        btn = Gtk.Button(label=_("Close"), hexpand=True)
+        btn.add_css_class("pill")
+        if is_error:
+            btn.add_css_class("destructive-action")
+        else:
+            btn.add_css_class("suggested-action")
+        set_label(btn, _("Close"))
+        btn.connect("clicked", lambda _b: self.quit())
+        btn_clamp.set_child(btn)
+        result_box.append(btn_clamp)
+
+        # Remove previous result page if exists (re-entrant safe)
+        existing = self.stack.get_child_by_name(page_name)
+        if existing:
+            self.stack.remove(existing)
+
+        self.stack.add_named(result_box, page_name)
+        return page_name
+
+    def _show_result(self, icon_name: str, title: str, description: str,
+                     is_error: bool):
+        """Transition from progress to a result page."""
+        page_name = self._build_result_page(icon_name, title, description, is_error)
+        self.stack.set_visible_child_name(page_name)
+        self.win.set_title(title)
+        set_label(self.win, title)
+
+        full_msg = f"{title}. {description}" if description else title
+        announce(self.win, full_msg, assertive=is_error)
+
+        # Focus the close button
+        result_box = self.stack.get_child_by_name(page_name)
+        if result_box:
+            child = result_box.get_last_child()
+            if child:
+                btn = child.get_child() if hasattr(child, "get_child") else None
+                if btn:
+                    btn.grab_focus()
+
+    def _on_close_request(self, _win):
+        self._cancelled = True
+        return False
+
+    def _start_verification(self):
+        threading.Thread(target=self._verify_thread, daemon=True).start()
+
+    def _verify_thread(self):
+        # Remove previous fail flag
+        try:
+            os.remove(FAIL_FLAG)
+        except FileNotFoundError:
+            pass
+
+        mount_dir = detect_iso_mount()
+        if not mount_dir:
+            GLib.idle_add(self._on_error)
+            return
+
+        original_dir = os.getcwd()
+        try:
+            os.chdir(mount_dir)
+        except OSError:
+            GLib.idle_add(self._on_error)
+            return
+
+        for md5_file, sfs_name, pct in SQUASHFS_FILES:
+            if self._cancelled:
+                GLib.idle_add(self._on_cancelled)
+                os.chdir(original_dir)
+                return
+
+            msg = _("Checking the file:") + f" {sfs_name}"
+            GLib.idle_add(self._update_progress, pct, msg, sfs_name)
+
+            if not os.path.exists(md5_file):
+                continue
+
+            if not verify_md5_file(md5_file):
+                self._has_failure = True
+                os.chdir(original_dir)
+                try:
+                    with open(FAIL_FLAG, "w") as f:
+                        f.write("1")
+                except OSError:
+                    pass
+                GLib.idle_add(self._on_error)
+                return
+
+        os.chdir(original_dir)
+
+        # Mark as verified
+        try:
+            with open(VERIFIED_FLAG, "w") as f:
+                f.write("1")
+        except OSError:
+            pass
+
+        GLib.idle_add(self._on_success)
+
+    def _update_progress(self, pct: int, status: str, filename: str):
+        self.progress.set_fraction(pct / 100.0)
+        self.file_label.set_text(filename)
+        self.status_page.set_description(status)
+        announce(self.win, status)
+
+    def _on_error(self):
+        self._show_result(
+            "dialog-error-symbolic",
+            _("Verification failed"),
+            _("Error found, please download the system again or use another USB drive."),
+            is_error=True,
+        )
+
+    def _on_success(self):
+        self._show_result(
+            "emblem-ok-symbolic",
+            _("Verification complete"),
+            _("The files are intact."),
+            is_error=False,
+        )
+
+    def _on_cancelled(self):
+        try:
+            with open(FAIL_FLAG, "w") as f:
+                f.write("1")
+        except OSError:
+            pass
+        self._show_result(
+            "dialog-warning-symbolic",
+            _("Verification canceled"),
+            _("The integrity check was not completed."),
+            is_error=False,
+        )
+
+
+def main():
+    signal.signal(signal.SIGINT, lambda *_: sys.exit(1))
+
+    # Prevent duplicate instances
+    try:
+        result = subprocess.run(
+            ["pgrep", "-cf", "biglinux-verify-md5sum"],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        count = int(result.stdout.strip()) if result.stdout.strip() else 0
+        if count > 1:
+            sys.exit(0)
+    except Exception:
+        pass
+
+    # Already verified?
+    if os.path.exists(VERIFIED_FLAG):
+        sys.exit(0)
+
+    Adw.init()
+    app = VerifyApp()
+    sys.exit(app.run([]))
+
+
+if __name__ == "__main__":
+    main()

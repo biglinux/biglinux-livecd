@@ -16,6 +16,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, GObject
 from ..utils.i18n import _
 from ..utils.widgets import create_option_card
+from ..utils.accessibility import announce, set_label, set_description
 from ..services import get_system_service, get_install_service
 
 
@@ -139,6 +140,12 @@ class MainPage(Gtk.Box):
             use_markup=True, label=markup, wrap=True,
             justify=Gtk.Justification.CENTER, halign=Gtk.Align.CENTER
         )
+        # Accessible label (plain text, no markup)
+        plain_info = (
+            f"{_('The system is in')} {boot_mode}, "
+            f"Linux {kernel_version} {_('and graphical mode')} {session_type}."
+        )
+        set_label(info_label, plain_info)
         system_info_box.append(info_label)
 
         # Use a label with markup for the forum link
@@ -146,6 +153,10 @@ class MainPage(Gtk.Box):
             use_markup=True,
             label=_('<a href="https://forum.biglinux.com.br">This is a collaborative system, if you need help consult our forum.</a>'),
             halign=Gtk.Align.CENTER
+        )
+        set_label(
+            forum_label,
+            _("This is a collaborative system, if you need help consult our forum."),
         )
         # Connect to activate-link to handle the click ourselves
         forum_label.connect("activate-link", self._on_forum_link_activated)
@@ -280,6 +291,7 @@ class MainPage(Gtk.Box):
         # Reset installation button state when returning to this page
         if hasattr(self, 'installation_card') and hasattr(self.installation_card, 'action_button'):
             self.reset_button_state(self.installation_card.action_button, _("Install"))
+        announce(self, _("Main page: choose Maintenance, Installation, or Minimal"))
 
     def cleanup(self):
         self.logger.debug("MainPage cleanup")

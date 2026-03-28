@@ -11,6 +11,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, Gio, GLib
 from .window import CalamaresWindow
 from .utils.i18n import _
+from .utils.accessibility import start_orca
 
 
 class CalamaresApp(Adw.Application):
@@ -56,6 +57,11 @@ class CalamaresApp(Adw.Application):
         preferences_action.connect("activate", self.on_preferences_action)
         self.add_action(preferences_action)
 
+        # Start ORCA screen reader (Super+Alt+S)
+        orca_action = Gio.SimpleAction.new("start-orca", None)
+        orca_action.connect("activate", self.on_start_orca_action)
+        self.add_action(orca_action)
+
     def setup_menu(self):
         """Setup keyboard shortcuts"""
         # Quit shortcut
@@ -63,6 +69,9 @@ class CalamaresApp(Adw.Application):
 
         # About shortcut
         self.set_accels_for_action("app.about", ["F1"])
+
+        # Super+Alt+S: start ORCA screen reader (standard GNOME shortcut)
+        self.set_accels_for_action("app.start-orca", ["<Super><Alt>s"])
 
     def on_activate(self, app):
         """Called when application is activated"""
@@ -128,6 +137,11 @@ class CalamaresApp(Adw.Application):
 
     def on_preferences_action(self, action, param):
         """Handle preferences action (placeholder for future use)"""
+
+    def on_start_orca_action(self, action, param):
+        """Start ORCA screen reader via Super+Alt+S."""
+        self.logger.info("Starting ORCA screen reader")
+        start_orca()
         self.logger.info("Preferences action triggered")
 
         # Create a simple toast notification for now
