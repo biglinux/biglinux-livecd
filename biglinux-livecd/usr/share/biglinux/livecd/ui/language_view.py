@@ -8,6 +8,7 @@ import unicodedata
 from urllib.parse import parse_qs, urlparse
 from translations import _
 from config import LanguageSelection
+from accessibility import announce
 from logging_config import get_logger
 import os
 
@@ -95,6 +96,10 @@ class LanguageView(Adw.Bin):
             max_columns=3,
             min_columns=3,
         )
+        self.grid_view.update_property(
+            [Gtk.AccessibleProperty.LABEL],
+            [_("Search for a language...")],
+        )
         self.grid_view.connect("activate", self._on_grid_view_activate)
         grid_clamp.set_child(self.grid_view)
 
@@ -157,6 +162,9 @@ class LanguageView(Adw.Bin):
     def _trigger_filter_update(self):
         self.filter.changed(Gtk.FilterChange.DIFFERENT)
         GLib.idle_add(self._select_first_item_after_filter)
+        # Announce results count for screen readers
+        count = self.filter_model.get_n_items()
+        GLib.idle_add(lambda c=count: announce(self, _("%d results") % c))
         self.filter_timeout_id = 0
         return GLib.SOURCE_REMOVE
 

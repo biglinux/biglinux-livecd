@@ -13,6 +13,7 @@ gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Adw, GObject, GLib
 from ..utils.i18n import _
+from ..utils.accessibility import announce, set_label, set_description
 from ..services import get_package_service, get_install_service
 from ..services.package_service import Package
 
@@ -55,8 +56,10 @@ class MinimalPage(Gtk.Box):
         self.loading_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12, visible=True, margin_top=48)
         spinner = Gtk.Spinner(halign=Gtk.Align.CENTER, valign=Gtk.Align.CENTER, hexpand=True, vexpand=True)
         spinner.start()
+        set_label(spinner, _("Loading packages"))
         status_label = Gtk.Label(label=_("Loading packages..."), halign=Gtk.Align.CENTER)
         status_label.add_css_class("dim-label")
+        set_label(status_label, _("Loading packages..."))
         self.loading_box.append(spinner)
         self.loading_box.append(status_label)
         content_box.append(self.loading_box)
@@ -65,6 +68,10 @@ class MinimalPage(Gtk.Box):
         self.packages_listbox.add_css_class("boxed-list")
         self.packages_listbox.set_margin_top(12)
         self.packages_listbox.set_margin_bottom(12)
+        set_label(self.packages_listbox, _("Package list"))
+        set_description(
+            self.packages_listbox, _("Toggle switches to keep or remove packages")
+        )
         content_box.append(self.packages_listbox)
 
     def load_packages(self):
@@ -99,6 +106,10 @@ class MinimalPage(Gtk.Box):
             self.packages_listbox.append(row)
             self.package_rows[package.name] = row
 
+        # Announce loaded count to screen readers
+        count_msg = _("{count} packages loaded").format(count=len(packages))
+        announce(self, count_msg)
+
     def _create_package_row(self, package: Package) -> Adw.ActionRow:
         """Factory function to create a package row."""
         row = Adw.ActionRow(title=package.name, title_lines=1, subtitle="")
@@ -119,6 +130,11 @@ class MinimalPage(Gtk.Box):
         switch.connect("notify::active", self.on_package_toggled, package)
         row.add_suffix(switch)
         row.set_activatable_widget(switch)
+
+        # Accessible labels for the row and switch
+        keep_label = _("Keep {name}").format(name=package.name)
+        set_label(row, keep_label)
+        set_label(switch, keep_label)
 
         self._update_row_style(row, package.selected)
         return row
@@ -142,8 +158,10 @@ class MinimalPage(Gtk.Box):
 
     def on_packages_load_error(self, error_message):
         self.loading_box.get_first_child().stop()
-        self.loading_box.get_last_child().set_text(_("Failed to load packages: {}").format(error_message))
+        error_text = _("Failed to load packages: {}").format(error_message)
+        self.loading_box.get_last_child().set_text(error_text)
         self.loading_box.get_last_child().add_css_class("error")
+        announce(self, error_text, assertive=True)
 
     def on_check_all_clicked(self, button):
         """Corresponds to 'Keep All'"""
@@ -199,6 +217,7 @@ class MinimalPage(Gtk.Box):
         self.logger.debug("MinimalPage activated")
         if not self.packages:
             self.load_packages()
+        announce(self, _("Minimal installation: select packages to keep or remove"))
 
     def cleanup(self):
         self.logger.debug("MinimalPage cleanup")

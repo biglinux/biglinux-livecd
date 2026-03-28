@@ -15,6 +15,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw
 from .utils.i18n import _
 from .utils.constants import DEFAULTS
+from .utils.accessibility import announce, set_label, set_description
 from .pages import MainPage, MaintenancePage, MinimalPage, TipsPage
 
 
@@ -58,13 +59,17 @@ class CalamaresWindow(Adw.ApplicationWindow):
 
     def setup_window(self):
         """Configure window properties."""
-        self.set_title(_("{distro} Installation").format(distro=self.distro_name))
+        title = _("{distro} Installation").format(distro=self.distro_name)
+        self.set_title(title)
         # Use constants for window sizing to ensure configurability.
         self.set_default_size(DEFAULTS['window_width'], DEFAULTS['window_height'])
         self.set_size_request(DEFAULTS['min_window_width'], DEFAULTS['min_window_height'])
         # Icon removed from the window itself to create a cleaner header bar.
         # The app icon will be handled by the .desktop file.
         self.set_deletable(True)
+
+        # Accessible label for the window
+        set_label(self, title)
 
     def create_layout(self):
         """Create the main window layout using Adw.ToolbarView."""
@@ -123,6 +128,15 @@ class CalamaresWindow(Adw.ApplicationWindow):
         self.continue_button.add_css_class("suggested-action")
         self.continue_button.add_css_class("pill")
 
+        # Accessible labels for navigation buttons
+        set_label(self.back_button, _("Back"))
+        set_description(self.back_button, _("Return to the previous page"))
+        set_label(self.check_all_button, _("Keep All"))
+        set_description(self.check_all_button, _("Keep all packages selected"))
+        set_label(self.uncheck_all_button, _("Remove All"))
+        set_description(self.uncheck_all_button, _("Mark all packages for removal"))
+        set_label(self.continue_button, _("Continue"))
+        set_description(self.continue_button, _("Proceed to the next step"))
 
     def create_pages(self):
         """Create and add all pages to the stack."""
@@ -161,6 +175,16 @@ class CalamaresWindow(Adw.ApplicationWindow):
         
         if hasattr(current_page, 'on_page_activated'):
             current_page.on_page_activated()
+
+        # Announce the page transition to screen readers
+        page_titles = {
+            "main": _("{distro} Installation").format(distro=self.distro_name),
+            "maintenance": _("System Maintenance"),
+            "minimal": _("Uncheck the programs you want to remove"),
+            "tips": _("Installation Tips"),
+        }
+        title = page_titles.get(page_name, page_name)
+        announce(self, title, assertive=True)
 
     def navigate_back(self, button=None):
         current_page_name = self.stack.get_visible_child_name()

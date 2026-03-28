@@ -11,6 +11,7 @@ from ui.language_view import LanguageView
 from ui.keyboard_view import KeyboardView
 from ui.desktop_view import DesktopView
 from ui.theme_view import ThemeView
+from accessibility import announce, start_orca
 from logging_config import get_logger
 import os
 
@@ -71,6 +72,14 @@ class AppWindow(Adw.ApplicationWindow):
         self.completed_steps = set()  # Track completed steps
         self.is_simplified_env = system_service.is_simplified_environment()
         self.set_title(_("BigLinux Setup"))
+        self.update_property(
+            [Gtk.AccessibleProperty.DESCRIPTION],
+            [
+                _("BigLinux Setup")
+                + " — "
+                + _("press Super+Alt+S to start the screen reader")
+            ],
+        )
 
         # --- Fullscreen for Xorg without compositor ---
         # This approach makes the window undecorated and sized to the monitor.
@@ -206,6 +215,14 @@ class AppWindow(Adw.ApplicationWindow):
     def _retranslate_ui(self):
         """Updates all visible text in the application to the new language."""
         self.set_title(_("BigLinux Setup"))
+        self.update_property(
+            [Gtk.AccessibleProperty.DESCRIPTION],
+            [
+                _("BigLinux Setup")
+                + " \u2014 "
+                + _("press Super+Alt+S to start the screen reader")
+            ],
+        )
 
         # Update step button accessible labels
         for step in self.steps:
@@ -273,11 +290,17 @@ class AppWindow(Adw.ApplicationWindow):
         button.connect("clicked", self._on_step_button_clicked, step_info["name"])
         button.add_css_class("flat")
 
-        # Accessible label for screen readers
+        # Accessible label and description for screen readers
         label_fn = self._STEP_LABELS.get(step_info["name"])
         if label_fn:
+            step_index = next(
+                (i for i, s in enumerate(self.steps) if s["name"] == step_info["name"]),
+                0,
+            )
+            total = len(self.steps)
             button.update_property(
-                [Gtk.AccessibleProperty.LABEL], [label_fn()]
+                [Gtk.AccessibleProperty.LABEL, Gtk.AccessibleProperty.DESCRIPTION],
+                [label_fn(), f"{step_index + 1}/{total}"],
             )
 
         try:
@@ -293,6 +316,24 @@ class AppWindow(Adw.ApplicationWindow):
 
     def _on_view_changed(self, stack, param):
         GLib.idle_add(self._update_header_state)
+        # Announce the new step to screen readers (ORCA)
+        view_name = stack.get_visible_child_name()
+        GLib.idle_add(lambda n=view_name: self._announce_step(n))
+
+    def _announce_step(self, view_name: str) -> None:
+        """Announce step label and position to screen readers."""
+        search_name = "theme" if view_name == "simple_theme" else view_name
+        try:
+            index = next(
+                i for i, s in enumerate(self.steps) if s["name"] == search_name
+            )
+        except StopIteration:
+            return
+        total = len(self.steps)
+        label_fn = self._STEP_LABELS.get(search_name)
+        step_label = label_fn() if label_fn else search_name
+        msg = f"{step_label} — {index + 1}/{total}"
+        announce(self, msg, assertive=True)
 
     def _on_step_button_clicked(self, button, view_name):
         # Only allow navigation to completed steps
@@ -329,14 +370,17 @@ class AppWindow(Adw.ApplicationWindow):
                     # Completed step - clickable and visually active
                     button.add_css_class("step-completed")
                     button.set_sensitive(True)
+                    button.update_state([Gtk.AccessibleState.DISABLED], [False])
                 elif i == current_index:
                     # Current step - most prominent and enabled for bright appearance
                     button.add_css_class("step-current")
                     button.set_sensitive(True)  # Keep enabled for bright appearance
+                    button.update_state([Gtk.AccessibleState.DISABLED], [False])
                 else:
                     # Pending step - inactive
                     button.add_css_class("step-pending")
                     button.set_sensitive(False)
+                    button.update_state([Gtk.AccessibleState.DISABLED], [True])
 
     def _add_language_view(self):
         view = LanguageView()
@@ -513,6 +557,14 @@ class AppWindow(Adw.ApplicationWindow):
             logger.error(f"ERROR in _on_simple_theme_selected: {e}", exc_info=True)
 
     def _on_key_press_event(self, controller, keyval, keycode, state):
+        # Super+Alt+S: start ORCA screen reader (standard GNOME shortcut)
+        if (
+            keyval == Gdk.KEY_s
+            and state & Gdk.ModifierType.SUPER_MASK
+            and state & Gdk.ModifierType.ALT_MASK
+        ):
+            start_orca()
+            return True
         current_view = self.stack.get_visible_child()
         if isinstance(current_view, LanguageView):
             return current_view.handle_global_key_press(keyval)

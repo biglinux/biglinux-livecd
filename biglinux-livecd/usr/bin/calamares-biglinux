@@ -7,8 +7,7 @@
 # Package:     biglinux-livecd
 #
 # Dependencies:
-#   - zenity (GUI dialogs)
-#   - python3 (installer interface)
+#   - python3 (installer interface & GTK4 dialogs)
 #   - calamares-manjaro (installation backend)
 #   - curl (log upload)
 #===============================================================================
@@ -33,18 +32,24 @@ elif [[ -f /usr/bin/gnome-text-editor ]]; then
 fi
 
 #-------------------------------------------------------------------------------
+# GTK4 Dialog Helper
+#-------------------------------------------------------------------------------
+GTK_DIALOG="python3 /usr/share/biglinux/calamares/gtk_dialog.py"
+
+#-------------------------------------------------------------------------------
 # Wait for MD5 Verification (if running)
 #-------------------------------------------------------------------------------
 if [[ -n "$(ps -e | grep biglinux-verify)" ]]; then
-    windowID="$(xprop -root '\t$0' _NET_ACTIVE_WINDOW | cut -f 2)"
-    sleep 600 | zenity --attach="$windowID" --width=300 --progress --title=$"Please wait..." --pulsate --no-cancel --auto-close --text $"Checking the integrity of the download and storage device..." &
+    sleep 600 | $GTK_DIALOG progress --title=$"Please wait..." --pulsate --no-cancel --auto-close --text $"Checking the integrity of the download and storage device..." &
 fi
 
 while [[ -n "$(ps -e | grep biglinux-verify)" ]]; do
     sleep 1
 done
 
-killall zenity
+# Kill the waiting dialog if still open
+kill %1 2>/dev/null
+wait %1 2>/dev/null
 
 #-------------------------------------------------------------------------------
 # Verify ISO Checksum
@@ -60,11 +65,11 @@ fi
 # Alert if ISO is Older Than 30 Days
 #-------------------------------------------------------------------------------
 if [[ "$(echo $(( $(date +%s) / 86400 )))" -gt "$(( $(cat /etc/big-release | grep UNIX_TIMESTAMP= | cut -d "=" -f2) + 30 ))" ]] && ! grep -qi community /etc/os-release; then
-    zenity --question \
+    $GTK_DIALOG question \
         --icon-name=emblem-warning \
         --width=500 \
         --title=$"Outdated Version" \
-        --text=$"<b>Do you want to proceed with the installation of this old version anyway?</b>\n\nBigLinux is a system with weekly updates and this version was released more than a month ago.\nWe recommend downloading a more recent version." \
+        --text=$"Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version." \
         --ok-label=$"Continue" \
         --cancel-label=$"Close"
 
@@ -337,17 +342,12 @@ if [[ -d /sys/firmware/efi ]] && [[ "$(cat /tmp/efi-partitions)" = "" ]]; then
     PARTITION=LEGACY
 
     TEXT_01=$"Do you want to proceed with the installation in EFI mode?"
-    TEXT_02=$"The current boot is using <span color='#CC2222'>EFI</span> mode, but I did not find any EFI partition on this computer.
-
-If this computer already has another system installed and you intend 
-to keep it installed, you will probably need to change the 
-configuration in the BIOS to boot in Legacy mode, also 
-called BIOS mode."
-    zenity --question \
+    TEXT_02=$"The current boot is using EFI mode, but I did not find any EFI partition on this computer. If this computer already has another system installed and you intend to keep it installed, you will probably need to change the configuration in the BIOS to boot in Legacy mode, also called BIOS mode."
+    $GTK_DIALOG question \
         --icon-name=drive-harddisk \
         --width=500 \
         --title=$"Install the system" \
-        --text="<b>$TEXT_01</b>\n\n$TEXT_02" \
+        --text="$TEXT_01 $TEXT_02" \
         --ok-label=$"Continue" \
         --cancel-label=$"Close"
 
@@ -361,15 +361,12 @@ if [[ ! -d /sys/firmware/efi ]] && [[ "$(cat /tmp/efi-partitions)" != "" ]]; the
     LIVEBOOT=LEGACY
     PARTITION=EFI
     TEXT_03=$"Do you want to proceed with the installation in Legacy/BIOS mode?"
-    TEXT_04=$"The current boot is using <span color='#CC2222'>Legacy/BIOS</span> mode, but I found at least one EFI partition on this computer. 
-
-For the installation to be successful, you will probably need to 
-change the configuration in the BIOS to boot in EFI or UEFI mode."
-    zenity --question \
+    TEXT_04=$"The current boot is using Legacy/BIOS mode, but I found at least one EFI partition on this computer. For the installation to be successful, you will probably need to change the configuration in the BIOS to boot in EFI or UEFI mode."
+    $GTK_DIALOG question \
         --icon-name=drive-harddisk \
         --width=500 \
         --title=$"Install the system" \
-        --text="<b>$TEXT_03</b>\n\n$TEXT_04" \
+        --text="$TEXT_03 $TEXT_04" \
         --ok-label=$"Continue" \
         --cancel-label=$"Close"
 
@@ -435,7 +432,7 @@ if [[ -e "/tmp/start_calamares" ]]; then
             sudo -u $user curl -X POST --data-binary "@/home/$user/calamares_error.log" \
                 -H "Content-Type: application/octet-stream" \
                 "https://filebin.net/$binId/$fileName" 2>/dev/null | tee "/home/$user/transfer.url" | \
-                zenity --modal --progress --pulsate --no-cancel --auto-close --text $"Sending, please wait..."
+                $GTK_DIALOG progress --pulsate --no-cancel --auto-close --text $"Sending, please wait..."
             
             # Extract bin ID from response and construct URL
             responseBin=$(cat "/home/$user/transfer.url" | grep -o '"bin":"[^"]*"' | cut -d'"' -f4)
@@ -459,19 +456,19 @@ if [[ -e "/tmp/start_calamares" ]]; then
                 sudo -u $user falkon "$fileUrl"
             else
                 # No browser found - display URL to user
-                zenity --info \
+                $GTK_DIALOG info \
                     --title=$"Log Sent" \
-                    --text=$"Log successfully sent!\n\nURL: $fileUrl\n\nYou can use this URL to share the log." \
+                    --text=$"Log successfully sent! URL: $fileUrl You can use this URL to share the log." \
                     --width=400
             fi
         }
 
         # Handle specific efibootmgr error (EFI entry write failure)
         if grep -q 'grub-install: error: efibootmgr failed to register the boot entry: Input/output error.' /home/$user/calamares_error.log; then
-            zenity --question \
+            $GTK_DIALOG question \
                 --width=480 \
                 --title=$"calamares LOG" \
-                --text=$"It was not possible to write the EFI entry to the motherboard, likely due to insufficient space.\n\nCheck the EFI manager for any entries that can be deleted and try installing the system again." \
+                --text=$"It was not possible to write the EFI entry to the motherboard, likely due to insufficient space. Check the EFI manager for any entries that can be deleted and try installing the system again." \
                 --ok-label=$"Open the EFI manager" \
                 --cancel-label=$"Close"
                 
@@ -481,18 +478,18 @@ if [[ -e "/tmp/start_calamares" ]]; then
         fi
 
         # Prompt user for log action (view/send/close)
-        log_action=$(zenity --list \
+        log_action=$($GTK_DIALOG list \
             --width=480 \
             --height=350 \
             --title="Calamares LOG" \
-            --text=$"Do you want to view or send the installation log file to the cloud?\nGenerate a link to send in support groups." \
+            --text=$"Do you want to view or send the installation log file to the cloud? Generate a link to send in support groups." \
             --radiolist \
             --hide-column=2 \
             --print-column=2 \
             --column="" --column="ID" --column=$"Action" \
-            TRUE "open" $"Open" \
-            FALSE "send" $"Send to the cloud" \
-            FALSE "close" $"Close")
+            --row TRUE --row "open" --row $"Open" \
+            --row FALSE --row "send" --row $"Send to the cloud" \
+            --row FALSE --row "close" --row $"Close")
 
         echo "log action: $log_action"
         case "$log_action" in

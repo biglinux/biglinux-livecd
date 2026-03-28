@@ -13,6 +13,7 @@ gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Adw, GObject
 from ..utils.i18n import _
+from ..utils.accessibility import announce, set_label
 
 
 class TipsPage(Gtk.Box):
@@ -38,6 +39,7 @@ class TipsPage(Gtk.Box):
         
         self.page.set_title(_("Important Tips"))
         self.page.set_icon_name("dialog-information-symbolic")
+        set_label(self.page, _("Important Tips"))
 
         self.create_content()
         self.logger.debug("TipsPage initialized")
@@ -77,6 +79,9 @@ class TipsPage(Gtk.Box):
 
     def on_page_activated(self):
         self.logger.info("User reached tips page - installation configured")
+        announce(
+            self, _("Installation tips: read the recommendations before proceeding")
+        )
 
     def cleanup(self):
         self.logger.debug("TipsPage cleanup")

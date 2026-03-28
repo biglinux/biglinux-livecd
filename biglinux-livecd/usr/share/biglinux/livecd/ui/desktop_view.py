@@ -41,6 +41,11 @@ class DesktopView(BaseItemView):
     def create_item_widget(self, item: DesktopListItem):
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         box.set_can_focus(True)
+        # Accessible description for screen readers
+        box.update_property(
+            [Gtk.AccessibleProperty.LABEL],
+            [_("Desktop Layout") + ": " + item.name],
+        )
         try:
             cursor = Gdk.Cursor.new_from_name("pointer", None)
             box.set_cursor(cursor)

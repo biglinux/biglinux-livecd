@@ -18,7 +18,6 @@ depends=(
     'qefientrymanager'
     'calamares'
     'btrfs-progs'
-    'zenity'
     'gettext'
     'curl'
 )

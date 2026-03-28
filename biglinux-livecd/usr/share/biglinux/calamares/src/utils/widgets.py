@@ -11,6 +11,7 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Adw
+from .accessibility import set_label, set_description
 
 
 def create_option_card(
@@ -117,5 +118,10 @@ def create_option_card(
     
     # Store button for later access if needed
     card_box.action_button = button
+
+    # Accessible labels for screen readers
+    set_label(card_box, f"{title}: {description}")
+    set_label(button, button_text)
+    set_description(button, f"{button_text} - {title}")
     
     return card_box
