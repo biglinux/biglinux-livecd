@@ -14,22 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-msgid "Error: Integrity Check Failed"
-msgstr "Помилка: Перевірка цілісності не вдалася"
-msgid "Oops!"
-msgstr "Oops!"
-msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
-msgstr ""
-"Перевірка цілісності не вдалася. Необхідно завантажити систему знову або використати інший "
-"USB-накопичувач."
-msgid ""
-"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
-"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
-msgstr ""
-"<b>Чому?</b> Розглядайте файл установки як точний цифровий пакет. Ця помилка означає, що пакет був "
-"пошкоджений під час завантаження, або сам USB-накопичувач несправний і пошкоджує файл."
-msgid "Close"
-msgstr "Закрити"
 msgid "Please wait..."
 msgstr "Будь ласка, зачекайте..."
 msgid "Checking the integrity of the download and storage device..."
@@ -37,15 +21,13 @@ msgstr "Перевірка цілісності завантаження та п
 msgid "Outdated Version"
 msgstr "Застаріла версія"
 msgid ""
-"<b>Do you want to proceed with the installation of this old version anyway?</b>\\n"
-"\\n"
-"BigLinux is a system with weekly updates and this version was released more than a month ago.\\n"
-"We recommend downloading a more recent version."
+"Do you want to proceed with the installation of this old version anyway? BigLinux is a system with "
+"weekly updates and this version was released more than a month ago. We recommend downloading a more "
+"recent version."
 msgstr ""
-"<b>Чи бажаєте ви продовжити встановлення цієї старої версії все ж?</b>\\n"
-"\\n"
-"BigLinux - це система з щотижневими оновленнями, і ця версія була випущена більше місяця тому.\\n"
-"Ми рекомендуємо завантажити більш нову версію."
+"Чи бажаєте ви продовжити встановлення цієї старої версії? BigLinux - це система з щотижневими "
+"оновленнями, і ця версія була випущена більше місяця тому. Ми рекомендуємо завантажити більш нову "
+"версію."
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -67,92 +49,71 @@ msgstr ""
 # 
 msgid "Continue"
 msgstr "Продовжити"
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 192
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 256
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 259
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 297
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 300
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 401
+msgid "Close"
+msgstr "Закрити"
 msgid "Do you want to proceed with the installation in EFI mode?"
 msgstr "Чи бажаєте ви продовжити у режимі EFI під час встановлення?"
 msgid ""
-"The current boot is using <span color='#CC2222'>EFI</span> mode, but I did not find any EFI "
-"partition on this computer.\n"
-"\n"
-"If this computer already has another system installed and you intend \n"
-"to keep it installed, you will probably need to change the \n"
-"configuration in the BIOS to boot in Legacy mode, also \n"
-"called BIOS mode."
+"The current boot is using EFI mode, but I did not find any EFI partition on this computer. If this "
+"computer already has another system installed and you intend to keep it installed, you will "
+"probably need to change the configuration in the BIOS to boot in Legacy mode, also called BIOS mode."
 msgstr ""
-"Поточний завантаження використовує режим <span color='#CC2222'>EFI</span>, але я не знайшов жодного "
-"розділу EFI на цьому комп'ютері.\n"
-"\n"
-"Якщо на цьому комп'ютері вже встановлена інша система, і ви плануєте її залишити, вам, ймовірно, "
-"потрібно змінити конфігурацію в BIOS для завантаження в режимі спадщини, також відомому як режим "
-"BIOS."
+"Поточне завантаження використовує режим EFI, але я не знайшов жодного EFI-розділу на цьому "
+"комп'ютері. Якщо на цьому комп'ютері вже встановлена інша система і ви плануєте її зберегти, вам, "
+"ймовірно, потрібно буде змінити конфігурацію в BIOS, щоб завантажуватися в режимі Legacy, також "
+"званому режимом BIOS."
 msgid "Install the system"
 msgstr "Встановити систему"
 msgid "Do you want to proceed with the installation in Legacy/BIOS mode?"
 msgstr "Чи бажаєте ви продовжити установку у режимі спадковості/BIOS?"
 msgid ""
-"The current boot is using <span color='#CC2222'>Legacy/BIOS</span> mode, but I found at least one "
-"EFI partition on this computer. \n"
-"\n"
-"For the installation to be successful, you will probably need to \n"
-"change the configuration in the BIOS to boot in EFI or UEFI mode."
+"The current boot is using Legacy/BIOS mode, but I found at least one EFI partition on this "
+"computer. For the installation to be successful, you will probably need to change the configuration "
+"in the BIOS to boot in EFI or UEFI mode."
 msgstr ""
-"Поточний завантаження використовує режим <span color='#CC2222'>Legacy/BIOS</span>, але я виявив "
-"принаймні один розділ EFI на цьому комп'ютері.\n"
-"\n"
-"Для успішного встановлення, ймовірно, вам потрібно змінити конфігурацію в BIOS, щоб завантажувати в "
-"режимі EFI або UEFI."
+"Поточне завантаження використовує режим Legacy/BIOS, але я знайшов принаймні один EFI-розділ на "
+"цьому комп'ютері. Щоб установка була успішною, вам, ймовірно, потрібно буде змінити конфігурацію в "
+"BIOS, щоб завантажуватися в режимі EFI або UEFI."
 msgid "Sending, please wait..."
 msgstr "Відправка, зачекайте..."
 msgid "Log Sent"
 msgstr "Журнал надіслано"
-msgid ""
-"Log successfully sent!\\n"
-"\\n"
-"URL: $fileUrl\\n"
-"\\n"
-"You can use this URL to share the log."
+msgid "Log successfully sent! URL: $fileUrl You can use this URL to share the log."
 msgstr ""
-"Лог успішно надіслано!\\n"
-"\\n"
-"URL: $fileUrl\\n"
-"\\n"
-"Ви можете використовувати це URL для спільного доступу до логу."
+"Лог успішно надіслано! URL: $fileUrl Ви можете використовувати це посилання для спільного доступу "
+"до логу."
 msgid "calamares LOG"
 msgstr "calamares ЖУРНАЛ"
 msgid ""
-"It was not possible to write the EFI entry to the motherboard, likely due to insufficient space.\\n"
-"\\n"
+"It was not possible to write the EFI entry to the motherboard, likely due to insufficient space. "
 "Check the EFI manager for any entries that can be deleted and try installing the system again."
 msgstr ""
-"Не вдалося записати запис EFI на материнську плату, ймовірно, через недостатній обсяг пам'яті.\\n"
-"\\n"
+"Не вдалося записати запис EFI на материнську плату, ймовірно, через недостатній обсяг пам'яті. "
 "Перевірте менеджер EFI на наявність записів, які можна видалити, і спробуйте встановити систему ще "
 "раз."
 msgid "Open the EFI manager"
 msgstr "Відкрийте менеджер EFI"
 msgid ""
-"Do you want to view or send the installation log file to the cloud?\\n"
-"Generate a link to send in support groups."
+"Do you want to view or send the installation log file to the cloud? Generate a link to send in "
+"support groups."
 msgstr ""
-"Чи хочете ви переглянути або надіслати файл журналу встановлення в хмару?\\n"
-"Згенерувати посилання для надсилання в групи підтримки."
+"Чи хочете ви переглянути або надіслати файл журналу встановлення в хмару? Створіть посилання для "
+"надсилання в групи підтримки."
 msgid "Action"
 msgstr "Дія"
 msgid "Open"
 msgstr "Відкрити"
 msgid "Send to the cloud"
 msgstr "Надіслати в хмару"
-msgid "Checking the file:"
-msgstr "Перевірка файлу:"
-msgid "Checking for download or USB drive errors, this may take a few minutes..."
-msgstr "Перевірка помилок завантаження або USB-накопичувача, це може зайняти кілька хвилин..."
-msgid "Checking system integrity"
-msgstr "Перевірка цілісності системи"
-msgid "Error found, please download the system again or use another USB drive."
-msgstr "Помилка знайдена, будь ласка, завантажте систему знову або скористайтеся іншим USB-накопичувачем."
-msgid "The files are intact."
-msgstr "Файли цілі."
-msgid "Verification canceled."
-msgstr "Перевірка скасована."
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
 msgid "Settings"
@@ -266,6 +227,41 @@ msgstr "Не вдалося завантажити мовні дані."
 msgid "%d results"
 msgstr "%d результатів"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 85
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 107
+msgid "Progress"
+msgstr "Прогрес"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 168
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 225
+msgid "Question"
+msgstr ""
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 236
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 266
+msgid "Error"
+msgstr "Помилка"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 277
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 307
+msgid "Information"
+msgstr "Інформація"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 318
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 424
+msgid "Select"
+msgstr "Вибрати"
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 39
 msgid "Important Tips"
 msgstr "Важливі поради"
@@ -340,9 +336,35 @@ msgstr ""
 "Ми реалізували динамічне управління віртуальною пам'яттю з Zram та SWAP-файлами. SWAP-розділи не "
 "будуть використовуватися."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 83
+msgid "Installation tips: read the recommendations before proceeding"
+msgstr "Поради щодо встановлення: ознайомтеся з рекомендаціями перед продовженням"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 59
+msgid "Loading packages"
+msgstr "Завантаження пакетів"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 123
 msgid "Loading packages..."
 msgstr "Завантаження пакетів..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 71
+msgid "Package list"
+msgstr "Список пакетів"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 73
+msgid "Toggle switches to keep or remove packages"
+msgstr "Перемикачі для збереження або видалення пакетів"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 110
+#, python-brace-format
+msgid "{count} packages loaded"
+msgstr "{count} пакунків завантажено"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 135
+#, python-brace-format
+msgid "Keep {name}"
+msgstr "Залишити {name}"
 # 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 242
 msgid "Failed to load packages: {}"
@@ -362,6 +384,10 @@ msgstr "Не вдалося завантажити пакети: {}"
 msgid "Starting..."
 msgstr "Запуск..."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 220
+msgid "Minimal installation: select packages to keep or remove"
+msgstr "Мінімальна установка: виберіть пакунки для збереження або видалення"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 147
 msgid ""
 "<a href=\"https://forum.biglinux.com.br\">This is a collaborative system, if you need help consult "
@@ -369,6 +395,10 @@ msgid ""
 msgstr ""
 "<a href=\"https://forum.biglinux.com.br\">Це колаборативна система, якщо вам потрібна допомога, "
 "зверніться до нашого форуму.</a>"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 159
+msgid "This is a collaborative system, if you need help consult our forum."
+msgstr "Це колаборативна система, якщо вам потрібна допомога, зверніться до нашого форуму."
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -550,6 +580,10 @@ msgstr "Перевірка з'єднання..."
 msgid "Configuring..."
 msgstr "Налаштування..."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 294
+msgid "Main page: choose Maintenance, Installation, or Minimal"
+msgstr "Головна сторінка: виберіть Обслуговування, Встановлення або Мінімальний"
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
@@ -655,6 +689,10 @@ msgstr "EFI Вхідний Менеджер"
 msgid "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
 msgstr "Розширений інструмент для додавання, видалення або зміни записів завантаження в прошивці UEFI."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 171
+msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
+msgstr "Системне обслуговування: виберіть Знімок, Відновлення або EFI Менеджер"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 213
@@ -690,6 +728,22 @@ msgstr "Зберегти все"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 99
 msgid "Remove All"
 msgstr "Видалити все"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 133
+msgid "Return to the previous page"
+msgstr "Повернутися на попередню сторінку"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 135
+msgid "Keep all packages selected"
+msgstr "Залишити всі пакунки вибраними"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 137
+msgid "Mark all packages for removal"
+msgstr "Позначте всі пакунки для видалення"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 139
+msgid "Proceed to the next step"
+msgstr "Перейдіть до наступного кроку"
 # 
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 # 

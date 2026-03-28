@@ -14,23 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-msgid "Error: Integrity Check Failed"
-msgstr "Fehler: Integritätsprüfung fehlgeschlagen"
-msgid "Oops!"
-msgstr "Oops!"
-msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
-msgstr ""
-"Die Integritätsprüfung ist fehlgeschlagen. Es ist notwendig, das System erneut herunterzuladen oder "
-"ein anderes USB-Laufwerk zu verwenden."
-msgid ""
-"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
-"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
-msgstr ""
-"<b>Warum?</b> Betrachten Sie die Installationsdatei als ein präzises digitales Paket. Dieser Fehler "
-"bedeutet, dass das Paket während des Downloads beschädigt wurde oder dass der USB-Stick selbst "
-"fehlerhaft ist und die Datei beschädigt."
-msgid "Close"
-msgstr "Schließen"
 msgid "Please wait..."
 msgstr "Bitte warten Sie ..."
 msgid "Checking the integrity of the download and storage device..."
@@ -38,16 +21,13 @@ msgstr "Überprüfung der Integrität des Downloads und des Speichergeräts ..."
 msgid "Outdated Version"
 msgstr "Veraltete Version"
 msgid ""
-"<b>Do you want to proceed with the installation of this old version anyway?</b>\\n"
-"\\n"
-"BigLinux is a system with weekly updates and this version was released more than a month ago.\\n"
-"We recommend downloading a more recent version."
+"Do you want to proceed with the installation of this old version anyway? BigLinux is a system with "
+"weekly updates and this version was released more than a month ago. We recommend downloading a more "
+"recent version."
 msgstr ""
-"<b>Wollen Sie die Installation dieser alten Version trotzdem fortsetzen?</b>\\n"
-"\\n"
-"BigLinux ist ein System mit wöchentlichen Updates und diese Version wurde vor mehr als einem Monat "
-"veröffentlicht.\\n"
-"Wir empfehlen, eine aktuellere Version herunterzuladen."
+"Möchten Sie die Installation dieser alten Version trotzdem fortsetzen? BigLinux ist ein System mit "
+"wöchentlichen Updates und diese Version wurde vor mehr als einem Monat veröffentlicht. Wir "
+"empfehlen, eine aktuellere Version herunterzuladen."
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -69,96 +49,71 @@ msgstr ""
 # 
 msgid "Continue"
 msgstr "Fortsetzen"
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 192
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 256
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 259
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 297
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 300
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 401
+msgid "Close"
+msgstr "Schließen"
 msgid "Do you want to proceed with the installation in EFI mode?"
 msgstr "Möchten Sie mit der Installation im EFI-Modus fortfahren?"
 msgid ""
-"The current boot is using <span color='#CC2222'>EFI</span> mode, but I did not find any EFI "
-"partition on this computer.\n"
-"\n"
-"If this computer already has another system installed and you intend \n"
-"to keep it installed, you will probably need to change the \n"
-"configuration in the BIOS to boot in Legacy mode, also \n"
-"called BIOS mode."
+"The current boot is using EFI mode, but I did not find any EFI partition on this computer. If this "
+"computer already has another system installed and you intend to keep it installed, you will "
+"probably need to change the configuration in the BIOS to boot in Legacy mode, also called BIOS mode."
 msgstr ""
-"Der aktuelle Bootprozess verwendet den <span color='#CC2222'>EFI</span>-Modus, aber ich habe keine "
-"EFI-Partition auf diesem Computer gefunden.\n"
-"\n"
-"Wenn auf diesem Computer bereits ein anderes System installiert ist und \n"
-"Sie beabsichtigen, es installiert zu lassen, müssen Sie wahrscheinlich die \n"
-"Konfiguration im BIOS ändern, um im Legacy-Modus, auch BIOS-Modus \n"
-"genannt, zu booten."
+"Der aktuelle Boot verwendet den EFI-Modus, aber ich habe keine EFI-Partition auf diesem Computer "
+"gefunden. Wenn auf diesem Computer bereits ein anderes System installiert ist und Sie "
+"beabsichtigen, es installiert zu lassen, müssen Sie wahrscheinlich die Konfiguration im BIOS "
+"ändern, um im Legacy-Modus zu booten, auch als BIOS-Modus bezeichnet."
 msgid "Install the system"
 msgstr "Installation des Systems"
 msgid "Do you want to proceed with the installation in Legacy/BIOS mode?"
 msgstr "Möchten Sie mit der Installation im Legacy/BIOS-Modus fortfahren?"
 msgid ""
-"The current boot is using <span color='#CC2222'>Legacy/BIOS</span> mode, but I found at least one "
-"EFI partition on this computer. \n"
-"\n"
-"For the installation to be successful, you will probably need to \n"
-"change the configuration in the BIOS to boot in EFI or UEFI mode."
+"The current boot is using Legacy/BIOS mode, but I found at least one EFI partition on this "
+"computer. For the installation to be successful, you will probably need to change the configuration "
+"in the BIOS to boot in EFI or UEFI mode."
 msgstr ""
-"Der aktuelle Bootprozess verwendet den <span color='#CC2222'>Legacy/BIOS</span>-Modus, aber ich "
-"habe mindestens eine EFI-Partition auf diesem Computer gefunden. \n"
-"\n"
-"Damit die Installation erfolgreich ist, müssen Sie wahrscheinlich die \n"
+"Der aktuelle Boot verwendet den Legacy/BIOS-Modus, aber ich habe mindestens eine EFI-Partition auf "
+"diesem Computer gefunden. Damit die Installation erfolgreich ist, müssen Sie wahrscheinlich die "
 "Konfiguration im BIOS ändern, um im EFI- oder UEFI-Modus zu booten."
 msgid "Sending, please wait..."
 msgstr "Senden, bitte warten Sie ..."
 msgid "Log Sent"
 msgstr "Log gesendet"
-msgid ""
-"Log successfully sent!\\n"
-"\\n"
-"URL: $fileUrl\\n"
-"\\n"
-"You can use this URL to share the log."
+msgid "Log successfully sent! URL: $fileUrl You can use this URL to share the log."
 msgstr ""
-"Log erfolgreich gesendet!\\n"
-"\\n"
-"URL: $fileUrl\\n"
-"\\n"
-"Sie können diese URL verwenden, um das Log zu teilen."
+"Protokoll erfolgreich gesendet! URL: $fileUrl Sie können diese URL verwenden, um das Protokoll zu "
+"teilen."
 msgid "calamares LOG"
 msgstr "calamares-LOG"
 msgid ""
-"It was not possible to write the EFI entry to the motherboard, likely due to insufficient space.\\n"
-"\\n"
+"It was not possible to write the EFI entry to the motherboard, likely due to insufficient space. "
 "Check the EFI manager for any entries that can be deleted and try installing the system again."
 msgstr ""
 "Es war nicht möglich, den EFI-Eintrag auf das Motherboard zu schreiben, wahrscheinlich aufgrund von "
-"unzureichendem Speicherplatz.\\n"
-"\\n"
-"Überprüfen Sie den EFI-Manager auf Einträge, die gelöscht werden können, und versuchen Sie erneut, "
-"das System zu installieren."
+"unzureichendem Speicherplatz. Überprüfen Sie den EFI-Manager auf Einträge, die gelöscht werden "
+"können, und versuchen Sie erneut, das System zu installieren."
 msgid "Open the EFI manager"
 msgstr "Öffnen des EFI-Managers"
 msgid ""
-"Do you want to view or send the installation log file to the cloud?\\n"
-"Generate a link to send in support groups."
+"Do you want to view or send the installation log file to the cloud? Generate a link to send in "
+"support groups."
 msgstr ""
-"Möchten Sie die Installationsprotokolldatei in die Cloud anzeigen oder senden?\\n"
-"Erstellen Sie einen Link, um ihn in Supportgruppen zu senden."
+"Möchten Sie die Installationsprotokolldatei in die Cloud anzeigen oder senden? Erstellen Sie einen "
+"Link, um ihn in Supportgruppen zu senden."
 msgid "Action"
 msgstr "Aktion"
 msgid "Open"
 msgstr "Öffnen"
 msgid "Send to the cloud"
 msgstr "In die Cloud senden"
-msgid "Checking the file:"
-msgstr "Überprüfung der Datei:"
-msgid "Checking for download or USB drive errors, this may take a few minutes..."
-msgstr "Überprüfung auf Download- oder USB-Laufwerksfehler, dies kann einige Minuten dauern ..."
-msgid "Checking system integrity"
-msgstr "Überprüfung der Systemintegrität"
-msgid "Error found, please download the system again or use another USB drive."
-msgstr ""
-"Fehler gefunden, bitte laden Sie das System erneut herunter oder verwenden Sie ein anderes "
-"USB-Laufwerk."
-msgid "The files are intact."
-msgstr "Die Dateien sind intakt."
-msgid "Verification canceled."
-msgstr "Verifizierung abgebrochen."
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
 msgid "Settings"
@@ -272,6 +227,41 @@ msgstr "Konnte Sprachdaten nicht laden."
 msgid "%d results"
 msgstr "%d Ergebnisse"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 85
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 107
+msgid "Progress"
+msgstr "Fortschritt"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 168
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 225
+msgid "Question"
+msgstr "Frage"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 236
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 266
+msgid "Error"
+msgstr "Fehler"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 277
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 307
+msgid "Information"
+msgstr "Information"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 318
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 424
+msgid "Select"
+msgstr "Auswählen"
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 39
 msgid "Important Tips"
 msgstr "Wichtige Tipps"
@@ -348,9 +338,35 @@ msgstr ""
 "Wir haben ein dynamisches virtuelles Speichermanagement mit Zram und SWAP-Dateien implementiert. "
 "SWAP-Partitionen werden nicht verwendet."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 83
+msgid "Installation tips: read the recommendations before proceeding"
+msgstr "Installationstipps: Lesen Sie die Empfehlungen, bevor Sie fortfahren."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 59
+msgid "Loading packages"
+msgstr "Pakete werden geladen"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 123
 msgid "Loading packages..."
 msgstr "Pakete werden geladen..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 71
+msgid "Package list"
+msgstr "Paketliste"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 73
+msgid "Toggle switches to keep or remove packages"
+msgstr "Umschalter zum Beibehalten oder Entfernen von Paketen"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 110
+#, python-brace-format
+msgid "{count} packages loaded"
+msgstr "{count} Pakete geladen"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 135
+#, python-brace-format
+msgid "Keep {name}"
+msgstr "Behalte {name}"
 # 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 242
 msgid "Failed to load packages: {}"
@@ -370,6 +386,10 @@ msgstr "Pakete konnten nicht geladen werden: {}"
 msgid "Starting..."
 msgstr "Starte..."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 220
+msgid "Minimal installation: select packages to keep or remove"
+msgstr "Minimale Installation: Pakete zum Behalten oder Entfernen auswählen"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 147
 msgid ""
 "<a href=\"https://forum.biglinux.com.br\">This is a collaborative system, if you need help consult "
@@ -377,6 +397,10 @@ msgid ""
 msgstr ""
 "<a href=\"https://forum.biglinux.com.br\">Dies ist ein kollaboratives System. Wenn Sie Hilfe "
 "benötigen, konsultieren Sie unser Forum.</a>"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 159
+msgid "This is a collaborative system, if you need help consult our forum."
+msgstr "Dies ist ein kollaboratives System. Wenn Sie Hilfe benötigen, konsultieren Sie unser Forum."
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -558,6 +582,10 @@ msgstr "Verbindung wird überprüft..."
 msgid "Configuring..."
 msgstr "Konfigurieren..."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 294
+msgid "Main page: choose Maintenance, Installation, or Minimal"
+msgstr "Hauptseite: wählen Sie Wartung, Installation oder Minimal"
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
@@ -664,6 +692,10 @@ msgstr "EFI-Eintrag-Manager"
 msgid "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
 msgstr "Erweiterte Funktion zum Hinzufügen, Entfernen oder Ändern von Boot-Einträgen in der UEFI-Firmware."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 171
+msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
+msgstr "Systemwartung: Wählen Sie Snapshot, Wiederherstellen oder EFI-Manager"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 213
@@ -699,6 +731,22 @@ msgstr "Alle behalten"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 99
 msgid "Remove All"
 msgstr "Alle entfernen"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 133
+msgid "Return to the previous page"
+msgstr "Zurück zur vorherigen Seite"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 135
+msgid "Keep all packages selected"
+msgstr "Alle Pakete ausgewählt lassen"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 137
+msgid "Mark all packages for removal"
+msgstr "Alle Pakete zur Entfernung markieren"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 139
+msgid "Proceed to the next step"
+msgstr "Fahren Sie mit dem nächsten Schritt fort."
 # 
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 # 

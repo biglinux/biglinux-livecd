@@ -14,22 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-msgid "Error: Integrity Check Failed"
-msgstr "Greška: Provjera integriteta nije uspjela"
-msgid "Oops!"
-msgstr "Oprosti!"
-msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
-msgstr ""
-"Provjera integriteta nije uspjela. Potrebno je ponovno preuzeti sustav ili koristiti drugi USB "
-"uređaj."
-msgid ""
-"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
-"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
-msgstr ""
-"<b>Zašto?</b> Smatrajte datoteku za instalaciju kao precizan digitalni paket. Ova greška znači da "
-"je paket oštećen tijekom preuzimanja, ili je USB uređaj sam po sebi neispravan i oštećuje datoteku."
-msgid "Close"
-msgstr "Zatvori"
 msgid "Please wait..."
 msgstr "Molimo pričekajte..."
 msgid "Checking the integrity of the download and storage device..."
@@ -37,15 +21,12 @@ msgstr "Provjeravanje integriteta preuzimanja i uređaja za pohranu..."
 msgid "Outdated Version"
 msgstr "Zastarjela verzija"
 msgid ""
-"<b>Do you want to proceed with the installation of this old version anyway?</b>\\n"
-"\\n"
-"BigLinux is a system with weekly updates and this version was released more than a month ago.\\n"
-"We recommend downloading a more recent version."
+"Do you want to proceed with the installation of this old version anyway? BigLinux is a system with "
+"weekly updates and this version was released more than a month ago. We recommend downloading a more "
+"recent version."
 msgstr ""
-"<b>Želite li nastaviti s instalacijom ove stare verzije?</b>\\n"
-"\\n"
-"BigLinux je sustav s tjednim ažuriranjima i ova verzija je objavljena prije više od mjesec dana.\\n"
-"Preporučujemo preuzimanje novije verzije."
+"Želite li nastaviti s instalacijom ove stare verzije? BigLinux je sustav s tjednim ažuriranjima, a "
+"ova verzija je objavljena prije više od mjesec dana. Preporučujemo preuzimanje novije verzije."
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -67,94 +48,69 @@ msgstr ""
 # 
 msgid "Continue"
 msgstr "Nastavi"
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 192
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 256
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 259
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 297
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 300
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 401
+msgid "Close"
+msgstr "Zatvori"
 msgid "Do you want to proceed with the installation in EFI mode?"
 msgstr "Želite li nastaviti s instalacijom u EFI načinu rada?"
 msgid ""
-"The current boot is using <span color='#CC2222'>EFI</span> mode, but I did not find any EFI "
-"partition on this computer.\n"
-"\n"
-"If this computer already has another system installed and you intend \n"
-"to keep it installed, you will probably need to change the \n"
-"configuration in the BIOS to boot in Legacy mode, also \n"
-"called BIOS mode."
+"The current boot is using EFI mode, but I did not find any EFI partition on this computer. If this "
+"computer already has another system installed and you intend to keep it installed, you will "
+"probably need to change the configuration in the BIOS to boot in Legacy mode, also called BIOS mode."
 msgstr ""
-"Trenutačno pokretanje koristi <span color='#CC2222'>EFI</span> način rada, ali nisam pronašao "
-"nijednu EFI particiju na ovom računalu.\n"
-"\n"
-"Ako je na ovom računalu već instaliran drugi sustav i namjeravate ga zadržati instaliranim, "
-"vjerojatno ćete trebati promijeniti konfiguraciju u BIOS-u kako biste pokrenuli u Legacy načinu "
-"rada, također nazvanom BIOS način rada."
+"Trenutno pokretanje koristi EFI način, ali nisam pronašao nijednu EFI particiju na ovom računalu. "
+"Ako je na ovom računalu već instaliran drugi sustav i namjeravate ga zadržati, vjerojatno ćete "
+"morati promijeniti konfiguraciju u BIOS-u kako biste pokrenuli u Legacy načinu, također nazvanom "
+"BIOS način."
 msgid "Install the system"
 msgstr "Instalirajte sustav"
 msgid "Do you want to proceed with the installation in Legacy/BIOS mode?"
 msgstr "Želite li nastaviti s instalacijom u Legacy/BIOS načinu rada?"
 msgid ""
-"The current boot is using <span color='#CC2222'>Legacy/BIOS</span> mode, but I found at least one "
-"EFI partition on this computer. \n"
-"\n"
-"For the installation to be successful, you will probably need to \n"
-"change the configuration in the BIOS to boot in EFI or UEFI mode."
+"The current boot is using Legacy/BIOS mode, but I found at least one EFI partition on this "
+"computer. For the installation to be successful, you will probably need to change the configuration "
+"in the BIOS to boot in EFI or UEFI mode."
 msgstr ""
-"Trenutno pokretanje koristi način <span color='#CC2222'>Legacy/BIOS</span>, ali pronašao sam barem "
-"jednu EFI particiju na ovom računalu.\n"
-"\n"
-"Za uspješnu instalaciju vjerojatno će biti potrebno promijeniti konfiguraciju u BIOS-u kako bi se "
-"pokrenulo u EFI ili UEFI načinu rada."
+"Trenutno pokretanje koristi Legacy/BIOS način, ali sam pronašao barem jednu EFI particiju na ovom "
+"računalu. Da bi instalacija bila uspješna, vjerojatno ćete morati promijeniti konfiguraciju u "
+"BIOS-u kako biste pokrenuli u EFI ili UEFI načinu."
 msgid "Sending, please wait..."
 msgstr "Slanje, pričekajte..."
 msgid "Log Sent"
 msgstr "Zapis poslan"
-msgid ""
-"Log successfully sent!\\n"
-"\\n"
-"URL: $fileUrl\\n"
-"\\n"
-"You can use this URL to share the log."
-msgstr ""
-"Zapis je uspješno poslan!\\n"
-"\\n"
-"URL: $fileUrl\\n"
-"\\n"
-"Možete koristiti ovu URL adresu za dijeljenje zapisa."
+msgid "Log successfully sent! URL: $fileUrl You can use this URL to share the log."
+msgstr "Zapis je uspješno poslan! URL: $fileUrl Možete koristiti ovaj URL za dijeljenje zapisa."
 msgid "calamares LOG"
 msgstr "calamares ZAPISNIK"
 msgid ""
-"It was not possible to write the EFI entry to the motherboard, likely due to insufficient space.\\n"
-"\\n"
+"It was not possible to write the EFI entry to the motherboard, likely due to insufficient space. "
 "Check the EFI manager for any entries that can be deleted and try installing the system again."
 msgstr ""
-"Nije bilo moguće zapisati EFI unos na matičnu ploču, vjerojatno zbog nedovoljnog prostora.\\n"
-"\\n"
-"Provjerite EFI upravitelja za bilo kakve unose koji se mogu izbrisati i pokušajte ponovno "
+"Nije bilo moguće zapisati EFI unos na matičnu ploču, vjerojatno zbog nedovoljnog prostora. "
+"Provjerite EFI upravitelj za bilo kakve unose koji se mogu izbrisati i pokušajte ponovno "
 "instalirati sustav."
 msgid "Open the EFI manager"
 msgstr "Otvorite EFI upravitelj"
 msgid ""
-"Do you want to view or send the installation log file to the cloud?\\n"
-"Generate a link to send in support groups."
+"Do you want to view or send the installation log file to the cloud? Generate a link to send in "
+"support groups."
 msgstr ""
-"Želite li pregledati ili poslati datoteku instalacijskog dnevnika u oblak?\\n"
-"Generirajte vezu za slanje u grupe za podršku."
+"Želite li pregledati ili poslati datoteku instalacijskog dnevnika u oblak? Generirajte poveznicu za "
+"slanje u grupe za podršku."
 msgid "Action"
 msgstr "Akcija"
 msgid "Open"
 msgstr "Otvori"
 msgid "Send to the cloud"
 msgstr "Pošalji u oblak"
-msgid "Checking the file:"
-msgstr "Provjeravanje datoteke:"
-msgid "Checking for download or USB drive errors, this may take a few minutes..."
-msgstr ""
-"Provjeravanje grešaka prilikom preuzimanja ili na USB uređaju, postupak može potrajati nekoliko "
-"minuta..."
-msgid "Checking system integrity"
-msgstr "Provjera integriteta sustava"
-msgid "Error found, please download the system again or use another USB drive."
-msgstr "Pronađena je pogreška, molimo preuzmite sustav ponovno ili koristite drugi USB pogon."
-msgid "The files are intact."
-msgstr "Datoteke su netaknute."
-msgid "Verification canceled."
-msgstr "Verifikacija otkazana."
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
 msgid "Settings"
@@ -268,6 +224,35 @@ msgstr "Nije moguće učitati jezične podatke."
 msgid "%d results"
 msgstr "%d rezultata"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 85
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 107
+msgid "Progress"
+msgstr "Napredak"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 168
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 225
+msgid "Question"
+msgstr "Pitanje"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 236
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 266
+msgid "Error"
+msgstr "Greška"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 277
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 307
+msgid "Information"
+msgstr "Informacije"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 318
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 424
+msgid "Select"
+msgstr "Odaberi"
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 149
+msgid "OK"
+msgstr "U redu"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 39
 msgid "Important Tips"
 msgstr "Važne informacije"
@@ -344,9 +329,35 @@ msgstr ""
 "Implementirali smo dinamičko upravljanje virtualnom memorijom s Zram i SWAP datotekama. SWAP "
 "particije neće biti korištene."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 83
+msgid "Installation tips: read the recommendations before proceeding"
+msgstr "Savjeti za instalaciju: pročitajte preporuke prije nastavka"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 59
+msgid "Loading packages"
+msgstr "Učitavanje paketa"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 123
 msgid "Loading packages..."
 msgstr "Učitavanje paketa..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 71
+msgid "Package list"
+msgstr "Popis paketa"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 73
+msgid "Toggle switches to keep or remove packages"
+msgstr "Preklopni prekidači za zadržavanje ili uklanjanje paketa"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 110
+#, python-brace-format
+msgid "{count} packages loaded"
+msgstr "{count} paketa učitana"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 135
+#, python-brace-format
+msgid "Keep {name}"
+msgstr "Zadrži {name}"
 # 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 242
 msgid "Failed to load packages: {}"
@@ -366,6 +377,10 @@ msgstr "Nije moguće učitati pakete: {}"
 msgid "Starting..."
 msgstr "Pokretanje..."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 220
+msgid "Minimal installation: select packages to keep or remove"
+msgstr "Minimalna instalacija: odaberite pakete koje želite zadržati ili ukloniti"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 147
 msgid ""
 "<a href=\"https://forum.biglinux.com.br\">This is a collaborative system, if you need help consult "
@@ -373,6 +388,10 @@ msgid ""
 msgstr ""
 "<a href=\"https://forum.biglinux.com.br\">Ovo je kolaborativni sustav, ako trebate pomoć "
 "konzultirajte naš forum.</a>"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 159
+msgid "This is a collaborative system, if you need help consult our forum."
+msgstr "Ovo je kolaborativni sustav, ako trebate pomoć konzultirajte naš forum."
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -554,6 +573,10 @@ msgstr "Provjera veze..."
 msgid "Configuring..."
 msgstr "Konfiguriranje..."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 294
+msgid "Main page: choose Maintenance, Installation, or Minimal"
+msgstr "Glavna stranica: odaberite Održavanje, Instalaciju ili Minimalno"
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
@@ -658,6 +681,10 @@ msgstr "EFI Upravitelj Unosa"
 msgid "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
 msgstr "Napredni alat za dodavanje, uklanjanje ili promjenu stavki pokretanja u UEFI firmveru."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 171
+msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
+msgstr "Održavanje sustava: odaberite Snimku, Obnovu ili EFI Upravitelj"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 213
@@ -693,6 +720,22 @@ msgstr "Zadrži sve"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 99
 msgid "Remove All"
 msgstr "Ukloni sve"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 133
+msgid "Return to the previous page"
+msgstr "Vratite se na prethodnu stranicu"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 135
+msgid "Keep all packages selected"
+msgstr "Zadrži sve odabrane pakete"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 137
+msgid "Mark all packages for removal"
+msgstr "Označi sve pakete za uklanjanje"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 139
+msgid "Proceed to the next step"
+msgstr "Nastavite na sljedeći korak"
 # 
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -746,10 +789,6 @@ msgstr "Dokumentacija"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 128
 msgid "Preferences not implemented yet"
 msgstr "Postavke još nisu implementirane."
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 149
-msgid "OK"
-msgstr "U redu"
 # 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 167
 msgid "Cancel"

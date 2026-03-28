@@ -14,22 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-msgid "Error: Integrity Check Failed"
-msgstr "Viga: Tõhususe kontroll ebaõnnestus"
-msgid "Oops!"
-msgstr "Kahjuks!"
-msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
-msgstr ""
-"Integriteedikontroll ebaõnnestus. On vajalik süsteem uuesti alla laadida või kasutada teist "
-"USB-mälupulka."
-msgid ""
-"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
-"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
-msgstr ""
-"<b>Miks?</b> Mõtle installifailile kui täpset digitaalset paketti. See viga tähendab, et pakett "
-"kahjustus allalaadimise ajal või USB-mälupulk ise on vigane ja kahjustab faili."
-msgid "Close"
-msgstr "Sulge"
 msgid "Please wait..."
 msgstr "Palun oota..."
 msgid "Checking the integrity of the download and storage device..."
@@ -37,16 +21,13 @@ msgstr "Kontrollitakse allalaadimise ja salvestusseadme terviklikkust..."
 msgid "Outdated Version"
 msgstr "Aegunud versioon"
 msgid ""
-"<b>Do you want to proceed with the installation of this old version anyway?</b>\\n"
-"\\n"
-"BigLinux is a system with weekly updates and this version was released more than a month ago.\\n"
-"We recommend downloading a more recent version."
+"Do you want to proceed with the installation of this old version anyway? BigLinux is a system with "
+"weekly updates and this version was released more than a month ago. We recommend downloading a more "
+"recent version."
 msgstr ""
-"<b>Kas soovite ikkagi jätkata selle vana versiooni installimist?</b>\\n"
-"\\n"
-"BigLinux on süsteem, millel on iganädalased uuendused ja see versioon ilmus rohkem kui kuu aega "
-"tagasi.\\n"
-"Soovitame alla laadida uuema versiooni."
+"Kas soovite ikkagi selle vana versiooni installimisega jätkata? BigLinux on süsteem, millel on "
+"iganädalased uuendused ja see versioon ilmus rohkem kui kuu aega tagasi. Soovitame alla laadida "
+"uuema versiooni."
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -68,91 +49,67 @@ msgstr ""
 # 
 msgid "Continue"
 msgstr "Jätka"
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 192
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 256
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 259
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 297
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 300
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 401
+msgid "Close"
+msgstr "Sulge"
 msgid "Do you want to proceed with the installation in EFI mode?"
 msgstr "Kas soovite jätkata paigaldust EFI režiimis?"
 msgid ""
-"The current boot is using <span color='#CC2222'>EFI</span> mode, but I did not find any EFI "
-"partition on this computer.\n"
-"\n"
-"If this computer already has another system installed and you intend \n"
-"to keep it installed, you will probably need to change the \n"
-"configuration in the BIOS to boot in Legacy mode, also \n"
-"called BIOS mode."
+"The current boot is using EFI mode, but I did not find any EFI partition on this computer. If this "
+"computer already has another system installed and you intend to keep it installed, you will "
+"probably need to change the configuration in the BIOS to boot in Legacy mode, also called BIOS mode."
 msgstr ""
-"Praegune käivitus kasutab <span color='#CC2222'>EFI</span> režiimi, kuid ma ei leidnud sellest "
-"arvutist ühtegi EFI partitsiooni.\n"
-"\n"
-"Kui sellel arvutil on juba teine süsteem installitud ja soovite seda alles hoida, peate "
-"tõenäoliselt BIOS-is konfiguratsiooni muutma, et käivitada Legacy režiimis, mida nimetatakse ka "
-"BIOS režiimiks."
+"Praegune käivitamine kasutab EFI-režiimi, kuid ma ei leidnud sellel arvutil ühtegi "
+"EFI-partitsiooni. Kui sellel arvutil on juba installitud teine süsteem ja kavatsete selle "
+"säilitada, peate tõenäoliselt BIOS-is konfiguratsiooni muutma, et käivitada Legacy-režiimis, mida "
+"nimetatakse ka BIOS-režiimiks."
 msgid "Install the system"
 msgstr "Paigaldage süsteem"
 msgid "Do you want to proceed with the installation in Legacy/BIOS mode?"
 msgstr "Kas soovite jätkata installimist Legacy/BIOS režiimis?"
 msgid ""
-"The current boot is using <span color='#CC2222'>Legacy/BIOS</span> mode, but I found at least one "
-"EFI partition on this computer. \n"
-"\n"
-"For the installation to be successful, you will probably need to \n"
-"change the configuration in the BIOS to boot in EFI or UEFI mode."
+"The current boot is using Legacy/BIOS mode, but I found at least one EFI partition on this "
+"computer. For the installation to be successful, you will probably need to change the configuration "
+"in the BIOS to boot in EFI or UEFI mode."
 msgstr ""
-"Praegune käivitamine kasutab <span color='#CC2222'>Legacy/BIOS</span> režiimi, kuid leidsin "
-"vähemalt ühe EFI partitsiooni selle arvuti kohta.\n"
-"\n"
-"Installatsiooni õnnestumiseks peate tõenäoliselt muutma BIOS-i konfiguratsiooni, et käivitada EFI "
-"või UEFI režiimis."
+"Praegune käivitamine kasutab Legacy/BIOS režiimi, kuid leidsin sellel arvutil vähemalt ühe EFI "
+"jaotuse. Paigaldamise edukaks toimumiseks peate tõenäoliselt muutma BIOS-i seadistusi, et käivitada "
+"EFI või UEFI režiimis."
 msgid "Sending, please wait..."
 msgstr "Saadan, palun oota..."
 msgid "Log Sent"
 msgstr "Log saadetud"
-msgid ""
-"Log successfully sent!\\n"
-"\\n"
-"URL: $fileUrl\\n"
-"\\n"
-"You can use this URL to share the log."
-msgstr ""
-"Logi on edukalt saadetud!\\n"
-"\\n"
-"URL: $fileUrl\\n"
-"\\n"
-"Sa saad kasutada seda URL-i logi jagamiseks."
+msgid "Log successfully sent! URL: $fileUrl You can use this URL to share the log."
+msgstr "Logi on edukalt saadetud! URL: $fileUrl Saate seda URL-i kasutada logi jagamiseks."
 msgid "calamares LOG"
 msgstr "calamaresi LOG"
 msgid ""
-"It was not possible to write the EFI entry to the motherboard, likely due to insufficient space.\\n"
-"\\n"
+"It was not possible to write the EFI entry to the motherboard, likely due to insufficient space. "
 "Check the EFI manager for any entries that can be deleted and try installing the system again."
 msgstr ""
-"EFI sisenemist emaplaadile ei olnud võimalik kirjutada, tõenäoliselt ebapiisava ruumi tõttu.\\n"
-"\\n"
-"Kontrollige EFI haldurit, et leida kustutatavaid sisenemisi, ja proovige süsteemi uuesti installida."
+"EFI sisenemist emaplaadile ei olnud võimalik kirjutada, tõenäoliselt ebapiisava ruumi tõttu. "
+"Kontrollige EFI haldurit, et leida kustutamiseks sobivaid sisenemisi, ja proovige süsteemi uuesti "
+"installida."
 msgid "Open the EFI manager"
 msgstr "Avage EFI haldurit"
 msgid ""
-"Do you want to view or send the installation log file to the cloud?\\n"
-"Generate a link to send in support groups."
-msgstr ""
-"Kas soovite vaadata või saata installimise logifaili pilve?\\n"
-"Looge link, mida saata tugigruppidesse."
+"Do you want to view or send the installation log file to the cloud? Generate a link to send in "
+"support groups."
+msgstr "Kas soovite vaadata või saata installimise logifaili pilve? Looge link, et saata tugigruppidesse."
 msgid "Action"
 msgstr "Tegevus"
 msgid "Open"
 msgstr "Ava&nbsp;"
 msgid "Send to the cloud"
 msgstr "Saada pilve"
-msgid "Checking the file:"
-msgstr "Faili kontrollimine:"
-msgid "Checking for download or USB drive errors, this may take a few minutes..."
-msgstr "Kontrollitakse allalaadimise või USB-mälupulga vigu, see võib võtta paar minutit..."
-msgid "Checking system integrity"
-msgstr "Süsteemi tervikluse kontrollimine"
-msgid "Error found, please download the system again or use another USB drive."
-msgstr "Viga leitud, palun laadige süsteem uuesti alla või kasutage teist USB-mälupulka."
-msgid "The files are intact."
-msgstr "Failid on puutumatud."
-msgid "Verification canceled."
-msgstr "Kinnitamine tühistatud."
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
 msgid "Settings"
@@ -266,6 +223,41 @@ msgstr "Keelt ei õnnestunud laadida."
 msgid "%d results"
 msgstr "%d tulemust"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 85
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 107
+msgid "Progress"
+msgstr "Edenemine"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 168
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 225
+msgid "Question"
+msgstr "Küsimus"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 236
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 266
+msgid "Error"
+msgstr "Viga"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 277
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 307
+msgid "Information"
+msgstr "Teave"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 318
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 424
+msgid "Select"
+msgstr "Vali"
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 39
 msgid "Important Tips"
 msgstr "Olulised näpunäited"
@@ -340,9 +332,35 @@ msgstr ""
 "Oleme rakendanud dünaamilist virtuaalset mälu haldust Zrami ja SWAP-failidega. SWAP-partitsioone ei "
 "kasutata."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 83
+msgid "Installation tips: read the recommendations before proceeding"
+msgstr "Paigaldusnõuanded: loe soovitusi enne jätkamist"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 59
+msgid "Loading packages"
+msgstr "Pakettide laadimine"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 123
 msgid "Loading packages..."
 msgstr "Laadimine..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 71
+msgid "Package list"
+msgstr "Pakettide loend"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 73
+msgid "Toggle switches to keep or remove packages"
+msgstr "Lülitid pakettide säilitamiseks või eemaldamiseks"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 110
+#, python-brace-format
+msgid "{count} packages loaded"
+msgstr "{count} paketti laaditud"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 135
+#, python-brace-format
+msgid "Keep {name}"
+msgstr "Hoia {name}"
 # 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 242
 msgid "Failed to load packages: {}"
@@ -362,6 +380,10 @@ msgstr "Pakettide laadimine ebaõnnestus: {}"
 msgid "Starting..."
 msgstr "Alustamine..."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 220
+msgid "Minimal installation: select packages to keep or remove"
+msgstr "Minimaalne installatsioon: valige pakid, mida hoida või eemaldada"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 147
 msgid ""
 "<a href=\"https://forum.biglinux.com.br\">This is a collaborative system, if you need help consult "
@@ -369,6 +391,10 @@ msgid ""
 msgstr ""
 "<a href=\"https://forum.biglinux.com.br\">See on koostööline süsteem, kui vajate abi, konsulteerige "
 "meie foorumiga.</a>"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 159
+msgid "This is a collaborative system, if you need help consult our forum."
+msgstr "See on koostööline süsteem, kui vajate abi, konsulteerige meie foorumiga."
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -550,6 +576,10 @@ msgstr "Kontrollin ühendust..."
 msgid "Configuring..."
 msgstr "Konfigureerimine..."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 294
+msgid "Main page: choose Maintenance, Installation, or Minimal"
+msgstr "Peamine leht: vali Hooldus, Paigaldus või Minimalne"
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
@@ -655,6 +685,10 @@ msgstr "EFI sisenemise haldur"
 msgid "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
 msgstr "Täpsem tööriist käivituskanalite lisamiseks, eemaldamiseks või muutmiseks UEFI püsivara seadetes."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 171
+msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
+msgstr "Süsteemi hooldus: vali Snapshot, Taasta või EFI haldur"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 213
@@ -690,6 +724,22 @@ msgstr "Hoia kõik"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 99
 msgid "Remove All"
 msgstr "Eemalda kõik"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 133
+msgid "Return to the previous page"
+msgstr "Tagasi eelmisele lehele"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 135
+msgid "Keep all packages selected"
+msgstr "Hoia kõik paketid valituks."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 137
+msgid "Mark all packages for removal"
+msgstr "Märgi kõik paketid eemaldamiseks."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 139
+msgid "Proceed to the next step"
+msgstr "Jätka järgmise sammuga"
 # 
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 # 

@@ -14,22 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: attranslate\n"
-msgid "Error: Integrity Check Failed"
-msgstr "Feil: Integritetskontroll mislyktes"
-msgid "Oops!"
-msgstr "Oops!"
-msgid "The integrity check failed. It is necessary to download the system again or use another USB drive."
-msgstr ""
-"Integritetskontrollen feilet. Det er nødvendig å laste ned systemet på nytt eller bruke en annen "
-"USB-stasjon."
-msgid ""
-"<b>Why?</b> Think of the installation file as a precise digital package. This error means the "
-"package was damaged during download, or the USB drive itself is faulty and is damaging the file."
-msgstr ""
-"<b>Hvorfor?</b> Tenk på installasjonsfilen som en presis digital pakke. Denne feilen betyr at "
-"pakken ble skadet under nedlastingen, eller at USB-enheten i seg selv er defekt og skader filen."
-msgid "Close"
-msgstr "Lukk"
 msgid "Please wait..."
 msgstr "Vennligst vent..."
 msgid "Checking the integrity of the download and storage device..."
@@ -37,16 +21,13 @@ msgstr "Sjekker integriteten til nedlastingen og lagringsenheten..."
 msgid "Outdated Version"
 msgstr "Utdatert versjon"
 msgid ""
-"<b>Do you want to proceed with the installation of this old version anyway?</b>\\n"
-"\\n"
-"BigLinux is a system with weekly updates and this version was released more than a month ago.\\n"
-"We recommend downloading a more recent version."
+"Do you want to proceed with the installation of this old version anyway? BigLinux is a system with "
+"weekly updates and this version was released more than a month ago. We recommend downloading a more "
+"recent version."
 msgstr ""
-"<b>Vil du fortsette med installasjonen av denne gamle versjonen uansett?</b>\\n"
-"\\n"
-"BigLinux er et system med ukentlige oppdateringer, og denne versjonen ble utgitt for mer enn en "
-"måned siden.\\n"
-"Vi anbefaler å laste ned en nyere versjon."
+"Vil du fortsette med installasjonen av denne gamle versjonen uansett? BigLinux er et system med "
+"ukentlige oppdateringer, og denne versjonen ble utgitt for mer enn en måned siden. Vi anbefaler å "
+"laste ned en nyere versjon."
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -68,20 +49,25 @@ msgstr ""
 # 
 msgid "Continue"
 msgstr "Fortsett"
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 192
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 256
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 259
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 297
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 300
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 401
+msgid "Close"
+msgstr "Lukk"
 msgid "Do you want to proceed with the installation in EFI mode?"
 msgstr "Ønsker du å fortsette med installasjonen i EFI-modus?"
 msgid ""
-"The current boot is using <span color='#CC2222'>EFI</span> mode, but I did not find any EFI "
-"partition on this computer.\n"
-"\n"
-"If this computer already has another system installed and you intend \n"
-"to keep it installed, you will probably need to change the \n"
-"configuration in the BIOS to boot in Legacy mode, also \n"
-"called BIOS mode."
+"The current boot is using EFI mode, but I did not find any EFI partition on this computer. If this "
+"computer already has another system installed and you intend to keep it installed, you will "
+"probably need to change the configuration in the BIOS to boot in Legacy mode, also called BIOS mode."
 msgstr ""
-"Den nåværende oppstarten bruker <span color='#CC2222'>EFI</span>-modus, men jeg fant ingen "
-"EFI-partisjon på denne datamaskinen.\n"
-"\n"
+"Den nåværende oppstarten bruker EFI-modus, men jeg fant ingen EFI-partisjon på denne datamaskinen. "
 "Hvis denne datamaskinen allerede har et annet system installert og du har til hensikt å beholde det "
 "installert, må du sannsynligvis endre konfigurasjonen i BIOS for å starte i Legacy-modus, også kalt "
 "BIOS-modus."
@@ -90,71 +76,42 @@ msgstr "Installer systemet"
 msgid "Do you want to proceed with the installation in Legacy/BIOS mode?"
 msgstr "Ønsker du å fortsette med installasjonen i Legacy/BIOS-modus?"
 msgid ""
-"The current boot is using <span color='#CC2222'>Legacy/BIOS</span> mode, but I found at least one "
-"EFI partition on this computer. \n"
-"\n"
-"For the installation to be successful, you will probably need to \n"
-"change the configuration in the BIOS to boot in EFI or UEFI mode."
+"The current boot is using Legacy/BIOS mode, but I found at least one EFI partition on this "
+"computer. For the installation to be successful, you will probably need to change the configuration "
+"in the BIOS to boot in EFI or UEFI mode."
 msgstr ""
-"Den gjeldende oppstarten bruker <span color='#CC2222'>Legacy/BIOS</span>-modus, men jeg fant minst "
-"en EFI-partisjon på denne datamaskinen.\n"
-"\n"
-"For at installasjonen skal lykkes, må du sannsynligvis endre konfigurasjonen i BIOS for å starte i "
-"EFI- eller UEFI-modus."
+"Den nåværende oppstarten bruker Legacy/BIOS-modus, men jeg fant minst én EFI-partisjon på denne "
+"datamaskinen. For at installasjonen skal være vellykket, må du sannsynligvis endre konfigurasjonen "
+"i BIOS for å starte i EFI- eller UEFI-modus."
 msgid "Sending, please wait..."
 msgstr "Sender, vennligst vent..."
 msgid "Log Sent"
 msgstr "Logg sendt"
-msgid ""
-"Log successfully sent!\\n"
-"\\n"
-"URL: $fileUrl\\n"
-"\\n"
-"You can use this URL to share the log."
-msgstr ""
-"Logg sendt! \\n"
-"\\n"
-"URL: $fileUrl \\n"
-"\\n"
-"Du kan bruke denne URL-en til å dele loggen."
+msgid "Log successfully sent! URL: $fileUrl You can use this URL to share the log."
+msgstr "Logg sendt! URL: $fileUrl Du kan bruke denne URL-en for å dele loggen."
 msgid "calamares LOG"
 msgstr "calamares LOG"
 msgid ""
-"It was not possible to write the EFI entry to the motherboard, likely due to insufficient space.\\n"
-"\\n"
+"It was not possible to write the EFI entry to the motherboard, likely due to insufficient space. "
 "Check the EFI manager for any entries that can be deleted and try installing the system again."
 msgstr ""
 "Det var ikke mulig å skrive EFI-oppføringen til hovedkortet, sannsynligvis på grunn av "
-"utilstrekkelig plass.\\n"
-"\\n"
-"Sjekk EFI-behandleren for eventuelle oppføringer som kan slettes, og prøv å installere systemet på "
-"nytt."
+"utilstrekkelig plass. Sjekk EFI-administratoren for eventuelle oppføringer som kan slettes, og prøv "
+"å installere systemet på nytt."
 msgid "Open the EFI manager"
 msgstr "Åpne EFI-behandleren"
 msgid ""
-"Do you want to view or send the installation log file to the cloud?\\n"
-"Generate a link to send in support groups."
+"Do you want to view or send the installation log file to the cloud? Generate a link to send in "
+"support groups."
 msgstr ""
-"Vil du se eller sende installasjonsloggfilen til skyen?\\n"
-"Generer en lenke for å sende i støttegrupper."
+"Vil du se eller sende installasjonsloggfilen til skyen? Generer en lenke for å sende i "
+"støttegrupper."
 msgid "Action"
 msgstr "Handling"
 msgid "Open"
 msgstr "Åpne"
 msgid "Send to the cloud"
 msgstr "Send til skyen"
-msgid "Checking the file:"
-msgstr "Sjekker filen:"
-msgid "Checking for download or USB drive errors, this may take a few minutes..."
-msgstr "Sjekker for nedlastings- eller USB-stasjonsfeil, dette kan ta noen minutter..."
-msgid "Checking system integrity"
-msgstr "Sjekker systemintegritet"
-msgid "Error found, please download the system again or use another USB drive."
-msgstr "Feil funnet, vennligst last ned systemet på nytt eller bruk en annen USB-stasjon."
-msgid "The files are intact."
-msgstr "Filene er intakte."
-msgid "Verification canceled."
-msgstr "Verifisering avbrutt."
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
 msgid "Settings"
@@ -268,6 +225,41 @@ msgstr "Kunne ikke laste språkdata."
 msgid "%d results"
 msgstr "%d resultater"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 85
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 107
+msgid "Progress"
+msgstr "Fremdrift"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 168
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 225
+msgid "Question"
+msgstr "Spørsmål"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 236
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 266
+msgid "Error"
+msgstr "Feil"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 277
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 307
+msgid "Information"
+msgstr "Informasjon"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 318
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 424
+msgid "Select"
+msgstr "Velg"
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 39
 msgid "Important Tips"
 msgstr "Viktige tips"
@@ -342,9 +334,35 @@ msgstr ""
 "Vi har implementert dynamisk virtuell minnehåndtering med Zram og SWAP-filer. SWAP-partisjoner vil "
 "ikke bli brukt."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 83
+msgid "Installation tips: read the recommendations before proceeding"
+msgstr "Installasjonstips: les anbefalingene før du fortsetter"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 59
+msgid "Loading packages"
+msgstr "Laster pakker"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 123
 msgid "Loading packages..."
 msgstr "Laster pakker..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 71
+msgid "Package list"
+msgstr "Pakke liste"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 73
+msgid "Toggle switches to keep or remove packages"
+msgstr "Veksle brytere for å beholde eller fjerne pakker"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 110
+#, python-brace-format
+msgid "{count} packages loaded"
+msgstr "{count} pakker lastet"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 135
+#, python-brace-format
+msgid "Keep {name}"
+msgstr "Behold {name}"
 # 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 242
 msgid "Failed to load packages: {}"
@@ -364,6 +382,10 @@ msgstr "Mislyktes med å laste pakker: {}"
 msgid "Starting..."
 msgstr "Starter..."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 220
+msgid "Minimal installation: select packages to keep or remove"
+msgstr "Minimal installasjon: velg pakker å beholde eller fjerne"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 147
 msgid ""
 "<a href=\"https://forum.biglinux.com.br\">This is a collaborative system, if you need help consult "
@@ -371,6 +393,10 @@ msgid ""
 msgstr ""
 "<a href=\"https://forum.biglinux.com.br\">Dette er et samarbeidssystem, hvis du trenger hjelp, kan "
 "du konsultere vårt forum.</a>"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 159
+msgid "This is a collaborative system, if you need help consult our forum."
+msgstr "Dette er et samarbeidssystem, hvis du trenger hjelp, konsulter vårt forum."
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -552,6 +578,10 @@ msgstr "Sjekker tilkobling..."
 msgid "Configuring..."
 msgstr "Konfigurerer..."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 294
+msgid "Main page: choose Maintenance, Installation, or Minimal"
+msgstr "Hovedside: velg Vedlikehold, Installasjon eller Minimal"
+# 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
@@ -658,6 +688,10 @@ msgstr "EFI Inngangsbehandler"
 msgid "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
 msgstr "Avansert verktøy for å legge til, fjerne eller endre oppstartsposter i UEFI-firmware."
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 171
+msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
+msgstr "Systemvedlikehold: velg Snapshot, Gjenopprett eller EFI-behandler"
+# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 213
@@ -693,6 +727,22 @@ msgstr "Behold Altogether"
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 99
 msgid "Remove All"
 msgstr "Fjern alt"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 133
+msgid "Return to the previous page"
+msgstr "Gå tilbake til forrige side"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 135
+msgid "Keep all packages selected"
+msgstr "Behold alle pakker valgt"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 137
+msgid "Mark all packages for removal"
+msgstr "Merk alle pakker for fjerning"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 139
+msgid "Proceed to the next step"
+msgstr "Gå videre til neste trinn"
 # 
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 # 
