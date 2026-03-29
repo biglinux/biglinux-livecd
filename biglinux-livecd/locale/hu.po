@@ -791,10 +791,6 @@ msgstr "Fórum"
 msgid "Documentation"
 msgstr "Dokumentáció"
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 128
-msgid "Preferences not implemented yet"
-msgstr "A beállítások még nincsenek megvalósítva."
-# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 167
 msgid "Cancel"
 msgstr "Mégse"

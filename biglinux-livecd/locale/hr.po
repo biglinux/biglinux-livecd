@@ -786,10 +786,6 @@ msgstr "Forum"
 msgid "Documentation"
 msgstr "Dokumentacija"
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 128
-msgid "Preferences not implemented yet"
-msgstr "Postavke još nisu implementirane."
-# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 167
 msgid "Cancel"
 msgstr "Otkaži"

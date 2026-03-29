@@ -788,10 +788,6 @@ msgstr "Forum"
 msgid "Documentation"
 msgstr "Dokumentacja"
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 128
-msgid "Preferences not implemented yet"
-msgstr "Preferencje jeszcze nie zaimplementowane"
-# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 167
 msgid "Cancel"
 msgstr "Anuluj"
