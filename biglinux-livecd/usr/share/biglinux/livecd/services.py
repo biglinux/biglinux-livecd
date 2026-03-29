@@ -133,7 +133,9 @@ class SystemService:
         self._run_command(
             ["localectl", "set-locale", f"LANG={lang_code}.UTF-8"], as_root=True
         )
-        self._run_command(["/usr/bin/biglinux-verify-md5sum"], as_root=False)
+        self._run_command(
+            ["/usr/bin/biglinux-verify-md5sum", "--no-gui"], as_root=False
+        )
 
     def apply_keyboard_layout(self, layout: str):
         """Applies the selected keyboard layout."""

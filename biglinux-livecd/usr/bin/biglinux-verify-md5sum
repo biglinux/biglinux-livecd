@@ -367,6 +367,44 @@ class VerifyApp(Adw.Application):
         )
 
 
+def verify_headless() -> int:
+    """Run verification without GUI. Returns 0 on success, 1 on failure."""
+    try:
+        os.remove(FAIL_FLAG)
+    except FileNotFoundError:
+        pass
+
+    mount_dir = detect_iso_mount()
+    if not mount_dir:
+        return 1
+
+    original_dir = os.getcwd()
+    try:
+        os.chdir(mount_dir)
+    except OSError:
+        return 1
+
+    for md5_file, sfs_name, _pct in SQUASHFS_FILES:
+        if not os.path.exists(md5_file):
+            continue
+        if not verify_md5_file(md5_file):
+            os.chdir(original_dir)
+            try:
+                with open(FAIL_FLAG, "w") as f:
+                    f.write("1")
+            except OSError:
+                pass
+            return 1
+
+    os.chdir(original_dir)
+    try:
+        with open(VERIFIED_FLAG, "w") as f:
+            f.write("1")
+    except OSError:
+        pass
+    return 0
+
+
 def main():
     signal.signal(signal.SIGINT, lambda *_: sys.exit(1))
 
@@ -387,6 +425,10 @@ def main():
     # Already verified?
     if os.path.exists(VERIFIED_FLAG):
         sys.exit(0)
+
+    # Headless mode: run verification without GUI
+    if "--no-gui" in sys.argv:
+        sys.exit(verify_headless())
 
     Adw.init()
     app = VerifyApp()

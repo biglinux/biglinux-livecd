@@ -12,10 +12,10 @@ import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
-from gi.repository import Gtk, Adw
+from gi.repository import Gtk, Adw, Gdk
 from .utils.i18n import _
 from .utils.constants import DEFAULTS
-from .utils.accessibility import announce, set_label, set_description
+from .utils.accessibility import announce, set_label, set_description, start_orca
 from .pages import MainPage, MaintenancePage, MinimalPage, TipsPage
 
 
@@ -55,7 +55,23 @@ class CalamaresWindow(Adw.ApplicationWindow):
         self.create_pages()
         self.setup_navigation()
 
+        # KeyboardEventController for Super+Alt+S to start ORCA
+        key_controller = Gtk.EventControllerKey.new()
+        key_controller.connect("key-pressed", self._on_key_press_event)
+        self.add_controller(key_controller)
+
         self.logger.info("Main window initialized")
+
+    def _on_key_press_event(self, controller, keyval, keycode, state):
+        """Handle global key events — Super+Alt+S starts ORCA screen reader."""
+        if (
+            keyval == Gdk.KEY_s
+            and state & Gdk.ModifierType.SUPER_MASK
+            and state & Gdk.ModifierType.ALT_MASK
+        ):
+            start_orca()
+            return True
+        return False
 
     def setup_window(self):
         """Configure window properties."""
@@ -70,6 +86,10 @@ class CalamaresWindow(Adw.ApplicationWindow):
 
         # Accessible label for the window
         set_label(self, title)
+        set_description(
+            self,
+            title + " — " + _("press Super+Alt+S to start the screen reader"),
+        )
 
     def create_layout(self):
         """Create the main window layout using Adw.ToolbarView."""

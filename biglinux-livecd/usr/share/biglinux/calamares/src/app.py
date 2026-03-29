@@ -142,12 +142,6 @@ class CalamaresApp(Adw.Application):
         """Start ORCA screen reader via Super+Alt+S."""
         self.logger.info("Starting ORCA screen reader")
         start_orca()
-        self.logger.info("Preferences action triggered")
-
-        # Create a simple toast notification for now
-        if self.window:
-            toast = Adw.Toast(title=_("Preferences not implemented yet"), timeout=3)
-            self.window.show_toast(toast)
 
     def show_error_dialog(self, title, message, details=None):
         """Show error dialog to user"""
