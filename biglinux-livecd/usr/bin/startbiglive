@@ -543,13 +543,10 @@ elif [[ "$display_manager" == "sddm" || "$display_manager" == "lxdm" ]]; then
     fi
 
 elif [[ -e /usr/share/xsessions/xfce.desktop ]]; then
-    # XFCE
-    export XDG_MENU_PREFIX=xfce-
-    export DESKTOP_SESSION=xfce
-    export XDG_SESSION_DESKTOP=xfce
-    export GDMSESSION=xfce
-    export XDG_CURRENT_DESKTOP=XFCE
-    exec startxfce4
+    # XFCE: Clean up and start xfce session
+    rm -f "$HOME/Empty Bash" "$HOME/Empty Desktop File.desktop" "$HOME/Empty File"
+    xdg-user-dirs-update
+    exec startxfce-community
 
 elif [[ -e /usr/bin/startcinnamon-community ]]; then
     # Cinnamon: Clean up and start cinnamon-session
