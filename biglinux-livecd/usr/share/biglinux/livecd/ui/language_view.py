@@ -14,6 +14,42 @@ import os
 
 logger = get_logger()
 
+# Clean native language names for screen reader pronunciation.
+# Maps the 2-letter lang prefix to a short, clear native name.
+_NATIVE_LANG_NAMES = {
+    "be": "беларуская",
+    "bg": "български",
+    "cs": "čeština",
+    "da": "dansk",
+    "de": "Deutsch",
+    "el": "ελληνικά",
+    "en": "English",
+    "es": "español",
+    "et": "eesti",
+    "fi": "suomi",
+    "fr": "français",
+    "he": "עברית",
+    "hr": "hrvatski",
+    "hu": "magyar",
+    "is": "Íslenska",
+    "it": "italiano",
+    "ja": "日本語",
+    "ko": "한국어",
+    "nb": "norsk bokmål",
+    "nl": "Nederlands",
+    "nn": "norsk nynorsk",
+    "pl": "polski",
+    "pt": "Português",
+    "ro": "română",
+    "ru": "русский",
+    "sk": "slovenčina",
+    "sl": "slovenščina",
+    "sv": "Svenska",
+    "tr": "Türkçe",
+    "uk": "українська",
+    "zh": "中文",
+}
+
 
 def normalize_string(s: str) -> str:
     """Normalizes a string by converting to lowercase and removing diacritics."""
@@ -122,8 +158,8 @@ class LanguageView(Adw.Bin):
                 raw_data = json.load(f)
 
             language_data = [LanguageListItem(**item) for item in raw_data]
-            favorites = ["pt_BR", "en_US", "es_ES"]
-            language_data.sort(key=lambda x: (x.code not in favorites, x.name))
+            favorites_order = {"en_US": 0, "pt_BR": 1, "es_ES": 2}
+            language_data.sort(key=lambda x: (x.code not in favorites_order, favorites_order.get(x.code, 999), x.name))
             self._store.splice(0, 0, language_data)
             GLib.idle_add(self._post_load_setup)
 
@@ -200,7 +236,45 @@ class LanguageView(Adw.Bin):
             halign=Gtk.Align.START,
             valign=Gtk.Align.CENTER,
         )
+
+        flag_widget = Gtk.Image(
+            pixel_size=36,
+            accessible_role=Gtk.AccessibleRole.PRESENTATION,
+        )
+
+        vbox = Gtk.Box(
+            orientation=Gtk.Orientation.VERTICAL,
+            spacing=2,
+            halign=Gtk.Align.START,
+            valign=Gtk.Align.CENTER,
+        )
+        # Heading: ORCA reads this (native language name)
+        name_label = Gtk.Label(
+            halign=Gtk.Align.START,
+            wrap=True,
+            justify=Gtk.Justification.LEFT,
+        )
+        name_label.add_css_class("heading")
+        # Caption: hidden from ORCA (English name for visual reference only)
+        orig_name_label = Gtk.Label(
+            halign=Gtk.Align.START,
+            wrap=True,
+            justify=Gtk.Justification.LEFT,
+            accessible_role=Gtk.AccessibleRole.PRESENTATION,
+        )
+        orig_name_label.add_css_class("caption")
+        vbox.append(name_label)
+        vbox.append(orig_name_label)
+
+        content_box.append(flag_widget)
+        content_box.append(vbox)
         root_box.append(content_box)
+
+        # Store references for _on_factory_bind
+        root_box._flag = flag_widget
+        root_box._name_label = name_label
+        root_box._orig_label = orig_name_label
+
         list_item.set_child(root_box)
 
         try:
@@ -223,47 +297,19 @@ class LanguageView(Adw.Bin):
     def _on_factory_bind(self, factory, list_item):
         item = list_item.get_item()
         root_box = list_item.get_child()
-        content_box = root_box.get_first_child()
 
-        child = content_box.get_first_child()
-        while child:
-            content_box.remove(child)
-            child = content_box.get_first_child()
+        # Build native name heading: e.g. "Português, Brazil" or "English, United States"
+        parts = item.name.split(" - ", 1)
+        country = parts[1] if len(parts) > 1 else ""
+        native_name = _NATIVE_LANG_NAMES.get(item.code[:2], item.name_orig)
+        heading_text = f"{native_name}, {country}" if country else native_name
 
-        # Accessible label for screen readers
-        root_box.update_property(
-            [Gtk.AccessibleProperty.LABEL],
-            [f"{item.name} ({item.name_orig})"],
-        )
+        # Heading: native name (ORCA reads this)
+        root_box._name_label.set_label(heading_text)
+        # Caption: English name (hidden from ORCA via PRESENTATION role)
+        root_box._orig_label.set_label(item.name)
 
-        flag_widget = Gtk.Image.new_from_icon_name(item.flag_icon_name)
-        flag_widget.set_pixel_size(36)
-
-        vbox = Gtk.Box(
-            orientation=Gtk.Orientation.VERTICAL,
-            spacing=2,
-            halign=Gtk.Align.START,
-            valign=Gtk.Align.CENTER,
-        )
-        name_label = Gtk.Label(
-            halign=Gtk.Align.START,
-            label=item.name,
-            wrap=True,
-            justify=Gtk.Justification.LEFT,
-        )
-        name_label.add_css_class("heading")
-        orig_name_label = Gtk.Label(
-            halign=Gtk.Align.START,
-            label=item.name_orig,
-            wrap=True,
-            justify=Gtk.Justification.LEFT,
-        )
-        orig_name_label.add_css_class("caption")
-        vbox.append(name_label)
-        vbox.append(orig_name_label)
-
-        content_box.append(flag_widget)
-        content_box.append(vbox)
+        root_box._flag.set_from_icon_name(item.flag_icon_name)
 
         click_gesture = Gtk.GestureClick.new()
         click_gesture.connect("released", self._on_item_clicked, item)
