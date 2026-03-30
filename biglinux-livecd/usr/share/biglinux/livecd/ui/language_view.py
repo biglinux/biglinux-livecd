@@ -4,6 +4,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, Gio, GObject, Gdk, GLib
 import json
+import subprocess
 import unicodedata
 from urllib.parse import parse_qs, urlparse
 from translations import _
@@ -173,7 +174,74 @@ class LanguageView(Adw.Bin):
         self.filter = Gtk.CustomFilter.new(self._filter_func, None)
         self.filter_model = Gtk.FilterListModel(model=self._store, filter=self.filter)
         selection_model = Gtk.SingleSelection(model=self.filter_model)
+        selection_model.connect("selection-changed", self._on_selection_changed)
+        self._espeak_proc = None
+        self._speak_timeout_id = 0
+        # speech-dispatcher client for fast cancel (avoids subprocess overhead)
+        self._spd_client = None
+        self._spd_scope_all = None
+        try:
+            import speechd
+
+            self._spd_client = speechd.SSIPClient("biglinux-wizard")
+            self._spd_scope_all = speechd.Scope.ALL
+        except Exception:
+            pass
         return selection_model
+
+    def _cancel_orca(self):
+        """Cancel ALL speech-dispatcher clients (including ORCA) instantly."""
+        if self._spd_client and self._spd_scope_all:
+            try:
+                self._spd_client.cancel(scope=self._spd_scope_all)
+            except Exception:
+                pass
+
+    def _on_selection_changed(self, selection_model, position, n_items):
+        """For pt_BR, let ORCA speak with the default Letícia voice.
+        For other languages, cancel ORCA and use espeak-ng with the native voice."""
+        # Cancel any pending delayed speak
+        if self._speak_timeout_id > 0:
+            GLib.source_remove(self._speak_timeout_id)
+            self._speak_timeout_id = 0
+        # Kill any ongoing espeak-ng process
+        if self._espeak_proc and self._espeak_proc.poll() is None:
+            self._espeak_proc.terminate()
+            self._espeak_proc = None
+        selected = selection_model.get_selected()
+        if selected == Gtk.INVALID_LIST_POSITION:
+            return
+        item = selection_model.get_item(selected)
+        if not item:
+            return
+        # For pt_BR: do nothing, let ORCA read with Letícia voice
+        if item.code == "pt_BR":
+            return
+        # Immediately cancel ORCA speech via Python API (instant, no fork)
+        self._cancel_orca()
+        # Schedule espeak-ng after a brief delay to also cancel any ORCA re-queue
+        parts = item.name.split(" - ", 1)
+        country = parts[1] if len(parts) > 1 else ""
+        native_name = _NATIVE_LANG_NAMES.get(item.code[:2], item.name_orig)
+        text = f"{native_name}, {country}" if country else native_name
+        voice = item.code.replace("_", "-")  # "en_US" -> "en-US"
+        self._speak_timeout_id = GLib.timeout_add(50, self._do_espeak, voice, text)
+
+    def _do_espeak(self, voice, text):
+        """Cancel ORCA speech and speak with espeak-ng in native voice."""
+        self._speak_timeout_id = 0
+        # Cancel any ORCA speech that was re-queued
+        self._cancel_orca()
+        # Speak with espeak-ng using the native voice
+        try:
+            self._espeak_proc = subprocess.Popen(
+                ["espeak-ng", "-v", voice, "--", text],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+        except FileNotFoundError:
+            logger.debug("espeak-ng not found")
+        return GLib.SOURCE_REMOVE
 
     def _activate_item(self, item):
         if not item:
@@ -248,7 +316,7 @@ class LanguageView(Adw.Bin):
             halign=Gtk.Align.START,
             valign=Gtk.Align.CENTER,
         )
-        # Heading: ORCA reads this (native language name)
+        # Heading: native name (ORCA reads this for pt_BR with Letícia voice)
         name_label = Gtk.Label(
             halign=Gtk.Align.START,
             wrap=True,
@@ -304,9 +372,9 @@ class LanguageView(Adw.Bin):
         native_name = _NATIVE_LANG_NAMES.get(item.code[:2], item.name_orig)
         heading_text = f"{native_name}, {country}" if country else native_name
 
-        # Heading: native name (ORCA reads this)
+        # Heading: visual text
         root_box._name_label.set_label(heading_text)
-        # Caption: English name (hidden from ORCA via PRESENTATION role)
+        # Caption: English name (PRESENTATION — ORCA doesn't read)
         root_box._orig_label.set_label(item.name)
 
         root_box._flag.set_from_icon_name(item.flag_icon_name)
