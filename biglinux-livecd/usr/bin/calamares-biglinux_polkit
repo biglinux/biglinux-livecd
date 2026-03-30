@@ -12,5 +12,13 @@
 # Detect user's color scheme preference (prefer-light or prefer-dark)
 colorScheme=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
 
+# Get AT-SPI2 accessibility bus address so ORCA can read the GTK4 app
+# even when it runs as root via sudo
+AT_SPI_BUS_ADDRESS=$(dbus-send --session --dest=org.a11y.Bus --print-reply \
+    /org/a11y/bus org.a11y.Bus.GetAddress 2>/dev/null \
+    | grep 'string "' | sed 's/.*string "//;s/"//')
+
 # Launch Calamares with preserved environment and color scheme override
-sudo -E env ADW_DEBUG_COLOR_SCHEME=$colorScheme /usr/bin/calamares "$@"
+sudo -E env ADW_DEBUG_COLOR_SCHEME=$colorScheme \
+    ${AT_SPI_BUS_ADDRESS:+AT_SPI_BUS_ADDRESS="$AT_SPI_BUS_ADDRESS"} \
+    /usr/bin/calamares "$@"

@@ -785,10 +785,6 @@ msgstr "Forum"
 msgid "Documentation"
 msgstr "Dokümantasyon"
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 128
-msgid "Preferences not implemented yet"
-msgstr "Tercihler henüz uygulanmadı."
-# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 149
 # 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 149

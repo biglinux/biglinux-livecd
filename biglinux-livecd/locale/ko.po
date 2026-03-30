@@ -772,10 +772,6 @@ msgstr "포럼"
 msgid "Documentation"
 msgstr "문서화"
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 128
-msgid "Preferences not implemented yet"
-msgstr "아직 구현되지 않은 기본 설정"
-# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 147
 # 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 147

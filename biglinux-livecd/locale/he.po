@@ -777,10 +777,6 @@ msgstr "פורום"
 msgid "Documentation"
 msgstr "תיעוד"
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 128
-msgid "Preferences not implemented yet"
-msgstr "העדפות עדיין לא מיועדות."
-# 
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 167
 msgid "Cancel"
 msgstr "ביטול"
