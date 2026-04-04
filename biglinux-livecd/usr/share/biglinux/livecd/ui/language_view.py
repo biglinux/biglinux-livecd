@@ -5,6 +5,8 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, Gio, GObject, Gdk, GLib
 import json
 import subprocess
+import tempfile
+import threading
 import unicodedata
 from urllib.parse import parse_qs, urlparse
 from translations import _
@@ -50,6 +52,56 @@ _NATIVE_LANG_NAMES = {
     "uk": "українська",
     "zh": "中文",
 }
+
+# ─── Kokoro TTS integration ───────────────────────────────────────────────
+_VOICE_MAP_PATH = "/usr/share/biglinux-kokoro-tts/locale-voice-map.conf"
+_KOKO_BIN = "/usr/bin/koko"
+_KOKO_MODEL = "/usr/share/biglinux-kokoro-tts/model/model.onnx"
+_KOKO_VOICES = "/usr/share/biglinux-kokoro-tts/voices/voices.bin"
+_HAS_KOKO = all(os.path.isfile(p) for p in (_KOKO_BIN, _KOKO_MODEL, _KOKO_VOICES))
+
+
+def _parse_voice_map():
+    """Parse locale-voice-map.conf → {locale: (engine, voice, lang_code)}."""
+    result = {}
+    try:
+        with open(_VOICE_MAP_PATH, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                if "=" not in line:
+                    continue
+                locale, _, val = line.partition("=")
+                locale = locale.strip()
+                parts = [p.strip() for p in val.strip().split(":")]
+                if len(parts) >= 2:
+                    result[locale] = (
+                        parts[0],
+                        parts[1],
+                        parts[2] if len(parts) > 2 else "",
+                    )
+    except FileNotFoundError:
+        pass
+    return result
+
+
+_VOICE_MAP = _parse_voice_map()
+_KOKORO_WAV_CACHE = {}
+_KOKORO_CACHE_LOCK = threading.Lock()
+
+
+def _voice_config_for_locale(locale_code):
+    """Look up TTS voice config for a locale, with fallback chain."""
+    if locale_code in _VOICE_MAP:
+        return _VOICE_MAP[locale_code]
+    lang = locale_code.split("_")[0]
+    for key, val in _VOICE_MAP.items():
+        if key.startswith(lang + "_"):
+            return val
+    if "*" in _VOICE_MAP:
+        return _VOICE_MAP["*"]
+    return ("espeak", "en", "en")
 
 
 def normalize_string(s: str) -> str:
@@ -163,6 +215,8 @@ class LanguageView(Adw.Bin):
             language_data.sort(key=lambda x: (x.code not in favorites_order, favorites_order.get(x.code, 999), x.name))
             self._store.splice(0, 0, language_data)
             GLib.idle_add(self._post_load_setup)
+            # Pre-generate Kokoro WAVs in background (thread-safe copy of data)
+            self._start_kokoro_precache(language_data)
 
         except (FileNotFoundError, json.JSONDecodeError) as e:
             logger.error(f"Error loading languages: {e}")
@@ -177,6 +231,7 @@ class LanguageView(Adw.Bin):
         selection_model.connect("selection-changed", self._on_selection_changed)
         self._espeak_proc = None
         self._speak_timeout_id = 0
+        self._tts_gen = 0
         # speech-dispatcher client for fast cancel (avoids subprocess overhead)
         self._spd_client = None
         self._spd_scope_all = None
@@ -198,41 +253,64 @@ class LanguageView(Adw.Bin):
                 pass
 
     def _on_selection_changed(self, selection_model, position, n_items):
-        """For pt_BR, let ORCA speak with the default Letícia voice.
-        For other languages, cancel ORCA and use espeak-ng with the native voice."""
+        """Speak the selected language name using Kokoro TTS or espeak-ng fallback."""
         # Cancel any pending delayed speak
         if self._speak_timeout_id > 0:
             GLib.source_remove(self._speak_timeout_id)
             self._speak_timeout_id = 0
-        # Kill any ongoing espeak-ng process
+        # Kill any ongoing TTS process
         if self._espeak_proc and self._espeak_proc.poll() is None:
             self._espeak_proc.terminate()
             self._espeak_proc = None
+        self._tts_gen += 1
         selected = selection_model.get_selected()
         if selected == Gtk.INVALID_LIST_POSITION:
             return
         item = selection_model.get_item(selected)
         if not item:
             return
-        # For pt_BR: do nothing, let ORCA read with Letícia voice
-        if item.code == "pt_BR":
-            return
-        # Immediately cancel ORCA speech via Python API (instant, no fork)
+        # Cancel ORCA speech for ALL languages
         self._cancel_orca()
-        # Schedule espeak-ng after a brief delay to also cancel any ORCA re-queue
+        # Build text to speak
         parts = item.name.split(" - ", 1)
         country = parts[1] if len(parts) > 1 else ""
         native_name = _NATIVE_LANG_NAMES.get(item.code[:2], item.name_orig)
         text = f"{native_name}, {country}" if country else native_name
-        voice = item.code.replace("_", "-")  # "en_US" -> "en-US"
-        self._speak_timeout_id = GLib.timeout_add(50, self._do_espeak, voice, text)
+        # Look up voice config from locale-voice-map.conf
+        engine, voice, lang_code = _voice_config_for_locale(item.code)
+        if engine == "kokoro" and _HAS_KOKO:
+            cache_key = f"{voice}:{lang_code}:{text}"
+            with _KOKORO_CACHE_LOCK:
+                cached_wav = _KOKORO_WAV_CACHE.get(cache_key)
+            if cached_wav and os.path.isfile(cached_wav):
+                # Kokoro WAV is cached — play it instantly
+                self._speak_timeout_id = GLib.timeout_add(
+                    50, self._play_wav, cached_wav
+                )
+            else:
+                # Not cached yet — play espeak immediately (zero latency),
+                # and generate Kokoro WAV in background for next visit
+                espeak_voice = lang_code if lang_code else item.code.replace("_", "-")
+                self._speak_timeout_id = GLib.timeout_add(
+                    50, self._do_espeak, espeak_voice, text
+                )
+                threading.Thread(
+                    target=self._kokoro_generate,
+                    args=(voice, lang_code, text, cache_key),
+                    daemon=True,
+                ).start()
+        else:
+            espeak_voice = lang_code if engine == "kokoro" else voice
+            if not espeak_voice:
+                espeak_voice = item.code.replace("_", "-")
+            self._speak_timeout_id = GLib.timeout_add(
+                50, self._do_espeak, espeak_voice, text
+            )
 
     def _do_espeak(self, voice, text):
-        """Cancel ORCA speech and speak with espeak-ng in native voice."""
+        """Speak with espeak-ng in native voice."""
         self._speak_timeout_id = 0
-        # Cancel any ORCA speech that was re-queued
         self._cancel_orca()
-        # Speak with espeak-ng using the native voice
         try:
             self._espeak_proc = subprocess.Popen(
                 ["espeak-ng", "-v", voice, "--", text],
@@ -242,6 +320,81 @@ class LanguageView(Adw.Bin):
         except FileNotFoundError:
             logger.debug("espeak-ng not found")
         return GLib.SOURCE_REMOVE
+
+    def _play_wav(self, wav_path):
+        """Play a cached WAV file instantly."""
+        self._speak_timeout_id = 0
+        self._cancel_orca()
+        try:
+            self._espeak_proc = subprocess.Popen(
+                ["paplay", wav_path],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+        except FileNotFoundError:
+            pass
+        return GLib.SOURCE_REMOVE
+
+    def _kokoro_generate(self, voice, lang_code, text, cache_key):
+        """Background: generate WAV with koko and cache it (does not play)."""
+        tmpwav = None
+        try:
+            fd, tmpwav = tempfile.mkstemp(prefix="bw-", suffix=".wav")
+            os.close(fd)
+            proc = subprocess.run(
+                [
+                    _KOKO_BIN, "text", text,
+                    "-m", _KOKO_MODEL, "-d", _KOKO_VOICES,
+                    "--lan", lang_code, "--style", voice, "--force-style",
+                    "-o", tmpwav,
+                ],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                timeout=30,
+            )
+            if proc.returncode == 0 and os.path.isfile(tmpwav) and os.path.getsize(tmpwav) > 0:
+                with _KOKORO_CACHE_LOCK:
+                    _KOKORO_WAV_CACHE[cache_key] = tmpwav
+            else:
+                if tmpwav:
+                    os.unlink(tmpwav)
+        except Exception:
+            if tmpwav and os.path.isfile(tmpwav) and cache_key not in _KOKORO_WAV_CACHE:
+                try:
+                    os.unlink(tmpwav)
+                except OSError:
+                    pass
+
+    def _start_kokoro_precache(self, language_data):
+        """Launch background pre-generation of Kokoro WAVs for all supported locales."""
+        if not _HAS_KOKO:
+            return
+        # Build list of (voice, lang_code, text, cache_key) — thread-safe, no GObjects
+        tasks = []
+        favorites = {"en_US": 0, "pt_BR": 1, "es_ES": 2}
+        for item in language_data:
+            engine, voice, lang_code = _voice_config_for_locale(item.code)
+            if engine != "kokoro":
+                continue
+            parts = item.name.split(" - ", 1)
+            country = parts[1] if len(parts) > 1 else ""
+            native_name = _NATIVE_LANG_NAMES.get(item.code[:2], item.name_orig)
+            text = f"{native_name}, {country}" if country else native_name
+            cache_key = f"{voice}:{lang_code}:{text}"
+            priority = favorites.get(item.code, 999)
+            tasks.append((priority, voice, lang_code, text, cache_key))
+        tasks.sort(key=lambda t: t[0])
+        threading.Thread(
+            target=self._precache_worker, args=(tasks,), daemon=True
+        ).start()
+
+    def _precache_worker(self, tasks):
+        """Background: sequentially generate Kokoro WAVs, favorites first."""
+        for _, voice, lang_code, text, cache_key in tasks:
+            with _KOKORO_CACHE_LOCK:
+                if cache_key in _KOKORO_WAV_CACHE:
+                    continue
+            self._kokoro_generate(voice, lang_code, text, cache_key)
 
     def _activate_item(self, item):
         if not item:

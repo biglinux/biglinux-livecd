@@ -58,3 +58,19 @@ def start_orca() -> bool:
     except subprocess.TimeoutExpired:
         logger.warning("Timeout checking for ORCA process")
         return False
+
+
+def ensure_orca_disabled() -> None:
+    """Kill any running ORCA and disable GNOME auto-start of screen reader."""
+    subprocess.Popen(
+        ["pkill", "-x", "orca"],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    subprocess.Popen(
+        ["gsettings", "set", "org.gnome.desktop.a11y.applications",
+         "screen-reader-enabled", "false"],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    logger.info("Ensured ORCA is disabled at startup")

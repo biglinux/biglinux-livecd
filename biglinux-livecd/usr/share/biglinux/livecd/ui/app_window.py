@@ -11,7 +11,7 @@ from ui.language_view import LanguageView
 from ui.keyboard_view import KeyboardView
 from ui.desktop_view import DesktopView
 from ui.theme_view import ThemeView
-from accessibility import announce, start_orca
+from accessibility import announce, start_orca, ensure_orca_disabled
 from logging_config import get_logger
 import os
 
@@ -71,6 +71,8 @@ class AppWindow(Adw.ApplicationWindow):
         self.config = SetupConfig()
         self.completed_steps = set()  # Track completed steps
         self.is_simplified_env = system_service.is_simplified_environment()
+        # Ensure ORCA is not running — user activates it manually via Super+Alt+S
+        ensure_orca_disabled()
         self.set_title(_("BigLinux Setup"))
         self.update_property(
             [Gtk.AccessibleProperty.DESCRIPTION],
@@ -403,6 +405,9 @@ class AppWindow(Adw.ApplicationWindow):
         self._retranslate_ui()
         # --- END DYNAMIC TRANSLATION ---
 
+        # Set speech-dispatcher language so ORCA uses correct TTS voice
+        self._set_speechd_language(lang_code)
+
         # Mark language step as completed
         self.completed_steps.add("language")
 
@@ -569,3 +574,18 @@ class AppWindow(Adw.ApplicationWindow):
         if isinstance(current_view, LanguageView):
             return current_view.handle_global_key_press(keyval)
         return False
+
+    def _set_speechd_language(self, lang_code: str) -> None:
+        """Set speech-dispatcher language so ORCA speaks in the selected language."""
+        if not lang_code:
+            return
+        try:
+            import speechd
+            client = speechd.SSIPClient("biglinux-wizard-lang")
+            client.set_language(lang_code)
+            client.close()
+        except Exception:
+            pass
+        # Also update LANG for any newly spawned TTS processes
+        locale_code = getattr(self.config.language, "code", lang_code)
+        os.environ["LANG"] = f"{locale_code}.UTF-8"
