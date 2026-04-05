@@ -207,6 +207,10 @@ msgstr "Masaüstü Düzeni"
 msgid "Theme"
 msgstr "Tema"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 584
+msgid "Accessibility enabled. Use arrow keys to navigate."
+msgstr "Erişim etkinleştirildi. Navigasyon için ok tuşlarını kullanın."
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
 msgid "Choose a Desktop Layout"
 msgstr "Bir Masaüstü Düzeni Seçin"
