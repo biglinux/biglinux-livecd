@@ -11,7 +11,7 @@ import unicodedata
 from urllib.parse import parse_qs, urlparse
 from translations import _
 from config import LanguageSelection
-from accessibility import announce
+from accessibility import announce, set_speak_voice
 from logging_config import get_logger
 import os
 
@@ -215,8 +215,8 @@ class LanguageView(Adw.Bin):
             language_data.sort(key=lambda x: (x.code not in favorites_order, favorites_order.get(x.code, 999), x.name))
             self._store.splice(0, 0, language_data)
             GLib.idle_add(self._post_load_setup)
-            # Pre-generate Kokoro WAVs in background (thread-safe copy of data)
-            self._start_kokoro_precache(language_data)
+            # Save for later precache when voice preview is enabled
+            self._language_data = language_data
 
         except (FileNotFoundError, json.JSONDecodeError) as e:
             logger.error(f"Error loading languages: {e}")
@@ -232,6 +232,9 @@ class LanguageView(Adw.Bin):
         self._espeak_proc = None
         self._speak_timeout_id = 0
         self._tts_gen = 0
+        self._voice_preview_enabled = (
+            False  # TTS off by default; Super+Alt+S enables it
+        )
         # speech-dispatcher client for fast cancel (avoids subprocess overhead)
         self._spd_client = None
         self._spd_scope_all = None
@@ -243,6 +246,12 @@ class LanguageView(Adw.Bin):
         except Exception:
             pass
         return selection_model
+
+    def enable_voice_preview(self):
+        """Enable TTS voice preview and start WAV precache."""
+        self._voice_preview_enabled = True
+        if hasattr(self, "_language_data") and self._language_data:
+            self._start_kokoro_precache(self._language_data)
 
     def _cancel_orca(self):
         """Cancel ALL speech-dispatcher clients (including ORCA) instantly."""
@@ -263,7 +272,17 @@ class LanguageView(Adw.Bin):
             self._espeak_proc.terminate()
             self._espeak_proc = None
         self._tts_gen += 1
+        # Always update the global speak voice for other screens
         selected = selection_model.get_selected()
+        if selected != Gtk.INVALID_LIST_POSITION:
+            item = selection_model.get_item(selected)
+            if item:
+                engine, voice, lang_code = _voice_config_for_locale(item.code)
+                if engine == "kokoro":
+                    set_speak_voice(voice, lang_code)
+        # Voice preview is off by default until user activates accessibility
+        if not self._voice_preview_enabled:
+            return
         if selected == Gtk.INVALID_LIST_POSITION:
             return
         item = selection_model.get_item(selected)
@@ -276,8 +295,7 @@ class LanguageView(Adw.Bin):
         country = parts[1] if len(parts) > 1 else ""
         native_name = _NATIVE_LANG_NAMES.get(item.code[:2], item.name_orig)
         text = f"{native_name}, {country}" if country else native_name
-        # Look up voice config from locale-voice-map.conf
-        engine, voice, lang_code = _voice_config_for_locale(item.code)
+        # voice and lang_code already set above
         if engine == "kokoro" and _HAS_KOKO:
             cache_key = f"{voice}:{lang_code}:{text}"
             with _KOKORO_CACHE_LOCK:
@@ -288,15 +306,11 @@ class LanguageView(Adw.Bin):
                     50, self._play_wav, cached_wav
                 )
             else:
-                # Not cached yet — play espeak immediately (zero latency),
-                # and generate Kokoro WAV in background for next visit
-                espeak_voice = lang_code if lang_code else item.code.replace("_", "-")
-                self._speak_timeout_id = GLib.timeout_add(
-                    50, self._do_espeak, espeak_voice, text
-                )
+                # Not cached yet — generate in background and play when ready
+                gen = self._tts_gen
                 threading.Thread(
-                    target=self._kokoro_generate,
-                    args=(voice, lang_code, text, cache_key),
+                    target=self._kokoro_generate_and_play,
+                    args=(voice, lang_code, text, cache_key, gen),
                     daemon=True,
                 ).start()
         else:
@@ -343,10 +357,23 @@ class LanguageView(Adw.Bin):
             os.close(fd)
             proc = subprocess.run(
                 [
-                    _KOKO_BIN, "text", text,
-                    "-m", _KOKO_MODEL, "-d", _KOKO_VOICES,
-                    "--lan", lang_code, "--style", voice, "--force-style",
-                    "-o", tmpwav,
+                    _KOKO_BIN,
+                    "-m",
+                    _KOKO_MODEL,
+                    "-d",
+                    _KOKO_VOICES,
+                    "-l",
+                    lang_code,
+                    "-s",
+                    voice,
+                    "--force-style",
+                    "true",
+                    "--speed",
+                    "1.5",
+                    "text",
+                    text,
+                    "-o",
+                    tmpwav,
                 ],
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
@@ -364,6 +391,14 @@ class LanguageView(Adw.Bin):
                     os.unlink(tmpwav)
                 except OSError:
                     pass
+
+    def _kokoro_generate_and_play(self, voice, lang_code, text, cache_key, gen):
+        """Background: generate WAV with koko, cache it, and play if still current."""
+        self._kokoro_generate(voice, lang_code, text, cache_key)
+        with _KOKORO_CACHE_LOCK:
+            cached_wav = _KOKORO_WAV_CACHE.get(cache_key)
+        if cached_wav and self._tts_gen == gen:
+            GLib.idle_add(self._play_wav, cached_wav)
 
     def _start_kokoro_precache(self, language_data):
         """Launch background pre-generation of Kokoro WAVs for all supported locales."""

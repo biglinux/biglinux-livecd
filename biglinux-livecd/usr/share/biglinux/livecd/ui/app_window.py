@@ -11,7 +11,13 @@ from ui.language_view import LanguageView
 from ui.keyboard_view import KeyboardView
 from ui.desktop_view import DesktopView
 from ui.theme_view import ThemeView
-from accessibility import announce, start_orca, ensure_orca_disabled
+from accessibility import (
+    announce,
+    ensure_orca_disabled,
+    set_accessibility_enabled,
+    speak,
+    set_speak_voice,
+)
 from logging_config import get_logger
 import os
 
@@ -120,8 +126,10 @@ class AppWindow(Adw.ApplicationWindow):
         self.set_content(self._build_ui())
         self._update_header_state()
 
-        # Create and add a Gtk.EventControllerKey for global key events
+        # Create and add a Gtk.EventControllerKey for global key events (CAPTURE phase
+        # so it runs before child widgets like the search entry consume keys)
         key_controller = Gtk.EventControllerKey.new()
+        key_controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
         key_controller.connect("key-pressed", self._on_key_press_event)
         self.add_controller(key_controller)
 
@@ -562,13 +570,18 @@ class AppWindow(Adw.ApplicationWindow):
             logger.error(f"ERROR in _on_simple_theme_selected: {e}", exc_info=True)
 
     def _on_key_press_event(self, controller, keyval, keycode, state):
-        # Super+Alt+S: start ORCA screen reader (standard GNOME shortcut)
+        # Super+Alt+S: enable accessibility (speech via speech-dispatcher + Kokoro)
+        # Use keycode 39 (physical 'S' key) so it works on any keyboard layout
         if (
-            keyval == Gdk.KEY_s
+            keycode == 39
             and state & Gdk.ModifierType.SUPER_MASK
             and state & Gdk.ModifierType.ALT_MASK
         ):
-            start_orca()
+            set_accessibility_enabled(True)
+            lang_view = self.stack.get_child_by_name("language")
+            if isinstance(lang_view, LanguageView):
+                lang_view.enable_voice_preview()
+            speak(_("Accessibility enabled. Use arrow keys to navigate."))
             return True
         current_view = self.stack.get_visible_child()
         if isinstance(current_view, LanguageView):

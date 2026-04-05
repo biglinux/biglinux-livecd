@@ -9,7 +9,7 @@ from abc import ABCMeta, abstractmethod
 from gi.repository import Adw, Gdk, GLib, GObject, Gtk
 from services import SystemService
 from translations import _
-from accessibility import announce
+from accessibility import announce, speak, is_accessibility_enabled
 from logging_config import get_logger
 
 logger = get_logger()
@@ -37,6 +37,9 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
             self.load_items()
             self.items_loaded = True
         self.grab_focus()
+        # Suppress selection-changed speak during initial selection
+        self._suppress_speak = True
+        GLib.idle_add(self._select_first_and_announce)
 
     def _build_ui(self):
         scrolled_window = Gtk.ScrolledWindow(
@@ -87,6 +90,7 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
 
         self.flow_box.connect("child-activated", self._on_child_activated)
         self.flow_box.connect("activate-cursor-child", self._on_activate_cursor_child)
+        self.flow_box.connect("selected-children-changed", self._on_selection_changed)
 
         key_controller = Gtk.EventControllerKey.new()
         key_controller.connect("key-pressed", self._on_key_pressed)
@@ -136,8 +140,7 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
 
             self.flow_box.append(flow_child)
 
-        if items:
-            GLib.idle_add(self._select_first_item)
+        # Selection and announce are done in _select_first_and_announce via _on_map
 
     def grab_focus(self):
         self.flow_box.grab_focus()
@@ -170,6 +173,29 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
 
     def _on_item_enter(self, controller, x, y, flow_child):
         self.flow_box.select_child(flow_child)
+
+    def _on_selection_changed(self, flow_box):
+        """Speak the selected item name when selection changes (mouse or keyboard)."""
+        if getattr(self, "_suppress_speak", False):
+            return
+        selected = flow_box.get_selected_children()
+        if selected and is_accessibility_enabled():
+            child = selected[0]
+            if hasattr(child, "item_data"):
+                speak(child.item_data.name)
+
+    def _select_first_and_announce(self):
+        """Select first item and announce page title (without race condition)."""
+        first_child = self.flow_box.get_first_child()
+        if first_child:
+            self.flow_box.select_child(first_child)
+            self.grab_focus()
+        self._suppress_speak = False
+        if is_accessibility_enabled():
+            text = self.get_title() or ""
+            if text:
+                speak(text)
+        return GLib.SOURCE_REMOVE
 
     def _on_activate_cursor_child(self, flow_box):
         selected = flow_box.get_selected_children()

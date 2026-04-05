@@ -10,7 +10,7 @@ from gi.repository import Gdk, GdkPixbuf, GLib, GObject, Gtk
 from logging_config import get_logger
 from services import SystemService
 from translations import _
-from accessibility import announce
+from accessibility import announce, speak, is_accessibility_enabled
 from ui.base_view import BaseItemView
 
 logger = get_logger()
@@ -256,38 +256,75 @@ class ThemeView(BaseItemView):
     def _on_settings_card_clicked(self, gesture, n_press, x, y, switch):
         if n_press == 1:
             switch.set_active(not switch.get_active())
+            if is_accessibility_enabled():
+                label = self._label_for_switch(switch)
+                state_msg = _("enabled") if switch.get_active() else _("disabled")
+                speak(f"{label}, {state_msg}")
 
     def _on_settings_card_key(self, controller, keyval, keycode, state, _data):
         """Toggle the switch inside a settings card via Enter or Space."""
         if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter, Gdk.KEY_space):
             card = controller.get_widget()
-            # Find the Gtk.Switch inside the card
-            child = card.get_first_child()
-            while child:
-                if isinstance(child, Gtk.Switch):
-                    child.set_active(not child.get_active())
-                    state_msg = _("enabled") if child.get_active() else _("disabled")
-                    announce(self, state_msg)
-                    return True
-                # Search inside nested containers
-                inner = (
-                    child.get_first_child()
-                    if hasattr(child, "get_first_child")
-                    else None
-                )
-                while inner:
-                    if isinstance(inner, Gtk.Switch):
-                        inner.set_active(not inner.get_active())
-                        state_msg = (
-                            _("enabled") if inner.get_active() else _("disabled")
-                        )
-                        announce(self, state_msg)
-                        return True
-                    inner = inner.get_next_sibling()
-                child = child.get_next_sibling()
+            switch = self._find_switch_in_widget(card)
+            if switch:
+                switch.set_active(not switch.get_active())
+                state_msg = _("enabled") if switch.get_active() else _("disabled")
+                announce(self, state_msg)
+                if is_accessibility_enabled():
+                    label = self._label_for_switch(switch)
+                    speak(f"{label}, {state_msg}")
+                return True
         return False
 
+    def _find_switch_in_widget(self, widget):
+        """Find a Gtk.Switch inside a widget tree."""
+        child = widget.get_first_child()
+        while child:
+            if isinstance(child, Gtk.Switch):
+                return child
+            inner = (
+                child.get_first_child() if hasattr(child, "get_first_child") else None
+            )
+            while inner:
+                if isinstance(inner, Gtk.Switch):
+                    return inner
+                inner = inner.get_next_sibling()
+            child = child.get_next_sibling()
+        return None
+
+    def _label_for_switch(self, switch):
+        """Return the label text for a given switch."""
+        if switch is self.jamesdsp_switch:
+            return _("JamesDSP Audio")
+        if switch is self.contrast_switch:
+            return _("Image quality")
+        return ""
+
     # --- Implementation of BaseItemView abstract methods ---
+
+    def _select_first_and_announce(self):
+        """Override to include JamesDSP state in announcement."""
+        first_child = self.flow_box.get_first_child()
+        if first_child:
+            self.flow_box.select_child(first_child)
+            self.grab_focus()
+        self._suppress_speak = False
+        if is_accessibility_enabled():
+            text = self.get_title() or ""
+            # Include JamesDSP state
+            if self.jamesdsp_available and self.jamesdsp_switch:
+                state = (
+                    _("enabled") if self.jamesdsp_switch.get_active() else _("disabled")
+                )
+                text += f". {_('JamesDSP Audio')}, {state}"
+            if self.contrast_available and self.contrast_switch:
+                state = (
+                    _("enabled") if self.contrast_switch.get_active() else _("disabled")
+                )
+                text += f". {_('Image quality')}, {state}"
+            if text:
+                speak(text)
+        return GLib.SOURCE_REMOVE
 
     def get_title(self) -> str:
         if self.simplified_mode:

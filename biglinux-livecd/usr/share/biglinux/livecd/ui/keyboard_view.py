@@ -6,7 +6,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, GObject, GLib, Gdk
 from translations import _
-from accessibility import announce
+from accessibility import announce, speak, is_accessibility_enabled
 import os
 
 ASSETS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets"))
@@ -72,6 +72,7 @@ class KeyboardView(Adw.Bin):
         # Connect to FlowBox-level signals
         self.flow_box.connect("child-activated", self._on_child_activated)
         self.flow_box.connect("activate-cursor-child", self._on_activate_cursor_child)
+        self.flow_box.connect("selected-children-changed", self._on_selection_changed)
 
         # Add key controller for Enter key handling
         key_controller = Gtk.EventControllerKey.new()
@@ -127,7 +128,7 @@ class KeyboardView(Adw.Bin):
             child = self._create_layout_child(name, layout_id)
             self.flow_box.append(child)
 
-        GLib.idle_add(self._select_first_item)
+        # Selection and announce are handled by _select_first_and_announce via _on_map
 
     def _create_layout_child(self, name, layout_id):
         """Create a FlowBoxChild with a keyboard layout card."""
@@ -204,13 +205,41 @@ class KeyboardView(Adw.Bin):
         """Select the item when the mouse pointer enters it."""
         self.flow_box.select_child(child)
 
+    def _on_selection_changed(self, flow_box):
+        """Speak the selected layout name when selection changes (mouse or keyboard)."""
+        if getattr(self, "_suppress_speak", False):
+            return
+        selected = flow_box.get_selected_children()
+        if selected and is_accessibility_enabled():
+            child = selected[0]
+            if hasattr(child, "layout_data"):
+                speak(child.layout_data["name"])
+
     def _on_flow_leave(self, controller, *args):
         """Clear selection when the mouse pointer leaves the flow box."""
         self.flow_box.unselect_all()
 
     def _on_map(self, *args):
+        from logging_config import get_logger
+
+        logger = get_logger()
+        logger.info(
+            f"KeyboardView._on_map called, accessibility={is_accessibility_enabled()}"
+        )
         self.grab_focus()
-        GLib.idle_add(self._select_first_item)
+        # Suppress selection-changed speak during initial selection
+        self._suppress_speak = True
+        GLib.idle_add(self._select_first_and_announce)
+
+    def _select_first_and_announce(self):
+        """Select first item and announce page title (without race condition)."""
+        child = self.flow_box.get_first_child()
+        if child:
+            self.flow_box.select_child(child)
+        self._suppress_speak = False
+        if is_accessibility_enabled():
+            speak(_("Choose Your Keyboard Layout"))
+        return GLib.SOURCE_REMOVE
 
     def update_primary_layout(self, new_layout):
         self.primary_layout = new_layout
