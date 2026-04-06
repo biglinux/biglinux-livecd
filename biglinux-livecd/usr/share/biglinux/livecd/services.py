@@ -312,12 +312,12 @@ class SystemService:
                 "org/gnome/desktop/interface": {
                     "color-scheme": "'default'",
                     "gtk-theme": "'adw-gtk3'",
-                    "icon-theme": "'bigicons-papient'"
+                    "icon-theme": "'bigicons-papient-light'"
                 }
             })
             # Apply theme immediately via xfconf-query
             self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName", "-s", "adw-gtk3"])
-            self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/IconThemeName", "-s", "bigicons-papient"])
+            self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/IconThemeName", "-s", "bigicons-papient-light"])
 
         # Configure Kvantum theme
         kvantum_dir = os.path.join(home, ".config", "Kvantum")
