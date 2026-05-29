@@ -76,7 +76,8 @@ class AppWindow(Adw.ApplicationWindow):
         self.system_service = system_service
         self.config = SetupConfig()
         self.completed_steps = set()  # Track completed steps
-        self.is_simplified_env = system_service.is_simplified_environment()
+        self.has_desktop_step = system_service.has_desktop_layout_step()
+        self.uses_simple_theme = system_service.uses_simple_theme_selector()
         # Ensure ORCA is not running — user activates it manually via Super+Alt+S
         ensure_orca_disabled()
         self.set_title(_("BigLinux Setup"))
@@ -151,22 +152,22 @@ class AppWindow(Adw.ApplicationWindow):
         header_wrapper.set_center_widget(header_content_box)
 
         # Define steps based on environment
-        if self.is_simplified_env:
-            self.steps = [
-                {"name": "language", "file": "headerbar-locale.svg"},
-                {"name": "keyboard", "file": "headerbar-keyboard.svg"},
-                {"name": "theme", "file": "headerbar-theme.svg"},
-            ]
-        else:
+        if self.has_desktop_step:
             self.steps = [
                 {"name": "language", "file": "headerbar-locale.svg"},
                 {"name": "keyboard", "file": "headerbar-keyboard.svg"},
                 {"name": "desktop", "file": "headerbar-display.svg"},
                 {"name": "theme", "file": "headerbar-theme.svg"},
             ]
+        else:
+            self.steps = [
+                {"name": "language", "file": "headerbar-locale.svg"},
+                {"name": "keyboard", "file": "headerbar-keyboard.svg"},
+                {"name": "theme", "file": "headerbar-theme.svg"},
+            ]
 
         # Build header layout based on environment
-        if self.is_simplified_env:
+        if not self.has_desktop_step:
             # Simplified layout: [comm-logo.png] [Language] [Keyboard] [Theme]
             # Use comm-logo.png for simplified environments (XivaStudio override if exists)
             logo_path = get_comm_logo_path(self.system_service)
@@ -469,7 +470,7 @@ class AppWindow(Adw.ApplicationWindow):
         # Mark keyboard step as completed
         self.completed_steps.add("keyboard")
 
-        if self.is_simplified_env:
+        if not self.has_desktop_step:
             # Navigate to simple theme view for simplified environments (GNOME/XFCE/Cinnamon)
             self._ensure_view("simple_theme")
             self.stack.set_visible_child_name("simple_theme")
@@ -492,10 +493,16 @@ class AppWindow(Adw.ApplicationWindow):
         # Mark desktop step as completed
         self.completed_steps.add("desktop")
 
-        # LAZY LOADING: Ensure theme view exists before showing it
-        self._ensure_view("theme")
-        logger.debug("Navigating to theme view...")
-        self.stack.set_visible_child_name("theme")
+        if self.uses_simple_theme:
+            # GNOME has a layout step, but still uses the light/dark theme chooser.
+            self._ensure_view("simple_theme")
+            logger.debug("Navigating to simple theme view...")
+            self.stack.set_visible_child_name("simple_theme")
+        else:
+            # LAZY LOADING: Ensure theme view exists before showing it
+            self._ensure_view("theme")
+            logger.debug("Navigating to theme view...")
+            self.stack.set_visible_child_name("theme")
 
     def _add_theme_view(self):
         view = ThemeView(system_service=self.system_service)

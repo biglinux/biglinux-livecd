@@ -129,8 +129,9 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
             flow_child.item_data = item_obj
 
             # Accessible label for screen readers
+            item_label = getattr(item_obj, "display_name", item_obj.name)
             flow_child.update_property(
-                [Gtk.AccessibleProperty.LABEL], [item_obj.name]
+                [Gtk.AccessibleProperty.LABEL], [item_label]
             )
 
             # Hover-to-select functionality
@@ -182,7 +183,7 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
         if selected and is_accessibility_enabled():
             child = selected[0]
             if hasattr(child, "item_data"):
-                speak(child.item_data.name)
+                speak(getattr(child.item_data, "display_name", child.item_data.name))
 
     def _select_first_and_announce(self):
         """Select first item and announce page title (without race condition)."""

@@ -22,6 +22,7 @@ class DesktopListItem(GObject.Object):
     def __init__(self, name, system_service: SystemService):
         super().__init__()
         self.name = name
+        self.display_name = system_service.get_desktop_display_name(name)
         self.image_path = system_service.get_desktop_image_path(name)
 
 
@@ -44,7 +45,7 @@ class DesktopView(BaseItemView):
         # Accessible description for screen readers
         box.update_property(
             [Gtk.AccessibleProperty.LABEL],
-            [_("Desktop Layout") + ": " + item.name],
+            [_("Desktop Layout") + ": " + item.display_name],
         )
         try:
             cursor = Gdk.Cursor.new_from_name("pointer", None)

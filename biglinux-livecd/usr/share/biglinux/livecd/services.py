@@ -1,3 +1,4 @@
+import json
 import os
 import re
 import subprocess
@@ -7,6 +8,33 @@ from config import SetupConfig
 from logging_config import get_logger
 
 logger = get_logger()
+
+
+GNOME_LAYOUTS = [
+    "biggnome",
+    "desk-ux",
+    "hybrid",
+    "g-unity",
+    "classic",
+    "minimal",
+]
+
+GNOME_LAYOUT_DISPLAY_NAMES = {
+    "biggnome": "BigGnome",
+    "desk-ux": "Desk UX",
+    "hybrid": "Hybrid",
+    "g-unity": "G-Unity",
+    "classic": "Classic",
+    "minimal": "Minimal",
+}
+
+GNOME_DTP_MONITOR_KEYS = {
+    "panel-anchors",
+    "panel-element-positions",
+    "panel-lengths",
+    "panel-positions",
+    "panel-sizes",
+}
 
 
 class SystemService:
@@ -31,11 +59,17 @@ class SystemService:
         # Image paths
         self.desktop_image_path = os.path.join(self.base_themes_path, "img/{}.svg")
         self.theme_image_path = os.path.join(self.base_themes_path, "img/{}.png")
+        self.assets_path = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), "assets")
+        )
+        self.gnome_layouts_path = os.path.join(self.assets_path, "gnome-layouts")
 
         # Temp files for live session - Calamares will copy these to /etc/big-default-config/
         self.tmp_lang_file = "/tmp/big_language"
         self.tmp_keyboard_file = "/tmp/big_keyboard"
         self.tmp_desktop_file = "/tmp/big_desktop_changed"
+        self.tmp_gnome_layout_file = "/tmp/big_gnome_layout"
+        self.tmp_gnome_settings_file = "/tmp/big_gnome_settings"
         self.tmp_theme_file = "/tmp/big_desktop_theme"
         self.tmp_jamesdsp_file = "/tmp/big_enable_jamesdsp"
         self.tmp_display_profile_file = "/tmp/big_improve_display"
@@ -102,12 +136,14 @@ class SystemService:
             logger.debug(
                 f"[TEST MODE] Suppressed write to {filepath}: '{content[:50]}{'...' if len(content) > 50 else ''}'"
             )
-            return
+            return True
         try:
             with open(filepath, "w", encoding="utf-8") as f:
                 f.write(content)
+            return True
         except IOError as e:
             logger.error(f"Error writing to {filepath}: {e}")
+            return False
 
     def _write_user_config_file(self, filepath: str, content: str):
         """Helper to write a file in the user's home directory."""
@@ -115,13 +151,17 @@ class SystemService:
             logger.debug(
                 f"[TEST MODE] Suppressed write to {filepath}: '{content[:50]}{'...' if len(content) > 50 else ''}'"
             )
-            return
+            return True
         try:
             os.makedirs(os.path.dirname(filepath), exist_ok=True)
-            with open(filepath, "w", encoding="utf-8") as f:
+            tmp_path = f"{filepath}.tmp"
+            with open(tmp_path, "w", encoding="utf-8") as f:
                 f.write(content)
+            os.replace(tmp_path, filepath)
+            return True
         except IOError as e:
             logger.error(f"Error writing to {filepath}: {e}")
+            return False
 
     def apply_language_settings(self, lang_code: str, timezone: str):
         """Applies language, locale, and timezone settings."""
@@ -173,6 +213,16 @@ class SystemService:
 
     def get_available_desktops(self) -> List[str]:
         """Returns a list of available desktop layout names."""
+        if self.get_desktop_environment() == "GNOME":
+            layouts = [
+                layout
+                for layout in GNOME_LAYOUTS
+                if os.path.exists(self._get_gnome_layout_file_path(layout))
+            ]
+            if not layouts:
+                logger.warning(f"No GNOME layouts found at {self.gnome_layouts_path}")
+            return layouts
+
         if not os.path.exists(self.desktop_list_script):
             logger.warning(f"Desktop script not found at {self.desktop_list_script}")
             return []
@@ -182,8 +232,36 @@ class SystemService:
     def apply_desktop_layout(self, layout: str):
         """Applies the selected desktop layout."""
         logger.info(f"Applying desktop layout: {layout}")
+        if self.get_desktop_environment() == "GNOME":
+            self.apply_gnome_desktop_layout(layout)
+            return
+
         self._write_tmp_file(self.tmp_desktop_file, layout)
         self._run_command([self.desktop_apply_script, layout, "quiet"])
+
+    def apply_gnome_desktop_layout(self, layout: str):
+        """Prepare the selected GNOME layout for startgnome-community."""
+        layout_file = self._get_gnome_layout_file_path(layout)
+        if not layout_file or not os.path.exists(layout_file):
+            logger.error(f"GNOME layout file not found for: {layout}")
+            return
+
+        try:
+            with open(layout_file, "r", encoding="utf-8") as f:
+                layout_text = f.read()
+        except OSError as e:
+            logger.error(f"Failed to read GNOME layout {layout_file}: {e}")
+            return
+
+        settings_text = self._normalize_gnome_layout_text(layout_text)
+        settings_file = self._get_settings_file_path("GNOME")
+        if not self._write_user_config_file(settings_file, settings_text):
+            return
+
+        self._write_tmp_file(self.tmp_desktop_file, layout)
+        self._write_tmp_file(self.tmp_gnome_layout_file, layout)
+        self._write_tmp_file(self.tmp_gnome_settings_file, settings_text)
+        logger.info(f"Prepared GNOME layout '{layout}' in {settings_file}")
 
     def get_available_themes(self) -> List[str]:
         """Returns a list of available theme names."""
@@ -212,10 +290,16 @@ class SystemService:
 
         desktop_env = self.get_desktop_environment()
 
+        if desktop_env == "GNOME":
+            self._ensure_gnome_settings_file()
+
         if theme == "dark":
             self._apply_dark_theme(desktop_env)
         else:
             self._apply_light_theme(desktop_env)
+
+        if desktop_env == "GNOME":
+            self._sync_gnome_settings_tmp()
 
     def _apply_dark_theme(self, desktop_env: str):
         """Applies dark theme configuration by modifying settings file directly."""
@@ -540,10 +624,15 @@ class SystemService:
         self._run_command(["killall", "kwin_wayland"])
 
     def get_desktop_image_path(self, layout_name: str) -> str:
+        if self.get_desktop_environment() == "GNOME":
+            return os.path.join(self.gnome_layouts_path, f"{layout_name}.svg")
         return self.desktop_image_path.format(layout_name)
 
     def get_theme_image_path(self, theme_name: str) -> str:
         return self.theme_image_path.format(theme_name)
+
+    def get_desktop_display_name(self, layout_name: str) -> str:
+        return GNOME_LAYOUT_DISPLAY_NAMES.get(layout_name, layout_name)
 
     def apply_jamesdsp_settings(self, enabled: bool):
         """
@@ -691,6 +780,75 @@ class SystemService:
         """Checks if we should use simplified UI (GNOME/XFCE/Cinnamon)."""
         desktop_env = self.get_desktop_environment()
         return desktop_env in ["GNOME", "XFCE", "Cinnamon"]
+
+    def uses_simple_theme_selector(self) -> bool:
+        """Checks if the theme step should be light/dark only."""
+        return self.get_desktop_environment() in ["GNOME", "XFCE", "Cinnamon"]
+
+    def has_desktop_layout_step(self) -> bool:
+        """Checks if the wizard should show the desktop layout step."""
+        desktop_env = self.get_desktop_environment()
+        return desktop_env == "GNOME" or not self.is_simplified_environment()
+
+    def _get_gnome_layout_file_path(self, layout: str) -> str:
+        if layout not in GNOME_LAYOUTS:
+            return ""
+        return os.path.join(self.gnome_layouts_path, f"{layout}.txt")
+
+    def _ensure_gnome_settings_file(self):
+        settings_file = self._get_settings_file_path("GNOME")
+        if os.path.exists(settings_file):
+            return
+        default_layout = GNOME_LAYOUTS[0]
+        logger.info(f"Creating GNOME settings from default layout: {default_layout}")
+        self.apply_gnome_desktop_layout(default_layout)
+
+    def _sync_gnome_settings_tmp(self):
+        settings_file = self._get_settings_file_path("GNOME")
+        if not os.path.exists(settings_file):
+            return
+        try:
+            with open(settings_file, "r", encoding="utf-8") as f:
+                self._write_tmp_file(self.tmp_gnome_settings_file, f.read())
+        except OSError as e:
+            logger.error(f"Failed to sync GNOME settings temp file: {e}")
+
+    def _normalize_gnome_layout_text(self, text: str) -> str:
+        """Keep bundled GNOME layout dumps portable across monitors."""
+        out_lines = []
+        for line in text.splitlines():
+            if line.startswith("preferred-monitor-by-connector="):
+                out_lines.append("preferred-monitor-by-connector='primary'")
+                continue
+            if line.startswith("primary-monitor="):
+                out_lines.append("primary-monitor=''")
+                continue
+            if "=" not in line:
+                out_lines.append(line)
+                continue
+
+            key, _, value = line.partition("=")
+            if key not in GNOME_DTP_MONITOR_KEYS:
+                out_lines.append(line)
+                continue
+
+            try:
+                data = json.loads(value.strip().strip("'"))
+            except (TypeError, ValueError):
+                out_lines.append(line)
+                continue
+
+            if data:
+                normalized = {"0": next(iter(data.values()))}
+            else:
+                normalized = {}
+            new_value = json.dumps(normalized, separators=(",", ":"))
+            out_lines.append(f"{key}='{new_value}'")
+
+        normalized_text = "\n".join(out_lines)
+        if text.endswith("\n"):
+            normalized_text += "\n"
+        return normalized_text
 
     # XivaStudio detection with caching
     _xivastudio_cache: bool | None = None

@@ -75,6 +75,33 @@ mkdir -p "$CONFIG_DIR"
 
 # Copy desktop config if exists
 [[ -f "/tmp/big_desktop_changed" ]] && cp -f "/tmp/big_desktop_changed" "$CONFIG_DIR/desktop"
+[[ -f "/tmp/big_gnome_layout" ]] && cp -f "/tmp/big_gnome_layout" "$CONFIG_DIR/gnome-layout"
+
+# Copy GNOME layout settings if exists
+if [[ -f "/tmp/big_gnome_settings" ]]; then
+    cp -f "/tmp/big_gnome_settings" "$CONFIG_DIR/gnome-settings"
+
+    mkdir -p "$ROOT_MOUNT/etc/skel/.config/dconf"
+    cp -f "/tmp/big_gnome_settings" "$ROOT_MOUNT/etc/skel/.config/dconf/settings.gnome"
+
+    for USER_HOME in "$ROOT_MOUNT"/home/*; do
+        [[ -d "$USER_HOME" ]] || continue
+
+        USER_NAME="$(basename "$USER_HOME")"
+        USER_SETTINGS_DIR="$USER_HOME/.config/dconf"
+        USER_SETTINGS_FILE="$USER_SETTINGS_DIR/settings.gnome"
+
+        mkdir -p "$USER_SETTINGS_DIR"
+        cp -f "/tmp/big_gnome_settings" "$USER_SETTINGS_FILE"
+
+        if [[ -f "$ROOT_MOUNT/etc/passwd" ]]; then
+            USER_IDS="$(awk -F: -v user="$USER_NAME" '$1 == user { print $3 ":" $4 }' "$ROOT_MOUNT/etc/passwd")"
+            if [[ -n "$USER_IDS" ]]; then
+                chown "$USER_IDS" "$USER_HOME/.config" "$USER_SETTINGS_DIR" "$USER_SETTINGS_FILE" 2>/dev/null || true
+            fi
+        fi
+    done
+fi
 
 # Copy JamesDSP flag if exists
 [[ -f "/tmp/big_enable_jamesdsp" ]] && cp -f "/tmp/big_enable_jamesdsp" "$CONFIG_DIR/jamesdsp"
