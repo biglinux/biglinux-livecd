@@ -189,8 +189,11 @@ class AppWindow(Adw.ApplicationWindow):
             self._add_step_button(header_content_box, self.steps[0])
             self._add_step_button(header_content_box, self.steps[1])
 
-            # Use main logo (XivaStudio override if exists)
-            logo_path = get_logo_path(self.system_service)
+            # GNOME uses the Community branding even with the layout step.
+            if self.uses_simple_theme:
+                logo_path = get_comm_logo_path(self.system_service)
+            else:
+                logo_path = get_logo_path(self.system_service)
             if os.path.exists(logo_path):
                 logo = Gtk.Image.new_from_file(logo_path)
                 logo.set_pixel_size(72)

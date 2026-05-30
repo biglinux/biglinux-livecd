@@ -225,7 +225,7 @@ name='Office.directory'
 translate=true
 
 [org/gnome/desktop/app-folders/folders/Settings]
-apps=['br.com.biglinux-settings.desktop', 'org.gnome.tweaks.desktop', 'org.gnome.Settings.desktop', 'br.com.biglinux.bighardwareinfo.desktop', 'br.com.biglinux.drivermanager.desktop', 'org.manjaro.pamac.manager.desktop', 'timeshift-gtk.desktop', 'system-config-printer-only-jobs.desktop', 'hplip.desktop', 'hp-uiscan.desktop', 'cups.desktop', 'kvantummanager.desktop', 'ca.desrt.dconf-editor.desktop', 'org.gnome.Extensions.desktop', 'com.sidevesh.Luminance.desktop', 'pamac-updates.desktop', 'system-config-printer.desktop', 'big-parental-controls.desktop']
+apps=['org.communitybig.layout-switcher.desktop', 'br.com.biglinux-settings.desktop', 'org.gnome.tweaks.desktop', 'org.gnome.Settings.desktop', 'br.com.biglinux.bighardwareinfo.desktop', 'br.com.biglinux.drivermanager.desktop', 'org.manjaro.pamac.manager.desktop', 'timeshift-gtk.desktop', 'system-config-printer-only-jobs.desktop', 'hplip.desktop', 'hp-uiscan.desktop', 'cups.desktop', 'kvantummanager.desktop', 'ca.desrt.dconf-editor.desktop', 'org.gnome.Extensions.desktop', 'com.sidevesh.Luminance.desktop', 'pamac-updates.desktop', 'system-config-printer.desktop', 'big-parental-controls.desktop']
 categories=['Settings']
 excluded-apps=['big-store.desktop', 'bigsettings.desktop']
 name='Settings.directory'
@@ -251,8 +251,8 @@ translate=true
 [org/gnome/desktop/background]
 color-shading-type='solid'
 picture-options='zoom'
-picture-uri='file:///usr/share/wallpapers/ambiance3.avif'
-picture-uri-dark='file:///usr/share/wallpapers/ambiance3.avif'
+picture-uri='file:///usr/share/wallpapers/animal-owl4.avif'
+picture-uri-dark='file:///usr/share/wallpapers/animal-owl4.avif'
 primary-color='#000000000000'
 secondary-color='#000000000000'
 
@@ -323,7 +323,7 @@ recent-files-max-age=-1
 [org/gnome/desktop/screensaver]
 color-shading-type='solid'
 picture-options='zoom'
-picture-uri='file:///usr/share/wallpapers/ambiance3.avif'
+picture-uri='file:///usr/share/wallpapers/animal-owl4.avif'
 primary-color='#000000000000'
 secondary-color='#000000000000'
 
@@ -423,7 +423,7 @@ command-history=['ajustes', 'r']
 disable-user-extensions=false
 disabled-extensions=['ddterm@amezin.github.com', 'just-perfection-desktop@just-perfection', 'GPaste@gnome-shell-extensions.gnome.org', 'light-style@gnome-shell-extensions.gcampax.github.com', 'dash-to-dock@micxgx.gmail.com', 'apps-menu@gnome-shell-extensions.gcampax.github.com']
 enabled-extensions=['user-theme@gnome-shell-extensions.gcampax.github.com', 'CoverflowAltTab@dmo60.de', 'gsconnect@andyholmes.github.io', 'pamac-updates@manjaro.org', 'blur-my-shell@aunetx', 'legacyschemeautoswitcher@joshimukul29.gmail.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'copyous@boerdereinar.dev', 'big-shot@bigcommunity.org', 'dash-to-panel@jderose9.github.com', 'arcmenu@arcmenu.com', 'appindicatorsupport@rgcjonas.gmail.com', 'bignetscreen-helper@bigcommunity.org']
-favorite-apps=['org.gnome.Nautilus.desktop', 'brave-browser.desktop', 'org.communitybig.ashyterm.desktop', 'org.gnome.Calculator.desktop', 'org.gnome.TextEditor.desktop', 'org.gnome.Calendar.desktop']
+favorite-apps=['org.gnome.Nautilus.desktop', 'brave-browser.desktop', 'org.communitybig.ashyterm.desktop', 'org.gnome.TextEditor.desktop']
 welcome-dialog-last-shown-version='43.2'
 
 [org/gnome/shell/extensions/arcmenu]

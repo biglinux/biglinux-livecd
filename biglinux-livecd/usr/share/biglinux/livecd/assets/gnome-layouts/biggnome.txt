@@ -216,7 +216,7 @@ name='Office.directory'
 translate=true
 
 [org/gnome/desktop/app-folders/folders/Settings]
-apps=['br.com.biglinux-settings.desktop', 'org.gnome.tweaks.desktop', 'org.gnome.Settings.desktop', 'br.com.biglinux.bighardwareinfo.desktop', 'br.com.biglinux.grub-restore.desktop', 'br.com.biglinux.drivermanager.desktop', 'org.manjaro.pamac.manager.desktop', 'timeshift-gtk.desktop', 'system-config-printer-only-jobs.desktop', 'hplip.desktop', 'hp-uiscan.desktop', 'cups.desktop', 'kvantummanager.desktop', 'ca.desrt.dconf-editor.desktop', 'org.gnome.Extensions.desktop', 'com.sidevesh.Luminance.desktop', 'pamac-updates.desktop', 'system-config-printer.desktop', 'qefientrymanager.desktop']
+apps=['org.communitybig.layout-switcher.desktop', 'br.com.biglinux-settings.desktop', 'org.gnome.tweaks.desktop', 'org.gnome.Settings.desktop', 'br.com.biglinux.bighardwareinfo.desktop', 'br.com.biglinux.grub-restore.desktop', 'br.com.biglinux.drivermanager.desktop', 'org.manjaro.pamac.manager.desktop', 'timeshift-gtk.desktop', 'system-config-printer-only-jobs.desktop', 'hplip.desktop', 'hp-uiscan.desktop', 'cups.desktop', 'kvantummanager.desktop', 'ca.desrt.dconf-editor.desktop', 'org.gnome.Extensions.desktop', 'com.sidevesh.Luminance.desktop', 'pamac-updates.desktop', 'system-config-printer.desktop', 'qefientrymanager.desktop']
 categories=['Settings']
 excluded-apps=['big-store.desktop', 'bigsettings.desktop']
 name='Settings.directory'

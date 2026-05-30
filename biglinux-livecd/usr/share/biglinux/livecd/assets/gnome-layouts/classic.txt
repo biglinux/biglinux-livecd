@@ -239,7 +239,7 @@ name='X-Pardus-Apps.directory'
 translate=true
 
 [org/gnome/desktop/app-folders/folders/Settings]
-apps=['br.com.biglinux-settings.desktop', 'org.gnome.tweaks.desktop', 'org.gnome.Settings.desktop', 'br.com.biglinux.bighardwareinfo.desktop', 'br.com.biglinux.drivermanager.desktop', 'org.manjaro.pamac.manager.desktop', 'timeshift-gtk.desktop', 'system-config-printer-only-jobs.desktop', 'hplip.desktop', 'hp-uiscan.desktop', 'cups.desktop', 'kvantummanager.desktop', 'ca.desrt.dconf-editor.desktop', 'org.gnome.Extensions.desktop', 'com.sidevesh.Luminance.desktop', 'pamac-updates.desktop', 'system-config-printer.desktop', 'big-parental-controls.desktop']
+apps=['org.communitybig.layout-switcher.desktop', 'br.com.biglinux-settings.desktop', 'org.gnome.tweaks.desktop', 'org.gnome.Settings.desktop', 'br.com.biglinux.bighardwareinfo.desktop', 'br.com.biglinux.drivermanager.desktop', 'org.manjaro.pamac.manager.desktop', 'timeshift-gtk.desktop', 'system-config-printer-only-jobs.desktop', 'hplip.desktop', 'hp-uiscan.desktop', 'cups.desktop', 'kvantummanager.desktop', 'ca.desrt.dconf-editor.desktop', 'org.gnome.Extensions.desktop', 'com.sidevesh.Luminance.desktop', 'pamac-updates.desktop', 'system-config-printer.desktop', 'big-parental-controls.desktop']
 categories=['Settings']
 excluded-apps=['big-store.desktop', 'bigsettings.desktop']
 name='Settings.directory'
@@ -564,9 +564,9 @@ dot-style-focused='SEGMENTED'
 dot-style-unfocused='SEGMENTED'
 extension-version=73
 focus-highlight=true
-focus-highlight-color='#99c1f1'
+focus-highlight-color='#1c71d8'
 focus-highlight-dominant=false
-focus-highlight-opacity=30
+focus-highlight-opacity=100
 global-border-radius=2
 group-apps=false
 group-apps-label-font-color='#f6f5f4'

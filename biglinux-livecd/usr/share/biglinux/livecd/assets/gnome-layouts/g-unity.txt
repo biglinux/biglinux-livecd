@@ -220,7 +220,7 @@ name='Office.directory'
 translate=true
 
 [org/gnome/desktop/app-folders/folders/Settings]
-apps=['br.com.biglinux-settings.desktop', 'org.gnome.tweaks.desktop', 'org.gnome.Settings.desktop', 'br.com.biglinux.bighardwareinfo.desktop', 'br.com.biglinux.grub-restore.desktop', 'br.com.biglinux.drivermanager.desktop', 'org.manjaro.pamac.manager.desktop', 'timeshift-gtk.desktop', 'system-config-printer-only-jobs.desktop', 'hplip.desktop', 'hp-uiscan.desktop', 'cups.desktop', 'kvantummanager.desktop', 'ca.desrt.dconf-editor.desktop', 'org.gnome.Extensions.desktop', 'com.sidevesh.Luminance.desktop', 'pamac-updates.desktop', 'system-config-printer.desktop', 'qefientrymanager.desktop']
+apps=['org.communitybig.layout-switcher.desktop', 'br.com.biglinux-settings.desktop', 'org.gnome.tweaks.desktop', 'org.gnome.Settings.desktop', 'br.com.biglinux.bighardwareinfo.desktop', 'br.com.biglinux.grub-restore.desktop', 'br.com.biglinux.drivermanager.desktop', 'org.manjaro.pamac.manager.desktop', 'timeshift-gtk.desktop', 'system-config-printer-only-jobs.desktop', 'hplip.desktop', 'hp-uiscan.desktop', 'cups.desktop', 'kvantummanager.desktop', 'ca.desrt.dconf-editor.desktop', 'org.gnome.Extensions.desktop', 'com.sidevesh.Luminance.desktop', 'pamac-updates.desktop', 'system-config-printer.desktop', 'qefientrymanager.desktop']
 categories=['Settings']
 excluded-apps=['big-store.desktop', 'bigsettings.desktop']
 name='Settings.directory'
@@ -246,8 +246,8 @@ translate=true
 [org/gnome/desktop/background]
 color-shading-type='solid'
 picture-options='zoom'
-picture-uri='file:///usr/share/wallpapers/aurora-borealis-1.avif'
-picture-uri-dark='file:///usr/share/wallpapers/aurora-borealis-1.avif'
+picture-uri='file:///usr/share/wallpapers/animal-owl6.avif'
+picture-uri-dark='file:///usr/share/wallpapers/animal-owl6.avif'
 primary-color='#000000000000'
 secondary-color='#000000000000'
 
@@ -319,7 +319,7 @@ recent-files-max-age=-1
 [org/gnome/desktop/screensaver]
 color-shading-type='solid'
 picture-options='zoom'
-picture-uri='file:///usr/share/wallpapers/aurora-borealis-1.avif'
+picture-uri='file:///usr/share/wallpapers/animal-owl6.avif'
 primary-color='#000000000000'
 secondary-color='#000000000000'
 
