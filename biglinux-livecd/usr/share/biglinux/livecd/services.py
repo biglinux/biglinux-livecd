@@ -2,6 +2,7 @@ import json
 import os
 import re
 import subprocess
+import ast
 from typing import List, Tuple
 
 from config import SetupConfig
@@ -36,6 +37,9 @@ GNOME_DTP_MONITOR_KEYS = {
     "panel-sizes",
 }
 
+GNOME_LIGHT_STYLE_UUID = "light-style@gnome-shell-extensions.gcampax.github.com"
+GNOME_USER_THEME_UUID = "user-theme@gnome-shell-extensions.gcampax.github.com"
+
 
 class SystemService:
     def __init__(self, test_mode: bool = False):
@@ -62,7 +66,13 @@ class SystemService:
         self.assets_path = os.path.abspath(
             os.path.join(os.path.dirname(__file__), "assets")
         )
-        self.gnome_layouts_path = os.path.join(self.assets_path, "gnome-layouts")
+        # GNOME layout definitions (.txt) and previews (.svg) come straight from
+        # the layout-switcher package — single source of truth, no longer
+        # duplicated under assets/gnome-layouts/. The GNOME layout chooser only
+        # runs on the GNOME profile, where layout-switcher is installed, so this
+        # is not a hard dependency of biglinux-livecd (KDE/XFCE ISOs don't use it).
+        self.gnome_layouts_path = "/usr/share/layout-switcher/layouts"
+        self.gnome_layouts_icons_path = "/usr/share/layout-switcher/icons"
 
         # Temp files for live session - Calamares will copy these to /etc/big-default-config/
         self.tmp_lang_file = "/tmp/big_language"
@@ -323,7 +333,7 @@ class SystemService:
             })
         elif desktop_env == "GNOME":
             logger.info("Setting GNOME themes to dark mode")
-            self._modify_settings_file(settings_file, {
+            modifications = {
                 "org/gnome/desktop/interface": {
                     "color-scheme": "'prefer-dark'",
                     "gtk-theme": "'adw-gtk3-dark'"
@@ -331,7 +341,9 @@ class SystemService:
                 "org/gnome/shell/extensions/user-theme": {
                     "name": "'Big-Blue'"
                 }
-            })
+            }
+            modifications.update(self._gnome_shell_theme_extensions(settings_file, dark=True))
+            self._modify_settings_file(settings_file, modifications)
         elif desktop_env == "XFCE":
             logger.info("Setting XFCE themes to dark mode")
             self._modify_settings_file(settings_file, {
@@ -382,7 +394,7 @@ class SystemService:
             })
         elif desktop_env == "GNOME":
             logger.info("Setting GNOME themes to light mode")
-            self._modify_settings_file(settings_file, {
+            modifications = {
                 "org/gnome/desktop/interface": {
                     "color-scheme": "'default'",
                     "gtk-theme": "'adw-gtk3'"
@@ -390,7 +402,9 @@ class SystemService:
                 "org/gnome/shell/extensions/user-theme": {
                     "name": "'Big-Blue'"
                 }
-            })
+            }
+            modifications.update(self._gnome_shell_theme_extensions(settings_file, dark=False))
+            self._modify_settings_file(settings_file, modifications)
         elif desktop_env == "XFCE":
             logger.info("Setting XFCE themes to light mode")
             self._modify_settings_file(settings_file, {
@@ -549,6 +563,62 @@ class SystemService:
         except Exception as e:
             logger.error(f"Failed to write settings file: {e}")
 
+    @staticmethod
+    def _parse_settings_list(value: str) -> List[str]:
+        try:
+            parsed = ast.literal_eval(value.strip())
+        except (ValueError, SyntaxError):
+            return []
+        if not isinstance(parsed, list):
+            return []
+        return [item for item in parsed if isinstance(item, str) and item]
+
+    @staticmethod
+    def _settings_key_values(settings_file: str, section_name: str) -> dict:
+        values = {}
+        current_section = ""
+        try:
+            with open(settings_file, "r", encoding="utf-8") as f:
+                for raw in f:
+                    stripped = raw.strip()
+                    if stripped.startswith("[") and stripped.endswith("]"):
+                        current_section = stripped[1:-1]
+                        continue
+                    if current_section != section_name or "=" not in stripped:
+                        continue
+                    key, _, value = stripped.partition("=")
+                    values[key.strip()] = value.strip()
+        except OSError as e:
+            logger.error(f"Failed to read settings file: {e}")
+        return values
+
+    def _gnome_shell_theme_extensions(self, settings_file: str, dark: bool) -> dict:
+        values = self._settings_key_values(settings_file, "org/gnome/shell")
+        enabled = self._parse_settings_list(values.get("enabled-extensions", "[]"))
+        disabled = self._parse_settings_list(values.get("disabled-extensions", "[]"))
+
+        def add_once(items: List[str], uuid: str):
+            if uuid not in items:
+                items.append(uuid)
+
+        if dark:
+            enabled = [uuid for uuid in enabled if uuid != GNOME_LIGHT_STYLE_UUID]
+            disabled = [uuid for uuid in disabled if uuid != GNOME_USER_THEME_UUID]
+            add_once(enabled, GNOME_USER_THEME_UUID)
+            add_once(disabled, GNOME_LIGHT_STYLE_UUID)
+        else:
+            enabled = [uuid for uuid in enabled if uuid != GNOME_USER_THEME_UUID]
+            disabled = [uuid for uuid in disabled if uuid != GNOME_LIGHT_STYLE_UUID]
+            add_once(enabled, GNOME_LIGHT_STYLE_UUID)
+            add_once(disabled, GNOME_USER_THEME_UUID)
+
+        return {
+            "org/gnome/shell": {
+                "enabled-extensions": repr(enabled),
+                "disabled-extensions": repr(disabled),
+            }
+        }
+
     def finalize_setup(self, config: SetupConfig):
         """
         Performs final setup steps, including creating flag files.
@@ -625,7 +695,7 @@ class SystemService:
 
     def get_desktop_image_path(self, layout_name: str) -> str:
         if self.get_desktop_environment() == "GNOME":
-            return os.path.join(self.gnome_layouts_path, f"{layout_name}.svg")
+            return os.path.join(self.gnome_layouts_icons_path, f"{layout_name}.svg")
         return self.desktop_image_path.format(layout_name)
 
     def get_theme_image_path(self, theme_name: str) -> str:
