@@ -457,8 +457,9 @@ fi
 #-------------------------------------------------------------------------------
 xdg-user-dirs-update
 . ~/.config/user-dirs.dirs
-cp -f "/usr/share/applications/com.biglinux.calamares-config.desktop" "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
-chmod +x "$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
+installer_shortcut="$XDG_DESKTOP_DIR/calamares-biglinux.desktop"
+cp -f "/usr/share/applications/com.biglinux.calamares-config.desktop" "$installer_shortcut"
+chmod +x "$installer_shortcut"
 
 cd ~
 
@@ -511,6 +512,11 @@ _wait_for_user_session() {
 }
 
 _wait_for_user_session
+
+# GNOME Desktop Icons checks this metadata before launching desktop files.
+if [[ -f "$installer_shortcut" ]]; then
+    gio set "$installer_shortcut" metadata::trusted true 2>/dev/null || true
+fi
 
 # Fix to KDE Plasma using en_US
 rm ~/.cache/ksycoca*
