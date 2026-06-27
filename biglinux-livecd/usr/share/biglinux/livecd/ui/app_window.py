@@ -90,23 +90,17 @@ class AppWindow(Adw.ApplicationWindow):
             ],
         )
 
-        # --- Fullscreen for Xorg without compositor ---
-        # This approach makes the window undecorated and sized to the monitor.
-        # It's more reliable in environments without a full-featured window manager.
+        # --- Fullscreen wizard window ---
         self.set_decorated(False)
+        self.add_css_class("wizard-window")
         display = Gdk.Display.get_default()
         if display:
             monitors = display.get_monitors()
             if monitors.get_n_items() > 0:
-                # Use the first monitor as the target
                 monitor = monitors.get_item(0)
                 geometry = monitor.get_geometry()
                 self.set_default_size(geometry.width, geometry.height)
-            else:
-                # Fallback to the standard method if we can't get monitor info
-                self.fullscreen()
-        else:
-            self.fullscreen()
+        self.fullscreen()
 
 
         style_manager = Adw.StyleManager.get_default()

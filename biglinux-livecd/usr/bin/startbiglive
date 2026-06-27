@@ -333,6 +333,9 @@ for dm in sddm gdm lightdm lxdm; do
     fi
 done
 display_manager="${display_manager:-unknown}"
+# LightDM may omit this for X11 live sessions.
+session_type="${XDG_SESSION_TYPE:-x11}"
+export XDG_SESSION_TYPE="$session_type"
 
 _check_loop_protection
 
@@ -340,7 +343,7 @@ _check_loop_protection
 # X11: Configure multi-monitor mirroring
 # Duplicates all connected monitors to show the same content
 #-------------------------------------------------------------------------------
-if [[ "$XDG_SESSION_TYPE" == "x11" ]]; then
+if [[ "$session_type" == "x11" ]]; then
     monitors=$(xrandr | grep -w connected | awk '{print $1}')
     first_monitor=$(echo "$monitors" | awk '{print $1}')
     resolution_first_monitor=$(xrandr | grep "$first_monitor connected" -A1 | tail -n1 | awk '{print $1}')
@@ -394,7 +397,7 @@ fi
 # Launch live setup wizard
 # Different launch methods depending on session type and display manager
 #-------------------------------------------------------------------------------
-if [[ "$XDG_SESSION_TYPE" == "x11" ]]; then
+if [[ "$session_type" == "x11" ]]; then
     if [[ "$display_manager" == "sddm" ]]; then
         systemctl --user start plasma-kglobalaccel.service 2>/dev/null
     fi
@@ -518,6 +521,21 @@ if [[ -f "$installer_shortcut" ]]; then
     gio set "$installer_shortcut" metadata::trusted true 2>/dev/null || true
 fi
 
+# libadwaita apps use their own color-scheme setting and can ignore GTK INI files
+# in non-GNOME sessions.
+if [[ -f /tmp/big_desktop_theme ]]; then
+    case "$(< /tmp/big_desktop_theme)" in
+        dark)
+            export ADW_DEBUG_COLOR_SCHEME=prefer-dark
+            ;;
+        light)
+            export ADW_DEBUG_COLOR_SCHEME=default
+            ;;
+    esac
+    dbus-update-activation-environment --systemd ADW_DEBUG_COLOR_SCHEME 2>/dev/null || true
+    systemctl --user import-environment ADW_DEBUG_COLOR_SCHEME 2>/dev/null || true
+fi
+
 # Fix to KDE Plasma using en_US
 rm ~/.cache/ksycoca*
 
@@ -542,7 +560,7 @@ elif [[ -e /usr/share/wayland-sessions/hyprland.desktop ]]; then
 
 elif [[ "$display_manager" == "sddm" || "$display_manager" == "lxdm" ]]; then
     # KDE Plasma
-    if [[ "$XDG_SESSION_TYPE" == "x11" ]]; then
+    if [[ "$session_type" == "x11" ]]; then
         exec startkde-biglinux
     else
         exec startkde-biglinux wayland

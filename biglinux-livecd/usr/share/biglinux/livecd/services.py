@@ -173,6 +173,76 @@ class SystemService:
             logger.error(f"Error writing to {filepath}: {e}")
             return False
 
+    def _update_ini_settings(self, filepath: str, section: str, settings: dict):
+        """Update key/value pairs in a simple INI file."""
+        if self.test_mode:
+            logger.debug(f"[TEST MODE] Would update {filepath}: {settings}")
+            return
+
+        lines = []
+        if os.path.exists(filepath):
+            try:
+                with open(filepath, "r", encoding="utf-8") as f:
+                    lines = f.readlines()
+            except OSError as e:
+                logger.error(f"Error reading {filepath}: {e}")
+                return
+
+        modified_lines = []
+        in_section = False
+        section_found = False
+        updated_keys = set()
+
+        def append_missing_keys():
+            for key, value in settings.items():
+                if key not in updated_keys:
+                    modified_lines.append(f"{key}={value}\n")
+                    updated_keys.add(key)
+
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith("[") and stripped.endswith("]"):
+                if in_section:
+                    append_missing_keys()
+                in_section = stripped[1:-1] == section
+                section_found = section_found or in_section
+                modified_lines.append(line)
+                continue
+
+            if in_section and "=" in stripped and not stripped.startswith("#"):
+                key = stripped.split("=", 1)[0].strip()
+                if key in settings:
+                    modified_lines.append(f"{key}={settings[key]}\n")
+                    updated_keys.add(key)
+                    continue
+
+            modified_lines.append(line)
+
+        if in_section:
+            append_missing_keys()
+        elif not section_found:
+            if modified_lines and modified_lines[-1].strip():
+                modified_lines.append("\n")
+            modified_lines.append(f"[{section}]\n")
+            append_missing_keys()
+
+        self._write_user_config_file(filepath, "".join(modified_lines))
+
+    def _apply_gtk_settings_ini(self, dark: bool, icon_theme: str):
+        """Keep GTK settings.ini in sync for XFCE/Cinnamon sessions."""
+        home = os.path.expanduser("~")
+        gtk_theme = "adw-gtk3-dark" if dark else "adw-gtk3"
+        prefer_dark = "true" if dark else "false"
+        settings = {
+            "gtk-application-prefer-dark-theme": prefer_dark,
+            "gtk-theme-name": gtk_theme,
+            "gtk-icon-theme-name": icon_theme,
+        }
+
+        for gtk_dir in ("gtk-3.0", "gtk-4.0"):
+            settings_path = os.path.join(home, ".config", gtk_dir, "settings.ini")
+            self._update_ini_settings(settings_path, "Settings", settings)
+
     def apply_language_settings(self, lang_code: str, timezone: str):
         """Applies language, locale, and timezone settings."""
         logger.info(f"Setting language to {lang_code} and timezone to {timezone}")
@@ -358,6 +428,8 @@ class SystemService:
             self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/IconThemeName", "-s", "bigicons-papient-dark"])
             self._run_command(["xfconf-query", "-c", "xfwm4", "-p", "/general/theme", "-s", "adw-gtk3-dark"])
 
+        self._apply_gtk_settings_ini(dark=True, icon_theme="bigicons-papient-dark")
+
         # Configure Kvantum theme
         kvantum_dir = os.path.join(home, ".config", "Kvantum")
         kvantum_conf = os.path.join(kvantum_dir, "kvantum.kvconfig")
@@ -418,6 +490,8 @@ class SystemService:
             self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName", "-s", "adw-gtk3"])
             self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/IconThemeName", "-s", "bigicons-papient-light"])
             self._run_command(["xfconf-query", "-c", "xfwm4", "-p", "/general/theme", "-s", "adw-gtk3"])
+
+        self._apply_gtk_settings_ini(dark=False, icon_theme="bigicons-papient-light")
 
         # Configure Kvantum theme
         kvantum_dir = os.path.join(home, ".config", "Kvantum")
