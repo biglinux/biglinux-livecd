@@ -112,355 +112,52 @@ msgstr "Отвори"
 msgid "Send to the cloud"
 msgstr "Изпрати към облака"
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 147
-msgid ""
-"<a href=\"https://forum.biglinux.com.br\">This is a collaborative system, if you need help consult "
-"our forum.</a>"
-msgstr ""
-"<a href=\"https://forum.biglinux.com.br\">Това е колаборативна система, ако имате нужда от помощ, "
-"консултирайте се с нашия форум.</a>"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 159
-msgid "This is a collaborative system, if you need help consult our forum."
-msgstr "Това е колаборативна система, ако имате нужда от помощ, консултирайте се с нашия форум."
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Maintenance"
-msgstr "Поддръжка"
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Tools that facilitate the maintenance of the installed system."
-msgstr "Инструменти, които улесняват поддръжката на инсталираната система."
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Restore"
-msgstr "Възстановяване"
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Installation"
-msgstr "Инсталиране"
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "The system is in live mode, which has limitations."
-msgstr "Системата е в реално време, която има ограничения."
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Install it for a complete experience."
-msgstr "Инсталирайте го за пълно изживяване."
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Install"
-msgstr "Инсталиране"
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Minimal"
-msgstr "Минимален"
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 99
-msgid "Remove pre-selected software to create a lean, personalized system."
-msgstr "Премахнете предварително избрания софтуер, за да създадете изчистена, персонализирана система."
-# 
-# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/widgets/system_info.py, line: 169
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 320
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 226
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 234
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 259
-msgid "Starting..."
-msgstr "Стартиране..."
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 206
-msgid "Checking connection..."
-msgstr "Проверка на връзка..."
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 218
-msgid "Configuring..."
-msgstr "Конфигуриране..."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 294
-msgid "Main page: choose Maintenance, Installation, or Minimal"
-msgstr "Главна страница: изберете Поддръжка, Инсталация или Минимален"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 59
-msgid "Loading packages"
-msgstr "Зареждане на пакети"
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 123
-msgid "Loading packages..."
-msgstr "Зареждане на пакети..."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 71
-msgid "Package list"
-msgstr "Списък с пакети"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 73
-msgid "Toggle switches to keep or remove packages"
-msgstr "Превключватели за запазване или премахване на пакети"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 110
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 85
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 107
+msgid "Progress"
+msgstr "Напредък"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 168
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 225
+msgid "Question"
+msgstr "Въпрос"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 236
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 266
+msgid "Error"
+msgstr "Грешка"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 277
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 307
+msgid "Information"
+msgstr "Информация"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 318
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 424
+msgid "Select"
+msgstr "Изберете"
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 213
 #, python-brace-format
-msgid "{count} packages loaded"
-msgstr "Заредени {count} пакета"
+msgid "{distro} Installation"
+msgstr "Инсталация на {distro}"
 # 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 135
-#, python-brace-format
-msgid "Keep {name}"
-msgstr "Запази {name}"
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 242
-msgid "Failed to load packages: {}"
-msgstr "Неуспешно зареждане на пакети: {}"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 220
-msgid "Minimal installation: select packages to keep or remove"
-msgstr "Минимална инсталация: изберете пакети за запазване или премахване"
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
-# 
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 39
-msgid "Important Tips"
-msgstr "Важно съвети"
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 48
-msgid "Manual Partitioning Recommendations"
-msgstr "Препоръки за ръчно разпределение на дялове"
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 49
-msgid "If you opt for automatic partitioning, these tips will be applied by default."
-msgstr "Ако изберете автоматично разпределение, тези съвети ще бъдат приложени по подразбиране."
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 54
-msgid "Use BTRFS"
-msgstr "Използвайте BTRFS"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 80
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 223
+msgid "press Super+Alt+S to start the screen reader"
+msgstr "натиснете Super+Alt+S, за да стартирате четеца на екрана"
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -480,49 +177,39 @@ msgstr "Използвайте BTRFS"
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
-msgid "This file system allows for automatic compression and restore points."
-msgstr "Тази файлова система позволява автоматично компресиране и възстановяване на точки."
+msgid "Back"
+msgstr "Назад"
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 55
-msgid "Keep /boot within the / partition"
-msgstr "Запазете /boot в / дяла"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 96
+msgid "Keep All"
+msgstr "Запази всичко"
 # 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 99
+msgid "Remove All"
+msgstr "Премахни всичко"
 # 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 133
+msgid "Return to the previous page"
+msgstr "Върнете се на предишната страница"
 # 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 135
+msgid "Keep all packages selected"
+msgstr "Запазете всички избрани пакети"
 # 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 137
+msgid "Mark all packages for removal"
+msgstr "Маркирайте всички пакети за премахване"
 # 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 139
+msgid "Proceed to the next step"
+msgstr "Продължете към следващата стъпка"
 # 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 # 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Placing it in a separate partition hampers BTRFS snapshots."
-msgstr "Поставянето му в отделна разделена затруднява снимките на BTRFS."
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
-msgid "Do not create a SWAP partition"
-msgstr "Не създавайте SWAP дял."
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
-msgid ""
-"We have implemented dynamic virtual memory management with Zram and SWAP files. SWAP partitions "
-"will not be used."
-msgstr ""
-"Имплементирахме динамично управление на виртуалната памет с Zram и SWAP файлове. SWAP партиции няма "
-"да се използват."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 83
-msgid "Installation tips: read the recommendations before proceeding"
-msgstr "Съвети за инсталиране: прочетете препоръките преди да продължите"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 157
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 76
+msgid "System Maintenance"
+msgstr "Поддръжка на системата"
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -542,96 +229,12 @@ msgstr "Съвети за инсталиране: прочетете препо�
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
-msgid "Snapshot and backups"
-msgstr "Снимка и резервни копия"
+msgid "Uncheck the programs you want to remove"
+msgstr "Премахнете отметките на програмите, които искате да премахнете."
 # 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Restore restore points of the installed system."
-msgstr "Възстановяване на точките за възстановяване на инсталираната система."
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Start"
-msgstr "Старт"
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Restore system settings"
-msgstr "Възстановяване на системни настройки"
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 78
-msgid ""
-"Utility that facilitates the restoration of the installed system, especially the restoration of the "
-"system boot (Grub).\n"
-"\n"
-"It can also be used to access the package manager and terminal of the installed system."
-msgstr ""
-"Утилита, която улеснява възстановяването на инсталираната система, особено възстановяването на "
-"системния старт (Grub).\n"
-"\n"
-"Може също да се използва за достъп до мениджъра на пакети и терминала на инсталираната система."
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "EFI Entry Manager"
-msgstr "EFI Мениджър на Записите"
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 90
-msgid "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
-msgstr "Разширен инструмент за добавяне, премахване или промяна на записи за зареждане в UEFI фърмуера."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 171
-msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
-msgstr "Поддръжка на системата: изберете Снимка, Възстановяване или EFI Мениджър"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 159
+msgid "Installation Tips"
+msgstr "Съвети за инсталиране"
 # 
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -862,69 +465,233 @@ msgstr "Отмяна"
 msgid "Confirm"
 msgstr "Потвърдете"
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 213
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 159
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
+# 
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 405
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 165
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 39
+msgid "Important Tips"
+msgstr "Важно съвети"
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 48
+msgid "Manual Partitioning Recommendations"
+msgstr "Препоръки за ръчно разпределение на дялове"
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 49
+msgid "If you opt for automatic partitioning, these tips will be applied by default."
+msgstr "Ако изберете автоматично разпределение, тези съвети ще бъдат приложени по подразбиране."
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 54
+msgid "Use BTRFS"
+msgstr "Използвайте BTRFS"
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "This file system allows for automatic compression and restore points."
+msgstr "Тази файлова система позволява автоматично компресиране и възстановяване на точки."
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 55
+msgid "Keep /boot within the / partition"
+msgstr "Запазете /boot в / дяла"
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "Placing it in a separate partition hampers BTRFS snapshots."
+msgstr "Поставянето му в отделна разделена затруднява снимките на BTRFS."
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
+msgid "Do not create a SWAP partition"
+msgstr "Не създавайте SWAP дял."
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 56
+msgid ""
+"We have implemented dynamic virtual memory management with Zram and SWAP files. SWAP partitions "
+"will not be used."
+msgstr ""
+"Имплементирахме динамично управление на виртуалната памет с Zram и SWAP файлове. SWAP партиции няма "
+"да се използват."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 83
+msgid "Installation tips: read the recommendations before proceeding"
+msgstr "Съвети за инсталиране: прочетете препоръките преди да продължите"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 59
+msgid "Loading packages"
+msgstr "Зареждане на пакети"
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 123
+msgid "Loading packages..."
+msgstr "Зареждане на пакети..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 71
+msgid "Package list"
+msgstr "Списък с пакети"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 73
+msgid "Toggle switches to keep or remove packages"
+msgstr "Превключватели за запазване или премахване на пакети"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 110
 #, python-brace-format
-msgid "{distro} Installation"
-msgstr "Инсталация на {distro}"
+msgid "{count} packages loaded"
+msgstr "Заредени {count} пакета"
 # 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 80
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 223
-msgid "press Super+Alt+S to start the screen reader"
-msgstr "натиснете Super+Alt+S, за да стартирате четеца на екрана"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 135
+#, python-brace-format
+msgid "Keep {name}"
+msgstr "Запази {name}"
 # 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-# 
-msgid "Back"
-msgstr "Назад"
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 96
-msgid "Keep All"
-msgstr "Запази всичко"
-# 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 99
-msgid "Remove All"
-msgstr "Премахни всичко"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 133
-msgid "Return to the previous page"
-msgstr "Върнете се на предишната страница"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 135
-msgid "Keep all packages selected"
-msgstr "Запазете всички избрани пакети"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 137
-msgid "Mark all packages for removal"
-msgstr "Маркирайте всички пакети за премахване"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 139
-msgid "Proceed to the next step"
-msgstr "Продължете към следващата стъпка"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 242
+msgid "Failed to load packages: {}"
+msgstr "Неуспешно зареждане на пакети: {}"
 # 
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 157
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 76
-msgid "System Maintenance"
-msgstr "Поддръжка на системата"
+# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/widgets/system_info.py, line: 169
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 320
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 226
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 234
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 259
+msgid "Starting..."
+msgstr "Стартиране..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 220
+msgid "Minimal installation: select packages to keep or remove"
+msgstr "Минимална инсталация: изберете пакети за запазване или премахване"
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 147
+msgid ""
+"<a href=\"https://forum.biglinux.com.br\">This is a collaborative system, if you need help consult "
+"our forum.</a>"
+msgstr ""
+"<a href=\"https://forum.biglinux.com.br\">Това е колаборативна система, ако имате нужда от помощ, "
+"консултирайте се с нашия форум.</a>"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 159
+msgid "This is a collaborative system, if you need help consult our forum."
+msgstr "Това е колаборативна система, ако имате нужда от помощ, консултирайте се с нашия форум."
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
@@ -944,37 +711,280 @@ msgstr "Поддръжка на системата"
 # 
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
-msgid "Uncheck the programs you want to remove"
-msgstr "Премахнете отметките на програмите, които искате да премахнете."
+msgid "Maintenance"
+msgstr "Поддръжка"
 # 
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 159
-msgid "Installation Tips"
-msgstr "Съвети за инсталиране"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 85
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 107
-msgid "Progress"
-msgstr "Напредък"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 168
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 225
-msgid "Question"
-msgstr "Въпрос"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 236
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 266
-msgid "Error"
-msgstr "Грешка"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 277
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 307
-msgid "Information"
-msgstr "Информация"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 # 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 318
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 424
-msgid "Select"
-msgstr "Изберете"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "Tools that facilitate the maintenance of the installed system."
+msgstr "Инструменти, които улесняват поддръжката на инсталираната система."
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "Restore"
+msgstr "Възстановяване"
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "Installation"
+msgstr "Инсталиране"
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "The system is in live mode, which has limitations."
+msgstr "Системата е в реално време, която има ограничения."
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "Install it for a complete experience."
+msgstr "Инсталирайте го за пълно изживяване."
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "Install"
+msgstr "Инсталиране"
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "Minimal"
+msgstr "Минимален"
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 99
+msgid "Remove pre-selected software to create a lean, personalized system."
+msgstr "Премахнете предварително избрания софтуер, за да създадете изчистена, персонализирана система."
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 206
+msgid "Checking connection..."
+msgstr "Проверка на връзка..."
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py, line: 218
+msgid "Configuring..."
+msgstr "Конфигуриране..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 294
+msgid "Main page: choose Maintenance, Installation, or Minimal"
+msgstr "Главна страница: изберете Поддръжка, Инсталация или Минимален"
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "Snapshot and backups"
+msgstr "Снимка и резервни копия"
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "Restore restore points of the installed system."
+msgstr "Възстановяване на точките за възстановяване на инсталираната система."
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "Start"
+msgstr "Старт"
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "Restore system settings"
+msgstr "Възстановяване на системни настройки"
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 78
+msgid ""
+"Utility that facilitates the restoration of the installed system, especially the restoration of the "
+"system boot (Grub).\n"
+"\n"
+"It can also be used to access the package manager and terminal of the installed system."
+msgstr ""
+"Утилита, която улеснява възстановяването на инсталираната система, особено възстановяването на "
+"системния старт (Grub).\n"
+"\n"
+"Може също да се използва за достъп до мениджъра на пакети и терминала на инсталираната система."
+# 
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+# 
+msgid "EFI Entry Manager"
+msgstr "EFI Мениджър на Записите"
+# 
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 90
+msgid "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
+msgstr "Разширен инструмент за добавяне, премахване или промяна на записи за зареждане в UEFI фърмуера."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 171
+msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
+msgstr "Поддръжка на системата: изберете Снимка, Възстановяване или EFI Мениджър"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 35
 msgid "Choose Your Keyboard Layout"
@@ -988,14 +998,6 @@ msgstr "Преглед на разположението на клавиатур
 #, python-format
 msgid "Keyboard layout: %s"
 msgstr "Разред на клавиатурата: %s"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
-msgid "Choose a Desktop Layout"
-msgstr "Изберете оформление на работния плот"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
-msgid "Desktop Layout"
-msgstr "Работен плот"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 36
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 120
@@ -1015,6 +1017,10 @@ msgstr "Език"
 msgid "Keyboard"
 msgstr "Клавиатура"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
+msgid "Desktop Layout"
+msgstr "Работен плот"
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 262
 msgid "Theme"
 msgstr "Тема"
@@ -1022,19 +1028,6 @@ msgstr "Тема"
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 591
 msgid "Accessibility enabled. Use arrow keys to navigate."
 msgstr "Достъпността е активирана. Използвайте стрелките, за да навигирате."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
-msgid "Search for a language..."
-msgstr "Търсете език..."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
-msgid "Could not load language data."
-msgstr "Не можа да зареди езиковите данни."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 167
-#, python-format
-msgid "%d results"
-msgstr "%d резултата"
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 60
 msgid "Settings"
@@ -1086,3 +1079,20 @@ msgstr "Тъмен режим"
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 261
 msgid "Light Theme"
 msgstr "Светла тема"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 65
+msgid "Search for a language..."
+msgstr "Търсете език..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 114
+msgid "Could not load language data."
+msgstr "Не можа да зареди езиковите данни."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 167
+#, python-format
+msgid "%d results"
+msgstr "%d резултата"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
+msgid "Choose a Desktop Layout"
+msgstr "Изберете оформление на работния плот"
