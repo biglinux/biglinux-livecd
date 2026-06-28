@@ -205,6 +205,10 @@ msgstr "Rozložení plochy"
 msgid "Theme"
 msgstr "Téma"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 584
+msgid "Accessibility enabled. Use arrow keys to navigate."
+msgstr "Zpřístupnění povoleno. Použijte šipkové klávesy pro navigaci."
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
 msgid "Choose a Desktop Layout"
 msgstr "Vyberte rozložení plochy"

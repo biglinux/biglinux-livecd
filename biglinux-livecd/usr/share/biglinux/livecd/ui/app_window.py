@@ -11,7 +11,13 @@ from ui.language_view import LanguageView
 from ui.keyboard_view import KeyboardView
 from ui.desktop_view import DesktopView
 from ui.theme_view import ThemeView
-from accessibility import announce, start_orca
+from accessibility import (
+    announce,
+    ensure_orca_disabled,
+    set_accessibility_enabled,
+    speak,
+    set_speak_voice,
+)
 from logging_config import get_logger
 import os
 
@@ -70,7 +76,10 @@ class AppWindow(Adw.ApplicationWindow):
         self.system_service = system_service
         self.config = SetupConfig()
         self.completed_steps = set()  # Track completed steps
-        self.is_simplified_env = system_service.is_simplified_environment()
+        self.has_desktop_step = system_service.has_desktop_layout_step()
+        self.uses_simple_theme = system_service.uses_simple_theme_selector()
+        # Ensure ORCA is not running — user activates it manually via Super+Alt+S
+        ensure_orca_disabled()
         self.set_title(_("BigLinux Setup"))
         self.update_property(
             [Gtk.AccessibleProperty.DESCRIPTION],
@@ -81,23 +90,17 @@ class AppWindow(Adw.ApplicationWindow):
             ],
         )
 
-        # --- Fullscreen for Xorg without compositor ---
-        # This approach makes the window undecorated and sized to the monitor.
-        # It's more reliable in environments without a full-featured window manager.
+        # --- Fullscreen wizard window ---
         self.set_decorated(False)
+        self.add_css_class("wizard-window")
         display = Gdk.Display.get_default()
         if display:
             monitors = display.get_monitors()
             if monitors.get_n_items() > 0:
-                # Use the first monitor as the target
                 monitor = monitors.get_item(0)
                 geometry = monitor.get_geometry()
                 self.set_default_size(geometry.width, geometry.height)
-            else:
-                # Fallback to the standard method if we can't get monitor info
-                self.fullscreen()
-        else:
-            self.fullscreen()
+        self.fullscreen()
 
 
         style_manager = Adw.StyleManager.get_default()
@@ -118,8 +121,10 @@ class AppWindow(Adw.ApplicationWindow):
         self.set_content(self._build_ui())
         self._update_header_state()
 
-        # Create and add a Gtk.EventControllerKey for global key events
+        # Create and add a Gtk.EventControllerKey for global key events (CAPTURE phase
+        # so it runs before child widgets like the search entry consume keys)
         key_controller = Gtk.EventControllerKey.new()
+        key_controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
         key_controller.connect("key-pressed", self._on_key_press_event)
         self.add_controller(key_controller)
 
@@ -141,22 +146,22 @@ class AppWindow(Adw.ApplicationWindow):
         header_wrapper.set_center_widget(header_content_box)
 
         # Define steps based on environment
-        if self.is_simplified_env:
-            self.steps = [
-                {"name": "language", "file": "headerbar-locale.svg"},
-                {"name": "keyboard", "file": "headerbar-keyboard.svg"},
-                {"name": "theme", "file": "headerbar-theme.svg"},
-            ]
-        else:
+        if self.has_desktop_step:
             self.steps = [
                 {"name": "language", "file": "headerbar-locale.svg"},
                 {"name": "keyboard", "file": "headerbar-keyboard.svg"},
                 {"name": "desktop", "file": "headerbar-display.svg"},
                 {"name": "theme", "file": "headerbar-theme.svg"},
             ]
+        else:
+            self.steps = [
+                {"name": "language", "file": "headerbar-locale.svg"},
+                {"name": "keyboard", "file": "headerbar-keyboard.svg"},
+                {"name": "theme", "file": "headerbar-theme.svg"},
+            ]
 
         # Build header layout based on environment
-        if self.is_simplified_env:
+        if not self.has_desktop_step:
             # Simplified layout: [comm-logo.png] [Language] [Keyboard] [Theme]
             # Use comm-logo.png for simplified environments (XivaStudio override if exists)
             logo_path = get_comm_logo_path(self.system_service)
@@ -178,8 +183,11 @@ class AppWindow(Adw.ApplicationWindow):
             self._add_step_button(header_content_box, self.steps[0])
             self._add_step_button(header_content_box, self.steps[1])
 
-            # Use main logo (XivaStudio override if exists)
-            logo_path = get_logo_path(self.system_service)
+            # GNOME uses the Community branding even with the layout step.
+            if self.uses_simple_theme:
+                logo_path = get_comm_logo_path(self.system_service)
+            else:
+                logo_path = get_logo_path(self.system_service)
             if os.path.exists(logo_path):
                 logo = Gtk.Image.new_from_file(logo_path)
                 logo.set_pixel_size(72)
@@ -403,6 +411,9 @@ class AppWindow(Adw.ApplicationWindow):
         self._retranslate_ui()
         # --- END DYNAMIC TRANSLATION ---
 
+        # Set speech-dispatcher language so ORCA uses correct TTS voice
+        self._set_speechd_language(lang_code)
+
         # Mark language step as completed
         self.completed_steps.add("language")
 
@@ -456,7 +467,7 @@ class AppWindow(Adw.ApplicationWindow):
         # Mark keyboard step as completed
         self.completed_steps.add("keyboard")
 
-        if self.is_simplified_env:
+        if not self.has_desktop_step:
             # Navigate to simple theme view for simplified environments (GNOME/XFCE/Cinnamon)
             self._ensure_view("simple_theme")
             self.stack.set_visible_child_name("simple_theme")
@@ -479,10 +490,16 @@ class AppWindow(Adw.ApplicationWindow):
         # Mark desktop step as completed
         self.completed_steps.add("desktop")
 
-        # LAZY LOADING: Ensure theme view exists before showing it
-        self._ensure_view("theme")
-        logger.debug("Navigating to theme view...")
-        self.stack.set_visible_child_name("theme")
+        if self.uses_simple_theme:
+            # GNOME has a layout step, but still uses the light/dark theme chooser.
+            self._ensure_view("simple_theme")
+            logger.debug("Navigating to simple theme view...")
+            self.stack.set_visible_child_name("simple_theme")
+        else:
+            # LAZY LOADING: Ensure theme view exists before showing it
+            self._ensure_view("theme")
+            logger.debug("Navigating to theme view...")
+            self.stack.set_visible_child_name("theme")
 
     def _add_theme_view(self):
         view = ThemeView(system_service=self.system_service)
@@ -557,15 +574,35 @@ class AppWindow(Adw.ApplicationWindow):
             logger.error(f"ERROR in _on_simple_theme_selected: {e}", exc_info=True)
 
     def _on_key_press_event(self, controller, keyval, keycode, state):
-        # Super+Alt+S: start ORCA screen reader (standard GNOME shortcut)
+        # Super+Alt+S: enable accessibility (speech via speech-dispatcher + Kokoro)
+        # Use keycode 39 (physical 'S' key) so it works on any keyboard layout
         if (
-            keyval == Gdk.KEY_s
+            keycode == 39
             and state & Gdk.ModifierType.SUPER_MASK
             and state & Gdk.ModifierType.ALT_MASK
         ):
-            start_orca()
+            set_accessibility_enabled(True)
+            lang_view = self.stack.get_child_by_name("language")
+            if isinstance(lang_view, LanguageView):
+                lang_view.enable_voice_preview()
+            speak(_("Accessibility enabled. Use arrow keys to navigate."))
             return True
         current_view = self.stack.get_visible_child()
         if isinstance(current_view, LanguageView):
             return current_view.handle_global_key_press(keyval)
         return False
+
+    def _set_speechd_language(self, lang_code: str) -> None:
+        """Set speech-dispatcher language so ORCA speaks in the selected language."""
+        if not lang_code:
+            return
+        try:
+            import speechd
+            client = speechd.SSIPClient("biglinux-wizard-lang")
+            client.set_language(lang_code)
+            client.close()
+        except Exception:
+            pass
+        # Also update LANG for any newly spawned TTS processes
+        locale_code = getattr(self.config.language, "code", lang_code)
+        os.environ["LANG"] = f"{locale_code}.UTF-8"

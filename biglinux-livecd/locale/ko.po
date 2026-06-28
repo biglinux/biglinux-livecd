@@ -199,6 +199,10 @@ msgstr "데스크탑 레이아웃"
 msgid "Theme"
 msgstr "테마"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 584
+msgid "Accessibility enabled. Use arrow keys to navigate."
+msgstr "접근성 활성화됨. 화살표 키를 사용하여 탐색하세요."
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
 msgid "Choose a Desktop Layout"
 msgstr "바탕화면 레이아웃 선택"

@@ -4,15 +4,104 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, Gio, GObject, Gdk, GLib
 import json
+import subprocess
+import tempfile
+import threading
 import unicodedata
 from urllib.parse import parse_qs, urlparse
 from translations import _
 from config import LanguageSelection
-from accessibility import announce
+from accessibility import announce, set_speak_voice
 from logging_config import get_logger
 import os
 
 logger = get_logger()
+
+# Clean native language names for screen reader pronunciation.
+# Maps the 2-letter lang prefix to a short, clear native name.
+_NATIVE_LANG_NAMES = {
+    "be": "беларуская",
+    "bg": "български",
+    "cs": "čeština",
+    "da": "dansk",
+    "de": "Deutsch",
+    "el": "ελληνικά",
+    "en": "English",
+    "es": "español",
+    "et": "eesti",
+    "fi": "suomi",
+    "fr": "français",
+    "he": "עברית",
+    "hr": "hrvatski",
+    "hu": "magyar",
+    "is": "Íslenska",
+    "it": "italiano",
+    "ja": "日本語",
+    "ko": "한국어",
+    "nb": "norsk bokmål",
+    "nl": "Nederlands",
+    "nn": "norsk nynorsk",
+    "pl": "polski",
+    "pt": "Português",
+    "ro": "română",
+    "ru": "русский",
+    "sk": "slovenčina",
+    "sl": "slovenščina",
+    "sv": "Svenska",
+    "tr": "Türkçe",
+    "uk": "українська",
+    "zh": "中文",
+}
+
+# ─── Kokoro TTS integration ───────────────────────────────────────────────
+_VOICE_MAP_PATH = "/usr/share/biglinux-kokoro-tts/locale-voice-map.conf"
+_KOKO_BIN = "/usr/bin/koko"
+_KOKO_MODEL = "/usr/share/biglinux-kokoro-tts/model/model.onnx"
+_KOKO_VOICES = "/usr/share/biglinux-kokoro-tts/voices/voices.bin"
+_HAS_KOKO = all(os.path.isfile(p) for p in (_KOKO_BIN, _KOKO_MODEL, _KOKO_VOICES))
+
+
+def _parse_voice_map():
+    """Parse locale-voice-map.conf → {locale: (engine, voice, lang_code)}."""
+    result = {}
+    try:
+        with open(_VOICE_MAP_PATH, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                if "=" not in line:
+                    continue
+                locale, _, val = line.partition("=")
+                locale = locale.strip()
+                parts = [p.strip() for p in val.strip().split(":")]
+                if len(parts) >= 2:
+                    result[locale] = (
+                        parts[0],
+                        parts[1],
+                        parts[2] if len(parts) > 2 else "",
+                    )
+    except FileNotFoundError:
+        pass
+    return result
+
+
+_VOICE_MAP = _parse_voice_map()
+_KOKORO_WAV_CACHE = {}
+_KOKORO_CACHE_LOCK = threading.Lock()
+
+
+def _voice_config_for_locale(locale_code):
+    """Look up TTS voice config for a locale, with fallback chain."""
+    if locale_code in _VOICE_MAP:
+        return _VOICE_MAP[locale_code]
+    lang = locale_code.split("_")[0]
+    for key, val in _VOICE_MAP.items():
+        if key.startswith(lang + "_"):
+            return val
+    if "*" in _VOICE_MAP:
+        return _VOICE_MAP["*"]
+    return ("espeak", "en", "en")
 
 
 def normalize_string(s: str) -> str:
@@ -122,10 +211,12 @@ class LanguageView(Adw.Bin):
                 raw_data = json.load(f)
 
             language_data = [LanguageListItem(**item) for item in raw_data]
-            favorites = ["pt_BR", "en_US", "es_ES"]
-            language_data.sort(key=lambda x: (x.code not in favorites, x.name))
+            favorites_order = {"en_US": 0, "pt_BR": 1, "es_ES": 2}
+            language_data.sort(key=lambda x: (x.code not in favorites_order, favorites_order.get(x.code, 999), x.name))
             self._store.splice(0, 0, language_data)
             GLib.idle_add(self._post_load_setup)
+            # Save for later precache when voice preview is enabled
+            self._language_data = language_data
 
         except (FileNotFoundError, json.JSONDecodeError) as e:
             logger.error(f"Error loading languages: {e}")
@@ -137,7 +228,208 @@ class LanguageView(Adw.Bin):
         self.filter = Gtk.CustomFilter.new(self._filter_func, None)
         self.filter_model = Gtk.FilterListModel(model=self._store, filter=self.filter)
         selection_model = Gtk.SingleSelection(model=self.filter_model)
+        selection_model.connect("selection-changed", self._on_selection_changed)
+        self._espeak_proc = None
+        self._speak_timeout_id = 0
+        self._tts_gen = 0
+        self._voice_preview_enabled = (
+            False  # TTS off by default; Super+Alt+S enables it
+        )
+        # speech-dispatcher client for fast cancel (avoids subprocess overhead)
+        self._spd_client = None
+        self._spd_scope_all = None
+        try:
+            import speechd
+
+            self._spd_client = speechd.SSIPClient("biglinux-wizard")
+            self._spd_scope_all = speechd.Scope.ALL
+        except Exception:
+            pass
         return selection_model
+
+    def enable_voice_preview(self):
+        """Enable TTS voice preview and start WAV precache."""
+        self._voice_preview_enabled = True
+        if hasattr(self, "_language_data") and self._language_data:
+            self._start_kokoro_precache(self._language_data)
+
+    def _cancel_orca(self):
+        """Cancel ALL speech-dispatcher clients (including ORCA) instantly."""
+        if self._spd_client and self._spd_scope_all:
+            try:
+                self._spd_client.cancel(scope=self._spd_scope_all)
+            except Exception:
+                pass
+
+    def _on_selection_changed(self, selection_model, position, n_items):
+        """Speak the selected language name using Kokoro TTS or espeak-ng fallback."""
+        # Cancel any pending delayed speak
+        if self._speak_timeout_id > 0:
+            GLib.source_remove(self._speak_timeout_id)
+            self._speak_timeout_id = 0
+        # Kill any ongoing TTS process
+        if self._espeak_proc and self._espeak_proc.poll() is None:
+            self._espeak_proc.terminate()
+            self._espeak_proc = None
+        self._tts_gen += 1
+        # Always update the global speak voice for other screens
+        selected = selection_model.get_selected()
+        if selected != Gtk.INVALID_LIST_POSITION:
+            item = selection_model.get_item(selected)
+            if item:
+                engine, voice, lang_code = _voice_config_for_locale(item.code)
+                if engine == "kokoro":
+                    set_speak_voice(voice, lang_code)
+        # Voice preview is off by default until user activates accessibility
+        if not self._voice_preview_enabled:
+            return
+        if selected == Gtk.INVALID_LIST_POSITION:
+            return
+        item = selection_model.get_item(selected)
+        if not item:
+            return
+        # Cancel ORCA speech for ALL languages
+        self._cancel_orca()
+        # Build text to speak
+        parts = item.name.split(" - ", 1)
+        country = parts[1] if len(parts) > 1 else ""
+        native_name = _NATIVE_LANG_NAMES.get(item.code[:2], item.name_orig)
+        text = f"{native_name}, {country}" if country else native_name
+        # voice and lang_code already set above
+        if engine == "kokoro" and _HAS_KOKO:
+            cache_key = f"{voice}:{lang_code}:{text}"
+            with _KOKORO_CACHE_LOCK:
+                cached_wav = _KOKORO_WAV_CACHE.get(cache_key)
+            if cached_wav and os.path.isfile(cached_wav):
+                # Kokoro WAV is cached — play it instantly
+                self._speak_timeout_id = GLib.timeout_add(
+                    50, self._play_wav, cached_wav
+                )
+            else:
+                # Not cached yet — generate in background and play when ready
+                gen = self._tts_gen
+                threading.Thread(
+                    target=self._kokoro_generate_and_play,
+                    args=(voice, lang_code, text, cache_key, gen),
+                    daemon=True,
+                ).start()
+        else:
+            espeak_voice = lang_code if engine == "kokoro" else voice
+            if not espeak_voice:
+                espeak_voice = item.code.replace("_", "-")
+            self._speak_timeout_id = GLib.timeout_add(
+                50, self._do_espeak, espeak_voice, text
+            )
+
+    def _do_espeak(self, voice, text):
+        """Speak with espeak-ng in native voice."""
+        self._speak_timeout_id = 0
+        self._cancel_orca()
+        try:
+            self._espeak_proc = subprocess.Popen(
+                ["espeak-ng", "-v", voice, "--", text],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+        except FileNotFoundError:
+            logger.debug("espeak-ng not found")
+        return GLib.SOURCE_REMOVE
+
+    def _play_wav(self, wav_path):
+        """Play a cached WAV file instantly."""
+        self._speak_timeout_id = 0
+        self._cancel_orca()
+        try:
+            self._espeak_proc = subprocess.Popen(
+                ["paplay", wav_path],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+        except FileNotFoundError:
+            pass
+        return GLib.SOURCE_REMOVE
+
+    def _kokoro_generate(self, voice, lang_code, text, cache_key):
+        """Background: generate WAV with koko and cache it (does not play)."""
+        tmpwav = None
+        try:
+            fd, tmpwav = tempfile.mkstemp(prefix="bw-", suffix=".wav")
+            os.close(fd)
+            proc = subprocess.run(
+                [
+                    _KOKO_BIN,
+                    "-m",
+                    _KOKO_MODEL,
+                    "-d",
+                    _KOKO_VOICES,
+                    "-l",
+                    lang_code,
+                    "-s",
+                    voice,
+                    "--force-style",
+                    "true",
+                    "--speed",
+                    "1.5",
+                    "text",
+                    text,
+                    "-o",
+                    tmpwav,
+                ],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                timeout=30,
+            )
+            if proc.returncode == 0 and os.path.isfile(tmpwav) and os.path.getsize(tmpwav) > 0:
+                with _KOKORO_CACHE_LOCK:
+                    _KOKORO_WAV_CACHE[cache_key] = tmpwav
+            else:
+                if tmpwav:
+                    os.unlink(tmpwav)
+        except Exception:
+            if tmpwav and os.path.isfile(tmpwav) and cache_key not in _KOKORO_WAV_CACHE:
+                try:
+                    os.unlink(tmpwav)
+                except OSError:
+                    pass
+
+    def _kokoro_generate_and_play(self, voice, lang_code, text, cache_key, gen):
+        """Background: generate WAV with koko, cache it, and play if still current."""
+        self._kokoro_generate(voice, lang_code, text, cache_key)
+        with _KOKORO_CACHE_LOCK:
+            cached_wav = _KOKORO_WAV_CACHE.get(cache_key)
+        if cached_wav and self._tts_gen == gen:
+            GLib.idle_add(self._play_wav, cached_wav)
+
+    def _start_kokoro_precache(self, language_data):
+        """Launch background pre-generation of Kokoro WAVs for all supported locales."""
+        if not _HAS_KOKO:
+            return
+        # Build list of (voice, lang_code, text, cache_key) — thread-safe, no GObjects
+        tasks = []
+        favorites = {"en_US": 0, "pt_BR": 1, "es_ES": 2}
+        for item in language_data:
+            engine, voice, lang_code = _voice_config_for_locale(item.code)
+            if engine != "kokoro":
+                continue
+            parts = item.name.split(" - ", 1)
+            country = parts[1] if len(parts) > 1 else ""
+            native_name = _NATIVE_LANG_NAMES.get(item.code[:2], item.name_orig)
+            text = f"{native_name}, {country}" if country else native_name
+            cache_key = f"{voice}:{lang_code}:{text}"
+            priority = favorites.get(item.code, 999)
+            tasks.append((priority, voice, lang_code, text, cache_key))
+        tasks.sort(key=lambda t: t[0])
+        threading.Thread(
+            target=self._precache_worker, args=(tasks,), daemon=True
+        ).start()
+
+    def _precache_worker(self, tasks):
+        """Background: sequentially generate Kokoro WAVs, favorites first."""
+        for _, voice, lang_code, text, cache_key in tasks:
+            with _KOKORO_CACHE_LOCK:
+                if cache_key in _KOKORO_WAV_CACHE:
+                    continue
+            self._kokoro_generate(voice, lang_code, text, cache_key)
 
     def _activate_item(self, item):
         if not item:
@@ -200,7 +492,45 @@ class LanguageView(Adw.Bin):
             halign=Gtk.Align.START,
             valign=Gtk.Align.CENTER,
         )
+
+        flag_widget = Gtk.Image(
+            pixel_size=36,
+            accessible_role=Gtk.AccessibleRole.PRESENTATION,
+        )
+
+        vbox = Gtk.Box(
+            orientation=Gtk.Orientation.VERTICAL,
+            spacing=2,
+            halign=Gtk.Align.START,
+            valign=Gtk.Align.CENTER,
+        )
+        # Heading: native name (ORCA reads this for pt_BR with Letícia voice)
+        name_label = Gtk.Label(
+            halign=Gtk.Align.START,
+            wrap=True,
+            justify=Gtk.Justification.LEFT,
+        )
+        name_label.add_css_class("heading")
+        # Caption: hidden from ORCA (English name for visual reference only)
+        orig_name_label = Gtk.Label(
+            halign=Gtk.Align.START,
+            wrap=True,
+            justify=Gtk.Justification.LEFT,
+            accessible_role=Gtk.AccessibleRole.PRESENTATION,
+        )
+        orig_name_label.add_css_class("caption")
+        vbox.append(name_label)
+        vbox.append(orig_name_label)
+
+        content_box.append(flag_widget)
+        content_box.append(vbox)
         root_box.append(content_box)
+
+        # Store references for _on_factory_bind
+        root_box._flag = flag_widget
+        root_box._name_label = name_label
+        root_box._orig_label = orig_name_label
+
         list_item.set_child(root_box)
 
         try:
@@ -223,47 +553,19 @@ class LanguageView(Adw.Bin):
     def _on_factory_bind(self, factory, list_item):
         item = list_item.get_item()
         root_box = list_item.get_child()
-        content_box = root_box.get_first_child()
 
-        child = content_box.get_first_child()
-        while child:
-            content_box.remove(child)
-            child = content_box.get_first_child()
+        # Build native name heading: e.g. "Português, Brazil" or "English, United States"
+        parts = item.name.split(" - ", 1)
+        country = parts[1] if len(parts) > 1 else ""
+        native_name = _NATIVE_LANG_NAMES.get(item.code[:2], item.name_orig)
+        heading_text = f"{native_name}, {country}" if country else native_name
 
-        # Accessible label for screen readers
-        root_box.update_property(
-            [Gtk.AccessibleProperty.LABEL],
-            [f"{item.name} ({item.name_orig})"],
-        )
+        # Heading: visual text
+        root_box._name_label.set_label(heading_text)
+        # Caption: English name (PRESENTATION — ORCA doesn't read)
+        root_box._orig_label.set_label(item.name)
 
-        flag_widget = Gtk.Image.new_from_icon_name(item.flag_icon_name)
-        flag_widget.set_pixel_size(36)
-
-        vbox = Gtk.Box(
-            orientation=Gtk.Orientation.VERTICAL,
-            spacing=2,
-            halign=Gtk.Align.START,
-            valign=Gtk.Align.CENTER,
-        )
-        name_label = Gtk.Label(
-            halign=Gtk.Align.START,
-            label=item.name,
-            wrap=True,
-            justify=Gtk.Justification.LEFT,
-        )
-        name_label.add_css_class("heading")
-        orig_name_label = Gtk.Label(
-            halign=Gtk.Align.START,
-            label=item.name_orig,
-            wrap=True,
-            justify=Gtk.Justification.LEFT,
-        )
-        orig_name_label.add_css_class("caption")
-        vbox.append(name_label)
-        vbox.append(orig_name_label)
-
-        content_box.append(flag_widget)
-        content_box.append(vbox)
+        root_box._flag.set_from_icon_name(item.flag_icon_name)
 
         click_gesture = Gtk.GestureClick.new()
         click_gesture.connect("released", self._on_item_clicked, item)

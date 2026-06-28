@@ -208,6 +208,10 @@ msgstr "Skrivbordslayout"
 msgid "Theme"
 msgstr "Tema"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 584
+msgid "Accessibility enabled. Use arrow keys to navigate."
+msgstr "Tillgänglighet aktiverad. Använd piltangenterna för att navigera."
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 30
 msgid "Choose a Desktop Layout"
 msgstr "Välj en skrivbordslayout"
