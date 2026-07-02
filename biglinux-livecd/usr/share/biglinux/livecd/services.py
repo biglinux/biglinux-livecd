@@ -243,6 +243,14 @@ class SystemService:
             settings_path = os.path.join(home, ".config", gtk_dir, "settings.ini")
             self._update_ini_settings(settings_path, "Settings", settings)
 
+    @staticmethod
+    def _simple_icon_theme(desktop_env: str, dark: bool) -> str:
+        if dark:
+            return "bigicons-papient-dark"
+        if desktop_env == "XFCE":
+            return "bigicons-papient-light"
+        return "bigicons-papient"
+
     def apply_language_settings(self, lang_code: str, timezone: str):
         """Applies language, locale, and timezone settings."""
         logger.info(f"Setting language to {lang_code} and timezone to {timezone}")
@@ -392,10 +400,13 @@ class SystemService:
             logger.info("Setting Cinnamon themes to dark mode")
             self._modify_settings_file(settings_file, {
                 "org/gnome/desktop/interface": {
-                    "color-scheme": "'prefer-dark'"
+                    "color-scheme": "'prefer-dark'",
+                    "gtk-theme": "'adw-gtk3-dark'",
+                    "icon-theme": "'bigicons-papient-dark'"
                 },
                 "org/cinnamon/desktop/interface": {
-                    "gtk-theme": "'adw-gtk3-dark'"
+                    "gtk-theme": "'adw-gtk3-dark'",
+                    "icon-theme": "'bigicons-papient-dark'"
                 },
                 "org/cinnamon/theme": {
                     "name": "'Big-Orange'"
@@ -406,7 +417,8 @@ class SystemService:
             modifications = {
                 "org/gnome/desktop/interface": {
                     "color-scheme": "'prefer-dark'",
-                    "gtk-theme": "'adw-gtk3-dark'"
+                    "gtk-theme": "'adw-gtk3-dark'",
+                    "icon-theme": "'bigicons-papient-dark'"
                 },
                 "org/gnome/shell/extensions/user-theme": {
                     "name": "'Big-Blue'"
@@ -428,7 +440,10 @@ class SystemService:
             self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/IconThemeName", "-s", "bigicons-papient-dark"])
             self._run_command(["xfconf-query", "-c", "xfwm4", "-p", "/general/theme", "-s", "adw-gtk3-dark"])
 
-        self._apply_gtk_settings_ini(dark=True, icon_theme="bigicons-papient-dark")
+        self._apply_gtk_settings_ini(
+            dark=True,
+            icon_theme=self._simple_icon_theme(desktop_env, dark=True),
+        )
 
         # Configure Kvantum theme
         kvantum_dir = os.path.join(home, ".config", "Kvantum")
@@ -455,10 +470,13 @@ class SystemService:
             logger.info("Setting Cinnamon themes to light mode")
             self._modify_settings_file(settings_file, {
                 "org/gnome/desktop/interface": {
-                    "color-scheme": "'default'"
+                    "color-scheme": "'default'",
+                    "gtk-theme": "'adw-gtk3'",
+                    "icon-theme": "'bigicons-papient'"
                 },
                 "org/cinnamon/desktop/interface": {
-                    "gtk-theme": "'adw-gtk3'"
+                    "gtk-theme": "'adw-gtk3'",
+                    "icon-theme": "'bigicons-papient'"
                 },
                 "org/cinnamon/theme": {
                     "name": "'Big-Orange-Light'"
@@ -469,7 +487,8 @@ class SystemService:
             modifications = {
                 "org/gnome/desktop/interface": {
                     "color-scheme": "'default'",
-                    "gtk-theme": "'adw-gtk3'"
+                    "gtk-theme": "'adw-gtk3'",
+                    "icon-theme": "'bigicons-papient'"
                 },
                 "org/gnome/shell/extensions/user-theme": {
                     "name": "'Big-Blue'"
@@ -491,7 +510,10 @@ class SystemService:
             self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/IconThemeName", "-s", "bigicons-papient-light"])
             self._run_command(["xfconf-query", "-c", "xfwm4", "-p", "/general/theme", "-s", "adw-gtk3"])
 
-        self._apply_gtk_settings_ini(dark=False, icon_theme="bigicons-papient-light")
+        self._apply_gtk_settings_ini(
+            dark=False,
+            icon_theme=self._simple_icon_theme(desktop_env, dark=False),
+        )
 
         # Configure Kvantum theme
         kvantum_dir = os.path.join(home, ".config", "Kvantum")
