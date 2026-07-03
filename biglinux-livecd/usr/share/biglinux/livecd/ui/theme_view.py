@@ -369,8 +369,18 @@ class ThemeView(BaseItemView):
                 [Gtk.AccessibleProperty.LABEL], [label_text]
             )
 
-            icon = Gtk.Image.new_from_icon_name(icon_name)
+            icon_path = f"/usr/share/biglinux/livecd/assets/icons/{icon_name}.svg"
+            if os.path.exists(icon_path):
+                try:
+                    pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(icon_path, 120, 120)
+                    icon = Gtk.Image.new_from_paintable(Gdk.Texture.new_for_pixbuf(pixbuf))
+                except Exception as e:
+                    logger.warning(f"Failed to load local theme icon {icon_path}: {e}")
+                    icon = Gtk.Image.new_from_icon_name(icon_name)
+            else:
+                icon = Gtk.Image.new_from_icon_name(icon_name)
             icon.set_pixel_size(120)
+            icon.set_size_request(120, 120)
             icon.set_halign(Gtk.Align.CENTER)
             icon.set_valign(Gtk.Align.CENTER)
             icon.set_vexpand(True)
