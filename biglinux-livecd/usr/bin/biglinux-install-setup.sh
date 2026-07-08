@@ -78,11 +78,22 @@ mkdir -p "$CONFIG_DIR"
 [[ -f "/tmp/big_gnome_layout" ]] && cp -f "/tmp/big_gnome_layout" "$CONFIG_DIR/gnome-layout"
 
 # Copy GNOME layout settings if exists
-if [[ -f "/tmp/big_gnome_settings" ]]; then
-    cp -f "/tmp/big_gnome_settings" "$CONFIG_DIR/gnome-settings"
+# Prefer the live user's current settings.gnome (layout-switcher may have
+# changed it after the wizard); fall back to the wizard-time snapshot.
+GNOME_SETTINGS_SRC=""
+for LIVE_HOME in /home/*; do
+    if [[ -f "$LIVE_HOME/.config/dconf/settings.gnome" ]]; then
+        GNOME_SETTINGS_SRC="$LIVE_HOME/.config/dconf/settings.gnome"
+        break
+    fi
+done
+[[ -z "$GNOME_SETTINGS_SRC" && -f "/tmp/big_gnome_settings" ]] && GNOME_SETTINGS_SRC="/tmp/big_gnome_settings"
+
+if [[ -n "$GNOME_SETTINGS_SRC" ]]; then
+    cp -f "$GNOME_SETTINGS_SRC" "$CONFIG_DIR/gnome-settings"
 
     mkdir -p "$ROOT_MOUNT/etc/skel/.config/dconf"
-    cp -f "/tmp/big_gnome_settings" "$ROOT_MOUNT/etc/skel/.config/dconf/settings.gnome"
+    cp -f "$GNOME_SETTINGS_SRC" "$ROOT_MOUNT/etc/skel/.config/dconf/settings.gnome"
 
     for USER_HOME in "$ROOT_MOUNT"/home/*; do
         [[ -d "$USER_HOME" ]] || continue
@@ -92,7 +103,7 @@ if [[ -f "/tmp/big_gnome_settings" ]]; then
         USER_SETTINGS_FILE="$USER_SETTINGS_DIR/settings.gnome"
 
         mkdir -p "$USER_SETTINGS_DIR"
-        cp -f "/tmp/big_gnome_settings" "$USER_SETTINGS_FILE"
+        cp -f "$GNOME_SETTINGS_SRC" "$USER_SETTINGS_FILE"
 
         if [[ -f "$ROOT_MOUNT/etc/passwd" ]]; then
             USER_IDS="$(awk -F: -v user="$USER_NAME" '$1 == user { print $3 ":" $4 }' "$ROOT_MOUNT/etc/passwd")"

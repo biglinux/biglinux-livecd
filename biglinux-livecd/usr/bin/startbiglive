@@ -522,8 +522,9 @@ if [[ -f "$installer_shortcut" ]]; then
 fi
 
 # libadwaita apps use their own color-scheme setting and can ignore GTK INI files
-# in non-GNOME sessions.
-if [[ -f /tmp/big_desktop_theme ]]; then
+# in non-GNOME sessions. GNOME reads color-scheme from dconf directly, and the
+# forced override would fight the wizard's choice there, so skip it on gdm.
+if [[ "$display_manager" != "gdm" && -f /tmp/big_desktop_theme ]]; then
     case "$(< /tmp/big_desktop_theme)" in
         dark)
             export ADW_DEBUG_COLOR_SCHEME=prefer-dark
