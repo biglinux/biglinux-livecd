@@ -39,6 +39,9 @@ GNOME_DTP_MONITOR_KEYS = {
 
 GNOME_LIGHT_STYLE_UUID = "light-style@gnome-shell-extensions.gcampax.github.com"
 GNOME_USER_THEME_UUID = "user-theme@gnome-shell-extensions.gcampax.github.com"
+GNOME_KIWI_UUID = "kiwi@kemma"
+GNOME_DTP_UUID = "dash-to-panel@jderose9.github.com"
+GNOME_LAYOUT_SWITCHER_HELPER_UUID = "layout-switcher-helper@bigcommunity.org"
 
 
 class SystemService:
@@ -83,6 +86,10 @@ class SystemService:
         self.tmp_theme_file = "/tmp/big_desktop_theme"
         self.tmp_jamesdsp_file = "/tmp/big_enable_jamesdsp"
         self.tmp_display_profile_file = "/tmp/big_improve_display"
+
+        # Keyboard choice for GNOME (GVariant input-sources value); layout
+        # dumps hard-code sources, so this gets re-stamped after each write.
+        self._gnome_input_sources: str | None = None
 
     def _run_command(
         self,
@@ -265,14 +272,23 @@ class SystemService:
             ["/usr/bin/biglinux-verify-md5sum", "--no-gui"], as_root=False
         )
 
+    @staticmethod
+    def _split_xkb_layout(layout: str) -> Tuple[str, str]:
+        """Split tokens like 'us(intl)' into layout and variant parts."""
+        match = re.match(r"^([^()]+)\(([^()]+)\)$", layout)
+        if match:
+            return match.group(1), match.group(2)
+        return layout, ""
+
     def apply_keyboard_layout(self, layout: str):
         """Applies the selected keyboard layout."""
         logger.info(f"Setting keyboard layout to: {layout}")
         layout_cleaned = layout.replace("\\", "")
         self._write_tmp_file(self.tmp_keyboard_file, layout_cleaned)
         self._run_command(["setxkbmap", layout_cleaned])
+        xkb_layout, xkb_variant = self._split_xkb_layout(layout_cleaned)
         self._run_command(
-            ["localectl", "set-x11-keymap", layout_cleaned, "pc105+inet", "", "terminate:ctrl_alt_bksp"],
+            ["localectl", "set-x11-keymap", xkb_layout, "pc105+inet", xkb_variant, "terminate:ctrl_alt_bksp"],
             as_root=True
         )
 
@@ -293,6 +309,15 @@ class SystemService:
                     }
                 })
                 logger.info(f"Configured keyboard layout '{layout_cleaned}' in settings.cinnamon")
+        elif desktop_env == "GNOME":
+            # GNOME reads input sources from dconf; remember the choice so it
+            # survives layout dumps that hard-code their own sources key.
+            xkb_id = f"{xkb_layout}+{xkb_variant}" if xkb_variant else xkb_layout
+            self._gnome_input_sources = f"[('xkb', '{xkb_id}')]"
+            settings_file = self._get_settings_file_path(desktop_env)
+            if settings_file and os.path.exists(settings_file):
+                self._stamp_gnome_input_sources(settings_file)
+            logger.info(f"Configured keyboard layout '{layout_cleaned}' for GNOME input-sources")
         else:
             # KDE/Plasma uses kxkbrc
             kxkbrc_path = os.path.join(home, ".config", "kxkbrc")
@@ -346,9 +371,13 @@ class SystemService:
         if not self._write_user_config_file(settings_file, settings_text):
             return
 
+        # Layout dumps hard-code their own sources key; re-apply the wizard
+        # keyboard choice so re-choosing a layout can't clobber it.
+        self._stamp_gnome_input_sources(settings_file)
+
         self._write_tmp_file(self.tmp_desktop_file, layout)
         self._write_tmp_file(self.tmp_gnome_layout_file, layout)
-        self._write_tmp_file(self.tmp_gnome_settings_file, settings_text)
+        self._sync_gnome_settings_tmp()
         logger.info(f"Prepared GNOME layout '{layout}' in {settings_file}")
 
     def get_available_themes(self) -> List[str]:
@@ -387,6 +416,7 @@ class SystemService:
             self._apply_light_theme(desktop_env)
 
         if desktop_env == "GNOME":
+            self._stamp_gnome_input_sources(self._get_settings_file_path("GNOME"))
             self._sync_gnome_settings_tmp()
 
     def _apply_dark_theme(self, desktop_env: str):
@@ -414,17 +444,21 @@ class SystemService:
             })
         elif desktop_env == "GNOME":
             logger.info("Setting GNOME themes to dark mode")
+            layout_class = self._gnome_layout_class(settings_file)
             modifications = {
                 "org/gnome/desktop/interface": {
                     "color-scheme": "'prefer-dark'",
                     "gtk-theme": "'adw-gtk3-dark'",
                     "icon-theme": "'bigicons-papient-dark'"
-                },
-                "org/gnome/shell/extensions/user-theme": {
-                    "name": "'Big-Blue'"
                 }
             }
-            modifications.update(self._gnome_shell_theme_extensions(settings_file, dark=True))
+            if layout_class != "kiwi":
+                # kiwi layouts manage the shell bar themselves (user-theme
+                # stays enabled with name='' as shipped): interface keys only.
+                modifications["org/gnome/shell/extensions/user-theme"] = {
+                    "name": "'Big-Blue'"
+                }
+                modifications.update(self._gnome_shell_theme_extensions(settings_file, dark=True))
             self._modify_settings_file(settings_file, modifications)
         elif desktop_env == "XFCE":
             logger.info("Setting XFCE themes to dark mode")
@@ -484,17 +518,28 @@ class SystemService:
             })
         elif desktop_env == "GNOME":
             logger.info("Setting GNOME themes to light mode")
+            layout_class = self._gnome_layout_class(settings_file)
             modifications = {
                 "org/gnome/desktop/interface": {
                     "color-scheme": "'default'",
                     "gtk-theme": "'adw-gtk3'",
                     "icon-theme": "'bigicons-papient'"
-                },
-                "org/gnome/shell/extensions/user-theme": {
-                    "name": "'Big-Blue'"
                 }
             }
-            modifications.update(self._gnome_shell_theme_extensions(settings_file, dark=False))
+            if layout_class == "biggnome":
+                # 'default' on GNOME 50 = dark shell + light apps: keep the
+                # Big-Blue shell theme enabled while apps go light.
+                modifications["org/gnome/shell/extensions/user-theme"] = {
+                    "name": "'Big-Blue'"
+                }
+                modifications.update(self._gnome_shell_theme_extensions(settings_file, dark=True))
+            elif layout_class == "panel":
+                # dash-to-panel layouts switch to the light shell style.
+                modifications["org/gnome/shell/extensions/user-theme"] = {
+                    "name": "'Big-Blue'"
+                }
+                modifications.update(self._gnome_shell_theme_extensions(settings_file, dark=False))
+            # kiwi layouts manage the shell bar themselves: interface keys only.
             self._modify_settings_file(settings_file, modifications)
         elif desktop_env == "XFCE":
             logger.info("Setting XFCE themes to light mode")
@@ -714,6 +759,35 @@ class SystemService:
                 "disabled-extensions": repr(disabled),
             }
         }
+
+    def _gnome_layout_class(self, settings_file: str) -> str:
+        """
+        Classifies the current GNOME layout by its enabled extensions:
+        - "kiwi" (g-unity, minimal): kiwi keeps the shell bar dark itself,
+          so the theme chooser must not touch extensions or user-theme.
+        - "panel" (classic, hybrid, desk-ux): dash-to-panel layouts toggle
+          light-style/user-theme per theme.
+        - "biggnome": dash-to-dock based, Big-Blue shell theme always on.
+        """
+        values = self._settings_key_values(settings_file, "org/gnome/shell")
+        enabled = self._parse_settings_list(values.get("enabled-extensions", "[]"))
+        if GNOME_KIWI_UUID in enabled:
+            return "kiwi"
+        if GNOME_DTP_UUID in enabled:
+            return "panel"
+        return "biggnome"
+
+    def _stamp_gnome_input_sources(self, settings_file: str):
+        """Re-applies the wizard keyboard choice to settings.gnome, if any."""
+        if not self._gnome_input_sources:
+            return
+        if not settings_file or not os.path.exists(settings_file):
+            return
+        self._modify_settings_file(settings_file, {
+            "org/gnome/desktop/input-sources": {
+                "sources": self._gnome_input_sources
+            }
+        })
 
     def finalize_setup(self, config: SetupConfig):
         """
@@ -988,6 +1062,14 @@ class SystemService:
                 continue
             if line.startswith("primary-monitor="):
                 out_lines.append("primary-monitor=''")
+                continue
+            if line.startswith("enabled-extensions="):
+                # Layout dumps don't ship the layout-switcher helper (the
+                # skel does); keep it enabled so live switching still works.
+                extensions = self._parse_settings_list(line.partition("=")[2])
+                if GNOME_LAYOUT_SWITCHER_HELPER_UUID not in extensions:
+                    extensions.append(GNOME_LAYOUT_SWITCHER_HELPER_UUID)
+                out_lines.append(f"enabled-extensions={extensions!r}")
                 continue
             if "=" not in line:
                 out_lines.append(line)
