@@ -1,34 +1,12 @@
-#!/bin/bash
-#===============================================================================
-# Script Name: boot-in-plasma
-# Description: KDE Plasma Session Starter (Legacy/Debug)
-#              Initializes Plasma desktop with default BigLinux theme.
-#              Used for testing
-# Package:     biglinux-livecd
-#===============================================================================
+#!/usr/bin/env bash
+set -euo pipefail
 
-#-------------------------------------------------------------------------------
-# Set Default Configuration
-#-------------------------------------------------------------------------------
-echo 'en_US' > /tmp/big_language
-echo "breeze" > /tmp/big_desktop_theme
-echo "startkde-biglinux classic" > /tmp/biglightdm
+# shellcheck disable=SC1091
+source /usr/lib/biglinux-livecd/live-state
 
-# Legacy support files (for older Calamares versions)
-echo "startkde-biglinux classic" > /tmp/big_desktop_changed-calamares
-echo "startkde-biglinux classic" > /tmp/big_desktop_changed
+initialize_default_live_state
+/usr/bin/biglinux-themes.sh --apply breeze
+/usr/bin/change-plasma-theme --apply classic quiet
+install_live_state_defaults
 
-#-------------------------------------------------------------------------------
-# Apply Default Theme
-#-------------------------------------------------------------------------------
-biglinux-themes.sh --apply breeze
-change-plasma-theme --apply classic quiet
-
-# Save theme for Calamares installation
-sudo cp -f /tmp/big_desktop_theme /etc/default-theme-biglinux
-sudo cp -f /tmp/big_desktop_changed /etc/big_desktop_changed
-
-#-------------------------------------------------------------------------------
-# Start Plasma Wayland Session
-#-------------------------------------------------------------------------------
-startplasma-wayland
+exec /usr/bin/startplasma-wayland

@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+kernel_cmdline_path=/proc/cmdline
+
+kernel_has_argument() {
+	local wanted=$1 argument
+	local -a arguments=()
+	IFS=' ' read -r -a arguments <"$kernel_cmdline_path" || return 1
+	for argument in "${arguments[@]}"; do
+		[[ $argument == "$wanted" ]] && return 0
+	done
+	return 1
+}
+
+kernel_option_value() {
+	local key=$1 argument value=
+	local matches=0
+	local -a arguments=()
+	IFS=' ' read -r -a arguments <"$kernel_cmdline_path" || return 1
+	for argument in "${arguments[@]}"; do
+		if [[ $argument == "$key="* ]]; then
+			value=${argument#*=}
+			matches=$((matches + 1))
+		fi
+	done
+	if ((matches != 1)) || [[ -z $value ]]; then
+		((matches == 0)) && return 1
+		return 2
+	fi
+	printf '%s\n' "$value"
+}
+
+live_boot_command_path() {
+	case "$1" in
+	only-calamares) printf '%s\n' /usr/bin/only-calamares ;;
+	boot-in-plasma) printf '%s\n' /usr/bin/boot-in-plasma ;;
+	only-konsole) printf '%s\n' /usr/bin/only-konsole ;;
+	calamares_polkit) printf '%s\n' /usr/bin/calamares-biglinux_polkit ;;
+	konsole) printf '%s\n' /usr/bin/konsole ;;
+	urxvt) printf '%s\n' /usr/bin/urxvt ;;
+	startplasma-x11) printf '%s\n' /usr/bin/startplasma-x11 ;;
+	*) return 1 ;;
+	esac
+}
+
+sanitize_kernel_arguments() {
+	local input=$1
+	local drop_cosmetic=${2:-0}
+	local argument
+	local -A seen=()
+	local -a arguments=() retained=()
+	IFS=' ' read -r -a arguments <<<"$input"
+	for argument in "${arguments[@]}"; do
+		case "$argument" in
+		BOOT_IMAGE=* | initrd=* | misobasedir=* | misolabel=* | driver=* | rdinit=* | biglinux.bootcmd=* | sshenable | wayland | rw | ro)
+			continue
+			;;
+		esac
+		if [[ $drop_cosmetic == 1 && ($argument == quiet || $argument == splash) ]]; then
+			continue
+		fi
+		[[ -n $argument && ! -v seen[$argument] ]] || continue
+		seen[$argument]=1
+		retained+=("$argument")
+	done
+	printf '%s\n' "${retained[*]}"
+}
+
+sanitize_installed_kernel_arguments() {
+	sanitize_kernel_arguments "$1" 0
+}
+
+installed_kernel_arguments() {
+	local cmdline
+	IFS= read -r cmdline <"$kernel_cmdline_path" || return 1
+	sanitize_kernel_arguments "$cmdline" 1
+}

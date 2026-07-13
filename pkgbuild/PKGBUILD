@@ -1,50 +1,39 @@
 # Maintainer: Bruno Goncalves <bigbruno@gmail.com>
+# shellcheck shell=bash disable=SC2034,SC2154
 
 pkgname=biglinux-livecd
-pkgver=$(date +%y.%m.%d)
-pkgrel=$(date +%H%M)
+pkgver=26.07.11
+pkgrel=1
+pkgdesc="BigLinux live-session setup and Calamares installer integration"
 arch=('any')
-license=('GPL')
 url="https://github.com/biglinux/biglinux-livecd"
-pkgdesc="Complete control center to use in BigLinux with KDE - includes initial setup wizard and Calamares installer interface"
+license=('GPL-3.0-only' 'CC0-1.0')
 depends=(
-    # Original biglinux-livecd dependencies
-    'python'
-    'python-gobject'
+    'binutils'
+    'btrfs-progs'
+    'calamares'
+    'circle-flags'
+    'curl'
+    'e2fsprogs'
+    'gettext'
     'gtk4'
     'libadwaita'
-    'circle-flags'
-    # Dependencies from calamares-biglinux (merged)
+    'mtools'
+    'python'
+    'python-babel'
+    'python-gobject'
     'qefientrymanager'
-    'calamares'
-    'btrfs-progs'
-    'gettext'
-    'curl'
+    'util-linux'
 )
-source=("git+https://github.com/biglinux/biglinux-livecd.git")
-md5sums=(SKIP)
-install=$pkgname.install
+optdepends=('speech-dispatcher: spoken feedback in the live-session wizard')
+makedepends=('git')
+source=("${pkgname}::git+${url}.git#commit=92c7b7463fcf504d1795c4e4bd2ecbd04a4a7f03")
+sha256sums=('SKIP')
+install="${pkgname}.install"
 
 package() {
-    # Verify default folder
-    if [ -d "$srcdir/$pkgname/$pkgname" ]; then
-        InternalDir="$srcdir/$pkgname/$pkgname"
-    else
-        InternalDir="$srcdir/$pkgname"
-    fi
+    cd "${srcdir}/${pkgname}" || return 1
 
-
-    # Copy files
-    if [ -d "$InternalDir/usr" ]; then
-        cp -r "$InternalDir/usr" "$pkgdir/"
-    fi
-
-    if [ -d "$InternalDir/etc" ]; then
-        cp -r "$InternalDir/etc" "$pkgdir/"
-    fi
-
-    if [ -d "$InternalDir/opt" ]; then
-        cp -r "$InternalDir/opt" "$pkgdir/"
-    fi
+    cp -a biglinux-livecd/usr "${pkgdir}/"
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
-

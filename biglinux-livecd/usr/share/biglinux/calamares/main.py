@@ -20,21 +20,10 @@ from src.app import CalamaresApp
 
 def setup_logging():
     """Configure logging for the application"""
-    handlers = [logging.StreamHandler(sys.stdout)]
-
-    # Try to add file handler, but don't fail if can't create log file
-    try:
-        handlers.append(logging.FileHandler("/tmp/calamares-config.log", mode="a"))
-    except PermissionError:
-        # Note: Using stderr since logger is not yet available during bootstrap
-        sys.stderr.write("Warning: Could not create log file, using console only\n")
-    except Exception as e:
-        sys.stderr.write(f"Warning: Log file error: {e}\n")
-
     logging.basicConfig(
         level=logging.INFO,
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        handlers=handlers,
+        format="%(name)s: %(levelname)s: %(message)s",
+        handlers=[logging.StreamHandler(sys.stderr)],
     )
 
 
@@ -57,6 +46,7 @@ def setup_translations():
         import builtins
 
         builtins.__dict__["_"] = lambda x: x
+
 
 def load_custom_css():
     """Load custom CSS for application-wide styling."""
@@ -90,8 +80,12 @@ def setup_icon_theme():
         icon_theme.add_search_path("/usr/share/icons/bigicons-papient/16x16/panel")
         # Also add the dark variant as fallback
         icon_theme.add_search_path("/usr/share/icons/bigicons-papient-dark/48x48/apps")
-        icon_theme.add_search_path("/usr/share/icons/bigicons-papient-dark/scalable/apps")
-        logging.getLogger(__name__).info("Icon theme search paths configured for bigicons-papient")
+        icon_theme.add_search_path(
+            "/usr/share/icons/bigicons-papient-dark/scalable/apps"
+        )
+        logging.getLogger(__name__).info(
+            "Icon theme search paths configured for bigicons-papient"
+        )
 
 
 def main():

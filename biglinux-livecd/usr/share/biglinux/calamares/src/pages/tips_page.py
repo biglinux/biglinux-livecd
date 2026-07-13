@@ -6,22 +6,22 @@ Installation tips and guidance page using Adw.PreferencesPage.
 """
 
 import logging
+
 import gi
 
-gi.require_version('Gtk', '4.0')
-gi.require_version('Adw', '1')
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
 
-from gi.repository import Gtk, Adw, GObject
-from ..utils.i18n import _
-from ..utils.accessibility import announce, set_label
+from gi.repository import Adw, GObject, Gtk
+
+from ..infrastructure.accessibility import announce, set_label
+from ..infrastructure.i18n import _
 
 
 class TipsPage(Gtk.Box):
     """Page displaying installation tips and guidance, clamped for readability."""
 
-    __gsignals__ = {
-        'navigate': (GObject.SignalFlags.RUN_FIRST, None, (str, object))
-    }
+    __gsignals__ = {"navigate": (GObject.SignalFlags.RUN_FIRST, None, (str, object))}
 
     def __init__(self):
         super().__init__(orientation=Gtk.Orientation.VERTICAL)
@@ -36,7 +36,7 @@ class TipsPage(Gtk.Box):
 
         self.page = Adw.PreferencesPage()
         scrolled.set_child(self.page)
-        
+
         self.page.set_title(_("Important Tips"))
         self.page.set_icon_name("dialog-information-symbolic")
         set_label(self.page, _("Important Tips"))
@@ -48,18 +48,35 @@ class TipsPage(Gtk.Box):
         """Create the tips page content using Adw.PreferencesGroup."""
         tips_group = Adw.PreferencesGroup(
             title=_("Manual Partitioning Recommendations"),
-            description=_("If you opt for automatic partitioning, these tips will be applied by default.")
+            description=_(
+                "If you opt for automatic partitioning, these tips will be applied by default."
+            ),
         )
         self.page.add(tips_group)
 
         tips_data = [
-            {'title': _("Use BTRFS"), 'description': _("This file system allows for automatic compression and restore points.")},
-            {'title': _("Keep /boot within the / partition"), 'description': _("Placing it in a separate partition hampers BTRFS snapshots.")},
-            {'title': _("Do not create a SWAP partition"), 'description': _("We have implemented dynamic virtual memory management with Zram and SWAP files. SWAP partitions will not be used.")}
+            {
+                "title": _("Use BTRFS"),
+                "description": _(
+                    "This file system allows for automatic compression and restore points."
+                ),
+            },
+            {
+                "title": _("Keep /boot within the / partition"),
+                "description": _(
+                    "Placing it in a separate partition hampers BTRFS snapshots."
+                ),
+            },
+            {
+                "title": _("Do not create a SWAP partition"),
+                "description": _(
+                    "We have implemented dynamic virtual memory management with Zram and SWAP files. SWAP partitions will not be used."
+                ),
+            },
         ]
 
         for tip in tips_data:
-            row = Adw.ActionRow(title=tip['title'], subtitle=tip['description'])
+            row = Adw.ActionRow(title=tip["title"], subtitle=tip["description"])
             row.set_title_lines(1)
             row.set_subtitle_lines(2)
             tips_group.add(row)
@@ -70,7 +87,10 @@ class TipsPage(Gtk.Box):
 
         try:
             self.logger.info("The installer will now proceed...")
-            application = self.get_root().get_application()
+            root = self.get_root()
+            application = (
+                root.get_application() if isinstance(root, Gtk.Window) else None
+            )
             if application:
                 button.set_sensitive(False)
                 GObject.timeout_add(1000, application.quit)
@@ -85,5 +105,6 @@ class TipsPage(Gtk.Box):
 
     def cleanup(self):
         self.logger.debug("TipsPage cleanup")
+
 
 GObject.type_register(TipsPage)

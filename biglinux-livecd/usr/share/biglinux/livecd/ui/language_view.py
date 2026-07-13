@@ -2,18 +2,21 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, Gio, GObject, Gdk, GLib
 import json
+import os
 import subprocess
 import tempfile
 import threading
 import unicodedata
+from typing import Any
 from urllib.parse import parse_qs, urlparse
-from translations import _
-from config import LanguageSelection
+
 from accessibility import announce, set_speak_voice
+from config import LanguageSelection
+from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk
 from logging_config import get_logger
-import os
+from suggested_locale import language_sort_key, load_suggested_locale
+from translations import _
 
 logger = get_logger()
 
@@ -87,8 +90,33 @@ def _parse_voice_map():
 
 
 _VOICE_MAP = _parse_voice_map()
-_KOKORO_WAV_CACHE = {}
+_KOKORO_WAV_CACHE: dict[str, str] = {}
 _KOKORO_CACHE_LOCK = threading.Lock()
+_KOKORO_CACHE_CONDITION = threading.Condition(_KOKORO_CACHE_LOCK)
+_KOKORO_GENERATING: set[str] = set()
+_KOKORO_CACHE_DIRECTORY = tempfile.TemporaryDirectory(prefix="biglinux-kokoro-")
+
+
+def _kokoro_command(voice: str, language: str, text: str, output: str) -> list[str]:
+    return [
+        _KOKO_BIN,
+        "-m",
+        _KOKO_MODEL,
+        "-d",
+        _KOKO_VOICES,
+        "-l",
+        language,
+        "-s",
+        voice,
+        "--force-style",
+        "true",
+        "--speed",
+        "1.5",
+        "text",
+        text,
+        "-o",
+        output,
+    ]
 
 
 def _voice_config_for_locale(locale_code):
@@ -135,10 +163,21 @@ class LanguageListItem(GObject.Object):
         self.normalized_name_orig = normalize_string(nameOrig)
 
 
+class LanguageRow(Gtk.Box):
+    """Typed widget references owned by a recycled language row."""
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self.flag = Gtk.Image()
+        self.name_label = Gtk.Label()
+        self.orig_label = Gtk.Label()
+
+
 class LanguageView(Adw.Bin):
     __gtype_name__ = "LanguageView"
     sig_language_selected = GObject.Signal(
-        "language-selected", arg_types=[GObject.TYPE_PYOBJECT]
+        "language-selected",
+        arg_types=[GObject.TYPE_PYOBJECT],  # type: ignore[list-item]
     )
 
     def __init__(self, **kwargs):
@@ -211,8 +250,13 @@ class LanguageView(Adw.Bin):
                 raw_data = json.load(f)
 
             language_data = [LanguageListItem(**item) for item in raw_data]
-            favorites_order = {"en_US": 0, "pt_BR": 1, "es_ES": 2}
-            language_data.sort(key=lambda x: (x.code not in favorites_order, favorites_order.get(x.code, 999), x.name))
+            supported_locales = {item.code for item in language_data}
+            suggested_locale = load_suggested_locale(supported_locales)
+            language_data.sort(
+                key=lambda item: language_sort_key(
+                    item.code, item.name, suggested_locale
+                )
+            )
             self._store.splice(0, 0, language_data)
             GLib.idle_add(self._post_load_setup)
             # Save for later precache when voice preview is enabled
@@ -227,8 +271,8 @@ class LanguageView(Adw.Bin):
     def _create_filtered_model(self):
         self.filter = Gtk.CustomFilter.new(self._filter_func, None)
         self.filter_model = Gtk.FilterListModel(model=self._store, filter=self.filter)
-        selection_model = Gtk.SingleSelection(model=self.filter_model)
-        selection_model.connect("selection-changed", self._on_selection_changed)
+        self.selection_model = Gtk.SingleSelection(model=self.filter_model)
+        self.selection_model.connect("selection-changed", self._on_selection_changed)
         self._espeak_proc = None
         self._speak_timeout_id = 0
         self._tts_gen = 0
@@ -245,7 +289,7 @@ class LanguageView(Adw.Bin):
             self._spd_scope_all = speechd.Scope.ALL
         except Exception:
             pass
-        return selection_model
+        return self.selection_model
 
     def enable_voice_preview(self):
         """Enable TTS voice preview and start WAV precache."""
@@ -261,7 +305,9 @@ class LanguageView(Adw.Bin):
             except Exception:
                 pass
 
-    def _on_selection_changed(self, selection_model, position, n_items):
+    def _on_selection_changed(  # noqa: C901 - coordinates cancellable TTS backends
+        self, selection_model, position, _n_items
+    ):
         """Speak the selected language name using Kokoro TTS or espeak-ng fallback."""
         # Cancel any pending delayed speak
         if self._speak_timeout_id > 0:
@@ -351,46 +397,45 @@ class LanguageView(Adw.Bin):
 
     def _kokoro_generate(self, voice, lang_code, text, cache_key):
         """Background: generate WAV with koko and cache it (does not play)."""
+        with _KOKORO_CACHE_CONDITION:
+            while cache_key in _KOKORO_GENERATING:
+                _KOKORO_CACHE_CONDITION.wait()
+            if cache_key in _KOKORO_WAV_CACHE:
+                return
+            _KOKORO_GENERATING.add(cache_key)
         tmpwav = None
         try:
-            fd, tmpwav = tempfile.mkstemp(prefix="bw-", suffix=".wav")
+            fd, tmpwav = tempfile.mkstemp(
+                prefix="voice-", suffix=".wav", dir=_KOKORO_CACHE_DIRECTORY.name
+            )
             os.close(fd)
             proc = subprocess.run(
-                [
-                    _KOKO_BIN,
-                    "-m",
-                    _KOKO_MODEL,
-                    "-d",
-                    _KOKO_VOICES,
-                    "-l",
-                    lang_code,
-                    "-s",
-                    voice,
-                    "--force-style",
-                    "true",
-                    "--speed",
-                    "1.5",
-                    "text",
-                    text,
-                    "-o",
-                    tmpwav,
-                ],
+                _kokoro_command(voice, lang_code, text, tmpwav),
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
                 timeout=30,
             )
-            if proc.returncode == 0 and os.path.isfile(tmpwav) and os.path.getsize(tmpwav) > 0:
+            if (
+                proc.returncode == 0
+                and os.path.isfile(tmpwav)
+                and os.path.getsize(tmpwav) > 0
+            ):
                 with _KOKORO_CACHE_LOCK:
                     _KOKORO_WAV_CACHE[cache_key] = tmpwav
+                    tmpwav = None
             else:
-                if tmpwav:
-                    os.unlink(tmpwav)
-        except Exception:
-            if tmpwav and os.path.isfile(tmpwav) and cache_key not in _KOKORO_WAV_CACHE:
+                logger.warning("Kokoro could not generate a voice preview")
+        except (OSError, subprocess.SubprocessError):
+            logger.warning("Kokoro voice preview generation failed")
+        finally:
+            if tmpwav:
                 try:
                     os.unlink(tmpwav)
-                except OSError:
+                except FileNotFoundError:
                     pass
+            with _KOKORO_CACHE_CONDITION:
+                _KOKORO_GENERATING.discard(cache_key)
+                _KOKORO_CACHE_CONDITION.notify_all()
 
     def _kokoro_generate_and_play(self, voice, lang_code, text, cache_key, gen):
         """Background: generate WAV with koko, cache it, and play if still current."""
@@ -425,7 +470,7 @@ class LanguageView(Adw.Bin):
 
     def _precache_worker(self, tasks):
         """Background: sequentially generate Kokoro WAVs, favorites first."""
-        for _, voice, lang_code, text, cache_key in tasks:
+        for _priority, voice, lang_code, text, cache_key in tasks:
             with _KOKORO_CACHE_LOCK:
                 if cache_key in _KOKORO_WAV_CACHE:
                     continue
@@ -436,7 +481,7 @@ class LanguageView(Adw.Bin):
             return
         params = parse_qs(urlparse(item.url).query)
         params_flat = {k: v[0] for k, v in params.items()}
-        self.sig_language_selected.emit(
+        self.sig_language_selected.emit(  # type: ignore[arg-type]
             LanguageSelection(code=item.code, name=item.name, url_params=params_flat)
         )
 
@@ -461,8 +506,8 @@ class LanguageView(Adw.Bin):
         return GLib.SOURCE_REMOVE
 
     def _select_first_item_after_filter(self):
-        if self.grid_view.get_model().get_n_items() > 0:
-            self.grid_view.get_model().set_selected(0)
+        if self.selection_model.get_n_items() > 0:
+            self.selection_model.set_selected(0)
 
     def _post_load_setup(self):
         self._select_first_item_after_filter()
@@ -475,7 +520,7 @@ class LanguageView(Adw.Bin):
         return query in item.normalized_name or query in item.normalized_name_orig
 
     def _on_factory_setup(self, factory, list_item):
-        root_box = Gtk.Box(
+        root_box = LanguageRow(
             orientation=Gtk.Orientation.VERTICAL,
             halign=Gtk.Align.FILL,
             valign=Gtk.Align.CENTER,
@@ -498,20 +543,38 @@ class LanguageView(Adw.Bin):
             accessible_role=Gtk.AccessibleRole.PRESENTATION,
         )
 
-        vbox = Gtk.Box(
+        labels = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
             spacing=2,
             halign=Gtk.Align.START,
             valign=Gtk.Align.CENTER,
         )
-        # Heading: native name (ORCA reads this for pt_BR with Letícia voice)
+        name_label, orig_name_label = self._build_language_labels()
+        labels.append(name_label)
+        labels.append(orig_name_label)
+        content_box.append(flag_widget)
+        content_box.append(labels)
+        root_box.append(content_box)
+        root_box.flag = flag_widget
+        root_box.name_label = name_label
+        root_box.orig_label = orig_name_label
+        list_item.set_child(root_box)
+        try:
+            root_box.set_cursor(Gdk.Cursor.new_from_name("pointer", None))
+        except Exception:
+            pass
+        motion_controller = Gtk.EventControllerMotion.new()
+        motion_controller.connect("motion", self._on_mouse_motion_item, list_item)
+        root_box.add_controller(motion_controller)
+
+    @staticmethod
+    def _build_language_labels() -> tuple[Gtk.Label, Gtk.Label]:
         name_label = Gtk.Label(
             halign=Gtk.Align.START,
             wrap=True,
             justify=Gtk.Justification.LEFT,
         )
         name_label.add_css_class("heading")
-        # Caption: hidden from ORCA (English name for visual reference only)
         orig_name_label = Gtk.Label(
             halign=Gtk.Align.START,
             wrap=True,
@@ -519,40 +582,21 @@ class LanguageView(Adw.Bin):
             accessible_role=Gtk.AccessibleRole.PRESENTATION,
         )
         orig_name_label.add_css_class("caption")
-        vbox.append(name_label)
-        vbox.append(orig_name_label)
+        return name_label, orig_name_label
 
-        content_box.append(flag_widget)
-        content_box.append(vbox)
-        root_box.append(content_box)
-
-        # Store references for _on_factory_bind
-        root_box._flag = flag_widget
-        root_box._name_label = name_label
-        root_box._orig_label = orig_name_label
-
-        list_item.set_child(root_box)
-
-        try:
-            cursor = Gdk.Cursor.new_from_name("pointer", None)
-            root_box.set_cursor(cursor)
-        except Exception:
-            pass
-
-        motion_controller = Gtk.EventControllerMotion.new()
-        motion_controller.connect("motion", self._on_mouse_motion_item, list_item)
-        root_box.add_controller(motion_controller)
-
-    def _on_mouse_motion_item(self, controller, x, y, list_item):
+    def _on_mouse_motion_item(self, controller, x, _y, list_item):
         position = list_item.get_position()
         if position != Gtk.INVALID_LIST_POSITION:
-            selection_model = self.grid_view.get_model()
-            if selection_model and selection_model.get_selected() != position:
-                selection_model.set_selected(position)
+            if self.selection_model.get_selected() != position:
+                self.selection_model.set_selected(position)
 
     def _on_factory_bind(self, factory, list_item):
         item = list_item.get_item()
         root_box = list_item.get_child()
+        if not isinstance(item, LanguageListItem) or not isinstance(
+            root_box, LanguageRow
+        ):
+            return
 
         # Build native name heading: e.g. "Português, Brazil" or "English, United States"
         parts = item.name.split(" - ", 1)
@@ -561,23 +605,23 @@ class LanguageView(Adw.Bin):
         heading_text = f"{native_name}, {country}" if country else native_name
 
         # Heading: visual text
-        root_box._name_label.set_label(heading_text)
+        root_box.name_label.set_label(heading_text)
         # Caption: English name (PRESENTATION — ORCA doesn't read)
-        root_box._orig_label.set_label(item.name)
+        root_box.orig_label.set_label(item.name)
 
-        root_box._flag.set_from_icon_name(item.flag_icon_name)
+        root_box.flag.set_from_icon_name(item.flag_icon_name)
 
         click_gesture = Gtk.GestureClick.new()
         click_gesture.connect("released", self._on_item_clicked, item)
         root_box.add_controller(click_gesture)
 
-    def _on_item_clicked(self, gesture, n_press, x, y, item):
+    def _on_item_clicked(self, gesture, n_press, x, _y, item):
         if n_press == 1 and gesture.get_current_button() == Gdk.BUTTON_PRIMARY:
             self._activate_item(item)
 
     def handle_global_key_press(self, keyval):
         if keyval == Gdk.KEY_Return or keyval == Gdk.KEY_KP_Enter:
-            selection_model = self.grid_view.get_model()
+            selection_model = self.selection_model
             if (
                 selection_model
                 and selection_model.get_selected() != Gtk.INVALID_LIST_POSITION

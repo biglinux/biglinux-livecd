@@ -5,11 +5,18 @@
 Description=BigLinux LiveCD System Tweaks and Optimizations
 Documentation=https://github.com/biglinux
 Before=mhwd-live.service
+ConditionPathExists=/livefs-pkgs.txt
 
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/livecd-tweaks
 RemainAfterExit=true
+NoNewPrivileges=true
+ProtectHome=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+RestrictSUIDSGID=true
 
 [Install]
 WantedBy=multi-user.target

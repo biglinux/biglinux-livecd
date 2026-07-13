@@ -31,45 +31,16 @@
 # 2. SDDM session configuration (Wayland/X11 based on boot mode)
 # 3. Fstab optimization (btrfs compression levels)
 # 4. Live session config migration (theme, desktop, JamesDSP, display profile)
-# 5. Pre-installation wizard configs (minimal mode, XivaStudio packages)
 #
 
-import libcalamares
 import os
-import shutil
 import subprocess
+
+import libcalamares
 from libcalamares.utils import debug
 
 
-def copy_calamares_configs(root_mount_point):
-    """
-    Copy Calamares-generated configuration files that need to persist.
-    These are additional configs created by the pre-installation wizard.
-    """
-    # Copy minimal package removal list if it exists
-    minimal_list = "/tmp/calamares_remove_packages"
-    if os.path.isfile(minimal_list):
-        dst = os.path.join(root_mount_point, "tmp/calamares_remove_packages")
-        try:
-            os.makedirs(os.path.dirname(dst), exist_ok=True)
-            shutil.copy2(minimal_list, dst)
-            debug("Copied minimal packages list")
-        except Exception as e:
-            debug(f"Warning: Could not copy minimal list: {e}")
-
-    # Copy XivaStudio netinstall config if it exists
-    xiva_config = "/tmp/calamares_xivastudio_packages"
-    if os.path.isfile(xiva_config):
-        dst = os.path.join(root_mount_point, "tmp/calamares_xivastudio_packages")
-        try:
-            os.makedirs(os.path.dirname(dst), exist_ok=True)
-            shutil.copy2(xiva_config, dst)
-            debug("Copied XivaStudio packages list")
-        except Exception as e:
-            debug(f"Warning: Could not copy XivaStudio list: {e}")
-
-
-def run():
+def run() -> tuple[str, str] | None:
     """
     Main entry point for the Calamares module.
 
@@ -79,14 +50,20 @@ def run():
        - SDDM session setup (Wayland/X11)
        - Fstab optimization (btrfs compression)
        - Live session config migration (theme, desktop, JamesDSP, display)
-    2. Copies Calamares pre-installation wizard configs
     """
-    root_mount_point = libcalamares.globalstorage.value("rootMountPoint")
+    requested_root = libcalamares.globalstorage.value("rootMountPoint")
 
-    if not root_mount_point:
+    if not isinstance(requested_root, str) or not requested_root:
         return (
             "Root mount point not found",
             "Could not determine the installation target",
+        )
+
+    root_mount_point = os.path.realpath(requested_root)
+    if root_mount_point == "/" or not os.path.isdir(root_mount_point):
+        return (
+            "Unsafe installation target",
+            "The installation target is missing or resolves to the running system.",
         )
 
     debug(f"Running BigLinux installation setup on {root_mount_point}")
@@ -94,17 +71,16 @@ def run():
     # Run biglinux-install-setup.sh passing the root mount point
     # This script handles GRUB, SDDM, fstab and live session config migration
     try:
-        result = subprocess.call([
-            "/usr/bin/biglinux-install-setup.sh",
-            root_mount_point,
-        ])
-        if result != 0:
-            debug(f"biglinux-install-setup.sh returned non-zero exit code: {result}")
-    except Exception as e:
-        debug(f"Warning: Could not run biglinux-install-setup.sh: {e}")
-
-    # Copy Calamares pre-installation wizard configs
-    copy_calamares_configs(root_mount_point)
+        subprocess.run(
+            ["/usr/bin/biglinux-install-setup.sh", root_mount_point],
+            check=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as error:
+        debug(f"BigLinux installation setup failed: {error}")
+        return (
+            "BigLinux installation setup failed",
+            "The installed system could not be finalized safely. See the installation log.",
+        )
 
     debug("BigLinux installation setup completed successfully")
     return None

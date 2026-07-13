@@ -3,23 +3,24 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 gi.require_version("GdkPixbuf", "2.0")
-from gi.repository import Gtk, Adw, GdkPixbuf, GLib, Gdk
-from translations import _, set_language
-from config import SetupConfig
-from services import SystemService
-from ui.language_view import LanguageView
-from ui.keyboard_view import KeyboardView
-from ui.desktop_view import DesktopView
-from ui.theme_view import ThemeView
+import os
+from typing import Any
+
 from accessibility import (
     announce,
     ensure_orca_disabled,
     set_accessibility_enabled,
     speak,
-    set_speak_voice,
 )
+from config import SetupConfig
+from gi.repository import Adw, Gdk, GdkPixbuf, GLib, Gtk
 from logging_config import get_logger
-import os
+from services import SystemService
+from translations import _, set_language
+from ui.desktop_view import DesktopView
+from ui.keyboard_view import KeyboardView
+from ui.language_view import LanguageView
+from ui.theme_view import ThemeView
 
 logger = get_logger()
 
@@ -30,7 +31,7 @@ DEFAULT_LOGO_PATH = os.path.join(ASSETS_DIR, "logo.png")
 DEFAULT_COMM_LOGO_PATH = os.path.join(ASSETS_DIR, "comm-logo.png")
 
 
-def get_logo_path(system_service: SystemService = None):
+def get_logo_path(system_service: SystemService | None = None):
     """
     Returns the appropriate logo path for the current distribution.
     XivaStudio custom logos take precedence if they exist.
@@ -43,7 +44,7 @@ def get_logo_path(system_service: SystemService = None):
     return DEFAULT_LOGO_PATH
 
 
-def get_comm_logo_path(system_service: SystemService = None):
+def get_comm_logo_path(system_service: SystemService | None = None):
     """
     Returns the appropriate simplified/community logo path.
     XivaStudio custom logos take precedence if they exist.
@@ -60,11 +61,15 @@ def load_svg_texture(path, size):
     """Load SVG as Gdk.Texture for better GTK4 scaling."""
     try:
         pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(path, size, size)
+        if pixbuf is None:
+            raise GLib.Error("Could not allocate image")
         return Gdk.Texture.new_for_pixbuf(pixbuf)
     except GLib.Error as e:
         logger.error(f"Failed to load SVG {path}: {e}")
         # Create a fallback empty pixbuf and convert to texture
         pixbuf = GdkPixbuf.Pixbuf.new(GdkPixbuf.Colorspace.RGB, True, 8, size, size)
+        if pixbuf is None:
+            raise RuntimeError("Could not allocate fallback image")
         return Gdk.Texture.new_for_pixbuf(pixbuf)
 
 
@@ -75,7 +80,7 @@ class AppWindow(Adw.ApplicationWindow):
         super().__init__(**kwargs)
         self.system_service = system_service
         self.config = SetupConfig()
-        self.completed_steps = set()  # Track completed steps
+        self.completed_steps: set[str] = set()  # Track completed steps
         self.has_desktop_step = system_service.has_desktop_layout_step()
         self.uses_simple_theme = system_service.uses_simple_theme_selector()
         # Ensure ORCA is not running — user activates it manually via Super+Alt+S
@@ -98,10 +103,10 @@ class AppWindow(Adw.ApplicationWindow):
             monitors = display.get_monitors()
             if monitors.get_n_items() > 0:
                 monitor = monitors.get_item(0)
-                geometry = monitor.get_geometry()
-                self.set_default_size(geometry.width, geometry.height)
+                if monitor is not None:
+                    geometry = monitor.get_geometry()
+                    self.set_default_size(geometry.width, geometry.height)
         self.fullscreen()
-
 
         style_manager = Adw.StyleManager.get_default()
         style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
@@ -130,13 +135,22 @@ class AppWindow(Adw.ApplicationWindow):
 
     def _build_ui(self):
         root_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+        root_box.append(self._build_header())
+        content_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, vexpand=True)
+        content_box.add_css_class("app-content")
+        root_box.append(content_box)
+        self.stack = Adw.ViewStack()
+        self.stack.set_vexpand(True)
+        self.stack.connect("notify::visible-child", self._on_view_changed)
+        content_box.append(self.stack)
+        self._add_language_view()
+        self.stack.set_visible_child_name("language")
+        GLib.idle_add(self._update_header_state)
+        return root_box
 
-        # --- Header Area (Full-Width Wrapper) ---
+    def _build_header(self) -> Gtk.CenterBox:
         header_wrapper = Gtk.CenterBox()
         header_wrapper.add_css_class("app-header")
-        root_box.append(header_wrapper)
-
-        # --- Centered Header Content ---
         header_content_box = Gtk.Box(
             orientation=Gtk.Orientation.HORIZONTAL,
             spacing=15,
@@ -145,9 +159,8 @@ class AppWindow(Adw.ApplicationWindow):
         )
         header_wrapper.set_center_widget(header_content_box)
 
-        # Define steps based on environment
         if self.has_desktop_step:
-            self.steps = [
+            self.steps: list[dict[str, Any]] = [
                 {"name": "language", "file": "headerbar-locale.svg"},
                 {"name": "keyboard", "file": "headerbar-keyboard.svg"},
                 {"name": "desktop", "file": "headerbar-display.svg"},
@@ -160,67 +173,38 @@ class AppWindow(Adw.ApplicationWindow):
                 {"name": "theme", "file": "headerbar-theme.svg"},
             ]
 
-        # Build header layout based on environment
         if not self.has_desktop_step:
-            # Simplified layout: [comm-logo.png] [Language] [Keyboard] [Theme]
-            # Use comm-logo.png for simplified environments (XivaStudio override if exists)
-            logo_path = get_comm_logo_path(self.system_service)
-            if os.path.exists(logo_path):
-                logo = Gtk.Image.new_from_file(logo_path)
-                logo.set_pixel_size(72)
-                logo.set_margin_start(20)
-                logo.set_margin_end(20)
-                logo.update_property(
-                    [Gtk.AccessibleProperty.LABEL], [_("BigLinux Logo")]
-                )
-                header_content_box.append(logo)
-
+            self._append_logo(
+                header_content_box, get_comm_logo_path(self.system_service)
+            )
             self._add_step_button(header_content_box, self.steps[0])
             self._add_step_button(header_content_box, self.steps[1])
             self._add_step_button(header_content_box, self.steps[2])
         else:
-            # Full layout: [Language] [Keyboard] [logo.png] [Desktop] [Theme]
             self._add_step_button(header_content_box, self.steps[0])
             self._add_step_button(header_content_box, self.steps[1])
-
-            # GNOME uses the Community branding even with the layout step.
-            if self.uses_simple_theme:
-                logo_path = get_comm_logo_path(self.system_service)
-            else:
-                logo_path = get_logo_path(self.system_service)
-            if os.path.exists(logo_path):
-                logo = Gtk.Image.new_from_file(logo_path)
-                logo.set_pixel_size(72)
-                logo.set_margin_start(20)
-                logo.set_margin_end(20)
-                logo.update_property(
-                    [Gtk.AccessibleProperty.LABEL], [_("BigLinux Logo")]
-                )
-                header_content_box.append(logo)
-
+            logo_path = (
+                get_comm_logo_path(self.system_service)
+                if self.uses_simple_theme
+                else get_logo_path(self.system_service)
+            )
+            self._append_logo(header_content_box, logo_path)
             self._add_step_button(header_content_box, self.steps[2])
             self._add_step_button(header_content_box, self.steps[3])
+        return header_wrapper
 
-        # --- Content Area ---
-        content_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, vexpand=True)
-        content_box.add_css_class("app-content")
-        root_box.append(content_box)
+    @staticmethod
+    def _append_logo(box: Gtk.Box, path: str) -> None:
+        if not os.path.exists(path):
+            return
+        logo = Gtk.Image.new_from_file(path)
+        logo.set_pixel_size(72)
+        logo.set_margin_start(20)
+        logo.set_margin_end(20)
+        logo.update_property([Gtk.AccessibleProperty.LABEL], [_("BigLinux Logo")])
+        box.append(logo)
 
-        self.stack = Adw.ViewStack()
-        self.stack.set_vexpand(True)
-        self.stack.connect("notify::visible-child", self._on_view_changed)
-        content_box.append(self.stack)
-
-        # --- LAZY LOADING: Only create the first view initially ---
-        self._add_language_view()
-
-        # Set initial view and update header state
-        self.stack.set_visible_child_name("language")
-        GLib.idle_add(self._update_header_state)
-
-        return root_box
-
-    def _retranslate_ui(self):
+    def _retranslate_ui(self):  # noqa: C901 - translates heterogeneous lazy pages
         """Updates all visible text in the application to the new language."""
         self.set_title(_("BigLinux Setup"))
         self.update_property(
@@ -237,15 +221,14 @@ class AppWindow(Adw.ApplicationWindow):
             if button := step.get("button"):
                 label_fn = self._STEP_LABELS.get(step["name"])
                 if label_fn:
-                    button.update_property(
-                        [Gtk.AccessibleProperty.LABEL], [label_fn()]
-                    )
+                    button.update_property([Gtk.AccessibleProperty.LABEL], [label_fn()])
+                    button.set_tooltip_text(label_fn())
 
         # Iterate through all pages in the stack, even non-visible ones
         pages = self.stack.get_pages()
-        for i in range(pages.get_n_items()):
-            page = pages.get_item(i)
-            if not page:
+        for i in range(pages.get_n_items()):  # type: ignore[attr-defined]
+            page = pages.get_item(i)  # type: ignore[attr-defined]
+            if not isinstance(page, Adw.ViewStackPage):
                 continue
 
             view = page.get_child()
@@ -310,6 +293,8 @@ class AppWindow(Adw.ApplicationWindow):
                 [Gtk.AccessibleProperty.LABEL, Gtk.AccessibleProperty.DESCRIPTION],
                 [label_fn(), f"{step_index + 1}/{total}"],
             )
+            # Visible tooltip so sighted users can identify the icon-only step button.
+            button.set_tooltip_text(label_fn())
 
         try:
             cursor = Gdk.Cursor.new_from_name("pointer", None)
@@ -322,7 +307,7 @@ class AppWindow(Adw.ApplicationWindow):
             step_info["img"] = img
         box.append(button)
 
-    def _on_view_changed(self, stack, param):
+    def _on_view_changed(self, stack, _param):
         GLib.idle_add(self._update_header_state)
         # Announce the new step to screen readers (ORCA)
         view_name = stack.get_visible_child_name()
@@ -355,7 +340,7 @@ class AppWindow(Adw.ApplicationWindow):
         if current_view_name == "simple_theme":
             search_name = "theme"
         else:
-            search_name = current_view_name
+            search_name = current_view_name or ""
 
         try:
             current_index = next(
@@ -442,7 +427,9 @@ class AppWindow(Adw.ApplicationWindow):
         # LAZY LOADING: Ensure keyboard view exists before updating or showing it
         self._ensure_view("keyboard", keyboard_layout)
 
-        if keyboard_view := self.stack.get_child_by_name("keyboard"):
+        if isinstance(
+            keyboard_view := self.stack.get_child_by_name("keyboard"), KeyboardView
+        ):
             keyboard_view.update_primary_layout(keyboard_layout)
 
         if keyboard_layout not in ["us", "latam"]:
@@ -450,10 +437,9 @@ class AppWindow(Adw.ApplicationWindow):
         else:
             # Also skip for us(intl) if the user doesn't need to see the choice
             if keyboard_layout == "us(intl)":
-                 self._on_keyboard_selected(None, keyboard_layout)
+                self._on_keyboard_selected(None, keyboard_layout)
             else:
-                 self._on_keyboard_selected(None, keyboard_layout)
-
+                self._on_keyboard_selected(None, keyboard_layout)
 
     def _add_keyboard_view(self, primary_layout):
         view = KeyboardView(primary_layout=primary_layout)
@@ -516,10 +502,10 @@ class AppWindow(Adw.ApplicationWindow):
 
         # Update config with extra options from the theme view
         theme_view = self.stack.get_child_by_name("theme")
-        if theme_view:
+        if isinstance(theme_view, ThemeView):
             self.config.enable_jamesdsp = theme_view.is_jamesdsp_enabled()
             self.config.enable_enhanced_contrast = theme_view.is_contrast_enabled()
-            
+
             # Apply JamesDSP settings immediately when theme is selected
             self.system_service.apply_jamesdsp_settings(self.config.enable_jamesdsp)
 
@@ -539,7 +525,9 @@ class AppWindow(Adw.ApplicationWindow):
         try:
             # Mark theme step as completed
             self.completed_steps.add("theme")
-            logger.debug(f"Marked theme step as completed. Completed steps: {self.completed_steps}")
+            logger.debug(
+                f"Marked theme step as completed. Completed steps: {self.completed_steps}"
+            )
 
             # Save to config
             self.config.simple_theme = theme
@@ -548,11 +536,11 @@ class AppWindow(Adw.ApplicationWindow):
             # Apply simple theme (light or dark)
             logger.info(f"Applying simple theme: {theme}")
             self.system_service.apply_simple_theme(theme)
-            logger.info(f"Simple theme applied successfully")
+            logger.info("Simple theme applied successfully")
 
             # Get JamesDSP and contrast settings from the theme view
             theme_view = self.stack.get_child_by_name("simple_theme")
-            if theme_view:
+            if isinstance(theme_view, ThemeView):
                 jamesdsp = theme_view.is_jamesdsp_enabled()
                 contrast = theme_view.is_contrast_enabled()
                 self.config.enable_jamesdsp = jamesdsp
@@ -598,6 +586,7 @@ class AppWindow(Adw.ApplicationWindow):
             return
         try:
             import speechd
+
             client = speechd.SSIPClient("biglinux-wizard-lang")
             client.set_language(lang_code)
             client.close()

@@ -1,4 +1,24 @@
-#!/bin/bash
-  
-btrfs filesystem defragment --nocomp -r $1/usr/share/grub
-btrfs filesystem defragment --nocomp -r $1/boot
+#!/usr/bin/env bash
+set -euo pipefail
+
+requested_root=${1:-}
+[[ -n $requested_root && -d $requested_root ]] || {
+	printf '%s\n' 'btrfs-fix: a valid installation root is required' >&2
+	exit 1
+}
+installation_root=$(realpath -e -- "$requested_root")
+[[ $installation_root != / ]] || {
+	printf '%s\n' 'btrfs-fix: refusing the running root filesystem' >&2
+	exit 1
+}
+
+for relative_path in usr/share/grub boot; do
+	target=$installation_root/$relative_path
+	[[ -d $target && ! -L $target ]] || continue
+	resolved_target=$(realpath -e -- "$target")
+	[[ $resolved_target == "$installation_root/"* ]] || {
+		printf 'btrfs-fix: target escapes installation root: %s\n' "$target" >&2
+		exit 1
+	}
+	btrfs filesystem defragment --nocomp -r -- "$resolved_target"
+done

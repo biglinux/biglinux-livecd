@@ -22,7 +22,11 @@ class Application(Adw.Application):
         Adw.Application.do_startup(self)
 
         # Add icon search paths
-        icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
+        display = Gdk.Display.get_default()
+        if display is None:
+            logger.error("No graphical display is available")
+            return
+        icon_theme = Gtk.IconTheme.get_for_display(display)
 
         # Local icons (theme icons)
         icons_dir = "/usr/share/biglinux/livecd/assets/icons/"

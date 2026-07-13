@@ -4,22 +4,21 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from abc import ABCMeta, abstractmethod
-
+from accessibility import is_accessibility_enabled, speak
 from gi.repository import Adw, Gdk, GLib, GObject, Gtk
-from services import SystemService
-from translations import _
-from accessibility import announce, speak, is_accessibility_enabled
 from logging_config import get_logger
+from services import SystemService
 
 logger = get_logger()
 
 
-class GObjectMeta(type(GObject.Object), ABCMeta):
-    pass
+class ItemFlowBoxChild(Gtk.FlowBoxChild):
+    """Flow-box child carrying the domain item represented by the row."""
+
+    item_data: GObject.Object
 
 
-class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
+class BaseItemView(Adw.Bin):
     __gtype_name__ = "BaseItemView"
 
     def __init__(self, system_service: SystemService, **kwargs):
@@ -123,16 +122,16 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
             item_obj = self.create_item_gobject(name)
             child_widget = self.create_item_widget(item_obj)
 
-            flow_child = Gtk.FlowBoxChild()
+            flow_child = ItemFlowBoxChild()
             flow_child.set_child(child_widget)
             flow_child.set_can_focus(True)
             flow_child.item_data = item_obj
 
             # Accessible label for screen readers
-            item_label = getattr(item_obj, "display_name", item_obj.name)
-            flow_child.update_property(
-                [Gtk.AccessibleProperty.LABEL], [item_label]
-            )
+            item_label = getattr(item_obj, "display_name", None)
+            if item_label is None:
+                item_label = getattr(item_obj, "name", "")
+            flow_child.update_property([Gtk.AccessibleProperty.LABEL], [item_label])
 
             # Hover-to-select functionality
             item_motion_controller = Gtk.EventControllerMotion.new()
@@ -148,7 +147,7 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
 
     def _select_first_item(self):
         first_child = self.flow_box.get_first_child()
-        if first_child:
+        if isinstance(first_child, Gtk.FlowBoxChild):
             self.flow_box.select_child(first_child)
             self.grab_focus()
         return GLib.SOURCE_REMOVE
@@ -162,17 +161,19 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
         return False
 
     def _on_child_activated(self, flow_box, child):
-        if hasattr(child, "item_data"):
-            item_name = child.item_data.name
-            logger.info(f"BaseItemView: child activated - emitting signal for: {item_name}")
+        if isinstance(child, ItemFlowBoxChild):
+            item_name = str(getattr(child.item_data, "name", ""))
+            logger.info(
+                f"BaseItemView: child activated - emitting signal for: {item_name}"
+            )
             self.emit_signal(item_name)
         else:
-            logger.warning(f"BaseItemView: child activated but no item_data found")
+            logger.warning("BaseItemView: child activated but no item_data found")
 
     def _on_flow_leave(self, controller, *args):
         self.flow_box.unselect_all()
 
-    def _on_item_enter(self, controller, x, y, flow_child):
+    def _on_item_enter(self, controller, x, _y, flow_child):
         self.flow_box.select_child(flow_child)
 
     def _on_selection_changed(self, flow_box):
@@ -182,13 +183,19 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
         selected = flow_box.get_selected_children()
         if selected and is_accessibility_enabled():
             child = selected[0]
-            if hasattr(child, "item_data"):
-                speak(getattr(child.item_data, "display_name", child.item_data.name))
+            if isinstance(child, ItemFlowBoxChild):
+                speak(
+                    getattr(
+                        child.item_data,
+                        "display_name",
+                        getattr(child.item_data, "name", ""),
+                    )
+                )
 
     def _select_first_and_announce(self):
         """Select first item and announce page title (without race condition)."""
         first_child = self.flow_box.get_first_child()
-        if first_child:
+        if isinstance(first_child, Gtk.FlowBoxChild):
             self.flow_box.select_child(first_child)
             self.grab_focus()
         self._suppress_speak = False
@@ -203,25 +210,20 @@ class BaseItemView(Adw.Bin, metaclass=GObjectMeta):
         if selected:
             self._on_child_activated(flow_box, selected[0])
 
-    @abstractmethod
     def get_title(self) -> str:
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def get_items(self) -> list:
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def create_item_gobject(self, name: str) -> GObject.Object:
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def create_item_widget(self, item: GObject.Object):
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def emit_signal(self, name: str):
-        pass
+        raise NotImplementedError
 
     def get_clamp_width(self) -> int:
         return 1600

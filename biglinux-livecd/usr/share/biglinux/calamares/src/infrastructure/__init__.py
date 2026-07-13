@@ -27,7 +27,7 @@ from .constants import (
 )
 
 # Import helper functions
-from .helpers import (
+from .file_operations import (
     cleanup_temp_files,
     copy_file_safe,
     ensure_directory,
@@ -45,7 +45,7 @@ from .helpers import (
 from .i18n import _, setup_i18n
 
 # Import shell execution utilities
-from .shell import (
+from .subprocesses import (
     CommandResult,
     ShellExecutor,
     check_command_exists,

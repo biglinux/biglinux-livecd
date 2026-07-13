@@ -4,12 +4,17 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, GObject, GLib, Gdk
-from translations import _
-from accessibility import announce, speak, is_accessibility_enabled
 import os
 
+from accessibility import is_accessibility_enabled, speak
+from gi.repository import Adw, Gdk, GLib, GObject, Gtk
+from translations import _
+
 ASSETS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets"))
+
+
+class LayoutFlowBoxChild(Gtk.FlowBoxChild):
+    layout_data: dict[str, str]
 
 
 class KeyboardView(Adw.Bin):
@@ -50,7 +55,23 @@ class KeyboardView(Adw.Bin):
         clamp.set_halign(Gtk.Align.CENTER)
         center_box.append(clamp)
 
-        self.flow_box = Gtk.FlowBox(
+        self.flow_box = self._build_flow_box()
+        clamp.set_child(self.flow_box)
+
+        image_path = os.path.join(ASSETS_DIR, "keyboard.svg")
+        if os.path.exists(image_path):
+            from gi.repository import Gio
+
+            image = Gtk.Picture.new_for_file(Gio.File.new_for_path(image_path))
+            image.set_content_fit(Gtk.ContentFit.SCALE_DOWN)
+            image.update_property(
+                [Gtk.AccessibleProperty.LABEL], [_("Keyboard layout preview")]
+            )
+            center_box.append(image)
+        return root_box
+
+    def _build_flow_box(self) -> Gtk.FlowBox:
+        flow_box = Gtk.FlowBox(
             selection_mode=Gtk.SelectionMode.SINGLE,
             activate_on_single_click=True,
             max_children_per_line=2,
@@ -62,45 +83,28 @@ class KeyboardView(Adw.Bin):
             vexpand=False,
             margin_bottom=18,
         )
-        self.flow_box.set_can_focus(True)
-        self.flow_box.set_halign(Gtk.Align.CENTER)
-        self.flow_box.update_property(
+        flow_box.set_can_focus(True)
+        flow_box.set_halign(Gtk.Align.CENTER)
+        flow_box.update_property(
             [Gtk.AccessibleProperty.LABEL],
             [_("Choose Your Keyboard Layout")],
         )
 
         # Connect to FlowBox-level signals
-        self.flow_box.connect("child-activated", self._on_child_activated)
-        self.flow_box.connect("activate-cursor-child", self._on_activate_cursor_child)
-        self.flow_box.connect("selected-children-changed", self._on_selection_changed)
+        flow_box.connect("child-activated", self._on_child_activated)
+        flow_box.connect("activate-cursor-child", self._on_activate_cursor_child)
+        flow_box.connect("selected-children-changed", self._on_selection_changed)
 
         # Add key controller for Enter key handling
         key_controller = Gtk.EventControllerKey.new()
         key_controller.connect("key-pressed", self._on_key_pressed)
-        self.flow_box.add_controller(key_controller)
+        flow_box.add_controller(key_controller)
 
         # Controller to clear selection when mouse leaves the entire flow box
         flow_motion_controller = Gtk.EventControllerMotion.new()
         flow_motion_controller.connect("leave", self._on_flow_leave)
-        self.flow_box.add_controller(flow_motion_controller)
-
-        clamp.set_child(self.flow_box)
-
-        # Keyboard.svg centered below buttons
-        image_path = os.path.join(ASSETS_DIR, "keyboard.svg")
-        if os.path.exists(image_path):
-            from gi.repository import Gio
-
-            gfile = Gio.File.new_for_path(image_path)
-            img = Gtk.Picture.new_for_file(gfile)
-            img.set_content_fit(Gtk.ContentFit.SCALE_DOWN)
-            img.update_property(
-                [Gtk.AccessibleProperty.LABEL],
-                [_("Keyboard layout preview")],
-            )
-            center_box.append(img)
-
-        return root_box
+        flow_box.add_controller(flow_motion_controller)
+        return flow_box
 
     def _retranslate_ui(self):
         """Updates the view's title to the current language."""
@@ -132,7 +136,7 @@ class KeyboardView(Adw.Bin):
 
     def _create_layout_child(self, name, layout_id):
         """Create a FlowBoxChild with a keyboard layout card."""
-        flow_child = Gtk.FlowBoxChild()
+        flow_child = LayoutFlowBoxChild()
         flow_child.layout_data = {"name": name, "layout_id": layout_id}
 
         # Accessible label for screen readers
@@ -172,7 +176,7 @@ class KeyboardView(Adw.Bin):
 
     def _select_first_item(self):
         child = self.flow_box.get_first_child()
-        if child:
+        if isinstance(child, Gtk.FlowBoxChild):
             self.flow_box.select_child(child)
         return GLib.SOURCE_REMOVE
 
@@ -197,13 +201,14 @@ class KeyboardView(Adw.Bin):
 
     def _activate_child(self, child):
         """Activate a FlowBoxChild and emit the selection signal."""
-        if hasattr(child, "layout_data"):
+        if isinstance(child, LayoutFlowBoxChild):
             layout_id = child.layout_data["layout_id"]
-            self.sig_keyboard_selected.emit(layout_id)
+            self.sig_keyboard_selected.emit(layout_id)  # type: ignore[arg-type]
 
-    def _on_item_enter(self, controller, x, y, child):
+    def _on_item_enter(self, controller, x, _y, child):
         """Select the item when the mouse pointer enters it."""
-        self.flow_box.select_child(child)
+        if isinstance(child, Gtk.FlowBoxChild):
+            self.flow_box.select_child(child)
 
     def _on_selection_changed(self, flow_box):
         """Speak the selected layout name when selection changes (mouse or keyboard)."""
@@ -212,7 +217,7 @@ class KeyboardView(Adw.Bin):
         selected = flow_box.get_selected_children()
         if selected and is_accessibility_enabled():
             child = selected[0]
-            if hasattr(child, "layout_data"):
+            if isinstance(child, LayoutFlowBoxChild):
                 speak(child.layout_data["name"])
 
     def _on_flow_leave(self, controller, *args):
@@ -234,7 +239,7 @@ class KeyboardView(Adw.Bin):
     def _select_first_and_announce(self):
         """Select first item and announce page title (without race condition)."""
         child = self.flow_box.get_first_child()
-        if child:
+        if isinstance(child, Gtk.FlowBoxChild):
             self.flow_box.select_child(child)
         self._suppress_speak = False
         if is_accessibility_enabled():

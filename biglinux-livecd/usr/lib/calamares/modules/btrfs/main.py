@@ -35,12 +35,26 @@ def run():
     :return:
     """
     root_mount_point = libcalamares.globalstorage.value("rootMountPoint")
-    subprocess.call(["mkdir", "-p", root_mount_point + '/boot'])
-    subprocess.call(["mkdir", "-p", root_mount_point + '/home'])
-    subprocess.call(["btrfs", "property", "set", root_mount_point, "compression", "zstd"])
-    subprocess.call(["btrfs", "property", "set", root_mount_point + '/home/', "compression", "zstd"])
-    subprocess.call(["btrfs", "property", "set", root_mount_point + '/@home/', "compression", "zstd"])
-    subprocess.call(["btrfs", "property", "set", root_mount_point + '/boot/', "compression", ""])
-
+    subprocess.call(["mkdir", "-p", root_mount_point + "/boot"])
+    subprocess.call(["mkdir", "-p", root_mount_point + "/home"])
+    subprocess.call(
+        ["btrfs", "property", "set", root_mount_point, "compression", "zstd"]
+    )
+    subprocess.call(
+        ["btrfs", "property", "set", root_mount_point + "/home/", "compression", "zstd"]
+    )
+    subprocess.call(
+        [
+            "btrfs",
+            "property",
+            "set",
+            root_mount_point + "/@home/",
+            "compression",
+            "zstd",
+        ]
+    )
+    subprocess.call(
+        ["btrfs", "property", "set", root_mount_point + "/boot/", "compression", ""]
+    )
 
     return None

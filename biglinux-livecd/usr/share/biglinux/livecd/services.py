@@ -1,47 +1,25 @@
-import json
 import os
 import re
 import subprocess
-import ast
+import tempfile
 from typing import List, Tuple
 
 from config import SetupConfig
+from desktop_theme import (
+    apply_packaged_theme,
+    available_theme_names,
+    modify_settings_file,
+    settings_file_path,
+)
+from desktop_theme import (
+    apply_simple_theme as apply_simple_desktop_theme,
+)
+from gnome_layout import LAYOUT_DISPLAY_NAMES, LAYOUT_NAMES, normalize_layout_text
 from logging_config import get_logger
+from user_config import update_ini_file
+from user_config import write_text as write_user_config_text
 
 logger = get_logger()
-
-
-GNOME_LAYOUTS = [
-    "biggnome",
-    "desk-ux",
-    "hybrid",
-    "g-unity",
-    "classic",
-    "minimal",
-]
-
-GNOME_LAYOUT_DISPLAY_NAMES = {
-    "biggnome": "BigGnome",
-    "desk-ux": "Desk UX",
-    "hybrid": "Hybrid",
-    "g-unity": "G-Unity",
-    "classic": "Classic",
-    "minimal": "Minimal",
-}
-
-GNOME_DTP_MONITOR_KEYS = {
-    "panel-anchors",
-    "panel-element-positions",
-    "panel-lengths",
-    "panel-positions",
-    "panel-sizes",
-}
-
-GNOME_LIGHT_STYLE_UUID = "light-style@gnome-shell-extensions.gcampax.github.com"
-GNOME_USER_THEME_UUID = "user-theme@gnome-shell-extensions.gcampax.github.com"
-GNOME_KIWI_UUID = "kiwi@kemma"
-GNOME_DTP_UUID = "dash-to-panel@jderose9.github.com"
-GNOME_LAYOUT_SWITCHER_HELPER_UUID = "layout-switcher-helper@bigcommunity.org"
 
 
 class SystemService:
@@ -77,18 +55,20 @@ class SystemService:
         self.gnome_layouts_path = "/usr/share/layout-switcher/layouts"
         self.gnome_layouts_icons_path = "/usr/share/layout-switcher/icons"
 
-        # Temp files for live session - Calamares will copy these to /etc/big-default-config/
-        self.tmp_lang_file = "/tmp/big_language"
-        self.tmp_keyboard_file = "/tmp/big_keyboard"
-        self.tmp_desktop_file = "/tmp/big_desktop_changed"
-        self.tmp_gnome_layout_file = "/tmp/big_gnome_layout"
-        self.tmp_gnome_settings_file = "/tmp/big_gnome_settings"
-        self.tmp_theme_file = "/tmp/big_desktop_theme"
-        self.tmp_jamesdsp_file = "/tmp/big_enable_jamesdsp"
-        self.tmp_display_profile_file = "/tmp/big_improve_display"
-
-        # Keyboard choice for GNOME (GVariant input-sources value); layout
-        # dumps hard-code sources, so this gets re-stamped after each write.
+        # Boot-scoped live state consumed by Calamares.
+        self.live_state_dir = "/run/biglinux-live"
+        self.language_state_file = os.path.join(self.live_state_dir, "language")
+        self.keyboard_state_file = os.path.join(self.live_state_dir, "keyboard")
+        self.desktop_state_file = os.path.join(self.live_state_dir, "desktop")
+        self.gnome_layout_state_file = os.path.join(self.live_state_dir, "gnome-layout")
+        self.gnome_settings_state_file = os.path.join(
+            self.live_state_dir, "gnome-settings"
+        )
+        self.theme_state_file = os.path.join(self.live_state_dir, "desktop-theme")
+        self.jamesdsp_state_file = os.path.join(self.live_state_dir, "enable-jamesdsp")
+        self.display_profile_state_file = os.path.join(
+            self.live_state_dir, "improve-display"
+        )
         self._gnome_input_sources: str | None = None
 
     def _run_command(
@@ -142,98 +122,111 @@ class SystemService:
             logger.error(err_msg)
             return False, e.stderr.strip()
         except Exception as e:
-            err_msg = f"An unexpected error occurred with command '{' '.join(command)}': {e}"
+            err_msg = (
+                f"An unexpected error occurred with command '{' '.join(command)}': {e}"
+            )
             logger.error(err_msg)
             return False, str(e)
 
-
-    def _write_tmp_file(self, filepath: str, content: str):
-        """Helper to write to a temp file."""
+    def _write_live_state_file(self, filepath: str, content: str) -> bool:
+        """Atomically commit one file in the tmpfiles-owned live state directory."""
         if self.test_mode:
             logger.debug(
                 f"[TEST MODE] Suppressed write to {filepath}: '{content[:50]}{'...' if len(content) > 50 else ''}'"
             )
             return True
-        try:
-            with open(filepath, "w", encoding="utf-8") as f:
-                f.write(content)
-            return True
-        except IOError as e:
-            logger.error(f"Error writing to {filepath}: {e}")
+        if os.path.dirname(filepath) != self.live_state_dir:
+            logger.error("Refusing live state path outside the contract directory")
             return False
-
-    def _write_user_config_file(self, filepath: str, content: str):
-        """Helper to write a file in the user's home directory."""
-        if self.test_mode:
-            logger.debug(
-                f"[TEST MODE] Suppressed write to {filepath}: '{content[:50]}{'...' if len(content) > 50 else ''}'"
+        temporary_path = ""
+        try:
+            directory_stat = os.lstat(self.live_state_dir)
+            if not os.path.isdir(self.live_state_dir) or os.path.islink(
+                self.live_state_dir
+            ):
+                raise OSError("live state directory is missing or unsafe")
+            with tempfile.NamedTemporaryFile(
+                mode="w",
+                encoding="utf-8",
+                dir=self.live_state_dir,
+                prefix=f".{os.path.basename(filepath)}.",
+                delete=False,
+            ) as temporary_file:
+                temporary_path = temporary_file.name
+                temporary_file.write(content)
+                temporary_file.flush()
+                os.fsync(temporary_file.fileno())
+            os.chmod(temporary_path, 0o600)
+            os.replace(temporary_path, filepath)
+            temporary_path = ""
+            directory_fd = os.open(
+                self.live_state_dir, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
             )
-            return True
-        try:
-            os.makedirs(os.path.dirname(filepath), exist_ok=True)
-            tmp_path = f"{filepath}.tmp"
-            with open(tmp_path, "w", encoding="utf-8") as f:
-                f.write(content)
-            os.replace(tmp_path, filepath)
-            return True
-        except IOError as e:
-            logger.error(f"Error writing to {filepath}: {e}")
-            return False
-
-    def _update_ini_settings(self, filepath: str, section: str, settings: dict):
-        """Update key/value pairs in a simple INI file."""
-        if self.test_mode:
-            logger.debug(f"[TEST MODE] Would update {filepath}: {settings}")
-            return
-
-        lines = []
-        if os.path.exists(filepath):
             try:
-                with open(filepath, "r", encoding="utf-8") as f:
-                    lines = f.readlines()
-            except OSError as e:
-                logger.error(f"Error reading {filepath}: {e}")
-                return
+                verified_directory = os.fstat(directory_fd)
+                if (verified_directory.st_dev, verified_directory.st_ino) != (
+                    directory_stat.st_dev,
+                    directory_stat.st_ino,
+                ):
+                    raise OSError("live state directory changed while writing")
+                os.fsync(directory_fd)
+            finally:
+                os.close(directory_fd)
+            return True
+        except OSError as e:
+            logger.error(f"Error writing to {filepath}: {e}")
+            return False
+        finally:
+            if temporary_path:
+                try:
+                    os.unlink(temporary_path)
+                except FileNotFoundError:
+                    pass
 
-        modified_lines = []
-        in_section = False
-        section_found = False
-        updated_keys = set()
+    def _remove_live_state_file(self, filepath: str) -> bool:
+        if self.test_mode:
+            logger.debug(f"[TEST MODE] Suppressed removal of {filepath}")
+            return True
+        if os.path.dirname(filepath) != self.live_state_dir:
+            logger.error("Refusing live state path outside the contract directory")
+            return False
+        try:
+            os.unlink(filepath)
+        except FileNotFoundError:
+            return True
+        except OSError as error:
+            logger.error(f"Error removing {filepath}: {error}")
+            return False
+        directory_fd = os.open(
+            self.live_state_dir, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+        )
+        try:
+            os.fsync(directory_fd)
+        finally:
+            os.close(directory_fd)
+        return True
 
-        def append_missing_keys():
-            for key, value in settings.items():
-                if key not in updated_keys:
-                    modified_lines.append(f"{key}={value}\n")
-                    updated_keys.add(key)
+    def _write_user_config_file(self, filepath: str, content: str) -> bool:
+        if self.test_mode:
+            return True
+        try:
+            write_user_config_text(filepath, content)
+            return True
+        except OSError as error:
+            logger.error("Could not write user configuration: %s", error)
+            return False
 
-        for line in lines:
-            stripped = line.strip()
-            if stripped.startswith("[") and stripped.endswith("]"):
-                if in_section:
-                    append_missing_keys()
-                in_section = stripped[1:-1] == section
-                section_found = section_found or in_section
-                modified_lines.append(line)
-                continue
-
-            if in_section and "=" in stripped and not stripped.startswith("#"):
-                key = stripped.split("=", 1)[0].strip()
-                if key in settings:
-                    modified_lines.append(f"{key}={settings[key]}\n")
-                    updated_keys.add(key)
-                    continue
-
-            modified_lines.append(line)
-
-        if in_section:
-            append_missing_keys()
-        elif not section_found:
-            if modified_lines and modified_lines[-1].strip():
-                modified_lines.append("\n")
-            modified_lines.append(f"[{section}]\n")
-            append_missing_keys()
-
-        self._write_user_config_file(filepath, "".join(modified_lines))
+    def _update_ini_settings(
+        self, filepath: str, section: str, settings: dict[str, str]
+    ) -> bool:
+        if self.test_mode:
+            return True
+        try:
+            update_ini_file(filepath, section, settings)
+            return True
+        except (OSError, UnicodeError) as error:
+            logger.error("Could not update user configuration: %s", error)
+            return False
 
     def _apply_gtk_settings_ini(self, dark: bool, icon_theme: str):
         """Keep GTK settings.ini in sync for XFCE/Cinnamon sessions."""
@@ -250,46 +243,34 @@ class SystemService:
             settings_path = os.path.join(home, ".config", gtk_dir, "settings.ini")
             self._update_ini_settings(settings_path, "Settings", settings)
 
-    @staticmethod
-    def _simple_icon_theme(desktop_env: str, dark: bool) -> str:
-        if dark:
-            return "bigicons-papient-dark"
-        if desktop_env == "XFCE":
-            return "bigicons-papient-light"
-        return "bigicons-papient"
-
     def apply_language_settings(self, lang_code: str, timezone: str):
         """Applies language, locale, and timezone settings."""
         logger.info(f"Setting language to {lang_code} and timezone to {timezone}")
-        self._write_tmp_file(self.tmp_lang_file, lang_code)
+        self._write_live_state_file(self.language_state_file, lang_code)
 
         self._run_command(["timedatectl", "set-timezone", timezone], as_root=True)
         self._run_command(["timedatectl", "set-ntp", "1"], as_root=True)
         self._run_command(
             ["localectl", "set-locale", f"LANG={lang_code}.UTF-8"], as_root=True
         )
-        self._run_command(
-            ["/usr/bin/biglinux-verify-md5sum", "--no-gui"], as_root=False
-        )
-
-    @staticmethod
-    def _split_xkb_layout(layout: str) -> Tuple[str, str]:
-        """Split tokens like 'us(intl)' into layout and variant parts."""
-        match = re.match(r"^([^()]+)\(([^()]+)\)$", layout)
-        if match:
-            return match.group(1), match.group(2)
-        return layout, ""
 
     def apply_keyboard_layout(self, layout: str):
         """Applies the selected keyboard layout."""
         logger.info(f"Setting keyboard layout to: {layout}")
         layout_cleaned = layout.replace("\\", "")
-        self._write_tmp_file(self.tmp_keyboard_file, layout_cleaned)
+        self._write_live_state_file(self.keyboard_state_file, layout_cleaned)
         self._run_command(["setxkbmap", layout_cleaned])
         xkb_layout, xkb_variant = self._split_xkb_layout(layout_cleaned)
         self._run_command(
-            ["localectl", "set-x11-keymap", xkb_layout, "pc105+inet", xkb_variant, "terminate:ctrl_alt_bksp"],
-            as_root=True
+            [
+                "localectl",
+                "set-x11-keymap",
+                xkb_layout,
+                "pc105+inet",
+                xkb_variant,
+                "terminate:ctrl_alt_bksp",
+            ],
+            as_root=True,
         )
 
         home = os.path.expanduser("~")
@@ -297,27 +278,30 @@ class SystemService:
 
         if desktop_env == "Cinnamon":
             # Configure keyboard layout via dconf settings file for Cinnamon
-            settings_file = self._get_settings_file_path(desktop_env)
+            settings_file = settings_file_path(desktop_env)
             if settings_file:
                 sources_value = f"[('xkb', '{layout_cleaned}')]"
-                self._modify_settings_file(settings_file, {
-                    "org/cinnamon/desktop/input-sources": {
-                        "sources": sources_value
+                modify_settings_file(
+                    self,
+                    settings_file,
+                    {
+                        "org/cinnamon/desktop/input-sources": {
+                            "sources": sources_value
+                        },
+                        "org/gnome/desktop/input-sources": {"sources": sources_value},
                     },
-                    "org/gnome/desktop/input-sources": {
-                        "sources": sources_value
-                    }
-                })
-                logger.info(f"Configured keyboard layout '{layout_cleaned}' in settings.cinnamon")
+                )
+                logger.info(
+                    f"Configured keyboard layout '{layout_cleaned}' in settings.cinnamon"
+                )
         elif desktop_env == "GNOME":
-            # GNOME reads input sources from dconf; remember the choice so it
-            # survives layout dumps that hard-code their own sources key.
             xkb_id = f"{xkb_layout}+{xkb_variant}" if xkb_variant else xkb_layout
             self._gnome_input_sources = f"[('xkb', '{xkb_id}')]"
-            settings_file = self._get_settings_file_path(desktop_env)
-            if settings_file and os.path.exists(settings_file):
-                self._stamp_gnome_input_sources(settings_file)
-            logger.info(f"Configured keyboard layout '{layout_cleaned}' for GNOME input-sources")
+            settings_file = settings_file_path(desktop_env)
+            self._stamp_gnome_input_sources(settings_file)
+            logger.info(
+                f"Configured keyboard layout '{layout_cleaned}' for GNOME input-sources"
+            )
         else:
             # KDE/Plasma uses kxkbrc
             kxkbrc_path = os.path.join(home, ".config", "kxkbrc")
@@ -329,7 +313,7 @@ class SystemService:
         if self.get_desktop_environment() == "GNOME":
             layouts = [
                 layout
-                for layout in GNOME_LAYOUTS
+                for layout in LAYOUT_NAMES
                 if os.path.exists(self._get_gnome_layout_file_path(layout))
             ]
             if not layouts:
@@ -349,7 +333,7 @@ class SystemService:
             self.apply_gnome_desktop_layout(layout)
             return
 
-        self._write_tmp_file(self.tmp_desktop_file, layout)
+        self._write_live_state_file(self.desktop_state_file, layout)
         self._run_command([self.desktop_apply_script, layout, "quiet"])
 
     def apply_gnome_desktop_layout(self, layout: str):
@@ -366,502 +350,69 @@ class SystemService:
             logger.error(f"Failed to read GNOME layout {layout_file}: {e}")
             return
 
-        settings_text = self._normalize_gnome_layout_text(layout_text)
-        settings_file = self._get_settings_file_path("GNOME")
+        settings_text = normalize_layout_text(layout_text)
+        settings_file = settings_file_path("GNOME")
         if not self._write_user_config_file(settings_file, settings_text):
             return
 
-        # Layout dumps hard-code their own sources key; re-apply the wizard
-        # keyboard choice so re-choosing a layout can't clobber it.
         self._stamp_gnome_input_sources(settings_file)
 
-        self._write_tmp_file(self.tmp_desktop_file, layout)
-        self._write_tmp_file(self.tmp_gnome_layout_file, layout)
+        self._write_live_state_file(self.desktop_state_file, layout)
+        self._write_live_state_file(self.gnome_layout_state_file, layout)
         self._sync_gnome_settings_tmp()
         logger.info(f"Prepared GNOME layout '{layout}' in {settings_file}")
 
     def get_available_themes(self) -> List[str]:
         """Returns a list of available theme names."""
-        if not os.path.exists(self.theme_list_script):
-            logger.warning(f"Theme script not found at {self.theme_list_script}")
-            return []
-        success, output = self._run_command([self.theme_list_script], read_only=True)
-        return output.splitlines() if success else []
+        return available_theme_names(self)
 
-    def apply_theme(self, theme: str):
+    def apply_theme(self, theme: str) -> bool:
         """Applies the selected theme."""
-        logger.info(f"Applying theme: {theme}")
-        self._write_tmp_file(self.tmp_theme_file, theme)
-        self._run_command([self.theme_apply_script, theme])
+        return apply_packaged_theme(self, theme)
 
-    def apply_simple_theme(self, theme: str):
-        """
-        Applies light or dark theme for simplified environments (GNOME/XFCE/Cinnamon).
-        Modifies the settings file directly instead of using dconf write.
-
-        Args:
-            theme: Either "light" or "dark"
-        """
-        logger.info(f"Applying simple theme: {theme}")
-        self._write_tmp_file(self.tmp_theme_file, theme)
-
-        desktop_env = self.get_desktop_environment()
-
-        if desktop_env == "GNOME":
-            self._ensure_gnome_settings_file()
-
-        if theme == "dark":
-            self._apply_dark_theme(desktop_env)
-        else:
-            self._apply_light_theme(desktop_env)
-
-        if desktop_env == "GNOME":
-            self._stamp_gnome_input_sources(self._get_settings_file_path("GNOME"))
-            self._sync_gnome_settings_tmp()
-
-    def _apply_dark_theme(self, desktop_env: str):
-        """Applies dark theme configuration by modifying settings file directly."""
-        logger.info("Applying dark theme configuration")
-
-        home = os.path.expanduser("~")
-        settings_file = self._get_settings_file_path(desktop_env)
-
-        if desktop_env == "Cinnamon":
-            logger.info("Setting Cinnamon themes to dark mode")
-            self._modify_settings_file(settings_file, {
-                "org/gnome/desktop/interface": {
-                    "color-scheme": "'prefer-dark'",
-                    "gtk-theme": "'adw-gtk3-dark'",
-                    "icon-theme": "'bigicons-papient-dark'"
-                },
-                "org/cinnamon/desktop/interface": {
-                    "gtk-theme": "'adw-gtk3-dark'",
-                    "icon-theme": "'bigicons-papient-dark'"
-                },
-                "org/cinnamon/theme": {
-                    "name": "'Big-Orange'"
-                }
-            })
-        elif desktop_env == "GNOME":
-            logger.info("Setting GNOME themes to dark mode")
-            layout_class = self._gnome_layout_class(settings_file)
-            modifications = {
-                "org/gnome/desktop/interface": {
-                    "color-scheme": "'prefer-dark'",
-                    "gtk-theme": "'adw-gtk3-dark'",
-                    "icon-theme": "'bigicons-papient-dark'"
-                }
-            }
-            if layout_class != "kiwi":
-                # kiwi layouts manage the shell bar themselves (user-theme
-                # stays enabled with name='' as shipped): interface keys only.
-                modifications["org/gnome/shell/extensions/user-theme"] = {
-                    "name": "'Big-Blue'"
-                }
-                modifications.update(self._gnome_shell_theme_extensions(settings_file, dark=True))
-            self._modify_settings_file(settings_file, modifications)
-        elif desktop_env == "XFCE":
-            logger.info("Setting XFCE themes to dark mode")
-            self._modify_settings_file(settings_file, {
-                "org/gnome/desktop/interface": {
-                    "color-scheme": "'prefer-dark'",
-                    "gtk-theme": "'adw-gtk3-dark'",
-                    "icon-theme": "'bigicons-papient-dark'"
-                }
-            })
-            # Apply theme immediately via xfconf-query
-            self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName", "-s", "adw-gtk3-dark"])
-            self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/IconThemeName", "-s", "bigicons-papient-dark"])
-            self._run_command(["xfconf-query", "-c", "xfwm4", "-p", "/general/theme", "-s", "adw-gtk3-dark"])
-
-        self._apply_gtk_settings_ini(
-            dark=True,
-            icon_theme=self._simple_icon_theme(desktop_env, dark=True),
-        )
-
-        # Configure Kvantum theme
-        kvantum_dir = os.path.join(home, ".config", "Kvantum")
-        kvantum_conf = os.path.join(kvantum_dir, "kvantum.kvconfig")
-        kvantum_content = "[General]\ntheme=BigAdwaitaRoundGtkDark\n"
-        self._write_user_config_file(kvantum_conf, kvantum_content)
-
-        # Copy kdeglobals for dark theme
-        kdeglobals_source = "/usr/share/sync-kde-and-gtk-places/biglinux-dark"
-        kdeglobals_dest = os.path.join(home, ".config", "kdeglobals")
-        if os.path.exists(kdeglobals_source):
-            self._run_command(["cp", "-f", kdeglobals_source, kdeglobals_dest])
-        else:
-            logger.warning(f"Dark theme kdeglobals not found at {kdeglobals_source}")
-
-    def _apply_light_theme(self, desktop_env: str):
-        """Applies light theme configuration by modifying settings file directly."""
-        logger.info("Applying light theme configuration")
-
-        home = os.path.expanduser("~")
-        settings_file = self._get_settings_file_path(desktop_env)
-
-        if desktop_env == "Cinnamon":
-            logger.info("Setting Cinnamon themes to light mode")
-            self._modify_settings_file(settings_file, {
-                "org/gnome/desktop/interface": {
-                    "color-scheme": "'default'",
-                    "gtk-theme": "'adw-gtk3'",
-                    "icon-theme": "'bigicons-papient'"
-                },
-                "org/cinnamon/desktop/interface": {
-                    "gtk-theme": "'adw-gtk3'",
-                    "icon-theme": "'bigicons-papient'"
-                },
-                "org/cinnamon/theme": {
-                    "name": "'Big-Orange-Light'"
-                }
-            })
-        elif desktop_env == "GNOME":
-            logger.info("Setting GNOME themes to light mode")
-            layout_class = self._gnome_layout_class(settings_file)
-            modifications = {
-                "org/gnome/desktop/interface": {
-                    "color-scheme": "'default'",
-                    "gtk-theme": "'adw-gtk3'",
-                    "icon-theme": "'bigicons-papient'"
-                }
-            }
-            if layout_class == "biggnome":
-                # 'default' on GNOME 50 = dark shell + light apps: keep the
-                # Big-Blue shell theme enabled while apps go light.
-                modifications["org/gnome/shell/extensions/user-theme"] = {
-                    "name": "'Big-Blue'"
-                }
-                modifications.update(self._gnome_shell_theme_extensions(settings_file, dark=True))
-            elif layout_class == "panel":
-                # dash-to-panel layouts switch to the light shell style.
-                modifications["org/gnome/shell/extensions/user-theme"] = {
-                    "name": "'Big-Blue'"
-                }
-                modifications.update(self._gnome_shell_theme_extensions(settings_file, dark=False))
-            # kiwi layouts manage the shell bar themselves: interface keys only.
-            self._modify_settings_file(settings_file, modifications)
-        elif desktop_env == "XFCE":
-            logger.info("Setting XFCE themes to light mode")
-            self._modify_settings_file(settings_file, {
-                "org/gnome/desktop/interface": {
-                    "color-scheme": "'default'",
-                    "gtk-theme": "'adw-gtk3'",
-                    "icon-theme": "'bigicons-papient-light'"
-                }
-            })
-            # Apply theme immediately via xfconf-query
-            self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/ThemeName", "-s", "adw-gtk3"])
-            self._run_command(["xfconf-query", "-c", "xsettings", "-p", "/Net/IconThemeName", "-s", "bigicons-papient-light"])
-            self._run_command(["xfconf-query", "-c", "xfwm4", "-p", "/general/theme", "-s", "adw-gtk3"])
-
-        self._apply_gtk_settings_ini(
-            dark=False,
-            icon_theme=self._simple_icon_theme(desktop_env, dark=False),
-        )
-
-        # Configure Kvantum theme
-        kvantum_dir = os.path.join(home, ".config", "Kvantum")
-        kvantum_conf = os.path.join(kvantum_dir, "kvantum.kvconfig")
-        kvantum_content = "[General]\ntheme=BigAdwaitaRoundGtk\n"
-        self._write_user_config_file(kvantum_conf, kvantum_content)
-
-        # Copy kdeglobals for light theme
-        kdeglobals_source = "/usr/share/sync-kde-and-gtk-places/biglinux"
-        kdeglobals_dest = os.path.join(home, ".config", "kdeglobals")
-        if os.path.exists(kdeglobals_source):
-            self._run_command(["cp", "-f", kdeglobals_source, kdeglobals_dest])
-        else:
-            logger.warning(f"Light theme kdeglobals not found at {kdeglobals_source}")
-
-    def _get_settings_file_path(self, desktop_env: str) -> str:
-        """Returns the path to the settings file for the given desktop environment."""
-        home = os.path.expanduser("~")
-        dconf_dir = os.path.join(home, ".config", "dconf")
-
-        if desktop_env == "Cinnamon":
-            return os.path.join(dconf_dir, "settings.cinnamon")
-        elif desktop_env == "GNOME":
-            return os.path.join(dconf_dir, "settings.gnome")
-        elif desktop_env == "XFCE":
-            return os.path.join(dconf_dir, "settings.xfce")
-        else:
-            return ""
-
-    def _modify_settings_file(self, settings_file: str, modifications: dict):
-        """
-        Modifies a dconf settings file with the given key-value pairs.
-
-        Args:
-            settings_file: Path to the settings file
-            modifications: Dict of {section: {key: value}}
-                          Example: {"org/cinnamon/theme": {"name": "'Big-Orange'"}}
-        """
-        if self.test_mode:
-            logger.debug(f"[TEST MODE] Would modify {settings_file} with: {modifications}")
-            return
-
-        if not os.path.exists(settings_file):
-            logger.error(f"Settings file does not exist: {settings_file}")
-            return
-
-        logger.info(f"Modifying settings file: {settings_file}")
-
-        # Read current content
-        try:
-            with open(settings_file, 'r', encoding='utf-8') as f:
-                lines = f.readlines()
-        except Exception as e:
-            logger.error(f"Failed to read settings file: {e}")
-            return
-
-        # Process modifications
-        modified_lines = []
-        current_section = None
-        sections_found = set()
-
-        i = 0
-        while i < len(lines):
-            line = lines[i]
-            stripped = line.strip()
-
-            # Check if this is a section header
-            if stripped.startswith('[') and stripped.endswith(']'):
-                current_section = stripped[1:-1]
-                modified_lines.append(line)
-
-                # If this section needs modifications, apply them
-                if current_section in modifications:
-                    sections_found.add(current_section)
-                    # Look ahead to see which keys already exist in this section
-                    section_keys = set()
-                    j = i + 1
-                    while j < len(lines):
-                        next_line = lines[j].strip()
-                        if next_line.startswith('['):
-                            break
-                        if '=' in next_line and not next_line.startswith('#'):
-                            key = next_line.split('=')[0].strip()
-                            section_keys.add(key)
-                        j += 1
-
-                    # Process lines in this section
-                    i += 1
-                    while i < len(lines):
-                        line = lines[i]
-                        stripped = line.strip()
-
-                        # Next section starts
-                        if stripped.startswith('['):
-                            i -= 1  # Go back one line
-                            break
-
-                        # Empty line or comment
-                        if not stripped or stripped.startswith('#'):
-                            modified_lines.append(line)
-                            i += 1
-                            continue
-
-                        # Key-value line
-                        if '=' in stripped:
-                            key = stripped.split('=')[0].strip()
-                            if key in modifications[current_section]:
-                                # Replace with new value
-                                new_value = modifications[current_section][key]
-                                modified_lines.append(f"{key}={new_value}\n")
-                                logger.debug(f"Updated [{current_section}] {key} = {new_value}")
-                            else:
-                                # Keep original
-                                modified_lines.append(line)
-                        else:
-                            modified_lines.append(line)
-
-                        i += 1
-
-                    # Add any keys that didn't exist in the section
-                    for key, value in modifications[current_section].items():
-                        if key not in section_keys:
-                            modified_lines.append(f"{key}={value}\n")
-                            logger.debug(f"Added [{current_section}] {key} = {value}")
-            else:
-                modified_lines.append(line)
-
-            i += 1
-
-        # Add sections that didn't exist
-        for section, keys in modifications.items():
-            if section not in sections_found:
-                modified_lines.append(f"\n[{section}]\n")
-                for key, value in keys.items():
-                    modified_lines.append(f"{key}={value}\n")
-                    logger.debug(f"Added new section [{section}] {key} = {value}")
-
-        # Write modified content
-        try:
-            with open(settings_file, 'w', encoding='utf-8') as f:
-                f.writelines(modified_lines)
-            logger.info(f"Successfully modified {settings_file}")
-        except Exception as e:
-            logger.error(f"Failed to write settings file: {e}")
-
-    @staticmethod
-    def _parse_settings_list(value: str) -> List[str]:
-        try:
-            parsed = ast.literal_eval(value.strip())
-        except (ValueError, SyntaxError):
-            return []
-        if not isinstance(parsed, list):
-            return []
-        return [item for item in parsed if isinstance(item, str) and item]
-
-    @staticmethod
-    def _settings_key_values(settings_file: str, section_name: str) -> dict:
-        values = {}
-        current_section = ""
-        try:
-            with open(settings_file, "r", encoding="utf-8") as f:
-                for raw in f:
-                    stripped = raw.strip()
-                    if stripped.startswith("[") and stripped.endswith("]"):
-                        current_section = stripped[1:-1]
-                        continue
-                    if current_section != section_name or "=" not in stripped:
-                        continue
-                    key, _, value = stripped.partition("=")
-                    values[key.strip()] = value.strip()
-        except OSError as e:
-            logger.error(f"Failed to read settings file: {e}")
-        return values
-
-    def _gnome_shell_theme_extensions(self, settings_file: str, dark: bool) -> dict:
-        values = self._settings_key_values(settings_file, "org/gnome/shell")
-        enabled = self._parse_settings_list(values.get("enabled-extensions", "[]"))
-        disabled = self._parse_settings_list(values.get("disabled-extensions", "[]"))
-
-        def add_once(items: List[str], uuid: str):
-            if uuid not in items:
-                items.append(uuid)
-
-        if dark:
-            enabled = [uuid for uuid in enabled if uuid != GNOME_LIGHT_STYLE_UUID]
-            disabled = [uuid for uuid in disabled if uuid != GNOME_USER_THEME_UUID]
-            add_once(enabled, GNOME_USER_THEME_UUID)
-            add_once(disabled, GNOME_LIGHT_STYLE_UUID)
-        else:
-            enabled = [uuid for uuid in enabled if uuid != GNOME_USER_THEME_UUID]
-            disabled = [uuid for uuid in disabled if uuid != GNOME_LIGHT_STYLE_UUID]
-            add_once(enabled, GNOME_LIGHT_STYLE_UUID)
-            add_once(disabled, GNOME_USER_THEME_UUID)
-
-        return {
-            "org/gnome/shell": {
-                "enabled-extensions": repr(enabled),
-                "disabled-extensions": repr(disabled),
-            }
-        }
-
-    def _gnome_layout_class(self, settings_file: str) -> str:
-        """
-        Classifies the current GNOME layout by its enabled extensions:
-        - "kiwi" (g-unity, minimal): kiwi keeps the shell bar dark itself,
-          so the theme chooser must not touch extensions or user-theme.
-        - "panel" (classic, hybrid, desk-ux): dash-to-panel layouts toggle
-          light-style/user-theme per theme.
-        - "biggnome": dash-to-dock based, Big-Blue shell theme always on.
-        """
-        values = self._settings_key_values(settings_file, "org/gnome/shell")
-        enabled = self._parse_settings_list(values.get("enabled-extensions", "[]"))
-        if GNOME_KIWI_UUID in enabled:
-            return "kiwi"
-        if GNOME_DTP_UUID in enabled:
-            return "panel"
-        return "biggnome"
-
-    def _stamp_gnome_input_sources(self, settings_file: str):
-        """Re-applies the wizard keyboard choice to settings.gnome, if any."""
-        if not self._gnome_input_sources:
-            return
-        if not settings_file or not os.path.exists(settings_file):
-            return
-        self._modify_settings_file(settings_file, {
-            "org/gnome/desktop/input-sources": {
-                "sources": self._gnome_input_sources
-            }
-        })
+    def apply_simple_theme(self, theme: str) -> bool:
+        """Apply an allowlisted light or dark desktop theme."""
+        return apply_simple_desktop_theme(self, theme)
 
     def finalize_setup(self, config: SetupConfig):
         """
         Performs final setup steps, including creating flag files.
 
-        All config files are saved to /tmp during the live session.
+        All config files are saved under /run/biglinux-live during the live session.
         Calamares will copy them to /etc/big-default-config/ on the installed system.
         """
         logger.info("Finalizing setup...")
 
-        # JamesDSP configuration - save flag to /tmp
-        if config.enable_jamesdsp:
-            logger.info("JamesDSP enabled, creating flag file.")
-            self._run_command(["touch", self.tmp_jamesdsp_file], as_root=False)
-            # Configure JamesDSP in live session
-            home = os.path.expanduser("~")
-            jamesdsp_conf = os.path.join(home, ".config/jamesdsp/application.conf")
-            if os.path.exists(jamesdsp_conf):
-                self._run_command(
-                    [
-                        "sed",
-                        "-i",
-                        "s|AutoStartEnabled=false|AutoStartEnabled=true|g",
-                        jamesdsp_conf,
-                    ],
-                    as_root=False,
-                )
-                # Restart the systemd service so JamesDSP actually starts
-                self._run_command(
-                    ["systemctl", "--user", "restart", "jamesdsp-autostart.service"],
-                    as_root=False,
-                )
-        else:
-            logger.info("JamesDSP not enabled, removing flag file if it exists.")
-            self._run_command(["rm", "-f", self.tmp_jamesdsp_file], as_root=False)
-            home = os.path.expanduser("~")
-            jamesdsp_conf = os.path.join(home, ".config/jamesdsp/application.conf")
-            if os.path.exists(jamesdsp_conf):
-                self._run_command(
-                    [
-                        "sed",
-                        "-i",
-                        "s|AutoStartEnabled=true|AutoStartEnabled=false|g",
-                        jamesdsp_conf,
-                    ],
-                    as_root=False,
-                )
-                # Stop the systemd service so JamesDSP actually stops
-                self._run_command(
-                    ["systemctl", "--user", "stop", "jamesdsp-autostart.service"],
-                    as_root=False,
-                )
-
-        # Display profile/ICC configuration - save flag to /tmp
-        if config.enable_enhanced_contrast:
-            logger.info("Enhanced contrast enabled, creating flag file.")
-            self._run_command(["touch", self.tmp_display_profile_file], as_root=False)
-            self._run_command(
-                ["/usr/bin/icc_profile_apply", "enable"],
-                as_root=False,
-            )
-        else:
-            logger.info(
-                "Enhanced contrast not enabled, removing flag file if it exists."
-            )
-            self._run_command(
-                ["rm", "-f", self.tmp_display_profile_file], as_root=False
-            )
-            self._run_command(
-                ["/usr/bin/icc_profile_apply", "disable"],
-                as_root=False,
-            )
-
+        self._finalize_jamesdsp(config.enable_jamesdsp)
+        self._finalize_display_profile(config.enable_enhanced_contrast)
         self._run_command(["killall", "kwin_wayland"])
+
+    def _finalize_jamesdsp(self, is_enabled: bool) -> None:
+        jamesdsp_conf = os.path.expanduser("~/.config/jamesdsp/application.conf")
+        replacement = (
+            "s|AutoStartEnabled=false|AutoStartEnabled=true|g"
+            if is_enabled
+            else "s|AutoStartEnabled=true|AutoStartEnabled=false|g"
+        )
+        service_action = "restart" if is_enabled else "stop"
+        if is_enabled:
+            self._write_live_state_file(self.jamesdsp_state_file, "enabled")
+        else:
+            self._remove_live_state_file(self.jamesdsp_state_file)
+        if os.path.exists(jamesdsp_conf):
+            self._run_command(["sed", "-i", replacement, jamesdsp_conf], as_root=False)
+            self._run_command(
+                ["systemctl", "--user", service_action, "jamesdsp-autostart.service"],
+                as_root=False,
+            )
+
+    def _finalize_display_profile(self, is_enabled: bool) -> None:
+        action = "enable" if is_enabled else "disable"
+        if is_enabled:
+            self._write_live_state_file(self.display_profile_state_file, "enabled")
+        else:
+            self._remove_live_state_file(self.display_profile_state_file)
+        self._run_command(["/usr/bin/icc_profile_apply", action], as_root=False)
 
     def get_desktop_image_path(self, layout_name: str) -> str:
         if self.get_desktop_environment() == "GNOME":
@@ -872,7 +423,7 @@ class SystemService:
         return self.theme_image_path.format(theme_name)
 
     def get_desktop_display_name(self, layout_name: str) -> str:
-        return GNOME_LAYOUT_DISPLAY_NAMES.get(layout_name, layout_name)
+        return LAYOUT_DISPLAY_NAMES.get(layout_name, layout_name)
 
     def apply_jamesdsp_settings(self, enabled: bool):
         """
@@ -881,10 +432,10 @@ class SystemService:
         """
         home = os.path.expanduser("~")
         jamesdsp_conf = os.path.join(home, ".config/jamesdsp/application.conf")
-        
+
         if enabled:
             logger.info("Applying JamesDSP enabled settings...")
-            self._run_command(["touch", self.tmp_jamesdsp_file], as_root=False)
+            self._write_live_state_file(self.jamesdsp_state_file, "enabled")
             if os.path.exists(jamesdsp_conf):
                 self._run_command(
                     [
@@ -902,7 +453,7 @@ class SystemService:
                 )
         else:
             logger.info("Applying JamesDSP disabled settings...")
-            self._run_command(["rm", "-f", self.tmp_jamesdsp_file], as_root=False)
+            self._remove_live_state_file(self.jamesdsp_state_file)
             if os.path.exists(jamesdsp_conf):
                 self._run_command(
                     [
@@ -926,16 +477,14 @@ class SystemService:
         """
         if enabled:
             logger.info("Applying ICC profile enabled settings...")
-            self._run_command(["touch", self.tmp_display_profile_file], as_root=False)
+            self._write_live_state_file(self.display_profile_state_file, "enabled")
             self._run_command(
                 ["/usr/bin/icc_profile_apply", "enable"],
                 as_root=False,
             )
         else:
             logger.info("Applying ICC profile disabled settings...")
-            self._run_command(
-                ["rm", "-f", self.tmp_display_profile_file], as_root=False
-            )
+            self._remove_live_state_file(self.display_profile_state_file)
             self._run_command(
                 ["/usr/bin/icc_profile_apply", "disable"],
                 as_root=False,
@@ -976,7 +525,9 @@ class SystemService:
             except FileNotFoundError:
                 pass
 
-        logger.info(f"Enhanced contrast availability: ICC={icc_profile_exists}, Wayland={wayland_running}, Result={icc_profile_exists and wayland_running}")
+        logger.info(
+            f"Enhanced contrast availability: ICC={icc_profile_exists}, Wayland={wayland_running}, Result={icc_profile_exists and wayland_running}"
+        )
         return icc_profile_exists and wayland_running
 
     def get_total_memory_gb(self) -> float:
@@ -1031,72 +582,43 @@ class SystemService:
         return desktop_env == "GNOME" or not self.is_simplified_environment()
 
     def _get_gnome_layout_file_path(self, layout: str) -> str:
-        if layout not in GNOME_LAYOUTS:
+        if layout not in LAYOUT_NAMES:
             return ""
         return os.path.join(self.gnome_layouts_path, f"{layout}.txt")
 
+    @staticmethod
+    def _split_xkb_layout(layout: str) -> tuple[str, str]:
+        match = re.fullmatch(r"([^()]+)\(([^()]+)\)", layout)
+        if match:
+            return match.group(1), match.group(2)
+        return layout, ""
+
+    def _stamp_gnome_input_sources(self, settings_file: str) -> None:
+        if not self._gnome_input_sources or not os.path.isfile(settings_file):
+            return
+        modify_settings_file(
+            self,
+            settings_file,
+            {"org/gnome/desktop/input-sources": {"sources": self._gnome_input_sources}},
+        )
+
     def _ensure_gnome_settings_file(self):
-        settings_file = self._get_settings_file_path("GNOME")
+        settings_file = settings_file_path("GNOME")
         if os.path.exists(settings_file):
             return
-        default_layout = GNOME_LAYOUTS[0]
+        default_layout = LAYOUT_NAMES[0]
         logger.info(f"Creating GNOME settings from default layout: {default_layout}")
         self.apply_gnome_desktop_layout(default_layout)
 
     def _sync_gnome_settings_tmp(self):
-        settings_file = self._get_settings_file_path("GNOME")
+        settings_file = settings_file_path("GNOME")
         if not os.path.exists(settings_file):
             return
         try:
             with open(settings_file, "r", encoding="utf-8") as f:
-                self._write_tmp_file(self.tmp_gnome_settings_file, f.read())
+                self._write_live_state_file(self.gnome_settings_state_file, f.read())
         except OSError as e:
             logger.error(f"Failed to sync GNOME settings temp file: {e}")
-
-    def _normalize_gnome_layout_text(self, text: str) -> str:
-        """Keep bundled GNOME layout dumps portable across monitors."""
-        out_lines = []
-        for line in text.splitlines():
-            if line.startswith("preferred-monitor-by-connector="):
-                out_lines.append("preferred-monitor-by-connector='primary'")
-                continue
-            if line.startswith("primary-monitor="):
-                out_lines.append("primary-monitor=''")
-                continue
-            if line.startswith("enabled-extensions="):
-                # Layout dumps don't ship the layout-switcher helper (the
-                # skel does); keep it enabled so live switching still works.
-                extensions = self._parse_settings_list(line.partition("=")[2])
-                if GNOME_LAYOUT_SWITCHER_HELPER_UUID not in extensions:
-                    extensions.append(GNOME_LAYOUT_SWITCHER_HELPER_UUID)
-                out_lines.append(f"enabled-extensions={extensions!r}")
-                continue
-            if "=" not in line:
-                out_lines.append(line)
-                continue
-
-            key, _, value = line.partition("=")
-            if key not in GNOME_DTP_MONITOR_KEYS:
-                out_lines.append(line)
-                continue
-
-            try:
-                data = json.loads(value.strip().strip("'"))
-            except (TypeError, ValueError):
-                out_lines.append(line)
-                continue
-
-            if data:
-                normalized = {"0": next(iter(data.values()))}
-            else:
-                normalized = {}
-            new_value = json.dumps(normalized, separators=(",", ":"))
-            out_lines.append(f"{key}='{new_value}'")
-
-        normalized_text = "\n".join(out_lines)
-        if text.endswith("\n"):
-            normalized_text += "\n"
-        return normalized_text
 
     # XivaStudio detection with caching
     _xivastudio_cache: bool | None = None

@@ -51,7 +51,7 @@ The configuration flow ensures a smooth transition from live media to permanent 
 graph TD
     A[Live Boot] --> B[biglinux-livecd wizard]
     B --> C{User Config}
-    C -->|Saves| D["/tmp/big_* files"]
+    C -->|Atomic writes| D["/run/biglinux-live state"]
     D --> E[Calamares Installer]
     E -->|Copies| F["/etc/big-default-config/"]
     F --> G[First System Boot]
@@ -62,10 +62,13 @@ graph TD
 
 | File | Description |
 |------|-------------|
-| `/tmp/big_language` | System locale (e.g., `pt_BR.UTF-8`) |
-| `/tmp/big_keyboard` | X11 Keyboard Model and Layout |
-| `/tmp/big_desktop_theme` | Selected visual theme |
-| `/tmp/big_enable_jamesdsp` | Audio enhancement flag |
+| `/run/biglinux-live/language` | System locale (for example, `pt_BR`) |
+| `/run/biglinux-live/keyboard` | X11 keyboard model and layout |
+| `/run/biglinux-live/desktop-theme` | Selected visual theme |
+| `/run/biglinux-live/enable-jamesdsp` | Audio enhancement state |
+
+See [LIVE-STATE.md](LIVE-STATE.md) for the complete producer, consumer, safety,
+and lifecycle contract.
 
 ---
 

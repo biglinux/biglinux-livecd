@@ -9,8 +9,8 @@ Fully accessible to ORCA screen reader via AT-SPI2.
 
 import gettext
 import os
+from pathlib import Path
 import signal
-import subprocess
 import sys
 import threading
 
@@ -19,7 +19,25 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-from gi.repository import Adw, Gdk, Gio, GLib, Gtk
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk  # noqa: E402
+
+installed_library = Path("/usr/lib/biglinux-livecd")
+development_library = Path(__file__).resolve().parent.parent / "lib/biglinux-livecd"
+library_directory = (
+    installed_library
+    if (installed_library / "integrity.py").is_file()
+    else development_library
+)
+sys.path.insert(0, str(library_directory))
+
+from integrity import (  # noqa: E402
+    VerificationStatus,
+    acquire_lock,
+    clear_state,
+    state_is_verified,
+    verify_iso,
+    write_state,
+)
 
 # ── i18n ──────────────────────────────────────────────────────────────────────
 gettext.bindtextdomain("biglinux-livecd", "/usr/share/locale")
@@ -50,57 +68,9 @@ def set_label(widget: Gtk.Accessible, label: str) -> None:
     """Set the accessible label for a widget."""
     if widget and label:
         try:
-            widget.update_property(
-                [Gtk.AccessibleProperty.LABEL], [label]
-            )
+            widget.update_property([Gtk.AccessibleProperty.LABEL], [label])
         except Exception:
             pass
-
-
-# ── Constants ─────────────────────────────────────────────────────────────────
-VERIFIED_FLAG = "/tmp/checksum_biglinux_ok.html"
-FAIL_FLAG = "/tmp/md5sum_big_fail"
-
-SQUASHFS_FILES = [
-    ("desktopfs.md5", "desktopfs.sfs", 10),
-    ("livefs.md5", "livefs.sfs", 50),
-    ("mhwdfs.md5", "mhwdfs.sfs", 60),
-    ("rootfs.md5", "rootfs.sfs", 80),
-]
-
-
-def detect_iso_mount() -> str:
-    """Detect the ISO mount directory (same logic as the original shell script)."""
-    hostname = os.environ.get("HOSTNAME", "")
-    candidates = [
-        "/run/miso/bootmnt/manjaro/x86_64/",
-        f"/run/miso/bootmnt/{hostname}/x86_64/",
-    ]
-    for path in candidates:
-        if os.path.isdir(path):
-            return path
-
-    # Fallback: any folder excluding /efi/ and /boot/
-    base = "/run/miso/bootmnt/"
-    if os.path.isdir(base):
-        for entry in os.listdir(base):
-            full = os.path.join(base, entry, "x86_64")
-            if entry not in ("efi", "boot") and os.path.isdir(full):
-                return full + "/"
-    return ""
-
-
-def verify_md5_file(md5_file: str) -> bool:
-    """Run md5sum --status -c on a .md5 file. Returns True if OK."""
-    try:
-        result = subprocess.run(
-            ["md5sum", "--status", "-c", md5_file],
-            capture_output=True,
-            timeout=600,
-        )
-        return result.returncode == 0
-    except Exception:
-        return False
 
 
 def load_custom_css() -> None:
@@ -183,7 +153,9 @@ class VerifyApp(Adw.Application):
         self.status_page.set_icon_name("drive-optical-symbolic")
         self.status_page.set_title(self._title)
         self.status_page.set_description(
-            _("Checking for download or USB drive errors, this may take a few minutes...")
+            _(
+                "Checking for download or USB drive errors, this may take a few minutes..."
+            )
         )
         set_label(self.status_page, self._title)
         progress_box.append(self.status_page)
@@ -213,8 +185,9 @@ class VerifyApp(Adw.Application):
         self.stack.add_named(progress_box, "progress")
         self.stack.set_visible_child_name("progress")
 
-    def _build_result_page(self, icon_name: str, title: str, description: str,
-                           is_error: bool) -> str:
+    def _build_result_page(
+        self, icon_name: str, title: str, description: str, is_error: bool
+    ) -> str:
         """Build a result page using Adw.StatusPage and return its stack name."""
         page_name = "result-error" if is_error else "result-ok"
 
@@ -251,8 +224,9 @@ class VerifyApp(Adw.Application):
         self.stack.add_named(result_box, page_name)
         return page_name
 
-    def _show_result(self, icon_name: str, title: str, description: str,
-                     is_error: bool):
+    def _show_result(
+        self, icon_name: str, title: str, description: str, is_error: bool
+    ):
         """Transition from progress to a result page."""
         page_name = self._build_result_page(icon_name, title, description, is_error)
         self.stack.set_visible_child_name(page_name)
@@ -279,57 +253,30 @@ class VerifyApp(Adw.Application):
         threading.Thread(target=self._verify_thread, daemon=True).start()
 
     def _verify_thread(self):
-        # Remove previous fail flag
         try:
-            os.remove(FAIL_FLAG)
-        except FileNotFoundError:
-            pass
-
-        mount_dir = detect_iso_mount()
-        if not mount_dir:
-            GLib.idle_add(self._on_error)
-            return
-
-        original_dir = os.getcwd()
-        try:
-            os.chdir(mount_dir)
-        except OSError:
-            GLib.idle_add(self._on_error)
-            return
-
-        for md5_file, sfs_name, pct in SQUASHFS_FILES:
-            if self._cancelled:
+            clear_state()
+            outcome = verify_iso(
+                is_cancelled=lambda: self._cancelled,
+                progress=lambda percentage, filename: GLib.idle_add(
+                    self._update_progress,
+                    percentage,
+                    _("Checking the file:") + f" {filename}",
+                    filename,
+                ),
+            )
+            if outcome.status is VerificationStatus.SUCCESS:
+                write_state("verified")
+                GLib.idle_add(self._on_success)
+            elif outcome.status is VerificationStatus.CANCELLED:
+                write_state("failed")
                 GLib.idle_add(self._on_cancelled)
-                os.chdir(original_dir)
-                return
-
-            msg = _("Checking the file:") + f" {sfs_name}"
-            GLib.idle_add(self._update_progress, pct, msg, sfs_name)
-
-            if not os.path.exists(md5_file):
-                continue
-
-            if not verify_md5_file(md5_file):
+            else:
                 self._has_failure = True
-                os.chdir(original_dir)
-                try:
-                    with open(FAIL_FLAG, "w") as f:
-                        f.write("1")
-                except OSError:
-                    pass
-                GLib.idle_add(self._on_error)
-                return
-
-        os.chdir(original_dir)
-
-        # Mark as verified
-        try:
-            with open(VERIFIED_FLAG, "w") as f:
-                f.write("1")
-        except OSError:
-            pass
-
-        GLib.idle_add(self._on_success)
+                write_state("failed")
+                GLib.idle_add(self._on_error, outcome.reason)
+        except OSError as error:
+            self._has_failure = True
+            GLib.idle_add(self._on_error, str(error))
 
     def _update_progress(self, pct: int, status: str, filename: str):
         self.progress.set_fraction(pct / 100.0)
@@ -337,11 +284,13 @@ class VerifyApp(Adw.Application):
         self.status_page.set_description(status)
         announce(self.win, status)
 
-    def _on_error(self):
+    def _on_error(self, reason: str):
         self._show_result(
             "dialog-error-symbolic",
             _("Verification failed"),
-            _("Error found, please download the system again or use another USB drive."),
+            _("The live media could not be verified:")
+            + f" {reason}. "
+            + _("Download the system again or use another USB drive."),
             is_error=True,
         )
 
@@ -354,11 +303,6 @@ class VerifyApp(Adw.Application):
         )
 
     def _on_cancelled(self):
-        try:
-            with open(FAIL_FLAG, "w") as f:
-                f.write("1")
-        except OSError:
-            pass
         self._show_result(
             "dialog-warning-symbolic",
             _("Verification canceled"),
@@ -370,70 +314,41 @@ class VerifyApp(Adw.Application):
 def verify_headless() -> int:
     """Run verification without GUI. Returns 0 on success, 1 on failure."""
     try:
-        os.remove(FAIL_FLAG)
-    except FileNotFoundError:
-        pass
-
-    mount_dir = detect_iso_mount()
-    if not mount_dir:
-        return 1
-
-    original_dir = os.getcwd()
-    try:
-        os.chdir(mount_dir)
+        clear_state()
+        outcome = verify_iso()
+        state = "verified" if outcome.status is VerificationStatus.SUCCESS else "failed"
+        write_state(state)
+        return 0 if outcome.status is VerificationStatus.SUCCESS else 1
     except OSError:
         return 1
 
-    for md5_file, sfs_name, _pct in SQUASHFS_FILES:
-        if not os.path.exists(md5_file):
-            continue
-        if not verify_md5_file(md5_file):
-            os.chdir(original_dir)
-            try:
-                with open(FAIL_FLAG, "w") as f:
-                    f.write("1")
-            except OSError:
-                pass
-            return 1
 
-    os.chdir(original_dir)
-    try:
-        with open(VERIFIED_FLAG, "w") as f:
-            f.write("1")
-    except OSError:
-        pass
-    return 0
-
-
-def main():
+def main() -> int:
     signal.signal(signal.SIGINT, lambda *_: sys.exit(1))
 
-    # Prevent duplicate instances
     try:
-        result = subprocess.run(
-            ["pgrep", "-cf", "biglinux-verify-md5sum"],
-            capture_output=True,
-            text=True,
-            timeout=5,
-        )
-        count = int(result.stdout.strip()) if result.stdout.strip() else 0
-        if count > 1:
-            sys.exit(0)
-    except Exception:
-        pass
+        if state_is_verified():
+            return 0
+        lock_descriptor = acquire_lock()
+    except OSError:
+        return 1
+    if lock_descriptor is None:
+        return 1
+    try:
+        if state_is_verified():
+            return 0
 
-    # Already verified?
-    if os.path.exists(VERIFIED_FLAG):
-        sys.exit(0)
+        # Headless mode: run verification without GUI
+        if "--no-gui" in sys.argv:
+            return verify_headless()
 
-    # Headless mode: run verification without GUI
-    if "--no-gui" in sys.argv:
-        sys.exit(verify_headless())
-
-    Adw.init()
-    app = VerifyApp()
-    sys.exit(app.run([]))
+        Adw.init()
+        app = VerifyApp()
+        app.run([])
+        return 0 if state_is_verified() else 1
+    finally:
+        os.close(lock_descriptor)
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

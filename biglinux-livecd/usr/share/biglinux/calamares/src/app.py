@@ -3,15 +3,17 @@ Main GTK4 Application class for BigLinux Calamares Configuration Tool
 """
 
 import logging
+
 import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-from gi.repository import Gtk, Adw, Gio, GLib
+from gi.repository import Adw, Gio, GLib, Gtk
+
+from .infrastructure.accessibility import start_orca
+from .infrastructure.i18n import _
 from .window import CalamaresWindow
-from .utils.i18n import _
-from .utils.accessibility import start_orca
 
 
 class CalamaresApp(Adw.Application):
@@ -22,7 +24,7 @@ class CalamaresApp(Adw.Application):
             application_id="com.biglinux.calamares-config",
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
         )
-        
+
         # Set the desktop file and icon name for proper Wayland taskbar integration
         GLib.set_prgname("com.biglinux.calamares-config")
         GLib.set_application_name("BigLinux Installation")
@@ -53,10 +55,6 @@ class CalamaresApp(Adw.Application):
         self.add_action(about_action)
 
         # Preferences action (if needed in future)
-        preferences_action = Gio.SimpleAction.new("preferences", None)
-        preferences_action.connect("activate", self.on_preferences_action)
-        self.add_action(preferences_action)
-
         # Start ORCA screen reader (Super+Alt+S)
         orca_action = Gio.SimpleAction.new("start-orca", None)
         orca_action.connect("activate", self.on_start_orca_action)
@@ -97,12 +95,12 @@ class CalamaresApp(Adw.Application):
         if self.window:
             self.window.cleanup()
 
-    def on_quit_action(self, action, param):
+    def on_quit_action(self, _action, _param):
         """Handle quit action"""
         self.logger.info("Quit action triggered")
         self.quit()
 
-    def on_about_action(self, action, param):
+    def on_about_action(self, _action, _param):
         """Show about dialog"""
         if not self.window:
             return
@@ -135,10 +133,7 @@ class CalamaresApp(Adw.Application):
 
         about_dialog.present()
 
-    def on_preferences_action(self, action, param):
-        """Handle preferences action (placeholder for future use)"""
-
-    def on_start_orca_action(self, action, param):
+    def on_start_orca_action(self, _action, _param):
         """Start ORCA screen reader via Super+Alt+S."""
         self.logger.info("Starting ORCA screen reader")
         start_orca()

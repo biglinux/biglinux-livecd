@@ -6,11 +6,11 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 import os
 
-from gi.repository import Gdk, GdkPixbuf, GLib, GObject, Gtk
+from accessibility import announce, is_accessibility_enabled, speak
+from gi.repository import Gdk, GdkPixbuf, GLib, GObject, Gtk, Pango
 from logging_config import get_logger
 from services import SystemService
 from translations import _
-from accessibility import announce, speak, is_accessibility_enabled
 from ui.base_view import BaseItemView
 
 logger = get_logger()
@@ -31,9 +31,11 @@ class ThemeView(BaseItemView):
     __gtype_name__ = "ThemeView"
     sig_theme_selected = GObject.Signal("theme-selected", arg_types=[str])
 
-    def __init__(self, system_service: SystemService, simplified_mode: bool = False, **kwargs):
-        self.jamesdsp_switch = None
-        self.contrast_switch = None
+    def __init__(
+        self, system_service: SystemService, simplified_mode: bool = False, **kwargs
+    ):
+        self.jamesdsp_switch: Gtk.Switch | None = None
+        self.contrast_switch: Gtk.Switch | None = None
         self._system_service = system_service  # Store reference for ICC callbacks
         self.simplified_mode = simplified_mode
 
@@ -46,7 +48,9 @@ class ThemeView(BaseItemView):
             self.contrast_available = False
             logger.info(f"Contrast disabled in simplified mode for {desktop_env}")
         else:
-            self.contrast_available = system_service.check_enhanced_contrast_availability()
+            self.contrast_available = (
+                system_service.check_enhanced_contrast_availability()
+            )
             logger.info(f"Contrast available in full mode: {self.contrast_available}")
 
         total_ram_gb = system_service.get_total_memory_gb()
@@ -253,7 +257,7 @@ class ThemeView(BaseItemView):
         )
         contrast_card.add_controller(controller)
 
-    def _on_settings_card_clicked(self, gesture, n_press, x, y, switch):
+    def _on_settings_card_clicked(self, gesture, n_press, x, _y, switch):
         if n_press == 1:
             switch.set_active(not switch.get_active())
             if is_accessibility_enabled():
@@ -340,102 +344,90 @@ class ThemeView(BaseItemView):
         return ThemeListItem(name, self.system_service)
 
     def emit_signal(self, name: str):
-        self.sig_theme_selected.emit(name)
+        self.sig_theme_selected.emit(name)  # type: ignore[arg-type]
 
-    def create_item_widget(self, item: ThemeListItem):
+    def create_item_widget(self, item: GObject.Object):
+        if not isinstance(item, ThemeListItem):
+            raise TypeError("ThemeView requires a ThemeListItem")
         if self.simplified_mode:
-            # Simplified mode: large theme cards with icons
-            box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
-            box.set_can_focus(True)
-            box.add_css_class("theme-card")
-            box.set_size_request(300, 250)
+            return self._create_simple_theme_widget(item)
+        return self._create_full_theme_widget(item)
 
-            try:
-                cursor = Gdk.Cursor.new_from_name("pointer", None)
-                box.set_cursor(cursor)
-            except Exception:
-                pass
-
-            # Icon based on theme type
-            if item.name == "dark":
-                icon_name = "weather-clear-night"
-                label_text = _("Dark Theme")
-            else:
-                icon_name = "weather-clear"
-                label_text = _("Light Theme")
-
-            # Accessible label for screen readers
-            box.update_property(
-                [Gtk.AccessibleProperty.LABEL], [label_text]
+    @staticmethod
+    def _create_simple_theme_widget(item: ThemeListItem) -> Gtk.Box:
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        box.set_can_focus(True)
+        box.add_css_class("theme-card")
+        box.set_size_request(300, 250)
+        icon_name = "weather-clear-night" if item.name == "dark" else "weather-clear"
+        label_text = _("Dark Theme") if item.name == "dark" else _("Light Theme")
+        box.update_property([Gtk.AccessibleProperty.LABEL], [label_text])
+        icon_path = f"/usr/share/biglinux/livecd/assets/icons/{icon_name}.svg"
+        try:
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(icon_path, 120, 120)
+            icon = (
+                Gtk.Image.new_from_paintable(Gdk.Texture.new_for_pixbuf(pixbuf))
+                if pixbuf
+                else Gtk.Image.new_from_icon_name(icon_name)
             )
+        except GLib.Error:
+            icon = Gtk.Image.new_from_icon_name(icon_name)
+        icon.set_pixel_size(120)
+        icon.set_size_request(120, 120)
+        icon.set_halign(Gtk.Align.CENTER)
+        icon.set_valign(Gtk.Align.CENTER)
+        icon.set_vexpand(True)
+        box.append(icon)
+        label = Gtk.Label(label=label_text, halign=Gtk.Align.CENTER)
+        label.add_css_class("title-4")
+        box.append(label)
+        return box
 
-            icon_path = f"/usr/share/biglinux/livecd/assets/icons/{icon_name}.svg"
-            if os.path.exists(icon_path):
-                try:
-                    pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(icon_path, 120, 120)
-                    icon = Gtk.Image.new_from_paintable(Gdk.Texture.new_for_pixbuf(pixbuf))
-                except Exception as e:
-                    logger.warning(f"Failed to load local theme icon {icon_path}: {e}")
-                    icon = Gtk.Image.new_from_icon_name(icon_name)
-            else:
-                icon = Gtk.Image.new_from_icon_name(icon_name)
-            icon.set_pixel_size(120)
-            icon.set_size_request(120, 120)
-            icon.set_halign(Gtk.Align.CENTER)
-            icon.set_valign(Gtk.Align.CENTER)
-            icon.set_vexpand(True)
-            box.append(icon)
+    @staticmethod
+    def _create_full_theme_widget(item: ThemeListItem) -> Gtk.Box:
+        # Full mode: standard small theme cards
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+        box.set_can_focus(True)
 
-            label = Gtk.Label(label=label_text)
-            label.add_css_class("title-4")
-            label.set_halign(Gtk.Align.CENTER)
-            box.append(label)
+        outer_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        outer_box.set_hexpand(True)
+        outer_box.set_vexpand(True)
 
-            return box
-        else:
-            # Full mode: standard small theme cards
-            box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-            box.set_can_focus(True)
+        try:
+            cursor = Gdk.Cursor.new_from_name("pointer", None)
+            outer_box.set_cursor(cursor)
+        except Exception:
+            pass
 
-            outer_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-            outer_box.set_hexpand(True)
-            outer_box.set_vexpand(True)
-
+        if os.path.exists(item.image_path):
             try:
-                cursor = Gdk.Cursor.new_from_name("pointer", None)
-                outer_box.set_cursor(cursor)
-            except Exception:
-                pass
-
-            if os.path.exists(item.image_path):
-                try:
-                    pixbuf = GdkPixbuf.Pixbuf.new_from_file(item.image_path)
-                    picture = Gtk.Picture.new_for_pixbuf(pixbuf)
-                    picture.set_keep_aspect_ratio(True)
-                    picture.set_hexpand(True)
-                    picture.set_vexpand(True)
-                    picture.set_can_shrink(True)
-                    picture.set_halign(Gtk.Align.CENTER)
-                    picture.set_valign(Gtk.Align.CENTER)
-                    picture.set_content_fit(Gtk.ContentFit.CONTAIN)
-                except GLib.Error as e:
-                    logger.error(f"Error loading image {item.image_path}: {e}")
-                    picture = Gtk.Picture()
-            else:
+                pixbuf = GdkPixbuf.Pixbuf.new_from_file(item.image_path)
+                picture = Gtk.Picture.new_for_pixbuf(pixbuf)
+                picture.set_keep_aspect_ratio(True)
+                picture.set_hexpand(True)
+                picture.set_vexpand(True)
+                picture.set_can_shrink(True)
+                picture.set_halign(Gtk.Align.CENTER)
+                picture.set_valign(Gtk.Align.CENTER)
+                picture.set_content_fit(Gtk.ContentFit.CONTAIN)
+            except GLib.Error as e:
+                logger.error(f"Error loading image {item.image_path}: {e}")
                 picture = Gtk.Picture()
+        else:
+            picture = Gtk.Picture()
 
-            outer_box.append(picture)
-            box.append(outer_box)
+        outer_box.append(picture)
+        box.append(outer_box)
 
-            label = Gtk.Label()
-            label.set_label(item.name.replace("-", " ").title())
-            label.set_halign(Gtk.Align.CENTER)
-            label.set_margin_top(6)
-            label.set_ellipsize(True)
-            label.set_max_width_chars(25)
-            box.append(label)
+        label = Gtk.Label()
+        label.set_label(item.name.replace("-", " ").title())
+        label.set_halign(Gtk.Align.CENTER)
+        label.set_margin_top(6)
+        label.set_ellipsize(Pango.EllipsizeMode.END)
+        label.set_max_width_chars(25)
+        box.append(label)
 
-            return box
+        return box
 
     def is_jamesdsp_enabled(self) -> bool:
         if self.jamesdsp_switch:
@@ -447,8 +439,10 @@ class ThemeView(BaseItemView):
             return self.contrast_switch.get_active()
         return False
 
-    def _on_contrast_switch_toggled(self, switch, param):
+    def _on_contrast_switch_toggled(self, switch, _param):
         """Called immediately when the ICC profile switch state changes."""
         enabled = switch.get_active()
-        logger.info(f"ICC profile switch toggled: {'enabled' if enabled else 'disabled'}")
+        logger.info(
+            f"ICC profile switch toggled: {'enabled' if enabled else 'disabled'}"
+        )
         self._system_service.apply_icc_profile_settings(enabled)

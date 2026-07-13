@@ -6,10 +6,11 @@ Handles Calamares configuration and installation process
 """
 
 import logging
+import re
 import subprocess
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
-from ..utils import (
+from ..infrastructure import (
     CALAMARES_CONFIG_DIR,
     CALAMARES_CONFIGS,
     CALAMARES_MODULES_DIR,
@@ -122,7 +123,12 @@ class InstallService:
                 return False
 
             # Configure package settings if needed (for minimal, explicit packages, or netinstall)
-            if config.packages_to_remove or config.use_minimal or config.enable_xivastudio_netinstall:
+            if (
+                config.packages_to_remove
+                or config.packages_to_install
+                or config.use_minimal
+                or config.enable_xivastudio_netinstall
+            ):
                 if not self._configure_package_settings():
                     return False
 
@@ -162,13 +168,17 @@ class InstallService:
             # Modify for ext4 if needed
             if self._current_config.filesystem_type == "ext4":
                 config_content = read_text_file(CALAMARES_CONFIGS["partition"])
-                if config_content:
-                    # Replace default filesystem type
-                    modified_content = config_content.replace(
-                        'defaultFileSystemType:  "btrfs"',
-                        'defaultFileSystemType:  "ext4"',
-                    )
-                    write_text_file(modified_content, CALAMARES_CONFIGS["partition"])
+                btrfs_setting = 'defaultFileSystemType:  "btrfs"'
+                if config_content is None or btrfs_setting not in config_content:
+                    self.logger.error("Could not read a valid partition configuration")
+                    return False
+                modified_content = config_content.replace(
+                    btrfs_setting, 'defaultFileSystemType:  "ext4"'
+                )
+                if not write_text_file(
+                    modified_content, CALAMARES_CONFIGS["partition"]
+                ):
+                    return False
 
             self.logger.debug("Partition configuration completed")
             return True
@@ -207,7 +217,8 @@ unpack:
       destination: ""
 """
 
-            write_text_file(config_content, CALAMARES_CONFIGS["unpackfs"])
+            if not write_text_file(config_content, CALAMARES_CONFIGS["unpackfs"]):
+                return False
             self.logger.debug("Unpack configuration completed")
             return True
 
@@ -220,6 +231,13 @@ unpack:
         try:
             packages_to_remove = self._current_config.packages_to_remove
             packages_to_install = self._current_config.packages_to_install
+            package_pattern = re.compile(r"^[a-z0-9][a-z0-9@._+-]*$")
+            if any(
+                not package_pattern.fullmatch(package)
+                for package in packages_to_remove + packages_to_install
+            ):
+                self.logger.error("Package configuration contains an invalid name")
+                return False
 
             # Base configuration - always create if netinstall is enabled
             config_content = """---
@@ -254,7 +272,8 @@ operations:
                     for package in packages_to_install:
                         config_content += f"        - {package}\n"
 
-            write_text_file(config_content, CALAMARES_CONFIGS["packages"])
+            if not write_text_file(config_content, CALAMARES_CONFIGS["packages"]):
+                return False
             self.logger.debug("Package configuration completed")
             return True
 
@@ -265,8 +284,15 @@ operations:
     def _configure_main_settings(self) -> bool:
         """Configure main settings.conf for Calamares"""
         try:
-            # Build instances block
-            instances_block = """
+            return write_text_file(
+                self._main_settings_text(), CALAMARES_CONFIGS["settings"]
+            )
+        except (OSError, ValueError) as error:
+            self.logger.error("Failed to configure main settings: %s", error)
+            return False
+
+    def _main_settings_text(self) -> str:
+        instances = """
 - id:       initialize_pacman
   module:   shellprocess
   config:   shellprocess_initialize_pacman.conf
@@ -275,40 +301,43 @@ operations:
   module:   shellprocess
   config:   shellprocess_displaymanager_biglinux.conf
 """
-
-            # Add XivaStudio netinstall instance if enabled
-            if self._current_config.enable_xivastudio_netinstall:
-                instances_block += """
+        show_netinstall = ""
+        if self._current_config.enable_xivastudio_netinstall:
+            instances += """
 - id:       xivastudio
   module:   netinstall
   config:   netinstall-xivastudio.conf
 """
-
-            # Build show sequence
-            show_sequence = """    - show:
-        - welcome
-        - locale
-        - keyboard
-        - partition"""
-
-            # Add netinstall@xivastudio to show sequence if enabled
-            if self._current_config.enable_xivastudio_netinstall:
-                show_sequence += """
-        - netinstall@xivastudio"""
-
-            show_sequence += """
-        - users
-        - summary"""
-
-            config_content = f"""---
+            show_netinstall = "\n        - netinstall@xivastudio"
+        execution = self._execution_sequence()
+        return f"""---
 modules-search: [ local ]
 
 instances:
-{instances_block}
+{instances}
 sequence:
-{show_sequence}
+    - show:
+        - welcome
+        - locale
+        - keyboard
+        - partition{show_netinstall}
+        - users
+        - summary
     - exec:
-        - partition
+{execution}    - show:
+        - finished
+
+branding: biglinux
+prompt-install: true
+dont-chroot: false
+oem-setup: false
+disable-cancel: false
+disable-cancel-during-exec: false
+quit-at-end: false
+"""
+
+    def _execution_sequence(self) -> str:
+        steps = """        - partition
         - mount
         - unpackfs
         - networkcfg
@@ -317,27 +346,20 @@ sequence:
         - locale
         - keyboard
 """
-
-            # Add package operations if needed (for netinstall, minimal, or explicit packages)
-            if (
-                self._current_config.packages_to_remove
-                or self._current_config.packages_to_install
-                or self._current_config.use_minimal
-                or self._current_config.enable_xivastudio_netinstall
-            ):
-                config_content += """        - shellprocess@initialize_pacman
+        if (
+            self._current_config.packages_to_remove
+            or self._current_config.packages_to_install
+            or self._current_config.use_minimal
+            or self._current_config.enable_xivastudio_netinstall
+        ):
+            steps += """        - shellprocess@initialize_pacman
         - packages
 """
-
-            # Add display manager configuration if custom desktop
-            if (
-                self._current_config.custom_desktop
-                and self._current_config.login_manager
-            ):
-                config_content += "        - shellprocess@displaymanager_biglinux\n"
-
-            # Add remaining steps
-            config_content += """        - localecfg
+        if self._current_config.custom_desktop and self._current_config.login_manager:
+            steps += "        - shellprocess@displaymanager_biglinux\n"
+        return (
+            steps
+            + """        - localecfg
         - luksopenswaphookcfg
         - luksbootkeyfile
         - initcpiocfg
@@ -353,27 +375,8 @@ sequence:
         - postcfg
         - btrfs-fix
         - umount
-    - show:
-        - finished
-
-branding: biglinux
-
-prompt-install: true
-
-dont-chroot: false
-oem-setup: false
-disable-cancel: false
-disable-cancel-during-exec: false
-quit-at-end: false
 """
-
-            write_text_file(config_content, CALAMARES_CONFIGS["settings"])
-            self.logger.debug("Main settings configuration completed")
-            return True
-
-        except Exception as e:
-            self.logger.error(f"Failed to configure main settings: {e}")
-            return False
+        )
 
     def _configure_shell_processes(self) -> bool:
         """Configure shell process modules"""
@@ -391,7 +394,10 @@ script:
 i18n:
     name: "Init pacman-key"
 """
-            write_text_file(pacman_config, CALAMARES_CONFIGS["shellprocess_pacman"])
+            if not write_text_file(
+                pacman_config, CALAMARES_CONFIGS["shellprocess_pacman"]
+            ):
+                return False
 
             # Configure display manager if needed
             if self._current_config.login_manager:
@@ -405,9 +411,10 @@ script:
 i18n:
     name: "Enable login manager"
 """
-                write_text_file(
+                if not write_text_file(
                     display_config, CALAMARES_CONFIGS["shellprocess_display"]
-                )
+                ):
+                    return False
 
             self.logger.debug("Shell process configuration completed")
             return True
@@ -417,7 +424,9 @@ i18n:
             return False
 
     def start_installation(
-        self, filesystem_type: str = "btrfs", packages_to_remove: List[str] = None
+        self,
+        filesystem_type: str = "btrfs",
+        packages_to_remove: Optional[List[str]] = None,
     ) -> bool:
         """
         Configure the installation process without launching Calamares.
@@ -432,7 +441,7 @@ i18n:
         try:
             # Prepare configuration (preserve netinstall flag if already set)
             enable_netinstall = self._current_config.enable_xivastudio_netinstall
-            
+
             config = InstallationConfig()
             config.filesystem_type = filesystem_type
             config.packages_to_remove = packages_to_remove or []
@@ -442,8 +451,10 @@ i18n:
             # Configure Calamares
             if not self.configure_installation(config):
                 return False
-            
-            self.logger.info("Installation configured successfully. Calamares can be launched externally.")
+
+            self.logger.info(
+                "Installation configured successfully. Calamares can be launched externally."
+            )
             return True
 
         except Exception as e:

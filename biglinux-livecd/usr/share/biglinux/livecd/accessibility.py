@@ -52,83 +52,62 @@ def speak(text: str) -> None:
     """Speak text using koko directly. Non-blocking, cancels previous speech."""
     if not _accessibility_enabled or not text:
         return
-    logger.info(
-        f"speak() called: '{text}' voice={_current_voice} lang={_current_lang_code}"
-    )
     stop_speaking()
     global _speak_gen
     with _speak_lock:
         _speak_gen += 1
         gen = _speak_gen
 
-    def _do_speak():
-        global _play_process
-        tmpwav = None
-        try:
-            fd, tmpwav = tempfile.mkstemp(prefix="a11y-", suffix=".wav")
-            os.close(fd)
-            cmd = [
-                _KOKO_BIN,
-                "-m",
-                _KOKO_MODEL,
-                "-d",
-                _KOKO_VOICES,
-                "-l",
-                _current_lang_code,
-                "-s",
-                _current_voice,
-                "--force-style",
-                "true",
-                "--speed",
-                "1.5",
-                "text",
-                text,
-                "-o",
-                tmpwav,
-            ]
-            logger.info(f"speak() running koko: {' '.join(cmd)}")
-            proc = subprocess.run(
-                cmd,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                timeout=15,
-            )
-            if proc.returncode != 0:
-                logger.info(
-                    f"speak() koko failed rc={proc.returncode} stderr={proc.stderr.decode()[:200]}"
-                )
-                return
-            with _speak_lock:
-                if gen != _speak_gen:
-                    logger.info("speak() discarded (gen changed)")
-                    return
-            fsize = os.path.getsize(tmpwav) if os.path.isfile(tmpwav) else 0
-            logger.info(f"speak() WAV generated: {tmpwav} size={fsize}")
-            if fsize > 0:
-                play = subprocess.Popen(
-                    ["paplay", tmpwav],
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.PIPE,
-                )
-                with _speak_lock:
-                    _play_process = play
-                play.wait(timeout=15)
-                if play.returncode != 0:
-                    logger.info(
-                        f"speak() paplay failed rc={play.returncode} stderr={play.stderr.read().decode()[:200]}"
-                    )
-                else:
-                    logger.info("speak() playback complete")
-        except Exception as e:
-            logger.info(f"speak() exception: {e}")
-        finally:
-            if tmpwav and os.path.isfile(tmpwav):
-                try:
-                    os.unlink(tmpwav)
-                except OSError:
-                    pass
+    threading.Thread(target=_synthesize_and_play, args=(text, gen), daemon=True).start()
 
-    threading.Thread(target=_do_speak, daemon=True).start()
+
+def _synthesize_and_play(text: str, generation: int) -> None:
+    temporary_wav = ""
+    try:
+        descriptor, temporary_wav = tempfile.mkstemp(prefix="a11y-", suffix=".wav")
+        os.close(descriptor)
+        command = [
+            _KOKO_BIN,
+            "-m",
+            _KOKO_MODEL,
+            "-d",
+            _KOKO_VOICES,
+            "-l",
+            _current_lang_code,
+            "-s",
+            _current_voice,
+            "--force-style",
+            "true",
+            "--speed",
+            "1.5",
+            "text",
+            text,
+            "-o",
+            temporary_wav,
+        ]
+        result = subprocess.run(command, capture_output=True, timeout=15)
+        with _speak_lock:
+            is_current = generation == _speak_gen
+        if result.returncode == 0 and is_current and os.path.getsize(temporary_wav) > 0:
+            _play_wav(temporary_wav)
+    except (OSError, subprocess.SubprocessError) as error:
+        logger.warning("Speech output failed: %s", error)
+    finally:
+        if temporary_wav:
+            try:
+                os.unlink(temporary_wav)
+            except FileNotFoundError:
+                pass
+
+
+def _play_wav(path: str) -> None:
+    global _play_process
+    play = subprocess.Popen(
+        ["paplay", path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+    )
+    with _speak_lock:
+        _play_process = play
+    play.wait(timeout=15)
 
 
 def stop_speaking() -> None:
@@ -165,8 +144,13 @@ def ensure_orca_disabled() -> None:
         stderr=subprocess.DEVNULL,
     )
     subprocess.Popen(
-        ["gsettings", "set", "org.gnome.desktop.a11y.applications",
-         "screen-reader-enabled", "false"],
+        [
+            "gsettings",
+            "set",
+            "org.gnome.desktop.a11y.applications",
+            "screen-reader-enabled",
+            "false",
+        ],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
     )

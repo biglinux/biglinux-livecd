@@ -16,7 +16,7 @@ _ = gettext.gettext
 
 def setup_i18n():
     """Setup internationalization (already configured above)
-    
+
     Returns:
         The translation function
     """

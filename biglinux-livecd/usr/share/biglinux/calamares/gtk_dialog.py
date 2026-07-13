@@ -18,6 +18,8 @@ import gettext
 import re
 import signal
 import sys
+
+# allow-noisy-log: stdout is the documented result channel and stderr reports CLI misuse.
 import threading
 
 import gi
@@ -25,7 +27,7 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-from gi.repository import Adw, Gdk, Gio, GLib, Gtk
+from gi.repository import Adw, Gio, GLib, Gtk
 
 # ── i18n ──────────────────────────────────────────────────────────────────────
 gettext.bindtextdomain("biglinux-livecd", "/usr/share/locale")
@@ -79,33 +81,37 @@ class DialogApp(Adw.Application):
 
 
 # ── Progress dialog ──────────────────────────────────────────────────────────
-def _show_progress(app: DialogApp, args):
+def _show_progress(app: DialogApp, args):  # noqa: C901 - GTK callback state machine
     global _exit_code
 
-    win = Adw.Window(application=app, title=args.title or _("Progress"),
-                     default_width=args.width or 400, default_height=140)
+    win = Adw.Window(
+        application=app,
+        title=args.title or _("Progress"),
+        default_width=args.width or 400,
+        default_height=140,
+    )
     win.set_deletable(False)
 
-    box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=16,
-                  margin_top=24, margin_bottom=24, margin_start=24, margin_end=24)
+    box = Gtk.Box(
+        orientation=Gtk.Orientation.VERTICAL,
+        spacing=16,
+        margin_top=24,
+        margin_bottom=24,
+        margin_start=24,
+        margin_end=24,
+    )
     win.set_content(box)
 
     plain_text = strip_pango_markup(args.text or "")
     label = Gtk.Label(label=plain_text, wrap=True, halign=Gtk.Align.CENTER)
-    label.update_property(
-        [Gtk.AccessibleProperty.LABEL], [plain_text]
-    )
+    label.update_property([Gtk.AccessibleProperty.LABEL], [plain_text])
     box.append(label)
 
     bar = Gtk.ProgressBar(show_text=False, hexpand=True)
-    bar.update_property(
-        [Gtk.AccessibleProperty.LABEL], [plain_text]
-    )
+    bar.update_property([Gtk.AccessibleProperty.LABEL], [plain_text])
     box.append(bar)
 
-    win.update_property(
-        [Gtk.AccessibleProperty.LABEL], [args.title or _("Progress")]
-    )
+    win.update_property([Gtk.AccessibleProperty.LABEL], [args.title or _("Progress")])
     announce(win, plain_text, assertive=True)
 
     if args.pulsate:
@@ -113,6 +119,7 @@ def _show_progress(app: DialogApp, args):
         def pulse():
             bar.pulse()
             return True
+
         pulse_id = GLib.timeout_add(120, pulse)
 
         def _read_stdin():
@@ -165,11 +172,21 @@ def _show_progress(app: DialogApp, args):
 def _show_question(app: DialogApp, args):
     global _exit_code
 
-    win = Adw.Window(application=app, title=args.title or _("Question"),
-                     default_width=args.width or 500, default_height=-1)
+    win = Adw.Window(
+        application=app,
+        title=args.title or _("Question"),
+        default_width=args.width or 500,
+        default_height=-1,
+    )
 
-    box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=16,
-                  margin_top=24, margin_bottom=24, margin_start=24, margin_end=24)
+    box = Gtk.Box(
+        orientation=Gtk.Orientation.VERTICAL,
+        spacing=16,
+        margin_top=24,
+        margin_bottom=24,
+        margin_start=24,
+        margin_end=24,
+    )
     win.set_content(box)
 
     icon_name = args.icon_name or "dialog-question"
@@ -179,11 +196,14 @@ def _show_question(app: DialogApp, args):
     box.append(icon)
 
     plain_text = strip_pango_markup(args.text or "")
-    label = Gtk.Label(label=plain_text, wrap=True, halign=Gtk.Align.CENTER,
-                      max_width_chars=60, use_markup=False)
-    label.update_property(
-        [Gtk.AccessibleProperty.LABEL], [plain_text]
+    label = Gtk.Label(
+        label=plain_text,
+        wrap=True,
+        halign=Gtk.Align.CENTER,
+        max_width_chars=60,
+        use_markup=False,
     )
+    label.update_property([Gtk.AccessibleProperty.LABEL], [plain_text])
     box.append(label)
 
     btn_box = Gtk.Box(spacing=12, halign=Gtk.Align.CENTER, margin_top=8)
@@ -194,17 +214,13 @@ def _show_question(app: DialogApp, args):
 
     cancel_btn = Gtk.Button(label=cancel_label)
     cancel_btn.add_css_class("pill")
-    cancel_btn.update_property(
-        [Gtk.AccessibleProperty.LABEL], [cancel_label]
-    )
+    cancel_btn.update_property([Gtk.AccessibleProperty.LABEL], [cancel_label])
     btn_box.append(cancel_btn)
 
     ok_btn = Gtk.Button(label=ok_label)
     ok_btn.add_css_class("suggested-action")
     ok_btn.add_css_class("pill")
-    ok_btn.update_property(
-        [Gtk.AccessibleProperty.LABEL], [ok_label]
-    )
+    ok_btn.update_property([Gtk.AccessibleProperty.LABEL], [ok_label])
     btn_box.append(ok_btn)
 
     def _on_ok(_btn):
@@ -221,9 +237,7 @@ def _show_question(app: DialogApp, args):
     cancel_btn.connect("clicked", _on_cancel)
     win.connect("close-request", lambda _w: (_on_cancel(None), True)[1])
 
-    win.update_property(
-        [Gtk.AccessibleProperty.LABEL], [args.title or _("Question")]
-    )
+    win.update_property([Gtk.AccessibleProperty.LABEL], [args.title or _("Question")])
     announce(win, plain_text, assertive=True)
     win.present()
     ok_btn.grab_focus()
@@ -233,11 +247,21 @@ def _show_question(app: DialogApp, args):
 def _show_error(app: DialogApp, args):
     global _exit_code
 
-    win = Adw.Window(application=app, title=args.title or _("Error"),
-                     default_width=args.width or 500, default_height=-1)
+    win = Adw.Window(
+        application=app,
+        title=args.title or _("Error"),
+        default_width=args.width or 500,
+        default_height=-1,
+    )
 
-    box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=16,
-                  margin_top=24, margin_bottom=24, margin_start=24, margin_end=24)
+    box = Gtk.Box(
+        orientation=Gtk.Orientation.VERTICAL,
+        spacing=16,
+        margin_top=24,
+        margin_bottom=24,
+        margin_start=24,
+        margin_end=24,
+    )
     win.set_content(box)
 
     icon = Gtk.Image.new_from_icon_name("dialog-error")
@@ -246,25 +270,24 @@ def _show_error(app: DialogApp, args):
     box.append(icon)
 
     plain_text = strip_pango_markup(args.text or "")
-    label = Gtk.Label(label=plain_text, wrap=True, halign=Gtk.Align.CENTER,
-                      max_width_chars=60, use_markup=False)
-    label.update_property(
-        [Gtk.AccessibleProperty.LABEL], [plain_text]
+    label = Gtk.Label(
+        label=plain_text,
+        wrap=True,
+        halign=Gtk.Align.CENTER,
+        max_width_chars=60,
+        use_markup=False,
     )
+    label.update_property([Gtk.AccessibleProperty.LABEL], [plain_text])
     box.append(label)
 
     btn = Gtk.Button(label=_("Close"), halign=Gtk.Align.CENTER)
     btn.add_css_class("pill")
-    btn.update_property(
-        [Gtk.AccessibleProperty.LABEL], [_("Close")]
-    )
+    btn.update_property([Gtk.AccessibleProperty.LABEL], [_("Close")])
     btn.connect("clicked", lambda _b: app.quit())
     box.append(btn)
 
     _exit_code = 0
-    win.update_property(
-        [Gtk.AccessibleProperty.LABEL], [args.title or _("Error")]
-    )
+    win.update_property([Gtk.AccessibleProperty.LABEL], [args.title or _("Error")])
     announce(win, plain_text, assertive=True)
     win.present()
     btn.grab_focus()
@@ -274,11 +297,21 @@ def _show_error(app: DialogApp, args):
 def _show_info(app: DialogApp, args):
     global _exit_code
 
-    win = Adw.Window(application=app, title=args.title or _("Information"),
-                     default_width=args.width or 500, default_height=-1)
+    win = Adw.Window(
+        application=app,
+        title=args.title or _("Information"),
+        default_width=args.width or 500,
+        default_height=-1,
+    )
 
-    box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=16,
-                  margin_top=24, margin_bottom=24, margin_start=24, margin_end=24)
+    box = Gtk.Box(
+        orientation=Gtk.Orientation.VERTICAL,
+        spacing=16,
+        margin_top=24,
+        margin_bottom=24,
+        margin_start=24,
+        margin_end=24,
+    )
     win.set_content(box)
 
     icon = Gtk.Image.new_from_icon_name("dialog-information")
@@ -287,18 +320,19 @@ def _show_info(app: DialogApp, args):
     box.append(icon)
 
     plain_text = strip_pango_markup(args.text or "")
-    label = Gtk.Label(label=plain_text, wrap=True, halign=Gtk.Align.CENTER,
-                      max_width_chars=60, use_markup=False)
-    label.update_property(
-        [Gtk.AccessibleProperty.LABEL], [plain_text]
+    label = Gtk.Label(
+        label=plain_text,
+        wrap=True,
+        halign=Gtk.Align.CENTER,
+        max_width_chars=60,
+        use_markup=False,
     )
+    label.update_property([Gtk.AccessibleProperty.LABEL], [plain_text])
     box.append(label)
 
     btn = Gtk.Button(label=_("Close"), halign=Gtk.Align.CENTER)
     btn.add_css_class("pill")
-    btn.update_property(
-        [Gtk.AccessibleProperty.LABEL], [_("Close")]
-    )
+    btn.update_property([Gtk.AccessibleProperty.LABEL], [_("Close")])
     btn.connect("clicked", lambda _b: app.quit())
     box.append(btn)
 
@@ -312,34 +346,44 @@ def _show_info(app: DialogApp, args):
 
 
 # ── List / Radio list dialog ─────────────────────────────────────────────────
-def _show_list(app: DialogApp, args):
+def _group_rows(raw_rows, column_count):
+    if column_count <= 0:
+        return []
+    return [
+        chunk
+        for offset in range(0, len(raw_rows), column_count)
+        if len(chunk := raw_rows[offset : offset + column_count]) == column_count
+    ]
+
+
+def _show_list(app: DialogApp, args):  # noqa: C901 - GTK factory and dialog lifecycle
     global _exit_code, _selected_value
 
-    win = Adw.Window(application=app, title=args.title or _("Select"),
-                     default_width=args.width or 480, default_height=args.height or 350)
+    win = Adw.Window(
+        application=app,
+        title=args.title or _("Select"),
+        default_width=args.width or 480,
+        default_height=args.height or 350,
+    )
 
-    box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12,
-                  margin_top=24, margin_bottom=24, margin_start=24, margin_end=24)
+    box = Gtk.Box(
+        orientation=Gtk.Orientation.VERTICAL,
+        spacing=12,
+        margin_top=24,
+        margin_bottom=24,
+        margin_start=24,
+        margin_end=24,
+    )
     win.set_content(box)
 
     plain_text = strip_pango_markup(args.text or "")
     header_label = Gtk.Label(label=plain_text, wrap=True, halign=Gtk.Align.CENTER)
-    header_label.update_property(
-        [Gtk.AccessibleProperty.LABEL], [plain_text]
-    )
+    header_label.update_property([Gtk.AccessibleProperty.LABEL], [plain_text])
     box.append(header_label)
 
-    # Parse rows/columns
     columns = args.column or []
     num_cols = len(columns)
-    raw_rows = args.row or []
-
-    # Build row groups
-    rows = []
-    for i in range(0, len(raw_rows), num_cols):
-        chunk = raw_rows[i:i + num_cols]
-        if len(chunk) == num_cols:
-            rows.append(chunk)
+    rows = _group_rows(args.row or [], num_cols)
 
     print_col = (args.print_column or 1) - 1  # 0-indexed
     hide_col = (args.hide_column or 0) - 1
@@ -352,7 +396,7 @@ def _show_list(app: DialogApp, args):
     scrolled.set_child(listbox)
     box.append(scrolled)
 
-    check_group = []  # List of (row_widget, Gtk.CheckButton, value)
+    check_group: list[tuple[Adw.ActionRow, Gtk.CheckButton, str]] = []
 
     for row_data in rows:
         # Determine display text (skip hidden columns)
@@ -365,9 +409,7 @@ def _show_list(app: DialogApp, args):
         value = row_data[print_col] if print_col < len(row_data) else ""
 
         action_row = Adw.ActionRow(title=display_text)
-        action_row.update_property(
-            [Gtk.AccessibleProperty.LABEL], [display_text]
-        )
+        action_row.update_property([Gtk.AccessibleProperty.LABEL], [display_text])
 
         check_btn = Gtk.CheckButton()
         check_btn.set_halign(Gtk.Align.CENTER)
@@ -392,7 +434,7 @@ def _show_list(app: DialogApp, args):
         if btn.get_active():
             _selected_value = val
 
-    for _, cb, val in check_group:
+    for _row_widget, cb, val in check_group:
         cb.connect("toggled", _on_check_toggled, val)
 
     btn_box = Gtk.Box(spacing=12, halign=Gtk.Align.CENTER)
@@ -420,9 +462,7 @@ def _show_list(app: DialogApp, args):
     ok_btn.connect("clicked", _on_ok)
     cancel_btn.connect("clicked", _on_cancel)
 
-    win.update_property(
-        [Gtk.AccessibleProperty.LABEL], [args.title or _("Select")]
-    )
+    win.update_property([Gtk.AccessibleProperty.LABEL], [args.title or _("Select")])
     announce(win, plain_text)
     win.present()
 

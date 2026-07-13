@@ -1,14 +1,22 @@
 #!/usr/bin/env bash
 
 post_install() {
-    # Enable livecd-tweaks service for boot optimizations
-    systemctl enable livecd-tweaks.service
+	local directory=/usr/share/bigbashview/bcc/apps/bigbashview-calamares
+	local mode temporary
 
-    # Save to compare date of iso creation and date of installation
-    echo $(( $(date +%s) / 86400 )) > /usr/share/bigbashview/bcc/apps/bigbashview-calamares/install_date
+	# This is an optional compatibility marker owned by BigBashView. Do not make
+	# that application a hard dependency or create directories in its namespace.
+	[[ -d $directory && ! -L $directory && $(stat -c %u -- "$directory") == 0 ]] || return 0
+	mode=$(stat -c %a -- "$directory") || return 0
+	(((8#$mode & 8#22) == 0)) || return 0
+
+	temporary=$(mktemp --tmpdir="$directory" .install_date.XXXXXX) || return 0
+	if ! printf '%s\n' "$(($(date +%s) / 86400))" >"$temporary"; then
+		rm -f -- "$temporary"
+		return 0
+	fi
+	if ! chmod 0644 "$temporary" || ! mv -fT -- "$temporary" "$directory/install_date"; then
+		rm -f -- "$temporary"
+	fi
+	return 0
 }
-
-pre_remove() {
-    mv -f /usr/bin/calamares-manjaro /usr/bin/calamares
-    mv -f /usr/bin/calamares-manjaro_polkit /usr/bin/calamares_polkit
-} 

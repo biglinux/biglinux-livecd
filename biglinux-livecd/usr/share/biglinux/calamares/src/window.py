@@ -7,17 +7,23 @@ Manages navigation between different pages using Gtk.Stack
 
 import logging
 import os
+
 import gi
 
-gi.require_version('Gtk', '4.0')
-gi.require_version('Adw', '1')
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
 
-from gi.repository import Gtk, Adw, Gdk
-from .utils.i18n import _
-from .utils.constants import DEFAULTS
-from .utils.accessibility import announce, set_label, set_description, start_orca
+from gi.repository import Adw, Gdk, Gtk
+
+from .infrastructure.accessibility import (
+    announce,
+    set_description,
+    set_label,
+    start_orca,
+)
+from .infrastructure.constants import DEFAULTS
+from .infrastructure.i18n import _
 from .pages import MainPage, MaintenancePage, MinimalPage, TipsPage
-
 
 # XivaStudio detection paths
 XIVASTUDIO_LOGO_PNG = "/usr/share/pixmaps/icon-logo-xivastudio.png"
@@ -27,7 +33,7 @@ XIVASTUDIO_LOGO_GIF = "/usr/share/pixmaps/icon-logo-xivastudio.gif"
 def is_xivastudio_system() -> bool:
     """
     Check if the system is XivaStudio by looking for logo files.
-    
+
     Returns:
         True if XivaStudio is detected, False otherwise.
     """
@@ -78,8 +84,10 @@ class CalamaresWindow(Adw.ApplicationWindow):
         title = _("{distro} Installation").format(distro=self.distro_name)
         self.set_title(title)
         # Use constants for window sizing to ensure configurability.
-        self.set_default_size(DEFAULTS['window_width'], DEFAULTS['window_height'])
-        self.set_size_request(DEFAULTS['min_window_width'], DEFAULTS['min_window_height'])
+        self.set_default_size(DEFAULTS["window_width"], DEFAULTS["window_height"])
+        self.set_size_request(
+            DEFAULTS["min_window_width"], DEFAULTS["min_window_height"]
+        )
         # Icon removed from the window itself to create a cleaner header bar.
         # The app icon will be handled by the .desktop file.
         self.set_deletable(True)
@@ -103,7 +111,7 @@ class CalamaresWindow(Adw.ApplicationWindow):
         self.main_view.set_content(self.toast_overlay)
         self.stack = Gtk.Stack(
             transition_type=Gtk.StackTransitionType.SLIDE_LEFT_RIGHT,
-            transition_duration=300
+            transition_duration=300,
         )
         self.toast_overlay.set_child(self.stack)
 
@@ -111,7 +119,7 @@ class CalamaresWindow(Adw.ApplicationWindow):
         nav_bar_container = Gtk.Box()
         nav_bar_container.add_css_class("toolbar")
         self.main_view.add_bottom_bar(nav_bar_container)
-        
+
         self.nav_bar = Adw.Bin()
         nav_bar_container.append(self.nav_bar)
 
@@ -164,7 +172,7 @@ class CalamaresWindow(Adw.ApplicationWindow):
             "main": MainPage(),
             "maintenance": MaintenancePage(),
             "minimal": MinimalPage(),
-            "tips": TipsPage()
+            "tips": TipsPage(),
         }
 
         for name, page in self.pages.items():
@@ -188,12 +196,15 @@ class CalamaresWindow(Adw.ApplicationWindow):
         self.stack.set_visible_child_name(page_name)
         self.update_navigation_state(page_name)
         current_page = self.stack.get_visible_child()
-        
+        if current_page is None:
+            self.logger.error("Visible page disappeared during navigation")
+            return
+
         # Pass data to the page if it supports it
-        if data and hasattr(current_page, 'set_navigation_data'):
+        if data and hasattr(current_page, "set_navigation_data"):
             current_page.set_navigation_data(data)
-        
-        if hasattr(current_page, 'on_page_activated'):
+
+        if hasattr(current_page, "on_page_activated"):
             current_page.on_page_activated()
 
         # Announce the page transition to screen readers
@@ -209,7 +220,7 @@ class CalamaresWindow(Adw.ApplicationWindow):
     def navigate_back(self, button=None):
         current_page_name = self.stack.get_visible_child_name()
         if current_page_name in ["maintenance", "minimal", "tips"]:
-             self.navigate_to("main")
+            self.navigate_to("main")
         else:
             self.navigate_to("main")
 
@@ -242,11 +253,11 @@ class CalamaresWindow(Adw.ApplicationWindow):
         self.clear_nav_boxes()
 
         current_page = self.pages[page_name]
-        is_main_page = (page_name == "main")
-        
+        is_main_page = page_name == "main"
+
         self.nav_bar.set_visible(not is_main_page)
         self.back_button.remove_css_class("suggested-action")  # Reset style
-        
+
         # Reset button states - they may have been disabled by previous page
         self.continue_button.set_sensitive(True)
         self.back_button.set_sensitive(True)
@@ -264,12 +275,16 @@ class CalamaresWindow(Adw.ApplicationWindow):
         )
 
         if not is_main_page:
-            self.back_signal_handler = self.back_button.connect("clicked", self.navigate_back)
+            self.back_signal_handler = self.back_button.connect(
+                "clicked", self.navigate_back
+            )
 
             if page_name == "maintenance":
                 self.center_box.append(self.back_button)
-                self.back_button.add_css_class("suggested-action") # Blue button as requested
-            
+                self.back_button.add_css_class(
+                    "suggested-action"
+                )  # Blue button as requested
+
             elif page_name == "minimal":
                 self.start_box.append(self.back_button)
                 self.center_box.append(self.uncheck_all_button)
@@ -277,16 +292,24 @@ class CalamaresWindow(Adw.ApplicationWindow):
                 self.end_box.append(self.continue_button)
 
                 self.continue_button.set_label(_("Continue"))
-                self.continue_signal_handler = self.continue_button.connect("clicked", lambda btn: current_page.do_continue_action(btn))
-                self.check_all_handler = self.check_all_button.connect("clicked", current_page.on_check_all_clicked)
-                self.uncheck_all_handler = self.uncheck_all_button.connect("clicked", current_page.on_uncheck_all_clicked)
+                self.continue_signal_handler = self.continue_button.connect(
+                    "clicked", lambda btn: current_page.do_continue_action(btn)
+                )
+                self.check_all_handler = self.check_all_button.connect(
+                    "clicked", current_page.on_check_all_clicked
+                )
+                self.uncheck_all_handler = self.uncheck_all_button.connect(
+                    "clicked", current_page.on_uncheck_all_clicked
+                )
 
             elif page_name == "tips":
                 # Tips page only has centered Install button, no back button
                 self.center_box.append(self.continue_button)
-                
+
                 self.continue_button.set_label(_("Continue"))
-                self.continue_signal_handler = self.continue_button.connect("clicked", lambda btn: current_page.do_continue_action(btn))
+                self.continue_signal_handler = self.continue_button.connect(
+                    "clicked", lambda btn: current_page.do_continue_action(btn)
+                )
 
     def show_toast(self, toast):
         if self.toast_overlay:
@@ -302,6 +325,6 @@ class CalamaresWindow(Adw.ApplicationWindow):
         self.logger.info("Window cleanup started")
         self.disconnect_signals()
         for page in self.pages.values():
-            if hasattr(page, 'cleanup'):
+            if hasattr(page, "cleanup"):
                 page.cleanup()
         self.logger.info("Window cleanup completed")

@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+live_state_directory=/run/biglinux-live
+
+require_live_state_directory() {
+	[[ -d $live_state_directory && ! -L $live_state_directory ]] || {
+		printf 'biglinux-livecd: missing safe live state directory: %s\n' "$live_state_directory" >&2
+		return 1
+	}
+}
+
+write_live_state() {
+	local name=$1 content=$2 temporary_file target
+	case "$name" in
+	language | keyboard | desktop | gnome-layout | gnome-settings | desktop-theme | enable-jamesdsp | improve-display) ;;
+	*)
+		printf 'biglinux-livecd: unsupported live state name: %s\n' "$name" >&2
+		return 1
+		;;
+	esac
+	require_live_state_directory || return 1
+	target=$live_state_directory/$name
+	[[ ! -L $target ]] || return 1
+	temporary_file=$(mktemp -- "$live_state_directory/.${name}.XXXXXX") || return 1
+	if ! printf '%s' "$content" >"$temporary_file"; then
+		rm -f -- "$temporary_file"
+		return 1
+	fi
+	chmod 0600 -- "$temporary_file"
+	sync -f -- "$temporary_file"
+	mv -fT -- "$temporary_file" "$target"
+	sync -f -- "$live_state_directory"
+}
+
+initialize_default_live_state() {
+	write_live_state language en_US
+	write_live_state desktop-theme breeze
+	write_live_state desktop 'startkde-biglinux classic'
+}
+
+install_live_state_defaults() {
+	require_live_state_directory || return 1
+	sudo install -m 0644 -- "$live_state_directory/desktop-theme" /etc/default-theme-biglinux
+	sudo install -m 0644 -- "$live_state_directory/desktop" /etc/big_desktop_changed
+}

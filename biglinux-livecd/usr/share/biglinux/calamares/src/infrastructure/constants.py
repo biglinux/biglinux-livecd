@@ -26,7 +26,7 @@ NETINSTALL_XIVASTUDIO_YAML = DATA_DIR / "netinstall-xivastudio.yaml"
 
 # System Paths
 BOOT_MOUNT_DIR = Path("/run/miso/bootmnt")
-TEMP_DIR = Path("/tmp")
+TEMP_DIR = Path("/run/biglinux-live/calamares")
 
 # Temporary Files (used by installation process)
 TEMP_FILES = {

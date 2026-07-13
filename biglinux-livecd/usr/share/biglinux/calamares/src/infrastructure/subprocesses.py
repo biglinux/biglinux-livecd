@@ -6,10 +6,11 @@ Safe wrapper for executing system commands with proper error handling
 import logging
 import os
 import shlex
+import shutil
 import signal
 import subprocess
 import threading
-from typing import Callable, Dict, List, Optional
+from typing import Callable, Dict, List, Optional, Sequence
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +35,7 @@ class CommandResult:
 class ShellExecutor:
     """Safe shell command executor with timeout and logging"""
 
-    def __init__(self, timeout: int = 30, log_commands: bool = True):
+    def __init__(self, timeout: int = 30, log_commands: bool = False):
         self.timeout = timeout
         self.log_commands = log_commands
         self.running_processes: Dict[int, subprocess.Popen] = {}
@@ -42,11 +43,9 @@ class ShellExecutor:
 
     def execute(
         self,
-        command: str,
+        command: str | Sequence[str],
         timeout: Optional[int] = None,
-        shell: bool = False,
         cwd: Optional[str] = None,
-        env: Optional[Dict[str, str]] = None,
         check_output: bool = True,
     ) -> CommandResult:
         """
@@ -55,9 +54,7 @@ class ShellExecutor:
         Args:
             command: Command to execute
             timeout: Timeout in seconds (None uses default)
-            shell: Whether to use shell=True
             cwd: Working directory
-            env: Environment variables
             check_output: Whether to capture output
 
         Returns:
@@ -66,31 +63,21 @@ class ShellExecutor:
         if timeout is None:
             timeout = self.timeout
 
-        if self.log_commands:
-            logger.info(f"Executing command: {command}")
-
         try:
             # Prepare command
-            if shell:
-                cmd = command
-            else:
-                cmd = shlex.split(command)
-
-            # Prepare environment
-            exec_env = os.environ.copy()
-            if env:
-                exec_env.update(env)
+            cmd = shlex.split(command) if isinstance(command, str) else list(command)
+            display_command = shlex.join(cmd)
+            if self.log_commands:
+                logger.info("Executing command: %s", display_command)
 
             # Start process
             process = subprocess.Popen(
                 cmd,
                 stdout=subprocess.PIPE if check_output else None,
                 stderr=subprocess.PIPE if check_output else None,
-                shell=shell,
                 cwd=cwd,
-                env=exec_env,
                 text=True,
-                preexec_fn=os.setsid if os.name != "nt" else None,
+                start_new_session=os.name != "nt",
             )
 
             # Track running process
@@ -98,74 +85,63 @@ class ShellExecutor:
                 self.running_processes[process.pid] = process
 
             try:
-                # Wait for completion with timeout
-                stdout, stderr = process.communicate(timeout=timeout)
-
-                # Create result
-                result = CommandResult(
-                    returncode=process.returncode,
-                    stdout=stdout or "",
-                    stderr=stderr or "",
-                    command=command,
-                )
-
-                if self.log_commands:
-                    if result.success:
-                        logger.debug(f"Command completed successfully: {command}")
-                    else:
-                        logger.warning(
-                            f"Command failed (code {result.returncode}): {command}"
-                        )
-                        if result.stderr:
-                            logger.warning(f"Command stderr: {result.stderr}")
-
-                return result
-
-            except subprocess.TimeoutExpired:
-                logger.error(f"Command timed out after {timeout}s: {command}")
-
-                # Kill process group
-                try:
-                    if os.name != "nt":
-                        os.killpg(os.getpgid(process.pid), signal.SIGTERM)
-                    else:
-                        process.terminate()
-
-                    # Wait a bit for graceful termination
-                    try:
-                        process.wait(timeout=5)
-                    except subprocess.TimeoutExpired:
-                        # Force kill if still running
-                        if os.name != "nt":
-                            os.killpg(os.getpgid(process.pid), signal.SIGKILL)
-                        else:
-                            process.kill()
-                        process.wait()
-
-                except Exception as e:
-                    logger.error(f"Failed to kill timed out process: {e}")
-
-                return CommandResult(
-                    returncode=-1,
-                    stdout="",
-                    stderr=f"Command timed out after {timeout} seconds",
-                    command=command,
-                )
-
+                return self._communicate(process, timeout, display_command)
             finally:
                 # Remove from tracking
                 with self._lock:
                     self.running_processes.pop(process.pid, None)
 
         except Exception as e:
-            logger.error(f"Exception executing command '{command}': {e}")
+            logger.error("Exception executing command: %s", e)
             return CommandResult(
-                returncode=-1, stdout="", stderr=str(e), command=command
+                returncode=-1, stdout="", stderr=str(e), command="<invalid command>"
             )
+
+    def _communicate(
+        self, process, timeout: int, display_command: str
+    ) -> CommandResult:
+        try:
+            stdout, stderr = process.communicate(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            logger.error("Command timed out after %ss: %s", timeout, display_command)
+            self._terminate_process(process)
+            return CommandResult(
+                returncode=-1,
+                stdout="",
+                stderr=f"Command timed out after {timeout} seconds",
+                command=display_command,
+            )
+        result = CommandResult(
+            returncode=process.returncode,
+            stdout=stdout or "",
+            stderr=stderr or "",
+            command=display_command,
+        )
+        if self.log_commands:
+            logger.info("Command finished with status %s", result.returncode)
+        return result
+
+    @staticmethod
+    def _terminate_process(process) -> None:
+        try:
+            if os.name != "nt":
+                os.killpg(os.getpgid(process.pid), signal.SIGTERM)
+            else:
+                process.terminate()
+            try:
+                process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                if os.name != "nt":
+                    os.killpg(os.getpgid(process.pid), signal.SIGKILL)
+                else:
+                    process.kill()
+                process.wait()
+        except (OSError, subprocess.SubprocessError) as error:
+            logger.error("Failed to stop timed out process: %s", error)
 
     def execute_async(
         self,
-        command: str,
+        command: str | Sequence[str],
         callback: Callable[[CommandResult], None],
         timeout: Optional[int] = None,
         **kwargs,
@@ -185,8 +161,7 @@ class ShellExecutor:
 
         def run_command():
             result = self.execute(command, timeout=timeout, **kwargs)
-            if callback:
-                callback(result)
+            callback(result)
 
         thread = threading.Thread(target=run_command)
         thread.daemon = True
@@ -203,8 +178,7 @@ class ShellExecutor:
         Returns:
             True if command exists
         """
-        result = self.execute(f"command -v {shlex.quote(command)}", shell=True)
-        return result.success
+        return shutil.which(command) is not None
 
     def kill_all_processes(self):
         """Kill all running processes started by this executor"""
@@ -227,7 +201,7 @@ class ShellExecutor:
 _default_executor = ShellExecutor()
 
 
-def execute_command(command: str, **kwargs) -> CommandResult:
+def execute_command(command: str | Sequence[str], **kwargs) -> CommandResult:
     """
     Execute a command using the default executor
 
@@ -242,7 +216,7 @@ def execute_command(command: str, **kwargs) -> CommandResult:
 
 
 def execute_command_async(
-    command: str, callback: Callable[[CommandResult], None], **kwargs
+    command: str | Sequence[str], callback: Callable[[CommandResult], None], **kwargs
 ) -> threading.Thread:
     """
     Execute a command asynchronously using the default executor
@@ -271,7 +245,7 @@ def check_command_exists(command: str) -> bool:
     return _default_executor.check_command_exists(command)
 
 
-def get_command_output(command: str, **kwargs) -> Optional[str]:
+def get_command_output(command: str | Sequence[str], **kwargs) -> Optional[str]:
     """
     Get command output or None if failed
 
@@ -286,7 +260,7 @@ def get_command_output(command: str, **kwargs) -> Optional[str]:
     return result.stdout.strip() if result.success else None
 
 
-def run_command_simple(command: str, **kwargs) -> bool:
+def run_command_simple(command: str | Sequence[str], **kwargs) -> bool:
     """
     Run command and return success status
 
@@ -309,7 +283,7 @@ def cleanup_shell_resources():
 # Convenience functions for common shell operations
 def pacman_query_installed() -> List[str]:
     """Get list of installed packages"""
-    result = execute_command("pacman -Qq")
+    result = execute_command(["pacman", "-Qq"])
     if result.success:
         return [pkg.strip() for pkg in result.stdout.split("\n") if pkg.strip()]
     return []
@@ -317,7 +291,7 @@ def pacman_query_installed() -> List[str]:
 
 def check_package_installed(package: str) -> bool:
     """Check if a specific package is installed"""
-    result = execute_command(f"pacman -Q {shlex.quote(package)}")
+    result = execute_command(["pacman", "-Q", package])
     return result.success
 
 
@@ -326,13 +300,14 @@ def get_system_info() -> Dict[str, str]:
     info = {}
 
     # Kernel version
-    result = execute_command("uname -r")
+    result = execute_command(["uname", "-r"])
     if result.success:
         info["kernel"] = result.stdout.strip().split("-")[0]
 
     # Boot mode
-    result = execute_command("[ -d /sys/firmware/efi ]")
-    info["boot_mode"] = "UEFI" if result.success else "BIOS (Legacy)"
+    info["boot_mode"] = (
+        "UEFI" if os.path.isdir("/sys/firmware/efi") else "BIOS (Legacy)"
+    )
 
     # Session type
     session_type = os.environ.get("XDG_SESSION_TYPE", "unknown")
@@ -352,7 +327,7 @@ def get_package_icon(package: str, size: int = 48) -> Optional[str]:
     3. Returns package name for GTK IconTheme lookup
     """
     # Try geticons command first
-    result = execute_command(f"geticons -s {size} {shlex.quote(package)}")
+    result = execute_command(["geticons", "-s", str(size), package])
     if result.success and result.stdout.strip():
         icon_path = result.stdout.strip()
         if os.path.exists(icon_path):

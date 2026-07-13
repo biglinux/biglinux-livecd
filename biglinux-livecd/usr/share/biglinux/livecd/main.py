@@ -1,10 +1,11 @@
-import sys
 import argparse
 import logging
+import sys
 
-from logging_config import setup_logging
 from application import Application
+from logging_config import setup_logging
 from services import SystemService
+
 
 def main():
     """Initializes and runs the GTK application."""
@@ -30,6 +31,7 @@ def main():
 
     app = Application(system_service=system_service)
     return app.run([sys.argv[0]] + remaining_argv)
+
 
 if __name__ == "__main__":
     sys.exit(main())

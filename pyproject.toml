@@ -1,0 +1,56 @@
+[project]
+name = "biglinux-livecd"
+version = "0.0.0"
+requires-python = ">=3.11"
+dependencies = ["Babel", "PyGObject"]
+
+[project.optional-dependencies]
+accessibility = ["speechd"]
+
+[tool.deptry]
+known_first_party = [
+    "accessibility",
+    "application",
+    "config",
+    "desktop_theme",
+    "gnome_layout",
+    "integrity",
+    "logging_config",
+    "services",
+    "suggested_locale",
+    "src",
+    "translations",
+    "ui",
+    "user_config",
+]
+package_module_name_map = { PyGObject = ["gi"] }
+per_rule_ignores = { DEP001 = ["libcalamares"] }
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"] # Ruff's formatter intentionally preserves long strings and URLs.
+
+[tool.ruff.lint.per-file-ignores]
+"biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py" = ["E402"]
+"biglinux-livecd/usr/share/biglinux/calamares/main.py" = ["E402"]
+"biglinux-livecd/usr/share/biglinux/calamares/src/app.py" = ["E402"]
+"biglinux-livecd/usr/share/biglinux/calamares/src/pages/*.py" = ["E402"]
+"biglinux-livecd/usr/share/biglinux/calamares/src/infrastructure/accessibility.py" = ["E402"]
+"biglinux-livecd/usr/share/biglinux/calamares/src/infrastructure/widgets.py" = ["E402"]
+"biglinux-livecd/usr/share/biglinux/calamares/src/window.py" = ["E402"]
+"biglinux-livecd/usr/share/biglinux/livecd/accessibility.py" = ["E402"]
+"biglinux-livecd/usr/share/biglinux/livecd/application.py" = ["E402"]
+"biglinux-livecd/usr/share/biglinux/livecd/ui/*.py" = ["E402"]
+
+[tool.mypy]
+# Calamares loads each plugin as a standalone module named `main`; a recursive
+# mypy invocation otherwise reports three correct files as one duplicate module.
+exclude = [
+    "biglinux-livecd/usr/lib/calamares/modules/.*/main[.]py$",
+    "biglinux-livecd/usr/share/biglinux/(calamares|livecd)/.*[.]py$",
+    "tests/.*[.]py$",
+]

@@ -4,7 +4,7 @@ Version=1.0
 Name=Install System
 GenericName=System Installer
 Keywords=calamares;system;installer
-Exec=/usr/bin/calamares_polkit %f
+Exec=/usr/bin/calamares-biglinux_polkit
 Comment=Calamares — System Installer
 Icon=icon-big-hd-install
 Terminal=false
@@ -196,4 +196,4 @@ Actions=SoftwareRender;
 
 [Desktop Action SoftwareRender]
 Name=Software Render
-Exec=SoftwareRender /usr/bin/calamares_polkit %f
+Exec=/usr/bin/calamares-biglinux_polkit --software-render

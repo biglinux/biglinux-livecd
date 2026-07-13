@@ -42,9 +42,7 @@ def set_label(widget: Gtk.Accessible, label: str) -> None:
     """Set the accessible LABEL property on a widget."""
     if widget and label:
         try:
-            widget.update_property(
-                [Gtk.AccessibleProperty.LABEL], [label]
-            )
+            widget.update_property([Gtk.AccessibleProperty.LABEL], [label])
         except Exception as e:
             logger.debug(f"set_label() failed: {e}")
 
@@ -53,9 +51,7 @@ def set_description(widget: Gtk.Accessible, description: str) -> None:
     """Set the accessible DESCRIPTION property on a widget."""
     if widget and description:
         try:
-            widget.update_property(
-                [Gtk.AccessibleProperty.DESCRIPTION], [description]
-            )
+            widget.update_property([Gtk.AccessibleProperty.DESCRIPTION], [description])
         except Exception as e:
             logger.debug(f"set_description() failed: {e}")
 
@@ -64,9 +60,7 @@ def set_labelled_by(widget: Gtk.Accessible, label_widget: Gtk.Accessible) -> Non
     """Set LABELLED_BY relation so screen readers associate a widget with its label."""
     if widget and label_widget:
         try:
-            widget.update_relation(
-                [Gtk.AccessibleRelation.LABELLED_BY], [label_widget]
-            )
+            widget.update_relation([Gtk.AccessibleRelation.LABELLED_BY], [label_widget])
         except Exception as e:
             logger.debug(f"set_labelled_by() failed: {e}")
 

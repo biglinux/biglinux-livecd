@@ -1,36 +1,59 @@
-#!/bin/bash
-#===============================================================================
-# Script Name: livecd-tweaks
-# Description: Live CD Runtime Optimizations
-#              Applies kernel cmdline-based tweaks for Live CD boot,
-#              handling driver modes and optional SSH access.
-# Package:     biglinux-livecd
-#===============================================================================
+#!/usr/bin/env bash
+set -uo pipefail
 
-#-------------------------------------------------------------------------------
-# Free Driver Mode: Disable proprietary hardware detection
-# When booting with 'driver=free', skip mhwd-live
-#-------------------------------------------------------------------------------
-if [[ -e "/livefs-pkgs.txt" ]] && [[ -n "$(grep 'driver=free' /proc/cmdline)" ]]; then
-    echo '#!/bin/sh
-    echo "Disable mhwd-live"' > /usr/bin/mhwd-live
-fi
+# shellcheck disable=SC1091
+source /usr/lib/biglinux-livecd/kernel-options
 
-#-------------------------------------------------------------------------------
-# Non-Free Driver Mode: Skip mkinitcpio during boot
-# When booting with 'driver=nonfree', prevent initramfs regeneration
-#-------------------------------------------------------------------------------
-if [[ -e "/livefs-pkgs.txt" ]] && [[ -n "$(grep 'driver=nonfree' /proc/cmdline)" ]]; then
-    echo '#!/bin/sh
-    true' > /usr/bin/mkinitcpio
-fi
+live_marker=/livefs-pkgs.txt
+console_path=/dev/console
+mkinitcpio_path=/usr/bin/mkinitcpio
+mkinitcpio_shim=/usr/lib/biglinux-livecd/shims/mkinitcpio
+systemctl_bin=/usr/bin/systemctl
+mount_bin=/usr/bin/mount
+mountpoint_bin=/usr/bin/mountpoint
+chpasswd_bin=/usr/bin/chpasswd
 
-#-------------------------------------------------------------------------------
-# SSH Access Mode: Enable remote access for debugging
-# When 'sshenable' is present in kernel cmdline, start sshd
-#-------------------------------------------------------------------------------
-if [[ "$(grep sshenable /proc/cmdline)" != "" ]]; then
-    # Set default password for live session
-    echo "biglinux:biglinux" | chpasswd
-    systemctl start sshd
+log() {
+	printf 'biglinux-livecd: %s\n' "$*" >&2
+}
+
+disable_free_driver_detection() {
+	"$systemctl_bin" mask --runtime --now mhwd-live.service
+}
+
+install_runtime_mkinitcpio_shim() {
+	if [[ ! -x $mkinitcpio_path || ! -x $mkinitcpio_shim ]]; then
+		log "mkinitcpio or its live shim is unavailable"
+		return 1
+	fi
+	if "$mountpoint_bin" --quiet "$mkinitcpio_path"; then
+		return 0
+	fi
+	"$mount_bin" --bind "$mkinitcpio_shim" "$mkinitcpio_path"
+}
+
+enable_live_ssh() {
+	local warning
+	printf -v warning '%s' 'WARNING: Live SSH enabled with the documented support password; disconnect untrusted networks.'
+	printf '%s\n' "$warning" >"$console_path" || true
+	log "$warning"
+	printf '%s\n' 'biglinux:biglinux' | "$chpasswd_bin" || return 1
+	"$systemctl_bin" start sshd.service
+}
+
+main() {
+	[[ -e $live_marker ]] || return 0
+	if kernel_has_argument driver=free; then
+		disable_free_driver_detection || return 1
+	fi
+	if kernel_has_argument driver=nonfree; then
+		install_runtime_mkinitcpio_shim || return 1
+	fi
+	if kernel_has_argument sshenable; then
+		enable_live_ssh || return 1
+	fi
+}
+
+if [[ ${BASH_SOURCE[0]} == "$0" ]]; then
+	main "$@"
 fi

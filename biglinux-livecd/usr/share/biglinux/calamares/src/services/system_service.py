@@ -5,11 +5,20 @@ System Service for BigLinux Calamares Configuration Tool
 Handles system detection and information gathering
 """
 
-import os
 import logging
+import os
+import sys
 from pathlib import Path
 from typing import Optional
-from ..utils import _, get_command_output, check_command_exists, COMMANDS
+
+from ..infrastructure import COMMANDS, _, check_command_exists, get_command_output
+
+_installed_library = Path("/usr/lib/biglinux-livecd")
+_development_library = Path(__file__).resolve().parents[5] / "lib/biglinux-livecd"
+sys.path.insert(
+    0, str(_installed_library if _installed_library.is_dir() else _development_library)
+)
+from integrity import detect_iso_mount  # noqa: E402
 
 
 class SystemService:
@@ -67,7 +76,7 @@ class SystemService:
     def _detect_kernel_version(self) -> str:
         """Detect kernel version"""
         try:
-            full_version = get_command_output("uname -r")
+            full_version = get_command_output(["uname", "-r"])
             return full_version.split("-")[0] if full_version else "Unknown"
         except Exception as e:
             self.logger.warning(f"Failed to detect kernel version: {e}")
@@ -85,7 +94,7 @@ class SystemService:
     def _detect_architecture(self) -> str:
         """Detect system architecture"""
         try:
-            return get_command_output("uname -m") or "Unknown"
+            return get_command_output(["uname", "-m"]) or "Unknown"
         except Exception as e:
             self.logger.warning(f"Failed to detect architecture: {e}")
             return "Unknown"
@@ -95,7 +104,7 @@ class SystemService:
         try:
             return (
                 os.environ.get("HOSTNAME")
-                or get_command_output("hostname")
+                or get_command_output(["hostname"])
                 or "Unknown"
             )
         except Exception as e:
@@ -113,18 +122,8 @@ class SystemService:
     def _detect_sfs_folder(self) -> Optional[str]:
         """Detect SFS folder for live system"""
         try:
-            boot_mount = Path("/run/miso/bootmnt")
-            if not boot_mount.exists():
-                return None
-
-            for item in boot_mount.iterdir():
-                if (
-                    item.is_dir()
-                    and item.name not in ["efi", "boot"]
-                    and (item / "x86_64").exists()
-                ):
-                    return item.name
-            return None
+            image_directory = detect_iso_mount()
+            return image_directory.parent.name if image_directory else None
         except Exception as e:
             self.logger.warning(f"Failed to detect SFS folder: {e}")
             return None

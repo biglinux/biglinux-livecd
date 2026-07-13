@@ -8,8 +8,7 @@ import os
 import shutil
 import tempfile
 from pathlib import Path
-from typing import Dict, List, Optional, Any, Union
-
+from typing import Any, Dict, List, Optional, Sequence, Union
 
 logger = logging.getLogger(__name__)
 
@@ -166,19 +165,42 @@ def write_text_file(
     Returns:
         True if successful
     """
+    temporary_path = ""
     try:
         file_path = Path(file_path)
 
         # Create directory if needed
         file_path.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(file_path, "w", encoding=encoding) as f:
-            f.write(content)
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding=encoding,
+            dir=file_path.parent,
+            prefix=f".{file_path.name}.",
+            delete=False,
+        ) as output:
+            temporary_path = output.name
+            output.write(content)
+            output.flush()
+            os.fsync(output.fileno())
+        os.chmod(temporary_path, 0o644)
+        os.replace(temporary_path, file_path)
+        temporary_path = ""
+        directory = os.open(file_path.parent, os.O_RDONLY | os.O_DIRECTORY)
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
 
         logger.debug(f"Successfully wrote text file: {file_path}")
         return True
 
-    except Exception as e:
+    except (OSError, UnicodeError) as e:
+        if temporary_path:
+            try:
+                os.unlink(temporary_path)
+            except FileNotFoundError:
+                pass
         logger.error(f"Failed to write text file {file_path}: {e}")
         return False
 
@@ -279,7 +301,7 @@ def human_readable_size(size_bytes: int) -> str:
         return f"{size:.1f} {units[unit_index]}"
 
 
-def cleanup_temp_files(file_paths: List[Union[str, Path]]) -> None:
+def cleanup_temp_files(file_paths: Sequence[Union[str, Path]]) -> None:
     """
     Clean up temporary files safely
 

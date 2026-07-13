@@ -1,0 +1,2 @@
+enable livecd-tweaks.service
+enable biglinux-language-suggestion.service

@@ -1,25 +1,10 @@
-#!/bin/bash
-#
-# only-konsole - Fullscreen Terminal Mode for LiveCD
-#
-# Launches Konsole in fullscreen mode for direct terminal access.
-# Used for troubleshooting, manual installation, or advanced configuration.
-#
-# Sets up default language and theme before launching the terminal.
-#
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Set default language and theme
-echo 'en_US' > /tmp/big_language
-echo "breeze" > /tmp/big_desktop_theme
-echo "startkde-biglinux classic" > /tmp/biglightdm
+# shellcheck disable=SC1091
+source /usr/lib/biglinux-livecd/live-state
 
-# Legacy support for older detection methods
-echo "startkde-biglinux classic" > /tmp/big_desktop_changed-calamares
-echo "startkde-biglinux classic" > /tmp/big_desktop_changed
+initialize_default_live_state
+install_live_state_defaults
 
-# Apply settings
-sudo cp -f /tmp/big_desktop_theme /etc/default-theme-biglinux
-sudo cp -f /tmp/big_desktop_changed /etc/big_desktop_changed
-
-# Launch fullscreen terminal
-konsole --fullscreen
+exec /usr/bin/konsole --fullscreen

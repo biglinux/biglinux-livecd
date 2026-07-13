@@ -4,12 +4,13 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, GObject, GLib, GdkPixbuf, Gdk
-from translations import _
-from services import SystemService
-from ui.base_view import BaseItemView
-from logging_config import get_logger
 import os
+
+from gi.repository import Gdk, GdkPixbuf, GLib, GObject, Gtk
+from logging_config import get_logger
+from services import SystemService
+from translations import _
+from ui.base_view import BaseItemView
 
 logger = get_logger()
 
@@ -39,7 +40,9 @@ class DesktopView(BaseItemView):
     def create_item_gobject(self, name: str) -> GObject.Object:
         return DesktopListItem(name, self.system_service)
 
-    def create_item_widget(self, item: DesktopListItem):
+    def create_item_widget(self, item: GObject.Object):
+        if not isinstance(item, DesktopListItem):
+            raise TypeError("DesktopView requires a DesktopListItem")
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         box.set_can_focus(True)
         # Accessible description for screen readers
@@ -53,6 +56,7 @@ class DesktopView(BaseItemView):
         except Exception:
             pass
 
+        picture: Gtk.Widget
         if os.path.exists(item.image_path):
             try:
                 pixbuf = GdkPixbuf.Pixbuf.new_from_file(item.image_path)
@@ -68,10 +72,10 @@ class DesktopView(BaseItemView):
                 logger.error(f"Error loading image {item.image_path}: {e}")
                 picture = Gtk.Picture()
         else:
-            picture = Gtk.Picture.new_from_icon_name("image-missing-symbolic")
+            picture = Gtk.Image.new_from_icon_name("image-missing-symbolic")
 
         box.append(picture)
         return box
 
     def emit_signal(self, name: str):
-        self.sig_desktop_selected.emit(name)
+        self.sig_desktop_selected.emit(name)  # type: ignore[arg-type]

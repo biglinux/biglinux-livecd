@@ -1,6 +1,7 @@
 """
 Translation utility module to ensure consistent translations throughout the application
 """
+
 import gettext
 
 from logging_config import get_logger

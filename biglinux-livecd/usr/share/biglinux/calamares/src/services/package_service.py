@@ -5,14 +5,15 @@ Handles package management, icon mapping, and package selection
 
 import logging
 from pathlib import Path
-from typing import Dict, List, Optional, Any
-from ..utils import (
-    load_json_file,
-    pacman_query_installed,
-    validate_package_name,
+from typing import Any, Dict, List, Optional
+
+from ..infrastructure import (
     ICON_MAPPING_FILE,
     MINIMAL_PACKAGES_FILE,
     TEMP_FILES,
+    load_json_file,
+    pacman_query_installed,
+    validate_package_name,
 )
 
 

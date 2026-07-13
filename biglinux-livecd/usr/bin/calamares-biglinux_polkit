@@ -1,24 +1,63 @@
-#!/bin/bash
-#
-# calamares-biglinux_polkit - PolicyKit wrapper for Calamares Installer
-#
-# Launches Calamares with elevated privileges while respecting the
-# user's desktop color scheme preference (light/dark mode).
-#
-# This wrapper is called by the PolicyKit action to ensure proper
-# theme detection when launching Calamares from the live session.
-#
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Detect user's color scheme preference (prefer-light or prefer-dark)
-colorScheme=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
+# Launch the BigLinux installer as root with only the desktop session values
+# required for rendering and accessibility. Do not preserve the full user
+# environment across the privilege boundary.
 
-# Get AT-SPI2 accessibility bus address so ORCA can read the GTK4 app
-# even when it runs as root via sudo
-AT_SPI_BUS_ADDRESS=$(dbus-send --session --dest=org.a11y.Bus --print-reply \
-    /org/a11y/bus org.a11y.Bus.GetAddress 2>/dev/null \
-    | grep 'string "' | sed 's/.*string "//;s/"//')
+software_render=0
+if [[ ${1:-} == --software-render ]]; then
+	software_render=1
+	shift
+fi
 
-# Launch Calamares with preserved environment and color scheme override
-sudo -E env ADW_DEBUG_COLOR_SCHEME=$colorScheme \
-    ${AT_SPI_BUS_ADDRESS:+AT_SPI_BUS_ADDRESS="$AT_SPI_BUS_ADDRESS"} \
-    /usr/bin/calamares "$@"
+live_user=${USER:-}
+[[ $live_user =~ ^[a-z_][a-z0-9_-]*[$]?$ ]] || {
+	printf '%s\n' 'calamares-biglinux: cannot determine the live-session user' >&2
+	exit 1
+}
+live_user_id=$(id -u -- "$live_user") || exit 1
+((live_user_id > 0)) || {
+	printf '%s\n' 'calamares-biglinux: refusing a root desktop session' >&2
+	exit 1
+}
+
+color_scheme=$(gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null | tr -d "'" || true)
+case "$color_scheme" in
+prefer-dark | prefer-light) ;;
+*) color_scheme=default ;;
+esac
+
+declare -a installer_environment=(
+	"HOME=/root"
+	"PATH=/usr/bin:/bin"
+	"BIGLINUX_LIVE_USER=$live_user"
+	"ADW_DEBUG_COLOR_SCHEME=$color_scheme"
+)
+
+append_safe_environment() {
+	local name=$1 value=$2 pattern=$3
+	[[ -n $value && ${#value} -le 4096 && ! $value =~ [[:cntrl:]] && $value =~ $pattern ]] || return 0
+	installer_environment+=("$name=$value")
+}
+
+append_safe_environment DISPLAY "${DISPLAY:-}" '^([A-Za-z0-9._-]+)?:[0-9]+([.][0-9]+)?$'
+append_safe_environment WAYLAND_DISPLAY "${WAYLAND_DISPLAY:-}" '^wayland-[A-Za-z0-9._-]+$'
+if [[ ${XDG_RUNTIME_DIR:-} =~ ^/run/user/[0-9]+$ && -d ${XDG_RUNTIME_DIR:-} ]]; then
+	installer_environment+=("XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR")
+fi
+append_safe_environment XAUTHORITY "${XAUTHORITY:-}" '^/[^[:cntrl:]]+$'
+append_safe_environment DBUS_SESSION_BUS_ADDRESS "${DBUS_SESSION_BUS_ADDRESS:-}" '^[^[:space:][:cntrl:]]+$'
+append_safe_environment LANG "${LANG:-}" '^[A-Za-z0-9_.@-]+$'
+append_safe_environment LC_ALL "${LC_ALL:-}" '^[A-Za-z0-9_.@-]+$'
+
+at_spi_bus_address=$(dbus-send --session --dest=org.a11y.Bus --print-reply \
+	/org/a11y/bus org.a11y.Bus.GetAddress 2>/dev/null |
+	sed -n 's/.*string "\([^"]*\)".*/\1/p' | head -n 1 || true)
+append_safe_environment AT_SPI_BUS_ADDRESS "$at_spi_bus_address" \
+	'^unix:(path|abstract)=[A-Za-z0-9_./@=-]+(,guid=[0-9a-fA-F]{32})?$'
+
+((software_render == 0)) || installer_environment+=("QT_QUICK_BACKEND=software")
+
+exec sudo -- /usr/bin/env -i "${installer_environment[@]}" \
+	/usr/bin/calamares-biglinux "$@"

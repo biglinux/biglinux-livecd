@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+findmnt_command=${findmnt_command:-/usr/bin/findmnt}
+lsblk_command=${lsblk_command:-/usr/bin/lsblk}
+
+count_non_live_efi_partitions() {
+	local live_mount=$1
+	local live_source live_ancestry candidate_rows
+	local partition_path partition_type candidate_ancestry ancestor_path
+	local is_live_partition count=0
+	local -A live_device_paths=()
+
+	live_source=$("$findmnt_command" --noheadings --raw --output SOURCE --target "$live_mount" 2>/dev/null | head -n 1) || return 1
+	if [[ $live_source == /dev/* ]]; then
+		live_source=$(readlink -f -- "$live_source") || return 1
+		live_ancestry=$("$lsblk_command" --inverse --paths --noheadings --raw --output PATH "$live_source") || return 1
+		while IFS= read -r ancestor_path; do
+			[[ -n $ancestor_path ]] && live_device_paths[$ancestor_path]=1
+		done <<<"$live_ancestry"
+	fi
+
+	candidate_rows=$("$lsblk_command" --paths --noheadings --raw --output PATH,PARTTYPE) || return 1
+	while read -r partition_path partition_type; do
+		partition_type=${partition_type,,}
+		[[ $partition_type == c12a7328-f81f-11d2-ba4b-00a0c93ec93b || $partition_type == 0xef ]] || continue
+		candidate_ancestry=$("$lsblk_command" --inverse --paths --noheadings --raw --output PATH "$partition_path") || return 1
+		is_live_partition=0
+		while IFS= read -r ancestor_path; do
+			if [[ -n $ancestor_path && -v live_device_paths[$ancestor_path] ]]; then
+				is_live_partition=1
+				break
+			fi
+		done <<<"$candidate_ancestry"
+		((is_live_partition == 1)) || count=$((count + 1))
+	done <<<"$candidate_rows"
+	printf '%s\n' "$count"
+}
