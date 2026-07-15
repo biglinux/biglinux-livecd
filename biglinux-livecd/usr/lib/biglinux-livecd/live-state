@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 
-live_state_directory=/run/biglinux-live
+live_state_directory=/tmp
+
+live_state_path() {
+	case "$1" in
+	language) printf '%s\n' "$live_state_directory/big_language" ;;
+	keyboard) printf '%s\n' "$live_state_directory/big_keyboard" ;;
+	desktop) printf '%s\n' "$live_state_directory/big_desktop_changed" ;;
+	gnome-layout) printf '%s\n' "$live_state_directory/big_gnome_layout" ;;
+	gnome-settings) printf '%s\n' "$live_state_directory/big_gnome_settings" ;;
+	desktop-theme) printf '%s\n' "$live_state_directory/big_desktop_theme" ;;
+	enable-jamesdsp) printf '%s\n' "$live_state_directory/big_enable_jamesdsp" ;;
+	improve-display) printf '%s\n' "$live_state_directory/big_improve_display" ;;
+	*) return 1 ;;
+	esac
+}
 
 require_live_state_directory() {
 	[[ -d $live_state_directory && ! -L $live_state_directory ]] || {
@@ -19,7 +33,7 @@ write_live_state() {
 		;;
 	esac
 	require_live_state_directory || return 1
-	target=$live_state_directory/$name
+	target=$(live_state_path "$name") || return 1
 	[[ ! -L $target ]] || return 1
 	temporary_file=$(mktemp -- "$live_state_directory/.${name}.XXXXXX") || return 1
 	if ! printf '%s' "$content" >"$temporary_file"; then
@@ -40,6 +54,6 @@ initialize_default_live_state() {
 
 install_live_state_defaults() {
 	require_live_state_directory || return 1
-	sudo install -m 0644 -- "$live_state_directory/desktop-theme" /etc/default-theme-biglinux
-	sudo install -m 0644 -- "$live_state_directory/desktop" /etc/big_desktop_changed
+	sudo install -m 0644 -- "$(live_state_path desktop-theme)" /etc/default-theme-biglinux
+	sudo install -m 0644 -- "$(live_state_path desktop)" /etc/big_desktop_changed
 }

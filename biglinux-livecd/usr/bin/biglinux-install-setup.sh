@@ -5,7 +5,13 @@ set -euo pipefail
 # command line or following attacker-controlled files from /tmp.
 
 readonly max_live_config_bytes=$((16 * 1024 * 1024))
-readonly live_state_directory=/run/biglinux-live
+readonly live_state_directory=/tmp
+readonly live_theme_file=/tmp/big_desktop_theme
+readonly live_desktop_file=/tmp/big_desktop_changed
+readonly live_gnome_layout_file=/tmp/big_gnome_layout
+readonly live_gnome_settings_file=/tmp/big_gnome_settings
+readonly live_jamesdsp_file=/tmp/big_enable_jamesdsp
+readonly live_display_profile_file=/tmp/big_improve_display
 declare -a temporary_files=()
 created_temporary_file=
 root_mount=
@@ -249,7 +255,7 @@ copy_gnome_settings_to_homes() {
 
 current_gnome_settings_source() {
 	local live_home_root=${1:-/home}
-	local fallback=${2:-$live_state_directory/gnome-settings}
+	local fallback=${2:-$live_gnome_settings_file}
 	local resolved_root home_directory candidate resolved_home resolved_candidate
 	resolved_root=$(realpath -e -- "$live_home_root") || {
 		printf '%s\n' "$fallback"
@@ -286,13 +292,13 @@ main() {
 	fi
 	atomic_write_text "$sddm_state" 0644 $'[Last]\nSession='"$session"
 	ensure_directory "$config_directory"
-	copy_live_config "$live_state_directory/desktop-theme" "$config_directory/theme"
-	copy_live_config "$live_state_directory/desktop" "$config_directory/desktop"
-	copy_live_config "$live_state_directory/gnome-layout" "$config_directory/gnome-layout"
+	copy_live_config "$live_theme_file" "$config_directory/theme"
+	copy_live_config "$live_desktop_file" "$config_directory/desktop"
+	copy_live_config "$live_gnome_layout_file" "$config_directory/gnome-layout"
 	gnome_settings_source=$(current_gnome_settings_source /home)
 	copy_gnome_settings_to_homes "$gnome_settings_source"
-	copy_live_config "$live_state_directory/enable-jamesdsp" "$config_directory/jamesdsp"
-	copy_live_config "$live_state_directory/improve-display" "$config_directory/display-profile"
+	copy_live_config "$live_jamesdsp_file" "$config_directory/jamesdsp"
+	copy_live_config "$live_display_profile_file" "$config_directory/display-profile"
 	printf '%s\n' 'BigLinux installation setup completed successfully'
 }
 

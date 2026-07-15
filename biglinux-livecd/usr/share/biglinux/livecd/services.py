@@ -55,20 +55,16 @@ class SystemService:
         self.gnome_layouts_path = "/usr/share/layout-switcher/layouts"
         self.gnome_layouts_icons_path = "/usr/share/layout-switcher/icons"
 
-        # Boot-scoped live state consumed by Calamares.
-        self.live_state_dir = "/run/biglinux-live"
-        self.language_state_file = os.path.join(self.live_state_dir, "language")
-        self.keyboard_state_file = os.path.join(self.live_state_dir, "keyboard")
-        self.desktop_state_file = os.path.join(self.live_state_dir, "desktop")
-        self.gnome_layout_state_file = os.path.join(self.live_state_dir, "gnome-layout")
-        self.gnome_settings_state_file = os.path.join(
-            self.live_state_dir, "gnome-settings"
-        )
-        self.theme_state_file = os.path.join(self.live_state_dir, "desktop-theme")
-        self.jamesdsp_state_file = os.path.join(self.live_state_dir, "enable-jamesdsp")
-        self.display_profile_state_file = os.path.join(
-            self.live_state_dir, "improve-display"
-        )
+        # Boot-scoped live state consumed by startbiglive and install setup.
+        self.live_state_dir = "/tmp"
+        self.language_state_file = "/tmp/big_language"
+        self.keyboard_state_file = "/tmp/big_keyboard"
+        self.desktop_state_file = "/tmp/big_desktop_changed"
+        self.gnome_layout_state_file = "/tmp/big_gnome_layout"
+        self.gnome_settings_state_file = "/tmp/big_gnome_settings"
+        self.theme_state_file = "/tmp/big_desktop_theme"
+        self.jamesdsp_state_file = "/tmp/big_enable_jamesdsp"
+        self.display_profile_state_file = "/tmp/big_improve_display"
         self._gnome_input_sources: str | None = None
 
     def _run_command(
@@ -129,7 +125,7 @@ class SystemService:
             return False, str(e)
 
     def _write_live_state_file(self, filepath: str, content: str) -> bool:
-        """Atomically commit one file in the tmpfiles-owned live state directory."""
+        """Atomically commit one boot-scoped live state file."""
         if self.test_mode:
             logger.debug(
                 f"[TEST MODE] Suppressed write to {filepath}: '{content[:50]}{'...' if len(content) > 50 else ''}'"

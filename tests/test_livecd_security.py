@@ -222,7 +222,7 @@ write_live_state unsupported value >/dev/null 2>&1; printf 'unsupported=%s\n' "$
     )
     assert result.returncode == 0, result.stderr
     assert result.stdout.strip() == "unsupported=1"
-    state_file = state_directory / "language"
+    state_file = state_directory / "big_language"
     assert state_file.read_text(encoding="utf-8") == "pt_BR"
     assert stat.S_IMODE(state_file.stat().st_mode) == 0o600
     assert list(state_directory.glob(".language.*")) == []

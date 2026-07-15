@@ -474,8 +474,9 @@ wait
 # Apply language and locale settings from user selection
 #-------------------------------------------------------------------------------
 # shellcheck disable=SC2154
-if [[ -f $live_state_directory/language && ! -L $live_state_directory/language ]]; then
-	live_language=$(<"$live_state_directory/language")
+live_language_file=$(live_state_path language)
+if [[ -f $live_language_file && ! -L $live_language_file ]]; then
+	live_language=$(<"$live_language_file")
 	if [[ $live_language =~ ^[a-z]{2,3}(_[A-Z]{2})?$ ]]; then
 		live_locale=$live_language.UTF-8
 		export LANGUAGE=$live_locale
@@ -501,6 +502,18 @@ fi
 mkdir -p -- "$xdg_desktop_directory"
 installer_shortcut=$xdg_desktop_directory/calamares-biglinux.desktop
 install -m 0755 -- /usr/share/applications/com.biglinux.calamares-config.desktop "$installer_shortcut"
+user_applications_directory=$HOME/.local/share/applications
+mkdir -p -- "$user_applications_directory"
+cat >"$user_applications_directory/calamares.desktop" <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=Calamares
+Exec=/usr/bin/false
+NoDisplay=true
+Hidden=true
+Terminal=false
+EOF
+chmod 0644 -- "$user_applications_directory/calamares.desktop"
 
 cd -- "$HOME" || exit 1
 
@@ -564,8 +577,9 @@ fi
 # libadwaita apps use their own color-scheme setting and can ignore GTK INI files
 # in non-GNOME sessions. GNOME reads color-scheme from dconf directly, and the
 # forced override would fight the wizard's choice there, so skip it on gdm.
-if [[ $display_manager != gdm && -f $live_state_directory/desktop-theme && ! -L $live_state_directory/desktop-theme ]]; then
-	case "$(<"$live_state_directory/desktop-theme")" in
+live_theme_file=$(live_state_path desktop-theme)
+if [[ $display_manager != gdm && -f $live_theme_file && ! -L $live_theme_file ]]; then
+	case "$(<"$live_theme_file")" in
 	dark)
 		export ADW_DEBUG_COLOR_SCHEME=prefer-dark
 		;;

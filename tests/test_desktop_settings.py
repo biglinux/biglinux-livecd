@@ -29,7 +29,7 @@ class FakeThemeHost:
         self.test_mode = False
         self.theme_list_script = str(theme_list_script)
         self.theme_apply_script = "/usr/bin/apply-theme"
-        self.theme_state_file = "/run/biglinux-live/desktop-theme"
+        self.theme_state_file = "/tmp/big_desktop_theme"
         self.commands: list[list[str]] = []
         self.states: list[tuple[str, str]] = []
         self.gtk_settings: list[tuple[bool, str]] = []
