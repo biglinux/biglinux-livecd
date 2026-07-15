@@ -2,8 +2,8 @@
 # shellcheck shell=bash disable=SC2034,SC2154
 
 pkgname=biglinux-livecd
-pkgver=26.07.11
-pkgrel=1
+pkgver=$(date +%y.%m.%d)
+pkgrel=$(date +%H%M)
 pkgdesc="BigLinux live-session setup and Calamares installer integration"
 arch=('any')
 url="https://github.com/biglinux/biglinux-livecd"
@@ -27,7 +27,7 @@ depends=(
 )
 optdepends=('speech-dispatcher: spoken feedback in the live-session wizard')
 makedepends=('git')
-source=("${pkgname}::git+${url}.git#commit=92c7b7463fcf504d1795c4e4bd2ecbd04a4a7f03")
+source=("git+https://github.com/biglinux/biglinux-livecd.git")
 sha256sums=('SKIP')
 install="${pkgname}.install"
 
