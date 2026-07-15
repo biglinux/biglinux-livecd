@@ -54,9 +54,22 @@ def normalize_layout_text(text: str) -> str:
             continue
         if line.startswith("enabled-extensions="):
             extensions = _parse_extension_list(line.partition("=")[2])
-            if LAYOUT_SWITCHER_HELPER_UUID not in extensions:
-                extensions.append(LAYOUT_SWITCHER_HELPER_UUID)
+            extensions = [
+                extension
+                for extension in extensions
+                if extension != LAYOUT_SWITCHER_HELPER_UUID
+            ]
+            extensions.insert(0, LAYOUT_SWITCHER_HELPER_UUID)
             output.append(f"enabled-extensions={extensions!r}")
+            continue
+        if line.startswith("disabled-extensions="):
+            extensions = _parse_extension_list(line.partition("=")[2])
+            extensions = [
+                extension
+                for extension in extensions
+                if extension != LAYOUT_SWITCHER_HELPER_UUID
+            ]
+            output.append(f"disabled-extensions={extensions!r}")
             continue
         if "=" not in line:
             output.append(line)
