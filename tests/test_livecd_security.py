@@ -460,6 +460,10 @@ def test_privileged_installer_uses_a_minimal_environment() -> None:
                 "USER": "liveuser",
                 "DISPLAY": ":1",
                 "LANG": "pt_BR.UTF-8",
+                "LANGUAGE": "pt_BR:pt",
+                "LC_MESSAGES": "pt_BR.UTF-8",
+                "DESKTOP_STARTUP_ID": "cinnamon-launcher_TIME1",
+                "XDG_ACTIVATION_TOKEN": "activation-token-1",
                 "LD_PRELOAD": "/tmp/evil.so",
                 "TEST_LOG": str(log),
             },
@@ -470,9 +474,23 @@ def test_privileged_installer_uses_a_minimal_environment() -> None:
     assert "BIGLINUX_LIVE_USER=liveuser" in arguments
     assert "ADW_DEBUG_COLOR_SCHEME=prefer-dark" in arguments
     assert "DISPLAY=:1" in arguments
+    assert "LANGUAGE=pt_BR:pt" in arguments
+    assert "LC_MESSAGES=pt_BR.UTF-8" in arguments
+    assert "DESKTOP_STARTUP_ID=cinnamon-launcher_TIME1" in arguments
+    assert "XDG_ACTIVATION_TOKEN=activation-token-1" in arguments
     assert "QT_QUICK_BACKEND=software" in arguments
     assert "LD_PRELOAD" not in arguments
     assert arguments.rstrip().endswith("/usr/bin/calamares-biglinux")
+
+
+def test_installer_waits_in_one_foreground_flow() -> None:
+    launcher = (PACKAGE / "usr/bin/calamares-biglinux").read_text(encoding="utf-8")
+    assert "integrity-wait" in launcher
+    assert "wait_for_verification |" in launcher
+    assert "Verification complete" in launcher
+    assert "The files are intact." in launcher
+    assert "sleep 600 |" not in launcher
+    assert "verification_dialog_pid" not in launcher
 
 
 def test_packaging_no_longer_replaces_distribution_binaries() -> None:
@@ -496,3 +514,6 @@ def test_packaging_no_longer_replaces_distribution_binaries() -> None:
     assert "enable biglinux-language-suggestion.service" in (
         PACKAGE / "usr/lib/systemd/system-preset/50-biglinux-livecd.preset"
     ).read_text(encoding="utf-8")
+    pkgbuild = (REPOSITORY / "pkgbuild/PKGBUILD").read_text(encoding="utf-8")
+    assert "for catalog in biglinux-livecd/locale/*.po" in pkgbuild
+    assert "msgfmt --check-format" in pkgbuild

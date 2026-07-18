@@ -8,11 +8,12 @@ Fully accessible to ORCA screen reader via AT-SPI2.
 """
 
 import gettext
+import logging
 import os
-from pathlib import Path
 import signal
 import sys
 import threading
+from pathlib import Path
 
 import gi
 
@@ -260,7 +261,7 @@ class VerifyApp(Adw.Application):
                 progress=lambda percentage, filename: GLib.idle_add(
                     self._update_progress,
                     percentage,
-                    _("Checking the file:") + f" {filename}",
+                    _("Checking the file: {filename}").format(filename=filename),
                     filename,
                 ),
             )
@@ -285,12 +286,13 @@ class VerifyApp(Adw.Application):
         announce(self.win, status)
 
     def _on_error(self, reason: str):
+        logging.getLogger(__name__).error("Integrity verification failed: %s", reason)
         self._show_result(
             "dialog-error-symbolic",
             _("Verification failed"),
-            _("The live media could not be verified:")
-            + f" {reason}. "
-            + _("Download the system again or use another USB drive."),
+            _(
+                "The live media could not be verified. Download the system again or use another USB drive."
+            ),
             is_error=True,
         )
 

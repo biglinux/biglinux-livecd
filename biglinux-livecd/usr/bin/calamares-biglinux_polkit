@@ -49,7 +49,11 @@ fi
 append_safe_environment XAUTHORITY "${XAUTHORITY:-}" '^/[^[:cntrl:]]+$'
 append_safe_environment DBUS_SESSION_BUS_ADDRESS "${DBUS_SESSION_BUS_ADDRESS:-}" '^[^[:space:][:cntrl:]]+$'
 append_safe_environment LANG "${LANG:-}" '^[A-Za-z0-9_.@-]+$'
+append_safe_environment LANGUAGE "${LANGUAGE:-}" '^[A-Za-z0-9_.@:-]+$'
+append_safe_environment LC_MESSAGES "${LC_MESSAGES:-}" '^[A-Za-z0-9_.@-]+$'
 append_safe_environment LC_ALL "${LC_ALL:-}" '^[A-Za-z0-9_.@-]+$'
+append_safe_environment DESKTOP_STARTUP_ID "${DESKTOP_STARTUP_ID:-}" '^[^[:space:][:cntrl:]]+$'
+append_safe_environment XDG_ACTIVATION_TOKEN "${XDG_ACTIVATION_TOKEN:-}" '^[^[:space:][:cntrl:]]+$'
 
 at_spi_bus_address=$(dbus-send --session --dest=org.a11y.Bus --print-reply \
 	/org/a11y/bus org.a11y.Bus.GetAddress 2>/dev/null |
