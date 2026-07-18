@@ -1270,3 +1270,52 @@ msgstr "%d резултата"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:35
 msgid "Choose a Desktop Layout"
 msgstr "Изберете оформление на работния плот"
+
+#: biglinux-livecd/usr/bin/calamares-biglinux:74
+msgid "Please wait..."
+msgstr "Моля, изчакайте..."
+
+#: biglinux-livecd/usr/bin/calamares-biglinux:74
+msgid "Checking the integrity of the download and storage device..."
+msgstr "Проверка на целостта на изтеглянето и устройството за съхранение..."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
+msgid "Checking system integrity"
+msgstr "Проверка на целостта на системата"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:158
+msgid "Checking for download or USB drive errors, this may take a few minutes..."
+msgstr "Проверка за грешки при изтеглянето или в USB устройството, която може да отнеме няколко минути..."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:180
+msgid "Verification progress"
+msgstr "Напредък на проверката"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:264
+#, python-brace-format
+msgid "Checking the file: {filename}"
+msgstr "Проверка на файла: {filename}"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:292
+msgid "Verification failed"
+msgstr "Проверката е неуспешна"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:294
+msgid "The live media could not be verified. Download the system again or use another USB drive."
+msgstr "Live носителят не можа да бъде проверен. Изтеглете системата отново или използвайте друго USB устройство."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
+msgid "Verification complete"
+msgstr "Проверката е завършена"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
+msgid "The files are intact."
+msgstr "Файловете са непокътнати."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
+msgid "Verification canceled"
+msgstr "Проверката е отменена"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:311
+msgid "The integrity check was not completed."
+msgstr "Проверката на целостта не беше завършена."

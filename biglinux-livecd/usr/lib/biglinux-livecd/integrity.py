@@ -25,6 +25,7 @@ _MANIFEST_PATTERN = re.compile(r"^([0-9a-fA-F]{32})[ \t]+\*?([^/\x00]+)$")
 _IMAGE_TREE_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
 _MAX_MANIFEST_BYTES = 1024
 _READ_CHUNK_BYTES = 4 * 1024 * 1024
+_CACHE_DROP_BYTES = 64 * 1024 * 1024
 
 
 class VerificationStatus(Enum):
@@ -114,10 +115,33 @@ def _hash_file(
     is_cancelled: Callable[[], bool],
 ) -> str | None:
     digest = hashlib.md5(usedforsecurity=False)
+    descriptor = image_file.fileno()
+    bytes_read = 0
+    last_cache_drop = 0
+    try:
+        os.posix_fadvise(descriptor, 0, 0, os.POSIX_FADV_SEQUENTIAL)
+    except (AttributeError, OSError):
+        pass
     while chunk := image_file.read(_READ_CHUNK_BYTES):
         if is_cancelled():
             return None
         digest.update(chunk)
+        bytes_read += len(chunk)
+        if bytes_read - last_cache_drop >= _CACHE_DROP_BYTES:
+            try:
+                os.posix_fadvise(
+                    descriptor,
+                    last_cache_drop,
+                    bytes_read - last_cache_drop,
+                    os.POSIX_FADV_DONTNEED,
+                )
+            except (AttributeError, OSError):
+                pass
+            last_cache_drop = bytes_read
+    try:
+        os.posix_fadvise(descriptor, 0, 0, os.POSIX_FADV_DONTNEED)
+    except (AttributeError, OSError):
+        pass
     return digest.hexdigest()
 
 

@@ -1270,3 +1270,52 @@ msgstr "%d tulemust"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:35
 msgid "Choose a Desktop Layout"
 msgstr "Vali töölaua paigutus"
+
+#: biglinux-livecd/usr/bin/calamares-biglinux:74
+msgid "Please wait..."
+msgstr "Palun oota..."
+
+#: biglinux-livecd/usr/bin/calamares-biglinux:74
+msgid "Checking the integrity of the download and storage device..."
+msgstr "Kontrollitakse allalaadimise ja salvestusseadme terviklikkust..."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
+msgid "Checking system integrity"
+msgstr "Süsteemi tervikluse kontrollimine"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:158
+msgid "Checking for download or USB drive errors, this may take a few minutes..."
+msgstr "Allalaadimis- või USB-draivi vigade kontrollimine, mis võib võtta mõne minuti..."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:180
+msgid "Verification progress"
+msgstr "Kontrolli edenemine"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:264
+#, python-brace-format
+msgid "Checking the file: {filename}"
+msgstr "Faili kontrollimine: {filename}"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:292
+msgid "Verification failed"
+msgstr "Kontrollimine ebaõnnestus"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:294
+msgid "The live media could not be verified. Download the system again or use another USB drive."
+msgstr "Live-andmekandjat ei õnnestunud kontrollida. Laadige süsteem uuesti alla või kasutage teist USB-draivi."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
+msgid "Verification complete"
+msgstr "Kontrollimine on lõpetatud"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
+msgid "The files are intact."
+msgstr "Failid on terved."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
+msgid "Verification canceled"
+msgstr "Kontrollimine on tühistatud"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:311
+msgid "The integrity check was not completed."
+msgstr "Tervikluse kontrollimist ei lõpetatud."

@@ -1272,3 +1272,52 @@ msgstr "%d tulosta"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:35
 msgid "Choose a Desktop Layout"
 msgstr "Valitse työpöydän asettelu"
+
+#: biglinux-livecd/usr/bin/calamares-biglinux:74
+msgid "Please wait..."
+msgstr "Odota hetki..."
+
+#: biglinux-livecd/usr/bin/calamares-biglinux:74
+msgid "Checking the integrity of the download and storage device..."
+msgstr "Tarkistetaan latauksen ja tallennuslaitteen eheys..."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
+msgid "Checking system integrity"
+msgstr "Järjestelmän eheyttä tarkistetaan"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:158
+msgid "Checking for download or USB drive errors, this may take a few minutes..."
+msgstr "Latauksessa tai USB-asemassa mahdollisesti olevia virheitä etsitään, tämä voi kestää muutaman minuutin..."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:180
+msgid "Verification progress"
+msgstr "Tarkistuksen edistyminen"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:264
+#, python-brace-format
+msgid "Checking the file: {filename}"
+msgstr "Tarkistetaan tiedostoa: {filename}"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:292
+msgid "Verification failed"
+msgstr "Tarkistus epäonnistui"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:294
+msgid "The live media could not be verified. Download the system again or use another USB drive."
+msgstr "Live-tietovälinettä ei voitu tarkistaa. Lataa järjestelmä uudelleen tai käytä toista USB-asemaa."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
+msgid "Verification complete"
+msgstr "Tarkistus valmis"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
+msgid "The files are intact."
+msgstr "Tiedostot ovat ehjiä."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
+msgid "Verification canceled"
+msgstr "Tarkistus peruutettu"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:311
+msgid "The integrity check was not completed."
+msgstr "Eheystarkistusta ei suoritettu loppuun."

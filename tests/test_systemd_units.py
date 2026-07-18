@@ -59,3 +59,23 @@ def test_language_suggestion_unit_is_valid_for_staged_payload(
         "/usr/lib/biglinux-livecd/language_suggestion_probe.py",
         "usr/lib/biglinux-livecd/language_suggestion_probe.py",
     )
+
+
+def test_integrity_check_unit_is_valid_and_enabled(tmp_path: Path) -> None:
+    verify_staged_unit(
+        tmp_path,
+        "biglinux-integrity-check.service",
+        "/usr/bin/biglinux-verify-md5sum",
+        "usr/bin/biglinux-verify-md5sum",
+    )
+    preset = PACKAGE / "usr/lib/systemd/system-preset/50-biglinux-livecd.preset"
+    assert (
+        "enable biglinux-integrity-check.service"
+        in preset.read_text(encoding="utf-8").splitlines()
+    )
+    wanted_unit = (
+        PACKAGE
+        / "usr/lib/systemd/system/graphical.target.wants/biglinux-integrity-check.service"
+    )
+    assert wanted_unit.is_symlink()
+    assert wanted_unit.readlink() == Path("../biglinux-integrity-check.service")

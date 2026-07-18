@@ -1,0 +1,37 @@
+[Unit]
+Description=Verify BigLinux live media in the background
+Documentation=https://github.com/biglinux/biglinux-livecd
+ConditionPathExists=/livefs-pkgs.txt
+After=local-fs.target
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+ExecStart=/usr/bin/biglinux-verify-md5sum --no-gui
+SuccessExitStatus=1
+TimeoutStartSec=infinity
+RemainAfterExit=true
+Nice=19
+IOSchedulingClass=idle
+IOSchedulingPriority=7
+UMask=0077
+PrivateDevices=true
+PrivateMounts=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/run/biglinux-live/integrity
+NoNewPrivileges=true
+ProtectControlGroups=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_UNIX
+LockPersonality=true
+MemoryDenyWriteExecute=true
+Environment=PYTHONDONTWRITEBYTECODE=1
+
+[Install]
+WantedBy=graphical.target
