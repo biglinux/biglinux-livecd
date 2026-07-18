@@ -1272,3 +1272,51 @@ msgstr "情報"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:465
 msgid "Select"
 msgstr "選択"
+
+#: biglinux-livecd/usr/bin/calamares-biglinux:74
+msgid "Checking the integrity of the download and storage device..."
+msgstr "ダウンロードとストレージデバイスの整合性をチェックしています..."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
+msgid "Checking system integrity"
+msgstr "システムの整合性を確認しています"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:158
+msgid ""
+"Checking for download or USB drive errors, this may take a few minutes..."
+msgstr "ダウンロードまたは USB ドライブにエラーがないか確認しています。これには数分かかる場合があります…"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:180
+msgid "Verification progress"
+msgstr "検証の進行状況"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:264
+#, python-brace-format
+msgid "Checking the file: {filename}"
+msgstr "ファイルを確認しています：{filename}"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:292
+msgid "Verification failed"
+msgstr "検証に失敗しました"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:294
+msgid ""
+"The live media could not be verified. Download the system again or use "
+"another USB drive."
+msgstr "ライブメディアを検証できませんでした。システムを再度ダウンロードするか、別の USB ドライブを使用してください。"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
+msgid "Verification complete"
+msgstr "検証が完了しました"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
+msgid "The files are intact."
+msgstr "ファイルは破損していません。"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
+msgid "Verification canceled"
+msgstr "検証がキャンセルされました"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:311
+msgid "The integrity check was not completed."
+msgstr "整合性チェックは完了しませんでした。"

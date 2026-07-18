@@ -1272,3 +1272,51 @@ msgstr "信息"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:465
 msgid "Select"
 msgstr "选择"
+
+#: biglinux-livecd/usr/bin/calamares-biglinux:74
+msgid "Checking the integrity of the download and storage device..."
+msgstr "检查下载和存储设备的完整性..."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
+msgid "Checking system integrity"
+msgstr "正在检查系统完整性"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:158
+msgid ""
+"Checking for download or USB drive errors, this may take a few minutes..."
+msgstr "正在检查下载文件或 U 盘是否存在错误，这可能需要几分钟……"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:180
+msgid "Verification progress"
+msgstr "验证进度"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:264
+#, python-brace-format
+msgid "Checking the file: {filename}"
+msgstr "正在检查文件：{filename}"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:292
+msgid "Verification failed"
+msgstr "验证失败"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:294
+msgid ""
+"The live media could not be verified. Download the system again or use "
+"another USB drive."
+msgstr "无法验证 Live 启动介质。请重新下载系统或换用其他 U 盘。"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
+msgid "Verification complete"
+msgstr "验证完成"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
+msgid "The files are intact."
+msgstr "文件完好无损。"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
+msgid "Verification canceled"
+msgstr "验证已取消"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:311
+msgid "The integrity check was not completed."
+msgstr "完整性检查未完成。"

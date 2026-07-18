@@ -1,0 +1,11 @@
+[Unit]
+Description=Start BigLinux live media verification after the wizard is visible
+Documentation=https://github.com/biglinux/biglinux-livecd
+ConditionPathExists=/livefs-pkgs.txt
+
+[Path]
+PathExists=/run/user/1000/biglinux-live-wizard-ready
+Unit=biglinux-integrity-check.service
+
+[Install]
+WantedBy=graphical.target

@@ -1275,3 +1275,56 @@ msgstr "Informação"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:465
 msgid "Select"
 msgstr "Selecionar"
+
+#: biglinux-livecd/usr/bin/calamares-biglinux:74
+msgid "Checking the integrity of the download and storage device..."
+msgstr ""
+"Verificando a integridade do download e do dispositivo de armazenamento..."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
+msgid "Checking system integrity"
+msgstr "Verificando a integridade do sistema"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:158
+msgid ""
+"Checking for download or USB drive errors, this may take a few minutes..."
+msgstr ""
+"Verificando se há erros no download ou na unidade USB, o que pode levar "
+"alguns minutos..."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:180
+msgid "Verification progress"
+msgstr "Progresso da verificação"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:264
+#, python-brace-format
+msgid "Checking the file: {filename}"
+msgstr "Verificando o arquivo: {filename}"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:292
+msgid "Verification failed"
+msgstr "Falha na verificação"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:294
+msgid ""
+"The live media could not be verified. Download the system again or use "
+"another USB drive."
+msgstr ""
+"Não foi possível verificar a mídia live. Baixe o sistema novamente ou use "
+"outra unidade USB."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
+msgid "Verification complete"
+msgstr "Verificação concluída"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
+msgid "The files are intact."
+msgstr "Os arquivos estão íntegros."
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
+msgid "Verification canceled"
+msgstr "Verificação cancelada"
+
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:311
+msgid "The integrity check was not completed."
+msgstr "A verificação de integridade não foi concluída."

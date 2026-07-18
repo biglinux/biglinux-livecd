@@ -35,6 +35,25 @@ gettext.bindtextdomain("biglinux-livecd", "/usr/share/locale")
 gettext.textdomain("biglinux-livecd")
 _ = gettext.gettext
 
+# Keep installer integrity messages in catalogs generated from share/ Python files.
+_INTEGRITY_TRANSLATION_KEYS = (
+    _("Please wait..."),
+    _("Checking the integrity of the download and storage device..."),
+    _("Checking system integrity"),
+    _("Checking for download or USB drive errors, this may take a few minutes..."),
+    _("Verification progress"),
+    _("Checking the file: {filename}"),
+    _("Verification failed"),
+    _(
+        "The live media could not be verified. Download the system again or use "
+        "another USB drive."
+    ),
+    _("Verification complete"),
+    _("The files are intact."),
+    _("Verification canceled"),
+    _("The integrity check was not completed."),
+)
+
 # ── Accessibility helper ──────────────────────────────────────────────────────
 _HAS_ANNOUNCE = hasattr(Gtk.Accessible, "announce")
 

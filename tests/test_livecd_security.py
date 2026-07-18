@@ -274,6 +274,19 @@ _start_kwin_wizard
     ]
 
 
+def test_integrity_check_waits_for_mapped_wizard() -> None:
+    application = (PACKAGE / "usr/share/biglinux/livecd/application.py").read_text(
+        encoding="utf-8"
+    )
+    assert 'self.win.connect("map", self._mark_wizard_visible)' in application
+    assert (
+        'marker = os.path.join(runtime_directory, "biglinux-live-wizard-ready")'
+        in application
+    )
+    assert "runtime_directory != expected_directory" in application
+    assert "os.O_NOFOLLOW" in application
+
+
 def test_installer_prefers_current_gnome_settings_without_following_home_links(
     tmp_path: Path,
 ) -> None:

@@ -6,9 +6,7 @@ import os
 import re
 import stat
 import tempfile
-import threading
 from collections.abc import Callable
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from enum import Enum, auto
 from pathlib import Path
@@ -27,7 +25,7 @@ _MANIFEST_PATTERN = re.compile(r"^([0-9a-fA-F]{32})[ \t]+\*?([^/\x00]+)$")
 _IMAGE_TREE_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
 _MAX_MANIFEST_BYTES = 1024
 _READ_CHUNK_BYTES = 4 * 1024 * 1024
-_CACHE_DROP_BYTES = 16 * 1024 * 1024
+_CACHE_DROP_BYTES = 64 * 1024 * 1024
 
 
 class VerificationStatus(Enum):
@@ -40,13 +38,6 @@ class VerificationStatus(Enum):
 class VerificationOutcome:
     status: VerificationStatus
     reason: str
-
-
-@dataclass(frozen=True)
-class _VerificationJob:
-    image: Path
-    image_name: str
-    expected_digest: str
 
 
 def _is_regular_file(path: Path) -> bool:
@@ -154,28 +145,6 @@ def _hash_file(
     return digest.hexdigest()
 
 
-def _verify_image(
-    job: _VerificationJob,
-    is_cancelled: Callable[[], bool],
-) -> VerificationOutcome:
-    try:
-        image_descriptor, _image_stat = _open_regular(job.image)
-        with os.fdopen(image_descriptor, "rb") as image_file:
-            actual_digest = _hash_file(image_file, is_cancelled)
-    except (OSError, ValueError) as error:
-        return VerificationOutcome(VerificationStatus.FAILED, str(error))
-    if actual_digest is None:
-        return VerificationOutcome(
-            VerificationStatus.CANCELLED, "verification cancelled"
-        )
-    if actual_digest != job.expected_digest:
-        return VerificationOutcome(
-            VerificationStatus.FAILED,
-            f"checksum mismatch: {job.image_name}",
-        )
-    return VerificationOutcome(VerificationStatus.SUCCESS, "verified")
-
-
 def verify_iso(
     mount_directory: Path | None = None,
     *,
@@ -185,9 +154,9 @@ def verify_iso(
     mount = mount_directory or detect_iso_mount()
     if mount is None:
         return VerificationOutcome(VerificationStatus.FAILED, "live media not found")
-    jobs: list[_VerificationJob] = []
+    checked_files = 0
     checked_images: set[str] = set()
-    for manifest_name, image_name, _percentage in CHECKSUM_FILES:
+    for manifest_name, image_name, percentage in CHECKSUM_FILES:
         manifest = mount / manifest_name
         image = mount / image_name
         manifest_exists = manifest.exists() or manifest.is_symlink()
@@ -199,19 +168,26 @@ def verify_iso(
                 VerificationStatus.FAILED,
                 f"incomplete checksum pair: {image_name}",
             )
+        progress(percentage, image_name)
         try:
             expected_digest = _read_manifest(manifest, image_name)
+            image_descriptor, _image_stat = _open_regular(image)
+            with os.fdopen(image_descriptor, "rb") as image_file:
+                actual_digest = _hash_file(image_file, is_cancelled)
         except (OSError, ValueError) as error:
             return VerificationOutcome(VerificationStatus.FAILED, str(error))
-        jobs.append(
-            _VerificationJob(
-                image=image,
-                image_name=image_name,
-                expected_digest=expected_digest,
+        if actual_digest is None:
+            return VerificationOutcome(
+                VerificationStatus.CANCELLED, "verification cancelled"
             )
-        )
+        if actual_digest != expected_digest:
+            return VerificationOutcome(
+                VerificationStatus.FAILED,
+                f"checksum mismatch: {image_name}",
+            )
+        checked_files += 1
         checked_images.add(image_name)
-    if not jobs:
+    if checked_files == 0:
         return VerificationOutcome(
             VerificationStatus.FAILED,
             "no checksum manifests found",
@@ -221,27 +197,6 @@ def verify_iso(
             VerificationStatus.FAILED,
             f"required checksum pair missing: {REQUIRED_IMAGE}",
         )
-    stop_event = threading.Event()
-
-    def verification_is_cancelled() -> bool:
-        return stop_event.is_set() or is_cancelled()
-
-    completed = 0
-    with ThreadPoolExecutor(
-        max_workers=min(len(jobs), len(CHECKSUM_FILES)),
-        thread_name_prefix="integrity",
-    ) as executor:
-        futures = {
-            executor.submit(_verify_image, job, verification_is_cancelled): job
-            for job in jobs
-        }
-        for future in as_completed(futures):
-            outcome = future.result()
-            if outcome.status is not VerificationStatus.SUCCESS:
-                stop_event.set()
-                return outcome
-            completed += 1
-            progress(completed * 100 // len(jobs), futures[future].image_name)
     return VerificationOutcome(VerificationStatus.SUCCESS, "verified")
 
 

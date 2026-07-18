@@ -61,7 +61,7 @@ def test_language_suggestion_unit_is_valid_for_staged_payload(
     )
 
 
-def test_integrity_check_unit_is_valid_and_enabled(tmp_path: Path) -> None:
+def test_integrity_check_starts_only_after_wizard_is_visible(tmp_path: Path) -> None:
     verify_staged_unit(
         tmp_path,
         "biglinux-integrity-check.service",
@@ -70,17 +70,27 @@ def test_integrity_check_unit_is_valid_and_enabled(tmp_path: Path) -> None:
     )
     preset = PACKAGE / "usr/lib/systemd/system-preset/50-biglinux-livecd.preset"
     assert (
-        "enable biglinux-integrity-check.service"
+        "enable biglinux-integrity-check.path"
         in preset.read_text(encoding="utf-8").splitlines()
     )
     wanted_unit = (
         PACKAGE
-        / "usr/lib/systemd/system/graphical.target.wants/biglinux-integrity-check.service"
+        / "usr/lib/systemd/system/graphical.target.wants/biglinux-integrity-check.path"
     )
     assert wanted_unit.is_symlink()
-    assert wanted_unit.readlink() == Path("../biglinux-integrity-check.service")
+    assert wanted_unit.readlink() == Path("../biglinux-integrity-check.path")
+    assert not (
+        PACKAGE
+        / "usr/lib/systemd/system/graphical.target.wants/biglinux-integrity-check.service"
+    ).exists()
     unit = (
         PACKAGE / "usr/lib/systemd/system/biglinux-integrity-check.service"
     ).read_text(encoding="utf-8")
-    assert "Nice=19" not in unit
-    assert "IOSchedulingClass=idle" not in unit
+    assert "Nice=19" in unit
+    assert "IOSchedulingClass=idle" in unit
+    assert "IOSchedulingPriority=7" in unit
+    path_unit = (
+        PACKAGE / "usr/lib/systemd/system/biglinux-integrity-check.path"
+    ).read_text(encoding="utf-8")
+    assert "PathExists=/run/user/1000/biglinux-live-wizard-ready" in path_unit
+    assert "Unit=biglinux-integrity-check.service" in path_unit
