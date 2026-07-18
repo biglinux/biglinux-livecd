@@ -1070,35 +1070,28 @@ msgstr "Information"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:465
 msgid "Select"
 msgstr "Vælg"
-
 #: biglinux-livecd/usr/bin/calamares-biglinux:74
 msgid "Checking the integrity of the download and storage device..."
 msgstr "Tjekker integriteten af download og opbevaringsenhed..."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
 msgid "Checking system integrity"
 msgstr "Kontrollerer systemets integritet"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:158
 msgid ""
 "Checking for download or USB drive errors, this may take a few minutes..."
 msgstr ""
 "Kontrollerer for fejl i hentningen eller på USB-drevet, hvilket kan tage et "
 "par minutter..."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:180
 msgid "Verification progress"
 msgstr "Kontrollens fremdrift"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:264
 #, python-brace-format
 msgid "Checking the file: {filename}"
 msgstr "Kontrollerer filen: {filename}"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:292
 msgid "Verification failed"
 msgstr "Kontrollen mislykkedes"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:294
 msgid ""
 "The live media could not be verified. Download the system again or use "
@@ -1106,19 +1099,15 @@ msgid ""
 msgstr ""
 "Live-mediet kunne ikke kontrolleres. Hent systemet igen eller brug et andet "
 "USB-drev."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
 msgid "Verification complete"
 msgstr "Kontrollen er fuldført"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
 msgid "The files are intact."
 msgstr "Filerne er intakte."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
 msgid "Verification canceled"
 msgstr "Kontrollen blev annulleret"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:311
 msgid "The integrity check was not completed."
 msgstr "Integritetskontrollen blev ikke fuldført."

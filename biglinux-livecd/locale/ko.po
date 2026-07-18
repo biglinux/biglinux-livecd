@@ -903,51 +903,40 @@ msgstr "정보"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:465
 msgid "Select"
 msgstr "선택하십시오"
-
 #: biglinux-livecd/usr/bin/calamares-biglinux:74
 msgid "Checking the integrity of the download and storage device..."
 msgstr "다운로드 및 저장 장치의 무결성 확인 중..."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
 msgid "Checking system integrity"
 msgstr "시스템 무결성을 확인하는 중"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:158
 msgid ""
 "Checking for download or USB drive errors, this may take a few minutes..."
 msgstr "다운로드나 USB 드라이브에 오류가 있는지 확인하는 중입니다. 몇 분 정도 걸릴 수 있습니다..."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:180
 msgid "Verification progress"
 msgstr "검증 진행률"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:264
 #, python-brace-format
 msgid "Checking the file: {filename}"
 msgstr "파일 확인 중: {filename}"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:292
 msgid "Verification failed"
 msgstr "검증 실패"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:294
 msgid ""
 "The live media could not be verified. Download the system again or use "
 "another USB drive."
 msgstr "라이브 미디어를 검증하지 못했습니다. 시스템을 다시 다운로드하거나 다른 USB 드라이브를 사용하세요."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
 msgid "Verification complete"
 msgstr "검증 완료"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
 msgid "The files are intact."
 msgstr "파일이 손상되지 않았습니다."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
 msgid "Verification canceled"
 msgstr "검증이 취소되었습니다"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:311
 msgid "The integrity check was not completed."
 msgstr "무결성 검사가 완료되지 않았습니다."

@@ -317,7 +317,7 @@ msgstr "Remove pre-selected software to create a lean, personalized system."
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 166
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 294
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 309
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 398
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 417
 msgid "Continue"
 msgstr "Continue"
 
@@ -528,7 +528,7 @@ msgstr "Documentation"
 # #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 154
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 632
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 651
 msgid "OK"
 msgstr "OK"
 
@@ -543,79 +543,47 @@ msgid "Confirm"
 msgstr "Confirm"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 90
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 115
-msgid "Progress"
-msgstr "Progress"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 223
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 254
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 40
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 242
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 273
 msgid "Please wait..."
 msgstr "Please wait..."
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 362
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 425
-msgid "Question"
-msgstr "Question"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 397
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 468
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 470
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 518
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 520
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 628
-msgid "Close"
-msgstr "Close"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 437
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 475
-msgid "Error"
-msgstr "Error"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 487
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 526
-msgid "Information"
-msgstr "Information"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 549
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 650
-msgid "Select"
-msgstr "Select"
-
-#: biglinux-livecd/usr/bin/calamares-biglinux:74
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 41
 msgid "Checking the integrity of the download and storage device..."
 msgstr "Checking the integrity of the download and storage device..."
 
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 42
 msgid "Checking system integrity"
 msgstr "Checking system integrity"
 
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:158
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 43
 msgid ""
 "Checking for download or USB drive errors, this may take a few minutes..."
 msgstr ""
 "Checking for download or USB drive errors, this may take a few minutes..."
 
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:180
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 44
 msgid "Verification progress"
 msgstr "Verification progress"
 
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:264
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 45
 #, python-brace-format
 msgid "Checking the file: {filename}"
 msgstr "Checking the file: {filename}"
 
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:292
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 46
 msgid "Verification failed"
 msgstr "Verification failed"
 
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:294
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 48
 msgid ""
 "The live media could not be verified. Download the system again or use "
 "another USB drive."
@@ -623,18 +591,62 @@ msgstr ""
 "The live media could not be verified. Download the system again or use "
 "another USB drive."
 
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 51
 msgid "Verification complete"
 msgstr "Verification complete"
 
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 52
 msgid "The files are intact."
 msgstr "The files are intact."
 
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 53
 msgid "Verification canceled"
 msgstr "Verification canceled"
 
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:311
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 54
 msgid "The integrity check was not completed."
 msgstr "The integrity check was not completed."
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 109
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 134
+msgid "Progress"
+msgstr "Progress"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 381
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 444
+msgid "Question"
+msgstr "Question"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 416
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 487
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 489
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 537
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 539
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 647
+msgid "Close"
+msgstr "Close"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 456
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 494
+msgid "Error"
+msgstr "Error"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 506
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 545
+msgid "Information"
+msgstr "Information"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 568
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 669
+msgid "Select"
+msgstr "Select"

@@ -1277,35 +1277,28 @@ msgstr "Информация"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:465
 msgid "Select"
 msgstr "Выбрать"
-
 #: biglinux-livecd/usr/bin/calamares-biglinux:74
 msgid "Checking the integrity of the download and storage device..."
 msgstr "Проверка целостности загрузки и устройства хранения..."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
 msgid "Checking system integrity"
 msgstr "Проверка целостности системы"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:158
 msgid ""
 "Checking for download or USB drive errors, this may take a few minutes..."
 msgstr ""
 "Выполняется проверка на наличие ошибок при скачивании или на USB-накопителе,"
 " это может занять несколько минут..."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:180
 msgid "Verification progress"
 msgstr "Ход проверки"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:264
 #, python-brace-format
 msgid "Checking the file: {filename}"
 msgstr "Проверка файла: {filename}"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:292
 msgid "Verification failed"
 msgstr "Проверка не пройдена"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:294
 msgid ""
 "The live media could not be verified. Download the system again or use "
@@ -1313,19 +1306,15 @@ msgid ""
 msgstr ""
 "Не удалось проверить загрузочный носитель. Скачайте систему заново или "
 "используйте другой USB-накопитель."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
 msgid "Verification complete"
 msgstr "Проверка завершена"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
 msgid "The files are intact."
 msgstr "Файлы не повреждены."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
 msgid "Verification canceled"
 msgstr "Проверка отменена"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:311
 msgid "The integrity check was not completed."
 msgstr "Проверка целостности не завершена."

@@ -1278,35 +1278,28 @@ msgstr "Πληροφορίες"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:465
 msgid "Select"
 msgstr "Επιλέξτε"
-
 #: biglinux-livecd/usr/bin/calamares-biglinux:74
 msgid "Checking the integrity of the download and storage device..."
 msgstr "Έλεγχος ακεραιότητας της λήψης και της συσκευής αποθήκευσης..."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
 msgid "Checking system integrity"
 msgstr "Έλεγχος ακεραιότητας συστήματος"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:158
 msgid ""
 "Checking for download or USB drive errors, this may take a few minutes..."
 msgstr ""
 "Έλεγχος για σφάλματα κατά τη λήψη ή στη μονάδα USB, ο οποίος μπορεί να "
 "διαρκέσει μερικά λεπτά..."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:180
 msgid "Verification progress"
 msgstr "Πρόοδος επαλήθευσης"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:264
 #, python-brace-format
 msgid "Checking the file: {filename}"
 msgstr "Έλεγχος του αρχείου: {filename}"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:292
 msgid "Verification failed"
 msgstr "Η επαλήθευση απέτυχε"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:294
 msgid ""
 "The live media could not be verified. Download the system again or use "
@@ -1314,19 +1307,15 @@ msgid ""
 msgstr ""
 "Δεν ήταν δυνατή η επαλήθευση του μέσου live. Κατεβάστε ξανά το σύστημα ή "
 "χρησιμοποιήστε άλλη μονάδα USB."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
 msgid "Verification complete"
 msgstr "Η επαλήθευση ολοκληρώθηκε"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
 msgid "The files are intact."
 msgstr "Τα αρχεία είναι άθικτα."
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
 msgid "Verification canceled"
 msgstr "Η επαλήθευση ακυρώθηκε"
-
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:311
 msgid "The integrity check was not completed."
 msgstr "Ο έλεγχος ακεραιότητας δεν ολοκληρώθηκε."
