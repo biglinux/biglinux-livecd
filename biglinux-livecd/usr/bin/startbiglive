@@ -203,7 +203,7 @@ _detect_multi_gpu() {
 # Returns 0 if the wizard completed, 1 if kwin could not start at all
 #-------------------------------------------------------------------------------
 _start_kwin_wizard() {
-	local -a wizard_command=(/usr/bin/python /usr/share/biglinux/livecd/main.py)
+	local wizard_command="/usr/bin/python /usr/share/biglinux/livecd/main.py"
 	local -a kwin_args=(--drm --no-lockscreen --xwayland)
 	local kwin_pid
 
@@ -211,7 +211,7 @@ _start_kwin_wizard() {
 
 	# Attempt 1: hardware-accelerated rendering (default GPU selection)
 	_log "Starting kwin_wayland (hardware rendering)..."
-	dbus-run-session kwin_wayland "${kwin_args[@]}" "${wizard_command[@]}" &
+	dbus-run-session kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
 	kwin_pid=$!
 
 	# Give kwin a few seconds to initialize; check it didn't crash immediately
@@ -236,7 +236,7 @@ _start_kwin_wizard() {
 		fi
 
 		env "${env_vars[@]}" \
-			dbus-run-session kwin_wayland "${kwin_args[@]}" "${wizard_command[@]}" &
+			dbus-run-session kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
 		kwin_pid=$!
 
 		sleep 3
@@ -256,7 +256,7 @@ _start_kwin_wizard() {
 
 	LIBGL_ALWAYS_SOFTWARE=1 \
 		GALLIUM_DRIVER=llvmpipe \
-		dbus-run-session kwin_wayland "${kwin_args[@]}" "${wizard_command[@]}" &
+		dbus-run-session kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
 	kwin_pid=$!
 
 	sleep 3

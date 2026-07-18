@@ -239,6 +239,41 @@ printf '%s\\n' "$attempt_file"
     assert result.stdout.strip() == "/tmp/startbiglive-attempts"
 
 
+def test_startbiglive_passes_wizard_as_single_kwin_session(tmp_path: Path) -> None:
+    source = STARTBIGLIVE.read_text(encoding="utf-8")
+    start = source.index("_start_kwin_wizard() {")
+    end = source.index("\n# Start mutter compositor", start)
+    function = source[start:end]
+    capture = tmp_path / "kwin-arguments"
+    result = run_bash(
+        f"""
+_log() {{ :; }}
+_detect_multi_gpu() {{
+    is_multi_gpu=0
+    primary_card=
+    has_nvidia_proprietary=0
+}}
+sleep() {{ :; }}
+dbus-run-session() {{
+    printf '%s\\0' "$@" >"$CAPTURE"
+    command sleep 0.2
+}}
+{function}
+_start_kwin_wizard
+""",
+        environment={"CAPTURE": str(capture)},
+    )
+    assert result.returncode == 0, result.stderr
+    assert capture.read_bytes().split(b"\0")[:-1] == [
+        b"kwin_wayland",
+        b"--drm",
+        b"--no-lockscreen",
+        b"--xwayland",
+        b"--exit-with-session",
+        b"/usr/bin/python /usr/share/biglinux/livecd/main.py",
+    ]
+
+
 def test_installer_prefers_current_gnome_settings_without_following_home_links(
     tmp_path: Path,
 ) -> None:
