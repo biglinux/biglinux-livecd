@@ -1226,6 +1226,11 @@ msgstr "Kinnita"
 msgid "Progress"
 msgstr "Edenemine"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 223
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 254
+msgid "Please wait..."
+msgstr "Palun oota..."
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 168
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 225
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:177

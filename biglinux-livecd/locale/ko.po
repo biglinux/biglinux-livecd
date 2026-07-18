@@ -854,6 +854,11 @@ msgstr "확인"
 msgid "Progress"
 msgstr "진행 상황"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 223
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 254
+msgid "Please wait..."
+msgstr "잠시만 기다려 주세요..."
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 168
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 225
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:177

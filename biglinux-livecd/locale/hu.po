@@ -855,6 +855,11 @@ msgstr "Megerősítjük"
 msgid "Progress"
 msgstr "Haladás"
 # 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 223
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 254
+msgid "Please wait..."
+msgstr "Kérem, várjon..."
+# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 168
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 225
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:177
