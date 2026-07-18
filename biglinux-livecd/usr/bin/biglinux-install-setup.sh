@@ -219,7 +219,7 @@ copy_live_config() {
 	local source=$1 target=$2
 	local temporary_file copied_size
 	[[ -f $source && ! -L $source ]] || return 0
-	[[ $(stat -c '%F' -- "$source") == 'regular file' ]] || die "unsafe live configuration source: $source"
+	[[ $(LC_ALL=C stat -c '%F' -- "$source") == 'regular file' ]] || die "unsafe live configuration source: $source"
 	ensure_directory "$(dirname -- "$target")"
 	make_temporary_file "$target"
 	temporary_file=$created_temporary_file

@@ -10,6 +10,7 @@ REPOSITORY = Path(__file__).resolve().parents[1]
 PACKAGE = REPOSITORY / "biglinux-livecd"
 KERNEL_OPTIONS = PACKAGE / "usr/lib/biglinux-livecd/kernel-options"
 INSTALL_SETUP = PACKAGE / "usr/bin/biglinux-install-setup.sh"
+STARTBIGLIVE = PACKAGE / "usr/bin/startbiglive"
 LIVE_STATE = PACKAGE / "usr/lib/biglinux-livecd/live-state"
 STORAGE_PROBE = PACKAGE / "usr/lib/biglinux-livecd/storage-probe"
 
@@ -173,6 +174,69 @@ write_grub_configuration "$GRUB_FILE"
         environment=environment,
     )
     assert symlink.returncode != 0
+
+
+def test_install_setup_accepts_regular_file_with_localized_stat(
+    tmp_path: Path,
+) -> None:
+    stubs = tmp_path / "stubs"
+    stubs.mkdir()
+    make_stub(
+        stubs,
+        "stat",
+        """
+if [[ ${1:-} == -c && ${2:-} == %F ]]; then
+    if [[ ${LC_ALL:-} == C ]]; then
+        printf '%s\\n' 'regular file'
+    else
+        printf '%s\\n' 'arquivo comum'
+    fi
+    exit 0
+fi
+exec /usr/bin/stat "$@"
+""".strip(),
+    )
+    root = tmp_path / "target"
+    destination = root / "etc/big-default-config/theme"
+    source = tmp_path / "live-theme"
+    root.mkdir()
+    source.write_text("dark\n", encoding="utf-8")
+    result = run_bash(
+        """
+source "$INSTALL_SETUP"
+root_mount=$TARGET_ROOT
+copy_live_config "$SOURCE" "$DESTINATION"
+""",
+        environment={
+            "INSTALL_SETUP": str(INSTALL_SETUP),
+            "TARGET_ROOT": str(root),
+            "SOURCE": str(source),
+            "DESTINATION": str(destination),
+            "LC_ALL": "pt_BR.UTF-8",
+            "PATH": f"{stubs}:/usr/bin:/bin",
+        },
+    )
+    assert result.returncode == 0, result.stderr
+    assert destination.read_text(encoding="utf-8") == "dark\n"
+
+
+def test_startbiglive_falls_back_when_sddm_runtime_is_unavailable(
+    tmp_path: Path,
+) -> None:
+    source = STARTBIGLIVE.read_text(encoding="utf-8")
+    start = source.index("user_id=$(id -u)")
+    end = source.index("\n_check_loop_protection()")
+    setup = source[start:end]
+    result = run_bash(
+        f"""
+_log() {{ :; }}
+{setup}
+printf '%s\\n' "$attempt_file"
+""",
+        environment={"XDG_RUNTIME_DIR": str(tmp_path / "missing-runtime")},
+    )
+    assert result.returncode == 0, result.stderr
+    assert result.stdout.strip() == "/tmp/startbiglive-attempts"
 
 
 def test_installer_prefers_current_gnome_settings_without_following_home_links(

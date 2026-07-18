@@ -15,168 +15,334 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 89
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 114
-msgid "Progress"
-msgstr "Progress"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 177
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 240
-msgid "Question"
-msgstr "Question"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 212
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 283
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 285
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 333
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 335
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 443
-msgid "Close"
-msgstr "Close"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 35
+msgid "Choose a Desktop Layout"
+msgstr "Choose a Desktop Layout"
 
 #
 # #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
 #
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 51
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 268
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 468
+msgid "Desktop Layout"
+msgstr "Desktop Layout"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 92
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 124
+msgid "Settings"
+msgstr "Settings"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 128
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 175
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 302
+msgid "JamesDSP Audio"
+msgstr "JamesDSP Audio"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 130
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 145
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 178
+msgid "Enable audio improvements"
+msgstr "Enable audio improvements"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 134
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 204
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 235
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 304
+msgid "Image quality"
+msgstr "Image quality"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 136
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 205
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 238
+msgid "Enable enhanced contrast"
+msgstr "Enable enhanced contrast"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 147
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 207
+msgid "press Enter or Space to toggle"
+msgstr "press Enter or Space to toggle"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 265
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 275
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 321
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 326
+msgid "enabled"
+msgstr "enabled"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 265
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 275
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 321
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 326
+msgid "disabled"
+msgstr "disabled"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 335
+msgid "Choose a Theme Style"
+msgstr "Choose a Theme Style"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 336
+msgid "Choose a System Theme"
+msgstr "Choose a System Theme"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 363
+msgid "Dark Theme"
+msgstr "Dark Theme"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 363
+msgid "Light Theme"
+msgstr "Light Theme"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 41
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 90
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 112
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 246
+msgid "Choose Your Keyboard Layout"
+msgstr "Choose Your Keyboard Layout"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 68
+msgid "Keyboard layout preview"
+msgstr "Keyboard layout preview"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 145
+#, python-format
+msgid "Keyboard layout: %s"
+msgstr "Keyboard layout: %s"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 197
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 201
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 229
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 238
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 240
+msgid "Search for a language..."
+msgstr "Search for a language..."
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 267
+msgid "Could not load language data."
+msgstr "Could not load language data."
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 504
+#, python-format
+msgid "%d results"
+msgstr "%d results"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 88
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 92
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 209
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 213
+msgid "BigLinux Setup"
+msgstr "BigLinux Setup"
+
+#
 # #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
 #
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 213
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 155
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 166
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 294
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 309
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 218
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 233
-msgid "Continue"
-msgstr "Continue"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 252
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 290
-msgid "Error"
-msgstr "Error"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 302
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 341
-msgid "Information"
-msgstr "Information"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 364
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 465
-msgid "Select"
-msgstr "Select"
-
-#
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 447
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 154
-msgid "OK"
-msgstr "OK"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 84
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 212
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 267
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 272
-#, python-brace-format
-msgid "{distro} Installation"
-msgstr "{distro} Installation"
-
-#
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 99
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 94
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 215
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 99
 msgid "press Super+Alt+S to start the screen reader"
 msgstr "press Super+Alt+S to start the screen reader"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 146
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 160
-msgid "Back"
-msgstr "Back"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 204
+msgid "BigLinux Logo"
+msgstr "BigLinux Logo"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 149
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 162
-msgid "Keep All"
-msgstr "Keep All"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 239
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 266
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 381
+msgid "Language"
+msgstr "Language"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 152
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 164
-msgid "Remove All"
-msgstr "Remove All"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 241
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 267
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 447
+msgid "Keyboard"
+msgstr "Keyboard"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 161
-msgid "Return to the previous page"
-msgstr "Return to the previous page"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 245
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 247
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 269
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 493
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 519
+msgid "Theme"
+msgstr "Theme"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 163
-msgid "Keep all packages selected"
-msgstr "Keep all packages selected"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 576
+msgid "Accessibility enabled. Use arrow keys to navigate."
+msgstr "Accessibility enabled. Use arrow keys to navigate."
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 165
-msgid "Mark all packages for removal"
-msgstr "Mark all packages for removal"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 154
+msgid "Snapshot and backups"
+msgstr "Snapshot and backups"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 167
-msgid "Proceed to the next step"
-msgstr "Proceed to the next step"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 155
+msgid "Restore restore points of the installed system."
+msgstr "Restore restore points of the installed system."
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 213
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 268
-msgid "System Maintenance"
-msgstr "System Maintenance"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 156
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 168
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 181
+msgid "Start"
+msgstr "Start"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 214
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 269
-msgid "Uncheck the programs you want to remove"
-msgstr "Uncheck the programs you want to remove"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 164
+msgid "Restore system settings"
+msgstr "Restore system settings"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 215
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 270
-msgid "Installation Tips"
-msgstr "Installation Tips"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 166
+msgid ""
+"Utility that facilitates the restoration of the installed system, especially "
+"the restoration of the system boot (Grub).\n"
+"\n"
+"It can also be used to access the package manager and terminal of the "
+"installed system."
+msgstr ""
+"Utility that facilitates the restoration of the installed system, especially "
+"the restoration of the system boot (Grub).\n"
+"\n"
+"It can also be used to access the package manager and terminal of the "
+"installed system."
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 111
-msgid "BigLinux Calamares Config"
-msgstr "BigLinux Calamares Config"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 177
+msgid "EFI Entry Manager"
+msgstr "EFI Entry Manager"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 128
-msgid "Forum"
-msgstr "Forum"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 179
+msgid ""
+"Advanced tool to add, remove, or change boot entries in the UEFI firmware."
+msgstr ""
+"Advanced tool to add, remove, or change boot entries in the UEFI firmware."
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 130
-msgid "Documentation"
-msgstr "Documentation"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 202
+msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
+msgstr "System Maintenance: choose Snapshot, Restore, or EFI Manager"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 169
-msgid "Cancel"
-msgstr "Cancel"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 168
+msgid "This is a collaborative system, if you need help consult our forum."
+msgstr "This is a collaborative system, if you need help consult our forum."
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 170
-msgid "Confirm"
-msgstr "Confirm"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 206
+msgid "Maintenance"
+msgstr "Maintenance"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 208
+msgid "Tools that facilitate the maintenance of the installed system."
+msgstr "Tools that facilitate the maintenance of the installed system."
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 210
+msgid "Restore"
+msgstr "Restore"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 218
+msgid "Installation"
+msgstr "Installation"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 219
+msgid "The system is in live mode, which has limitations."
+msgstr "The system is in live mode, which has limitations."
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 220
+msgid "Install it for a complete experience."
+msgstr "Install it for a complete experience."
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 221
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 269
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 297
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 301
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 317
+msgid "Install"
+msgstr "Install"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 229
+msgid "Minimal"
+msgstr "Minimal"
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 231
+msgid "Remove pre-selected software to create a lean, personalized system."
+msgstr "Remove pre-selected software to create a lean, personalized system."
+
+#
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+#
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+#
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 233
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 218
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 155
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 166
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 294
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 309
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 213
+msgid "Continue"
+msgstr "Continue"
+
+#
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 262
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 214
+msgid "Starting..."
+msgstr "Starting..."
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 278
+msgid "Checking connection..."
+msgstr "Checking connection..."
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 289
+msgid "Configuring..."
+msgstr "Configuring..."
+
+#
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 318
+msgid "Main page: choose Maintenance, Installation, or Minimal"
+msgstr "Main page: choose Maintenance, Installation, or Minimal"
 
 #
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py, line: 40
@@ -274,310 +440,144 @@ msgid "Failed to load packages: {}"
 msgstr "Failed to load packages: {}"
 
 #
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 214
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 262
-msgid "Starting..."
-msgstr "Starting..."
-
-#
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py, line: 240
 msgid "Minimal installation: select packages to keep or remove"
 msgstr "Minimal installation: select packages to keep or remove"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 168
-msgid "This is a collaborative system, if you need help consult our forum."
-msgstr "This is a collaborative system, if you need help consult our forum."
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 84
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 212
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 267
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 272
+#, python-brace-format
+msgid "{distro} Installation"
+msgstr "{distro} Installation"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 206
-msgid "Maintenance"
-msgstr "Maintenance"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 146
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 160
+msgid "Back"
+msgstr "Back"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 208
-msgid "Tools that facilitate the maintenance of the installed system."
-msgstr "Tools that facilitate the maintenance of the installed system."
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 149
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 162
+msgid "Keep All"
+msgstr "Keep All"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 210
-msgid "Restore"
-msgstr "Restore"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 152
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 164
+msgid "Remove All"
+msgstr "Remove All"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 218
-msgid "Installation"
-msgstr "Installation"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 161
+msgid "Return to the previous page"
+msgstr "Return to the previous page"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 219
-msgid "The system is in live mode, which has limitations."
-msgstr "The system is in live mode, which has limitations."
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 163
+msgid "Keep all packages selected"
+msgstr "Keep all packages selected"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 220
-msgid "Install it for a complete experience."
-msgstr "Install it for a complete experience."
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 165
+msgid "Mark all packages for removal"
+msgstr "Mark all packages for removal"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 221
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 269
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 297
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 301
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 317
-msgid "Install"
-msgstr "Install"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 167
+msgid "Proceed to the next step"
+msgstr "Proceed to the next step"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 229
-msgid "Minimal"
-msgstr "Minimal"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 213
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 268
+msgid "System Maintenance"
+msgstr "System Maintenance"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 231
-msgid "Remove pre-selected software to create a lean, personalized system."
-msgstr "Remove pre-selected software to create a lean, personalized system."
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 214
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 269
+msgid "Uncheck the programs you want to remove"
+msgstr "Uncheck the programs you want to remove"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 278
-msgid "Checking connection..."
-msgstr "Checking connection..."
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 215
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py, line: 270
+msgid "Installation Tips"
+msgstr "Installation Tips"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 289
-msgid "Configuring..."
-msgstr "Configuring..."
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 111
+msgid "BigLinux Calamares Config"
+msgstr "BigLinux Calamares Config"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py, line: 318
-msgid "Main page: choose Maintenance, Installation, or Minimal"
-msgstr "Main page: choose Maintenance, Installation, or Minimal"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 128
+msgid "Forum"
+msgstr "Forum"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 154
-msgid "Snapshot and backups"
-msgstr "Snapshot and backups"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 155
-msgid "Restore restore points of the installed system."
-msgstr "Restore restore points of the installed system."
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 156
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 168
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 181
-msgid "Start"
-msgstr "Start"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 164
-msgid "Restore system settings"
-msgstr "Restore system settings"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 166
-msgid ""
-"Utility that facilitates the restoration of the installed system, especially "
-"the restoration of the system boot (Grub).\n"
-"\n"
-"It can also be used to access the package manager and terminal of the "
-"installed system."
-msgstr ""
-"Utility that facilitates the restoration of the installed system, especially "
-"the restoration of the system boot (Grub).\n"
-"\n"
-"It can also be used to access the package manager and terminal of the "
-"installed system."
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 177
-msgid "EFI Entry Manager"
-msgstr "EFI Entry Manager"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 179
-msgid ""
-"Advanced tool to add, remove, or change boot entries in the UEFI firmware."
-msgstr ""
-"Advanced tool to add, remove, or change boot entries in the UEFI firmware."
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py, line: 202
-msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
-msgstr "System Maintenance: choose Snapshot, Restore, or EFI Manager"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 41
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 90
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 112
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 246
-msgid "Choose Your Keyboard Layout"
-msgstr "Choose Your Keyboard Layout"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 68
-msgid "Keyboard layout preview"
-msgstr "Keyboard layout preview"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py, line: 145
-#, python-format
-msgid "Keyboard layout: %s"
-msgstr "Keyboard layout: %s"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 88
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 92
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 209
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 213
-msgid "BigLinux Setup"
-msgstr "BigLinux Setup"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 204
-msgid "BigLinux Logo"
-msgstr "BigLinux Logo"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 239
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 266
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 381
-msgid "Language"
-msgstr "Language"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 241
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 267
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 447
-msgid "Keyboard"
-msgstr "Keyboard"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 130
+msgid "Documentation"
+msgstr "Documentation"
 
 #
 # #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 243
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 268
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 468
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 51
-msgid "Desktop Layout"
-msgstr "Desktop Layout"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 154
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 447
+msgid "OK"
+msgstr "OK"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 245
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 247
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 269
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 493
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 519
-msgid "Theme"
-msgstr "Theme"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 169
+msgid "Cancel"
+msgstr "Cancel"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py, line: 576
-msgid "Accessibility enabled. Use arrow keys to navigate."
-msgstr "Accessibility enabled. Use arrow keys to navigate."
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py, line: 170
+msgid "Confirm"
+msgstr "Confirm"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 92
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 124
-msgid "Settings"
-msgstr "Settings"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 89
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 114
+msgid "Progress"
+msgstr "Progress"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 128
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 144
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 175
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 302
-msgid "JamesDSP Audio"
-msgstr "JamesDSP Audio"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 177
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 240
+msgid "Question"
+msgstr "Question"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 130
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 145
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 178
-msgid "Enable audio improvements"
-msgstr "Enable audio improvements"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 212
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 283
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 285
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 333
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 335
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 443
+msgid "Close"
+msgstr "Close"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 134
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 204
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 235
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 304
-msgid "Image quality"
-msgstr "Image quality"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 252
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 290
+msgid "Error"
+msgstr "Error"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 136
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 205
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 238
-msgid "Enable enhanced contrast"
-msgstr "Enable enhanced contrast"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 302
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 341
+msgid "Information"
+msgstr "Information"
 
 #
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 147
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 207
-msgid "press Enter or Space to toggle"
-msgstr "press Enter or Space to toggle"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 265
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 275
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 321
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 326
-msgid "enabled"
-msgstr "enabled"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 265
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 275
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 321
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 326
-msgid "disabled"
-msgstr "disabled"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 335
-msgid "Choose a Theme Style"
-msgstr "Choose a Theme Style"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 336
-msgid "Choose a System Theme"
-msgstr "Choose a System Theme"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 363
-msgid "Dark Theme"
-msgstr "Dark Theme"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py, line: 363
-msgid "Light Theme"
-msgstr "Light Theme"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 197
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 201
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 229
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 238
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 240
-msgid "Search for a language..."
-msgstr "Search for a language..."
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 267
-msgid "Could not load language data."
-msgstr "Could not load language data."
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py, line: 504
-#, python-format
-msgid "%d results"
-msgstr "%d results"
-
-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py, line: 35
-msgid "Choose a Desktop Layout"
-msgstr "Choose a Desktop Layout"
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 364
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 465
+msgid "Select"
+msgstr "Select"

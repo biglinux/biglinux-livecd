@@ -31,21 +31,24 @@ _log() {
 # failing and SDDM's Relogin=true restarts it, we stop after a few attempts
 # to avoid burning CPU and confusing the user.
 #-------------------------------------------------------------------------------
-runtime_dir=${XDG_RUNTIME_DIR:-/run/user/$(id -u)}
-if [[ $runtime_dir != /run/user/"$(id -u)" || ! -d $runtime_dir || -L $runtime_dir ]] ||
-	[[ $(stat -c '%u' -- "$runtime_dir") != "$(id -u)" ]]; then
-	printf '%s\n' 'startbiglive: unsafe runtime directory' >&2
-	exit 1
+user_id=$(id -u)
+runtime_dir=${XDG_RUNTIME_DIR:-/run/user/$user_id}
+attempt_file=/tmp/startbiglive-attempts
+if [[ $runtime_dir == /run/user/"$user_id" && -d $runtime_dir && ! -L $runtime_dir ]] &&
+	[[ $(stat -c '%u' -- "$runtime_dir") == "$user_id" ]]; then
+	attempt_file=$runtime_dir/startbiglive-attempts
+else
+	_log "WARNING - Runtime directory unavailable during session startup; using legacy loop counter"
 fi
-attempt_file=$runtime_dir/startbiglive-attempts
 max_attempts=3
 attempt_cooldown=120 # reset counter if last attempt was this many seconds ago
 
 _check_loop_protection() {
-	local now attempts last_time
+	local now attempts last_time attempt_directory temporary_attempt_file
 	now=$(date +%s)
 
-	if [[ -f $attempt_file && ! -L $attempt_file ]]; then
+	if [[ -f $attempt_file && ! -L $attempt_file ]] &&
+		[[ $(stat -c '%u' -- "$attempt_file") == "$user_id" ]]; then
 		read -r attempts last_time <"$attempt_file" 2>/dev/null
 		attempts=${attempts:-0}
 		last_time=${last_time:-0}
@@ -87,10 +90,24 @@ _check_loop_protection() {
 		attempts=0
 	fi
 
-	(
+	attempt_directory=$(dirname -- "$attempt_file")
+	temporary_attempt_file=$(mktemp -- "$attempt_directory/.startbiglive-attempts.XXXXXX") || {
+		_log "WARNING - Could not create session loop counter"
+		return 0
+	}
+	if ! (
 		umask 077
-		printf '%s %s\n' "$((attempts + 1))" "$now" >"$attempt_file"
-	)
+		printf '%s %s\n' "$((attempts + 1))" "$now" >"$temporary_attempt_file"
+	); then
+		rm -f -- "$temporary_attempt_file"
+		_log "WARNING - Could not write session loop counter"
+		return 0
+	fi
+	if ! mv -fT -- "$temporary_attempt_file" "$attempt_file"; then
+		rm -f -- "$temporary_attempt_file"
+		_log "WARNING - Could not install session loop counter"
+		return 0
+	fi
 	_log "Session attempt $((attempts + 1))/$max_attempts"
 }
 
