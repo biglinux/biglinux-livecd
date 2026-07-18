@@ -43,5 +43,7 @@ package() {
         msgfmt --check-format "$catalog" \
             -o "${pkgdir}/usr/share/locale/${locale}/LC_MESSAGES/${pkgname}.mo"
     done
+    python -m compileall -q -j1 -s "${pkgdir}" -p / \
+        "${pkgdir}/usr/share/biglinux/livecd" || return 1
     install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }

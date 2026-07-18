@@ -17,10 +17,7 @@ from gi.repository import Adw, Gdk, GdkPixbuf, GLib, Gtk
 from logging_config import get_logger
 from services import SystemService
 from translations import _, set_language
-from ui.desktop_view import DesktopView
-from ui.keyboard_view import KeyboardView
 from ui.language_view import LanguageView
-from ui.theme_view import ThemeView
 
 logger = get_logger()
 
@@ -84,7 +81,7 @@ class AppWindow(Adw.ApplicationWindow):
         self.has_desktop_step = system_service.has_desktop_layout_step()
         self.uses_simple_theme = system_service.uses_simple_theme_selector()
         # Ensure ORCA is not running — user activates it manually via Super+Alt+S
-        ensure_orca_disabled()
+        GLib.timeout_add(500, ensure_orca_disabled)
         self.set_title(_("BigLinux Setup"))
         self.update_property(
             [Gtk.AccessibleProperty.DESCRIPTION],
@@ -381,6 +378,8 @@ class AppWindow(Adw.ApplicationWindow):
         self.stack.add_titled(view, "language", _("Language"))
 
     def _on_language_selected(self, view, selection):
+        from ui.keyboard_view import KeyboardView
+
         self.config.language = selection
         params = selection.url_params
         self.system_service.apply_language_settings(
@@ -442,6 +441,8 @@ class AppWindow(Adw.ApplicationWindow):
                 self._on_keyboard_selected(None, keyboard_layout)
 
     def _add_keyboard_view(self, primary_layout):
+        from ui.keyboard_view import KeyboardView
+
         view = KeyboardView(primary_layout=primary_layout)
         view.connect("keyboard-selected", self._on_keyboard_selected)
         self.stack.add_titled(view, "keyboard", _("Keyboard"))
@@ -463,6 +464,8 @@ class AppWindow(Adw.ApplicationWindow):
             self.stack.set_visible_child_name("desktop")
 
     def _add_desktop_view(self):
+        from ui.desktop_view import DesktopView
+
         view = DesktopView(system_service=self.system_service)
         view.connect("desktop-selected", self._on_desktop_selected)
         self.stack.add_titled(view, "desktop", _("Desktop Layout"))
@@ -488,11 +491,15 @@ class AppWindow(Adw.ApplicationWindow):
             self.stack.set_visible_child_name("theme")
 
     def _add_theme_view(self):
+        from ui.theme_view import ThemeView
+
         view = ThemeView(system_service=self.system_service)
         view.connect("theme-selected", self._on_theme_selected)
         self.stack.add_titled(view, "theme", _("Theme"))
 
     def _on_theme_selected(self, view, theme):
+        from ui.theme_view import ThemeView
+
         if theme != "default":
             self.config.theme = theme
             self.system_service.apply_theme(theme)
@@ -514,12 +521,16 @@ class AppWindow(Adw.ApplicationWindow):
 
     def _add_simple_theme_view(self):
         """Creates and adds the simplified theme view for GNOME/XFCE/Cinnamon."""
+        from ui.theme_view import ThemeView
+
         view = ThemeView(system_service=self.system_service, simplified_mode=True)
         view.connect("theme-selected", self._on_simple_theme_selected)
         self.stack.add_titled(view, "simple_theme", _("Theme"))
 
     def _on_simple_theme_selected(self, view, theme):
         """Handle theme selection from simplified theme view."""
+        from ui.theme_view import ThemeView
+
         logger.info(f"========== SIMPLE THEME SELECTED: {theme} ==========")
 
         try:

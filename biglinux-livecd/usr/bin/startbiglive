@@ -357,13 +357,13 @@ _apply_default_config() {
 #-------------------------------------------------------------------------------
 # Detect active display manager (must run before loop protection for messages)
 #-------------------------------------------------------------------------------
-for dm in sddm gdm lightdm lxdm; do
-	if systemctl status "$dm" &>/dev/null; then
-		display_manager="$dm"
-		break
-	fi
-done
-display_manager="${display_manager:-unknown}"
+display_manager_service=$(readlink -f /etc/systemd/system/display-manager.service 2>/dev/null || true)
+display_manager=${display_manager_service##*/}
+display_manager=${display_manager%.service}
+case $display_manager in
+	sddm | gdm | lightdm | lxdm) ;;
+	*) display_manager=unknown ;;
+esac
 # LightDM may omit this for X11 live sessions.
 session_type="${XDG_SESSION_TYPE:-x11}"
 export XDG_SESSION_TYPE="$session_type"
@@ -374,13 +374,17 @@ _check_loop_protection
 # X11: Configure multi-monitor mirroring
 # Duplicates all connected monitors to show the same content
 #-------------------------------------------------------------------------------
-if [[ "$session_type" == "x11" ]]; then
-	mapfile -t monitors < <(xrandr --query | awk '$2 == "connected" { print $1 }')
+_configure_x11_mirroring() {
+	local query first_monitor resolution_first_monitor monitor
+	local -a monitors xrandr_configuration
+	query=$(xrandr --query) || return 0
+	mapfile -t monitors < <(awk '$2 == "connected" { print $1 }' <<<"$query")
 	first_monitor=${monitors[0]:-}
-	resolution_first_monitor=$(xrandr --query | awk -v monitor="$first_monitor" '
+	[[ -n $first_monitor ]] || return 0
+	resolution_first_monitor=$(awk -v monitor="$first_monitor" '
         $1 == monitor && $2 == "connected" { found = 1; next }
         found && $1 ~ /^[0-9]+x[0-9]+$/ { print $1; exit }
-    ')
+    ' <<<"$query")
 
 	xrandr_configuration=()
 	for monitor in "${monitors[@]}"; do
@@ -395,21 +399,24 @@ if [[ "$session_type" == "x11" ]]; then
 
 	# Apply mirroring configuration
 	((${#xrandr_configuration[@]} == 0)) || xrandr "${xrandr_configuration[@]}"
+}
+
+if [[ $session_type == x11 ]]; then
+	_configure_x11_mirroring &
 fi
 
 #-------------------------------------------------------------------------------
 # SDDM: Disable screen lock and kwallet for live session
 #-------------------------------------------------------------------------------
-if [[ "$display_manager" == "sddm" ]]; then
+if [[ $display_manager == sddm ]]; then
 	if ! grep -q 'Autolock=false' ~/.config/kscreenlockerrc 2>/dev/null; then
 		sed -i '/^\[Daemon\]$/a Autolock=false\nLockOnResume=false' "$HOME/.config/kscreenlockerrc"
 	fi
-fi
-
-# Disable kwallet to prevent password prompts during live session
-if ! grep -q 'Enabled=false' ~/.config/kwalletrc 2>/dev/null; then
-	echo '[Wallet]
+	# Disable kwallet to prevent password prompts during the live KDE session.
+	if ! grep -q 'Enabled=false' ~/.config/kwalletrc 2>/dev/null; then
+		echo '[Wallet]
 Enabled=false' >>~/.config/kwalletrc
+	fi
 fi
 
 #-------------------------------------------------------------------------------
@@ -432,11 +439,6 @@ if [[ -e /livefs-pkgs.txt ]]; then
 	fi
 fi
 
-# Apply Qt/GTK theme sync if available
-if [[ -e /usr/share/sync-kde-and-gtk-places/sync-gnome-theme-to-qt.sh ]]; then
-	/usr/share/sync-kde-and-gtk-places/sync-gnome-theme-to-qt.sh
-fi
-
 #-------------------------------------------------------------------------------
 # Launch live setup wizard
 # Different launch methods depending on session type and display manager
@@ -445,6 +447,7 @@ if [[ "$session_type" == "x11" ]]; then
 	if [[ "$display_manager" == "sddm" ]]; then
 		systemctl --user start plasma-kglobalaccel.service 2>/dev/null
 	fi
+	_log "Starting setup wizard on X11"
 	python /usr/share/biglinux/livecd/main.py
 else
 	# Wayland session: launch appropriate compositor with setup wizard
@@ -486,6 +489,11 @@ else
 fi
 
 wait
+
+# This is not required by the wizard and can wait until its first interaction ends.
+if [[ -e /usr/share/sync-kde-and-gtk-places/sync-gnome-theme-to-qt.sh ]]; then
+	/usr/share/sync-kde-and-gtk-places/sync-gnome-theme-to-qt.sh
+fi
 
 #-------------------------------------------------------------------------------
 # Apply language and locale settings from user selection

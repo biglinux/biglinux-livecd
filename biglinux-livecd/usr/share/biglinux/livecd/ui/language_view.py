@@ -282,6 +282,14 @@ class LanguageView(Adw.Bin):
         # speech-dispatcher client for fast cancel (avoids subprocess overhead)
         self._spd_client = None
         self._spd_scope_all = None
+        self._speechd_connection_attempted = False
+
+        return self.selection_model
+
+    def _connect_speechd(self):
+        if self._speechd_connection_attempted:
+            return
+        self._speechd_connection_attempted = True
         try:
             import speechd
 
@@ -289,10 +297,10 @@ class LanguageView(Adw.Bin):
             self._spd_scope_all = speechd.Scope.ALL
         except Exception:
             pass
-        return self.selection_model
 
     def enable_voice_preview(self):
         """Enable TTS voice preview and start WAV precache."""
+        self._connect_speechd()
         self._voice_preview_enabled = True
         if hasattr(self, "_language_data") and self._language_data:
             self._start_kokoro_precache(self._language_data)

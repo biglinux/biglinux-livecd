@@ -48,6 +48,15 @@ def test_livecd_tweaks_unit_is_valid_for_staged_payload(tmp_path: Path) -> None:
         "/usr/bin/livecd-tweaks",
         "usr/bin/livecd-tweaks",
     )
+    unit = (PACKAGE / "usr/lib/systemd/system/livecd-tweaks.service").read_text(
+        encoding="utf-8"
+    )
+    assert "Before=display-manager.service" in unit
+    wanted_unit = (
+        PACKAGE / "usr/lib/systemd/system/multi-user.target.wants/livecd-tweaks.service"
+    )
+    assert wanted_unit.is_symlink()
+    assert wanted_unit.readlink() == Path("../livecd-tweaks.service")
 
 
 def test_language_suggestion_unit_is_valid_for_staged_payload(

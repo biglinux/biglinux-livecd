@@ -48,6 +48,7 @@ class Application(Adw.Application):
             logger.warning(f"Could not create wizard-ready marker: {error}")
             return
         self._wizard_ready_notified = True
+        logger.info("Wizard window mapped; background integrity check released")
 
     def do_startup(self):
         """Called once when the application starts."""
