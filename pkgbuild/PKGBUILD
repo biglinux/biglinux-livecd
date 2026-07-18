@@ -35,5 +35,13 @@ package() {
     cd "${srcdir}/${pkgname}" || return 1
 
     cp -a biglinux-livecd/usr "${pkgdir}/"
+    local catalog locale
+    for catalog in biglinux-livecd/locale/*.po; do
+        locale=${catalog##*/}
+        locale=${locale%.po}
+        install -d "${pkgdir}/usr/share/locale/${locale}/LC_MESSAGES"
+        msgfmt --check-format "$catalog" \
+            -o "${pkgdir}/usr/share/locale/${locale}/LC_MESSAGES/${pkgname}.mo"
+    done
     install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }

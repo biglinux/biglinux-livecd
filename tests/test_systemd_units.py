@@ -79,3 +79,8 @@ def test_integrity_check_unit_is_valid_and_enabled(tmp_path: Path) -> None:
     )
     assert wanted_unit.is_symlink()
     assert wanted_unit.readlink() == Path("../biglinux-integrity-check.service")
+    unit = (
+        PACKAGE / "usr/lib/systemd/system/biglinux-integrity-check.service"
+    ).read_text(encoding="utf-8")
+    assert "Nice=19" not in unit
+    assert "IOSchedulingClass=idle" not in unit

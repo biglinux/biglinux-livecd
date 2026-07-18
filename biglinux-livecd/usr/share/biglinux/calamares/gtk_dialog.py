@@ -15,6 +15,7 @@ Exit codes match zenity: 0 = OK/Yes, 1 = Cancel/No, -1 = Error/Timeout.
 
 import argparse
 import gettext
+import os
 import re
 import signal
 import sys
@@ -27,7 +28,7 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-from gi.repository import Adw, Gio, GLib, Gtk
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
 # ── i18n ──────────────────────────────────────────────────────────────────────
 gettext.bindtextdomain("biglinux-livecd", "/usr/share/locale")
@@ -165,6 +166,190 @@ def _show_progress(app: DialogApp, args):  # noqa: C901 - GTK callback state mac
 
         threading.Thread(target=_read_stdin, daemon=True).start()
 
+    win.present()
+
+
+# ── Integrity wait dialog ───────────────────────────────────────────────────
+def _show_integrity_wait(app: DialogApp, args):
+    global _exit_code
+
+    provider = Gtk.CssProvider()
+    provider.load_from_string(
+        """
+        .integrity-card {
+            padding: 30px;
+        }
+        .integrity-title {
+            font-size: 1.35em;
+            font-weight: 700;
+        }
+        .integrity-description {
+            opacity: 0.78;
+        }
+        .integrity-progress trough,
+        .integrity-progress progress {
+            min-height: 8px;
+            border-radius: 999px;
+        }
+        .integrity-success-ring {
+            min-width: 92px;
+            min-height: 92px;
+            border: 2px solid #35f58a;
+            border-radius: 999px;
+            box-shadow: 0 0 20px alpha(#35f58a, 0.68),
+                        inset 0 0 12px alpha(#35f58a, 0.30);
+        }
+        .integrity-success-icon {
+            color: #35f58a;
+            -gtk-icon-shadow: 0 0 12px alpha(#35f58a, 0.90);
+        }
+        """
+    )
+    display = Gdk.Display.get_default()
+    if display:
+        Gtk.StyleContext.add_provider_for_display(
+            display, provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        )
+
+    anchor = Gtk.Window(application=app)
+    anchor.set_decorated(False)
+    anchor.set_focusable(False)
+    anchor.set_opacity(0.0)
+    anchor.fullscreen()
+    anchor.present()
+
+    win = Adw.Window(
+        application=app,
+        title=args.title or _("Please wait..."),
+        default_width=args.width or 480,
+        default_height=args.height or 300,
+    )
+    win.set_transient_for(anchor)
+    win.set_deletable(False)
+    win.set_modal(True)
+    win.set_resizable(False)
+    if startup_id := os.environ.get("DESKTOP_STARTUP_ID"):
+        win.set_startup_id(startup_id)
+
+    stack = Gtk.Stack(
+        transition_type=Gtk.StackTransitionType.CROSSFADE,
+        transition_duration=250,
+    )
+    win.set_content(stack)
+
+    progress_box = Gtk.Box(
+        orientation=Gtk.Orientation.VERTICAL,
+        spacing=16,
+        halign=Gtk.Align.FILL,
+        valign=Gtk.Align.CENTER,
+    )
+    progress_box.add_css_class("integrity-card")
+
+    progress_icon = Gtk.Image.new_from_icon_name("drive-optical-symbolic")
+    progress_icon.set_pixel_size(56)
+    progress_icon.set_halign(Gtk.Align.CENTER)
+    progress_box.append(progress_icon)
+
+    title = Gtk.Label(
+        label=strip_pango_markup(args.title or _("Please wait...")),
+        halign=Gtk.Align.CENTER,
+    )
+    title.add_css_class("integrity-title")
+    progress_box.append(title)
+
+    description = Gtk.Label(
+        label=strip_pango_markup(args.text or ""),
+        wrap=True,
+        justify=Gtk.Justification.CENTER,
+        halign=Gtk.Align.CENTER,
+        max_width_chars=52,
+    )
+    description.add_css_class("integrity-description")
+    progress_box.append(description)
+
+    bar = Gtk.ProgressBar(hexpand=True)
+    bar.add_css_class("integrity-progress")
+    progress_box.append(bar)
+    stack.add_named(progress_box, "progress")
+
+    success_box = Gtk.Box(
+        orientation=Gtk.Orientation.VERTICAL,
+        spacing=16,
+        halign=Gtk.Align.CENTER,
+        valign=Gtk.Align.CENTER,
+    )
+    success_box.add_css_class("integrity-card")
+
+    success_ring = Gtk.Box(halign=Gtk.Align.CENTER, valign=Gtk.Align.CENTER)
+    success_ring.add_css_class("integrity-success-ring")
+    success_icon = Gtk.Image.new_from_icon_name("object-select-symbolic")
+    success_icon.set_pixel_size(58)
+    success_icon.set_halign(Gtk.Align.CENTER)
+    success_icon.set_valign(Gtk.Align.CENTER)
+    success_icon.add_css_class("integrity-success-icon")
+    success_ring.append(success_icon)
+    success_box.append(success_ring)
+
+    success_title = Gtk.Label(
+        label=strip_pango_markup(args.success_title),
+        halign=Gtk.Align.CENTER,
+    )
+    success_title.add_css_class("integrity-title")
+    success_box.append(success_title)
+
+    success_description = Gtk.Label(
+        label=strip_pango_markup(args.success_text),
+        wrap=True,
+        justify=Gtk.Justification.CENTER,
+        halign=Gtk.Align.CENTER,
+    )
+    success_description.add_css_class("integrity-description")
+    success_box.append(success_description)
+    stack.add_named(success_box, "success")
+    stack.set_visible_child_name("progress")
+
+    accessible_wait = ". ".join(
+        part for part in (title.get_text(), description.get_text()) if part
+    )
+    win.update_property([Gtk.AccessibleProperty.LABEL], [accessible_wait])
+    announce(win, accessible_wait, assertive=True)
+
+    def pulse():
+        bar.pulse()
+        return True
+
+    pulse_id = GLib.timeout_add(100, pulse)
+
+    def finish_success():
+        app.quit()
+        return False
+
+    def show_result(status: str):
+        global _exit_code
+        GLib.source_remove(pulse_id)
+        _exit_code = 0
+        if status != "verified":
+            app.quit()
+            return False
+
+        stack.set_visible_child_name("success")
+        win.set_title(args.success_title)
+        accessible_success = ". ".join(
+            part for part in (args.success_title, args.success_text) if part
+        )
+        win.update_property([Gtk.AccessibleProperty.LABEL], [accessible_success])
+        announce(win, accessible_success, assertive=True)
+        GLib.timeout_add(args.success_delay, finish_success)
+        return False
+
+    def read_status():
+        try:
+            status = sys.stdin.readline().strip()
+        except Exception:
+            status = ""
+        GLib.idle_add(show_result, status)
+
+    threading.Thread(target=read_status, daemon=True).start()
     win.present()
 
 
@@ -488,6 +673,12 @@ def build_parser():
     p_prog.add_argument("--no-cancel", action="store_true")
     p_prog.add_argument("--percentage", type=int, default=0)
 
+    # Integrity wait
+    p_integrity = sub.add_parser("integrity-wait", parents=[common])
+    p_integrity.add_argument("--success-title", required=True)
+    p_integrity.add_argument("--success-text", required=True)
+    p_integrity.add_argument("--success-delay", type=int, default=1100)
+
     # Question
     p_q = sub.add_parser("question", parents=[common])
     p_q.add_argument("--ok-label", default="")
@@ -523,6 +714,7 @@ def main():
 
     dispatch = {
         "progress": _show_progress,
+        "integrity-wait": _show_integrity_wait,
         "question": _show_question,
         "error": _show_error,
         "info": _show_info,

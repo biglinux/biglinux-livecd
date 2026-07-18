@@ -69,20 +69,35 @@ verification_is_running() {
 	pgrep -f '(^|/)biglinux-verify-md5sum([[:space:]]|$)' >/dev/null
 }
 
-verification_dialog_pid=
+# Avoid flashing a dialog when verification is about to finish.
 if verification_is_running; then
-	sleep 600 | "${gtk_dialog[@]}" progress --title="$(_ "Please wait...")" --pulsate --no-cancel --auto-close --text "$(_ "Checking the integrity of the download and storage device...")" &
-	verification_dialog_pid=$!
+	for ((attempt = 0; attempt < 10; attempt++)); do
+		sleep 0.1
+		verification_is_running || break
+	done
 fi
 
-while verification_is_running; do
-	sleep 1
-done
+wait_for_verification() {
+	local verification_state=
+	while verification_is_running; do
+		sleep 0.2
+	done
+	if [[ -f $integrity_state_directory/verified && ! -L $integrity_state_directory/verified ]]; then
+		IFS= read -r verification_state <"$integrity_state_directory/verified" || true
+	fi
+	if [[ $verification_state == verified ]]; then
+		printf '%s\n' verified
+	else
+		printf '%s\n' failed
+	fi
+}
 
-# Kill the waiting dialog if still open
-if [[ -n $verification_dialog_pid ]]; then
-	kill "$verification_dialog_pid" 2>/dev/null || true
-	wait "$verification_dialog_pid" 2>/dev/null || true
+if verification_is_running; then
+	wait_for_verification | "${gtk_dialog[@]}" integrity-wait \
+		--title="$(_ "Please wait...")" \
+		--text="$(_ "Checking the integrity of the download and storage device...")" \
+		--success-title="$(_ "Verification complete")" \
+		--success-text="$(_ "The files are intact.")" || true
 fi
 
 #-------------------------------------------------------------------------------
