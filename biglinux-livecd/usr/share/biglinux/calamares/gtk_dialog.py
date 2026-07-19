@@ -23,12 +23,13 @@ import sys
 # allow-noisy-log: stdout is the documented result channel and stderr reports CLI misuse.
 import threading
 
+import cairo
 import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-from gi.repository import Adw, Gdk, Gio, GLib, Gtk
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk  # noqa: E402
 
 # ── i18n ──────────────────────────────────────────────────────────────────────
 gettext.bindtextdomain("biglinux-livecd", "/usr/share/locale")
@@ -189,6 +190,27 @@ def _show_progress(app: DialogApp, args):  # noqa: C901 - GTK callback state mac
 
 
 # ── Integrity wait dialog ───────────────────────────────────────────────────
+def _draw_integrity_success_check(_area, context, width, height) -> None:
+    """Draw a theme-independent check mark centered in its allocation."""
+    center_x = width / 2
+    center_y = height / 2
+    points = (
+        (center_x - 20, center_y),
+        (center_x - 7, center_y + 13),
+        (center_x + 20, center_y - 13),
+    )
+
+    context.set_line_cap(cairo.LINE_CAP_ROUND)
+    context.set_line_join(cairo.LINE_JOIN_ROUND)
+    for line_width, alpha in ((14, 0.06), (10, 0.12), (5.5, 1.0)):
+        context.set_source_rgba(0.21, 0.96, 0.54, alpha)
+        context.set_line_width(line_width)
+        context.move_to(*points[0])
+        context.line_to(*points[1])
+        context.line_to(*points[2])
+        context.stroke()
+
+
 def _show_integrity_wait(app: DialogApp, args):
     global _exit_code
 
@@ -197,6 +219,9 @@ def _show_integrity_wait(app: DialogApp, args):
         """
         .integrity-card {
             padding: 30px;
+        }
+        window.integrity-window.background {
+            background-color: alpha(@theme_bg_color, 0.97);
         }
         .integrity-title {
             font-size: 1.35em;
@@ -217,10 +242,6 @@ def _show_integrity_wait(app: DialogApp, args):
             border-radius: 999px;
             box-shadow: 0 0 20px alpha(#35f58a, 0.68),
                         inset 0 0 12px alpha(#35f58a, 0.30);
-        }
-        .integrity-success-icon {
-            color: #35f58a;
-            -gtk-icon-shadow: 0 0 12px alpha(#35f58a, 0.90);
         }
         """
     )
@@ -247,6 +268,7 @@ def _show_integrity_wait(app: DialogApp, args):
     win.set_deletable(False)
     win.set_modal(True)
     win.set_resizable(False)
+    win.add_css_class("integrity-window")
     if startup_id := os.environ.get("DESKTOP_STARTUP_ID"):
         win.set_startup_id(startup_id)
 
@@ -299,18 +321,15 @@ def _show_integrity_wait(app: DialogApp, args):
     )
     success_box.add_css_class("integrity-card")
 
-    success_ring = Gtk.CenterBox(
+    success_badge = Gtk.DrawingArea(
         halign=Gtk.Align.CENTER,
         valign=Gtk.Align.CENTER,
     )
-    success_ring.add_css_class("integrity-success-ring")
-    success_icon = Gtk.Image.new_from_icon_name("object-select-symbolic")
-    success_icon.set_pixel_size(58)
-    success_icon.set_halign(Gtk.Align.CENTER)
-    success_icon.set_valign(Gtk.Align.CENTER)
-    success_icon.add_css_class("integrity-success-icon")
-    success_ring.set_center_widget(success_icon)
-    success_box.append(success_ring)
+    success_badge.set_content_width(92)
+    success_badge.set_content_height(92)
+    success_badge.set_draw_func(_draw_integrity_success_check)
+    success_badge.add_css_class("integrity-success-ring")
+    success_box.append(success_badge)
 
     success_title = Gtk.Label(
         label=strip_pango_markup(args.success_title),
