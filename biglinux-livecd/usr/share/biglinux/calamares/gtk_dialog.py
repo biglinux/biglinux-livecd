@@ -299,14 +299,17 @@ def _show_integrity_wait(app: DialogApp, args):
     )
     success_box.add_css_class("integrity-card")
 
-    success_ring = Gtk.Box(halign=Gtk.Align.CENTER, valign=Gtk.Align.CENTER)
+    success_ring = Gtk.CenterBox(
+        halign=Gtk.Align.CENTER,
+        valign=Gtk.Align.CENTER,
+    )
     success_ring.add_css_class("integrity-success-ring")
     success_icon = Gtk.Image.new_from_icon_name("object-select-symbolic")
     success_icon.set_pixel_size(58)
     success_icon.set_halign(Gtk.Align.CENTER)
     success_icon.set_valign(Gtk.Align.CENTER)
     success_icon.add_css_class("integrity-success-icon")
-    success_ring.append(success_icon)
+    success_ring.set_center_widget(success_icon)
     success_box.append(success_ring)
 
     success_title = Gtk.Label(

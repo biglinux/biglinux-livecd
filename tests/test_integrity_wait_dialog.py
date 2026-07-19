@@ -33,4 +33,6 @@ def test_integrity_wait_arguments_and_visual_contract() -> None:
     assert "win.set_modal(True)" in source
     assert '"integrity-success-ring"' in source
     assert '"integrity-success-icon"' in source
+    assert "success_ring = Gtk.CenterBox(" in source
+    assert "success_ring.set_center_widget(success_icon)" in source
     assert 'status != "verified"' in source
