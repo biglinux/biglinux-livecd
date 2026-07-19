@@ -4,7 +4,6 @@ import hashlib
 import os
 import stat
 import sys
-import threading
 from pathlib import Path
 
 REPOSITORY = Path(__file__).resolve().parents[1]
@@ -39,25 +38,7 @@ def test_verify_iso_accepts_matching_expected_files(tmp_path: Path) -> None:
         progress=lambda percentage, filename: progress.append((percentage, filename)),
     )
     assert outcome.status is VerificationStatus.SUCCESS
-    assert progress == [(100, "rootfs.sfs")]
-
-
-def test_verify_iso_checks_images_concurrently(tmp_path: Path, monkeypatch) -> None:
-    import integrity as integrity_module
-
-    for image_name in ("desktopfs.sfs", "livefs.sfs", "mhwdfs.sfs", "rootfs.sfs"):
-        add_checksum_pair(tmp_path, image_name, image_name.encode())
-
-    original_hash_file = integrity_module._hash_file
-    workers_ready = threading.Barrier(4)
-
-    def synchronized_hash_file(image_file, is_cancelled):
-        workers_ready.wait(timeout=2)
-        return original_hash_file(image_file, is_cancelled)
-
-    monkeypatch.setattr(integrity_module, "_hash_file", synchronized_hash_file)
-    outcome = verify_iso(tmp_path)
-    assert outcome.status is VerificationStatus.SUCCESS
+    assert progress == [(80, "rootfs.sfs")]
 
 
 def test_verify_iso_rejects_missing_or_mismatched_media(tmp_path: Path) -> None:

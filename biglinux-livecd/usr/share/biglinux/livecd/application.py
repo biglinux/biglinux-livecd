@@ -3,6 +3,7 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 import os
+import stat
 
 from gi.repository import Adw, Gdk, Gtk
 from logging_config import get_logger
@@ -16,6 +17,38 @@ class Application(Adw.Application):
         super().__init__(application_id="br.com.biglinux.livecd", **kwargs)
         self.system_service = system_service
         self.win = None
+        self._wizard_ready_notified = False
+
+    def _mark_wizard_visible(self, *_args):
+        """Notify systemd only after the wizard window is mapped."""
+        if self._wizard_ready_notified:
+            return
+
+        runtime_directory = os.environ.get("XDG_RUNTIME_DIR", "")
+        expected_directory = f"/run/user/{os.getuid()}"
+        try:
+            directory_stat = os.lstat(runtime_directory)
+        except OSError as error:
+            logger.warning(f"Could not inspect runtime directory: {error}")
+            return
+        if (
+            runtime_directory != expected_directory
+            or not stat.S_ISDIR(directory_stat.st_mode)
+            or directory_stat.st_uid != os.getuid()
+        ):
+            logger.warning("Refusing unsafe runtime directory for wizard-ready marker")
+            return
+
+        marker = os.path.join(runtime_directory, "biglinux-live-wizard-ready")
+        flags = os.O_WRONLY | os.O_CREAT | os.O_CLOEXEC | os.O_NOFOLLOW
+        try:
+            descriptor = os.open(marker, flags, 0o600)
+            os.close(descriptor)
+        except OSError as error:
+            logger.warning(f"Could not create wizard-ready marker: {error}")
+            return
+        self._wizard_ready_notified = True
+        logger.info("Wizard window mapped; background integrity check released")
 
     def do_startup(self):
         """Called once when the application starts."""
@@ -47,4 +80,5 @@ class Application(Adw.Application):
         """Called when the application is activated (run)."""
         if not self.win:
             self.win = AppWindow(application=self, system_service=self.system_service)
+            self.win.connect("map", self._mark_wizard_visible)
         self.win.present()

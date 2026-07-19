@@ -12,6 +12,11 @@ systemctl_bin=/usr/bin/systemctl
 mount_bin=/usr/bin/mount
 mountpoint_bin=/usr/bin/mountpoint
 chpasswd_bin=/usr/bin/chpasswd
+sed_bin=/usr/bin/sed
+lightdm_wallpaper_config=/etc/lightdm/lightdm.conf.d/99-comm-sync-wallpaper.conf
+lightdm_autologin_pam=/etc/pam.d/lightdm-autologin
+python_bin=/usr/bin/python
+wizard_directory=/usr/share/biglinux/livecd
 
 log() {
 	printf 'biglinux-livecd: %s\n' "$*" >&2
@@ -41,8 +46,32 @@ enable_live_ssh() {
 	"$systemctl_bin" start sshd.service
 }
 
+is_owned_regular_file() {
+	local path=$1
+	[[ -f $path && ! -L $path && $(stat -c '%u' -- "$path") == "$EUID" ]]
+}
+
+remove_live_login_delays() {
+	if is_owned_regular_file "$lightdm_wallpaper_config"; then
+		"$sed_bin" -i '/^[[:space:]]*display-setup-script=/d' \
+			"$lightdm_wallpaper_config"
+	fi
+	if is_owned_regular_file "$lightdm_autologin_pam"; then
+		"$sed_bin" -i '/pam_gnome_keyring\.so/d; /pam_kwallet5\.so/d' \
+			"$lightdm_autologin_pam"
+	fi
+}
+
+preload_wizard_runtime() {
+	[[ -x $python_bin && -f $wizard_directory/application.py ]] || return 0
+	PYTHONPATH=$wizard_directory "$python_bin" -c 'import application' \
+		</dev/null >/dev/null 2>&1 || log "Wizard preload failed; continuing normally"
+}
+
 main() {
 	[[ -e $live_marker ]] || return 0
+	remove_live_login_delays || return 1
+	preload_wizard_runtime
 	if kernel_has_argument driver=free; then
 		disable_free_driver_detection || return 1
 	fi

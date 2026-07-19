@@ -274,6 +274,49 @@ _start_kwin_wizard
     ]
 
 
+def test_startbiglive_defers_noncritical_work_until_after_wizard() -> None:
+    source = STARTBIGLIVE.read_text(encoding="utf-8")
+    assert 'systemctl status "$dm"' not in source
+    assert "_configure_x11_mirroring &" in source
+    wizard_launch = source.index('_log "Starting setup wizard on X11"')
+    theme_sync = source.index(
+        "# This is not required by the wizard and can wait until its first interaction"
+    )
+    assert wizard_launch < theme_sync
+
+
+def test_wizard_defers_noninitial_pages_and_accessibility_backends() -> None:
+    app_window = (
+        PACKAGE / "usr/share/biglinux/livecd/ui/app_window.py"
+    ).read_text(encoding="utf-8")
+    imports = app_window.split("logger = get_logger()", 1)[0]
+    assert "from ui.keyboard_view import KeyboardView" not in imports
+    assert "from ui.desktop_view import DesktopView" not in imports
+    assert "from ui.theme_view import ThemeView" not in imports
+    assert "GLib.timeout_add(500, ensure_orca_disabled)" in app_window
+
+    language_view = (
+        PACKAGE / "usr/share/biglinux/livecd/ui/language_view.py"
+    ).read_text(encoding="utf-8")
+    assert "def _connect_speechd(self):" in language_view
+    assert language_view.index("def _connect_speechd(self):") < language_view.index(
+        "speechd.SSIPClient"
+    )
+
+
+def test_integrity_check_waits_for_mapped_wizard() -> None:
+    application = (PACKAGE / "usr/share/biglinux/livecd/application.py").read_text(
+        encoding="utf-8"
+    )
+    assert 'self.win.connect("map", self._mark_wizard_visible)' in application
+    assert (
+        'marker = os.path.join(runtime_directory, "biglinux-live-wizard-ready")'
+        in application
+    )
+    assert "runtime_directory != expected_directory" in application
+    assert "os.O_NOFOLLOW" in application
+
+
 def test_installer_prefers_current_gnome_settings_without_following_home_links(
     tmp_path: Path,
 ) -> None:
@@ -386,6 +429,8 @@ def test_livecd_tweaks_requires_marker_and_exact_flags(tmp_path: Path) -> None:
     marker = tmp_path / "livefs-pkgs.txt"
     cmdline = tmp_path / "cmdline"
     console = tmp_path / "console"
+    wallpaper_config = tmp_path / "lightdm-wallpaper.conf"
+    pam_config = tmp_path / "lightdm-autologin"
     environment = {
         "KERNEL_OPTIONS": str(KERNEL_OPTIONS),
         "TEST_SCRIPT": str(test_script),
@@ -394,6 +439,8 @@ def test_livecd_tweaks_requires_marker_and_exact_flags(tmp_path: Path) -> None:
         "MARKER": str(marker),
         "CONSOLE": str(console),
         "EXECUTABLE": str(executable),
+        "WALLPAPER_CONFIG": str(wallpaper_config),
+        "PAM_CONFIG": str(pam_config),
     }
     command = """
 source "$TEST_SCRIPT"
@@ -412,6 +459,8 @@ systemctl_bin=test_systemctl
 mount_bin=test_mount
 mountpoint_bin=test_mountpoint
 chpasswd_bin=test_chpasswd
+lightdm_wallpaper_config=$WALLPAPER_CONFIG
+lightdm_autologin_pam=$PAM_CONFIG
 mkinitcpio_path=$EXECUTABLE
 mkinitcpio_shim=$EXECUTABLE
 main
@@ -422,6 +471,15 @@ main
     assert not log.exists()
 
     marker.touch()
+    wallpaper_config.write_text(
+        "[Seat:*]\ndisplay-setup-script=/usr/bin/slow-wallpaper-sync\n",
+        encoding="utf-8",
+    )
+    pam_config.write_text(
+        "auth required pam_unix.so\n-session optional pam_gnome_keyring.so auto_start\n"
+        "-session optional pam_kwallet5.so auto_start\n",
+        encoding="utf-8",
+    )
     cmdline.write_text("driver=free driver=nonfree sshenable\n", encoding="utf-8")
     enabled = run_bash(command, environment=environment)
     assert enabled.returncode == 0, enabled.stderr
@@ -431,6 +489,11 @@ main
     assert "chpasswd:biglinux:biglinux" in calls
     assert "systemctl:start sshd.service" in calls
     assert "WARNING: Live SSH enabled" in console.read_text(encoding="utf-8")
+    assert "display-setup-script" not in wallpaper_config.read_text(encoding="utf-8")
+    assert "pam_gnome_keyring" not in pam_config.read_text(encoding="utf-8")
+    assert "pam_kwallet5" not in pam_config.read_text(encoding="utf-8")
+    assert "preload_wizard_runtime" in source
+    assert "PYTHONPATH=$wizard_directory" in source
 
 
 def test_privileged_installer_uses_a_minimal_environment() -> None:
@@ -517,3 +580,4 @@ def test_packaging_no_longer_replaces_distribution_binaries() -> None:
     pkgbuild = (REPOSITORY / "pkgbuild/PKGBUILD").read_text(encoding="utf-8")
     assert "for catalog in biglinux-livecd/locale/*.po" in pkgbuild
     assert "msgfmt --check-format" in pkgbuild
+    assert "python -m compileall" in pkgbuild

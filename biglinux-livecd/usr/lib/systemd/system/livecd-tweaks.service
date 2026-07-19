@@ -4,7 +4,7 @@
 [Unit]
 Description=BigLinux LiveCD System Tweaks and Optimizations
 Documentation=https://github.com/biglinux
-Before=mhwd-live.service
+Before=display-manager.service mhwd-live.service
 ConditionPathExists=/livefs-pkgs.txt
 
 [Service]
