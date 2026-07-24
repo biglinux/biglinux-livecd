@@ -5,9 +5,11 @@ set -euo pipefail
 # command line or following attacker-controlled files from /tmp.
 
 readonly max_live_config_bytes=$((16 * 1024 * 1024))
+# shellcheck disable=SC2034
 readonly live_state_directory=/tmp
 readonly live_theme_file=/tmp/big_desktop_theme
 readonly live_desktop_file=/tmp/big_desktop_changed
+readonly live_keyboard_file=/tmp/big_keyboard
 readonly live_gnome_layout_file=/tmp/big_gnome_layout
 readonly live_gnome_settings_file=/tmp/big_gnome_settings
 readonly live_jamesdsp_file=/tmp/big_enable_jamesdsp
@@ -253,6 +255,135 @@ copy_gnome_settings_to_homes() {
 	done
 }
 
+valid_xkb_component() {
+	[[ $1 =~ ^[A-Za-z0-9_.+-]+$ ]]
+}
+
+valid_live_xkb_layout() {
+	[[ $1 =~ ^[A-Za-z0-9_.+-]+(\([A-Za-z0-9_.+-]+\))?$ ]]
+}
+
+read_live_keyboard_layout() {
+	local keyboard layout variant
+	[[ -f $live_keyboard_file && ! -L $live_keyboard_file ]] || return 1
+	keyboard=$(<"$live_keyboard_file")
+	valid_live_xkb_layout "$keyboard" || return 1
+	layout=$keyboard
+	variant=
+	if [[ $layout =~ ^([^()]+)\(([^()]+)\)$ ]]; then
+		layout=${BASH_REMATCH[1]}
+		variant=${BASH_REMATCH[2]}
+	fi
+	printf '%s\t%s\n' "$layout" "$variant"
+}
+
+read_installed_keyboard_layout() {
+	local keyboard_config layout variant
+	keyboard_config=$root_mount/etc/X11/xorg.conf.d/00-keyboard.conf
+	[[ -f $keyboard_config && ! -L $keyboard_config ]] || return 1
+	layout=$(awk -F'"' '$0 ~ /^[[:space:]]*Option[[:space:]]+"XkbLayout"/ { print $4; exit }' "$keyboard_config")
+	variant=$(awk -F'"' '$0 ~ /^[[:space:]]*Option[[:space:]]+"XkbVariant"/ { print $4; exit }' "$keyboard_config")
+	valid_xkb_component "$layout" || return 1
+	[[ -z $variant ]] || valid_xkb_component "$variant" || return 1
+	printf '%s\t%s\n' "$layout" "$variant"
+}
+
+selected_keyboard_layout() {
+	read_installed_keyboard_layout || read_live_keyboard_layout
+}
+
+xkb_layout_state_value() {
+	if [[ -n $2 ]]; then
+		printf '%s(%s)\n' "$1" "$2"
+	else
+		printf '%s\n' "$1"
+	fi
+}
+
+fcitx5_keyboard_input_method() {
+	if [[ -n $2 ]]; then
+		printf 'keyboard-%s-%s\n' "$1" "$2"
+	else
+		printf 'keyboard-%s\n' "$1"
+	fi
+}
+
+plasma_keyboard_config() {
+	local layout=$1 variant=$2
+	printf '[Layout]\n'
+	printf 'DisplayNames=\n'
+	printf 'LayoutList=%s\n' "$layout"
+	printf 'Model=pc105\n'
+	printf 'Options=terminate:ctrl_alt_bksp\n'
+	printf 'ResetOldOptions=true\n'
+	printf 'Use=true\n'
+	printf 'VariantList=%s\n' "$variant"
+}
+
+fcitx5_keyboard_profile() {
+	local layout=$1 variant=$2 input_method
+	input_method=$(fcitx5_keyboard_input_method "$layout" "$variant")
+	printf '[Groups/0]\n'
+	printf '# Group Name\n'
+	printf 'Name="Live Keyboard"\n'
+	printf '# Layout\n'
+	printf 'Default Layout=%s\n' "$layout"
+	printf '# Default Input Method\n'
+	printf 'DefaultIM=%s\n\n' "$input_method"
+	printf '[Groups/0/Items/0]\n'
+	printf '# Name\n'
+	printf 'Name=%s\n' "$input_method"
+	printf '# Layout\n'
+	printf 'Layout=\n\n'
+	printf '[GroupOrder]\n'
+	printf '0="Live Keyboard"\n'
+}
+
+write_owned_text() {
+	local target=$1 mode=$2 text=$3 owner_spec=${4:-}
+	atomic_write_text "$target" "$mode" "$text"
+	[[ -z $owner_spec ]] || chown "$owner_spec" "$target"
+}
+
+target_has_plasma_session() {
+	[[ -x $root_mount/usr/bin/startkde-biglinux ||
+		-e $root_mount/usr/share/wayland-sessions/plasmawayland.desktop ||
+		-e $root_mount/usr/share/xsessions/plasma.desktop ]]
+}
+
+write_plasma_keyboard_config() {
+	local config_directory=$1 owner_spec=$2 layout=$3 variant=$4 fcitx_directory
+	ensure_directory "$config_directory"
+	write_owned_text "$config_directory/kxkbrc" 0644 "$(plasma_keyboard_config "$layout" "$variant")" "$owner_spec"
+	fcitx_directory=$config_directory/fcitx5
+	ensure_directory "$fcitx_directory"
+	write_owned_text "$fcitx_directory/profile" 0644 "$(fcitx5_keyboard_profile "$layout" "$variant")" "$owner_spec"
+	[[ -z $owner_spec ]] || chown "$owner_spec" "$config_directory" "$fcitx_directory"
+}
+
+apply_installed_keyboard_config() {
+	local layout variant keyboard_state home_directory user_name user_ids user_id group_id resolved_home
+	if ! read -r layout variant < <(selected_keyboard_layout); then
+		return 0
+	fi
+	keyboard_state=$(xkb_layout_state_value "$layout" "$variant")
+	atomic_write_text "$root_mount/etc/big-default-config/keyboard" 0644 "$keyboard_state"
+	target_has_plasma_session || return 0
+	write_plasma_keyboard_config "$root_mount/etc/skel/.config" "" "$layout" "$variant"
+	for home_directory in "$root_mount"/home/*; do
+		[[ -d $home_directory && ! -L $home_directory ]] || continue
+		resolved_home=$(realpath -e -- "$home_directory") || continue
+		path_is_within_root "$resolved_home" || die "home directory escapes installation root: $home_directory"
+		user_name=$(basename -- "$home_directory")
+		[[ $user_name =~ ^[a-z_][a-z0-9_-]*[$]?$ ]] || continue
+		user_ids=$(awk -F: -v user="$user_name" '$1 == user { print $3 ":" $4 }' "$root_mount/etc/passwd" 2>/dev/null || true)
+		[[ $user_ids =~ ^[0-9]+:[0-9]+$ ]] || continue
+		IFS=: read -r user_id group_id <<<"$user_ids"
+		((user_id > 0)) || continue
+		write_plasma_keyboard_config "$home_directory/.config" "$user_id:$group_id" "$layout" "$variant"
+	done
+}
+
 current_gnome_settings_source() {
 	local live_home_root=${1:-/home}
 	local fallback=${2:-$live_gnome_settings_file}
@@ -294,6 +425,7 @@ main() {
 	ensure_directory "$config_directory"
 	copy_live_config "$live_theme_file" "$config_directory/theme"
 	copy_live_config "$live_desktop_file" "$config_directory/desktop"
+	apply_installed_keyboard_config
 	copy_live_config "$live_gnome_layout_file" "$config_directory/gnome-layout"
 	gnome_settings_source=$(current_gnome_settings_source /home)
 	copy_gnome_settings_to_homes "$gnome_settings_source"
