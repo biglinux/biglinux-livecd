@@ -38,6 +38,39 @@ _split_xkb_layout() {
 	fi
 }
 
+_fcitx5_keyboard_input_method() {
+	if [[ -n $2 ]]; then
+		printf 'keyboard-%s-%s\n' "$1" "$2"
+	else
+		printf 'keyboard-%s\n' "$1"
+	fi
+}
+
+_configure_fcitx5_keyboard_profile() {
+	local layout=$1 variant=$2 input_method profile_directory
+	input_method=$(_fcitx5_keyboard_input_method "$layout" "$variant")
+	profile_directory=$HOME/.config/fcitx5
+	mkdir -p -- "$profile_directory"
+	cat >"$profile_directory/profile" <<EOF
+[Groups/0]
+# Group Name
+Name="Live Keyboard"
+# Layout
+Default Layout=$layout
+# Default Input Method
+DefaultIM=$input_method
+
+[Groups/0/Items/0]
+# Name
+Name=$input_method
+# Layout
+Layout=
+
+[GroupOrder]
+0="Live Keyboard"
+EOF
+}
+
 #-------------------------------------------------------------------------------
 # Anti-loop protection: prevent infinite SDDM restart loops
 # Tracks how many times startbiglive has been invoked. If the session keeps
@@ -553,6 +586,9 @@ ResetOldOptions=true
 Use=true
 VariantList=$xkb_variant
 EOF
+		if [[ $display_manager == sddm ]]; then
+			_configure_fcitx5_keyboard_profile "$xkb_layout" "$xkb_variant"
+		fi
 	else
 		_log "ERROR - Ignoring invalid live keyboard selection"
 	fi
