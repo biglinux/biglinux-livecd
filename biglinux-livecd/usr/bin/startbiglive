@@ -642,6 +642,22 @@ if [[ -f "$installer_shortcut" ]]; then
 	gio set "$installer_shortcut" metadata::trusted true 2>/dev/null || true
 fi
 
+_reset_gnome_portals() {
+	# The wizard can activate the portal before the GNOME environment exists.
+	# Reset it so the desktop session selects the GNOME Settings backend.
+	dbus-update-activation-environment --systemd \
+		DESKTOP_SESSION XDG_SESSION_DESKTOP GDMSESSION XDG_CURRENT_DESKTOP \
+		2>/dev/null || true
+	systemctl --user import-environment \
+		DESKTOP_SESSION XDG_SESSION_DESKTOP GDMSESSION XDG_CURRENT_DESKTOP \
+		2>/dev/null || true
+	systemctl --user stop \
+		xdg-desktop-portal.service \
+		xdg-desktop-portal-gtk.service \
+		xdg-desktop-portal-gnome.service \
+		2>/dev/null || true
+}
+
 # libadwaita apps use their own color-scheme setting and can ignore GTK INI files
 # in non-GNOME sessions. GNOME reads color-scheme from dconf directly, and the
 # forced override would fight the wizard's choice there, so skip it on gdm.
@@ -675,6 +691,7 @@ elif [[ "$display_manager" == "gdm" ]]; then
 	# GNOME: Clean up and start gnome-session
 	rm -f "$HOME/Empty Bash" "$HOME/Empty Desktop File.desktop" "$HOME/Empty File"
 	xdg-user-dirs-update
+	_reset_gnome_portals
 	exec startgnome-community
 
 elif [[ -e /usr/share/wayland-sessions/hyprland.desktop ]]; then
