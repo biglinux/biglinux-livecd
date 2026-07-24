@@ -25,6 +25,19 @@ _log() {
 	logger -t "startbiglive" "$*"
 }
 
+_valid_xkb_layout() {
+	[[ $1 =~ ^[A-Za-z0-9_.+-]+(\([A-Za-z0-9_.+-]+\))?$ ]]
+}
+
+_split_xkb_layout() {
+	xkb_layout=$1
+	xkb_variant=
+	if [[ $xkb_layout =~ ^([^()]+)\(([^()]+)\)$ ]]; then
+		xkb_layout=${BASH_REMATCH[1]}
+		xkb_variant=${BASH_REMATCH[2]}
+	fi
+}
+
 #-------------------------------------------------------------------------------
 # Anti-loop protection: prevent infinite SDDM restart loops
 # Tracks how many times startbiglive has been invoked. If the session keeps
@@ -512,6 +525,36 @@ if [[ -f $live_language_file && ! -L $live_language_file ]]; then
 		printf '[Formats]\nLANG=%s\n' "$live_locale" >"$HOME/.config/plasma-localerc"
 	else
 		_log "ERROR - Ignoring invalid live locale selection"
+	fi
+fi
+
+#-------------------------------------------------------------------------------
+# Apply keyboard layout from user selection before starting the final desktop
+#-------------------------------------------------------------------------------
+live_keyboard_file=$(live_state_path keyboard)
+if [[ -f $live_keyboard_file && ! -L $live_keyboard_file ]]; then
+	live_keyboard=$(<"$live_keyboard_file")
+	if _valid_xkb_layout "$live_keyboard"; then
+		_split_xkb_layout "$live_keyboard"
+		if [[ -n $xkb_variant ]]; then
+			setxkbmap "$xkb_layout" -variant "$xkb_variant" 2>/dev/null || true
+		else
+			setxkbmap "$xkb_layout" 2>/dev/null || true
+		fi
+		sudo -n localectl set-x11-keymap "$xkb_layout" pc105 "$xkb_variant" terminate:ctrl_alt_bksp 2>/dev/null || true
+		mkdir -p -- "$HOME/.config"
+		cat >"$HOME/.config/kxkbrc" <<EOF
+[Layout]
+DisplayNames=
+LayoutList=$xkb_layout
+Model=pc105
+Options=terminate:ctrl_alt_bksp
+ResetOldOptions=true
+Use=true
+VariantList=$xkb_variant
+EOF
+	else
+		_log "ERROR - Ignoring invalid live keyboard selection"
 	fi
 fi
 

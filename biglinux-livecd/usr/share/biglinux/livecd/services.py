@@ -262,7 +262,7 @@ class SystemService:
                 "localectl",
                 "set-x11-keymap",
                 xkb_layout,
-                "pc105+inet",
+                "pc105",
                 xkb_variant,
                 "terminate:ctrl_alt_bksp",
             ],
@@ -301,7 +301,16 @@ class SystemService:
         else:
             # KDE/Plasma uses kxkbrc
             kxkbrc_path = os.path.join(home, ".config", "kxkbrc")
-            kxkbrc_content = f"[Layout]\nLayoutList={layout_cleaned}\nUse=true\n"
+            kxkbrc_content = (
+                "[Layout]\n"
+                "DisplayNames=\n"
+                f"LayoutList={xkb_layout}\n"
+                "Model=pc105\n"
+                "Options=terminate:ctrl_alt_bksp\n"
+                "ResetOldOptions=true\n"
+                "Use=true\n"
+                f"VariantList={xkb_variant}\n"
+            )
             self._write_user_config_file(kxkbrc_path, kxkbrc_content)
 
     def get_available_desktops(self) -> List[str]:
