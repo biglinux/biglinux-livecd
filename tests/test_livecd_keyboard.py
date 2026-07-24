@@ -8,6 +8,7 @@ from pathlib import Path
 REPOSITORY = Path(__file__).resolve().parents[1]
 PACKAGE = REPOSITORY / "biglinux-livecd"
 LIVECD_SRC = PACKAGE / "usr/share/biglinux/livecd"
+INSTALL_SETUP = PACKAGE / "usr/bin/biglinux-install-setup.sh"
 STARTBIGLIVE = PACKAGE / "usr/bin/startbiglive"
 sys.path.insert(0, str(LIVECD_SRC))
 
@@ -120,3 +121,63 @@ sudo() {{ printf 'sudo:%s\\n' "$*" >>"$COMMAND_LOG"; }}
     assert "DefaultIM=keyboard-us-intl\n" in fcitx_profile
     assert "Name=keyboard-us-intl\n" in fcitx_profile
     assert '0="Live Keyboard"\n' in fcitx_profile
+
+
+def test_install_setup_writes_plasma_keyboard_config_from_target_layout(
+    tmp_path: Path,
+) -> None:
+    root = tmp_path / "target"
+    xorg_config = root / "etc/X11/xorg.conf.d/00-keyboard.conf"
+    user_home = root / "home/tales"
+    (root / "etc/skel").mkdir(parents=True)
+    xorg_config.parent.mkdir(parents=True)
+    user_home.mkdir(parents=True)
+    (root / "usr/share/wayland-sessions").mkdir(parents=True)
+    (root / "usr/share/wayland-sessions/plasmawayland.desktop").write_text(
+        "[Desktop Entry]\nName=Plasma\n",
+        encoding="utf-8",
+    )
+    (root / "etc/passwd").write_text(
+        "root:x:0:0:root:/root:/bin/bash\n"
+        "tales:x:1000:1000:Tales:/home/tales:/bin/bash\n",
+        encoding="utf-8",
+    )
+    xorg_config.write_text(
+        'Section "InputClass"\n'
+        '        Identifier "system-keyboard"\n'
+        '        Option "XkbLayout" "br"\n'
+        '        Option "XkbVariant" ""\n'
+        "EndSection\n",
+        encoding="utf-8",
+    )
+    command_log = tmp_path / "commands"
+
+    result = run_bash(
+        """
+source "$INSTALL_SETUP"
+chown() { printf 'chown:%s\\n' "$*" >>"$COMMAND_LOG"; }
+root_mount=$TARGET_ROOT
+apply_installed_keyboard_config
+""",
+        environment={
+            "INSTALL_SETUP": str(INSTALL_SETUP),
+            "TARGET_ROOT": str(root),
+            "COMMAND_LOG": str(command_log),
+        },
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert (root / "etc/big-default-config/keyboard").read_text(
+        encoding="utf-8"
+    ) == "br\n"
+    for config_root in (root / "etc/skel/.config", user_home / ".config"):
+        kxkbrc = (config_root / "kxkbrc").read_text(encoding="utf-8")
+        fcitx_profile = (config_root / "fcitx5/profile").read_text(
+            encoding="utf-8"
+        )
+        assert "LayoutList=br\n" in kxkbrc
+        assert "VariantList=\n" in kxkbrc
+        assert "Default Layout=br\n" in fcitx_profile
+        assert "DefaultIM=keyboard-br\n" in fcitx_profile
+        assert "Name=keyboard-br\n" in fcitx_profile
+    assert "chown:1000:1000 " in command_log.read_text(encoding="utf-8")
