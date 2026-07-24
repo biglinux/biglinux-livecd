@@ -285,6 +285,47 @@ def test_startbiglive_defers_noncritical_work_until_after_wizard() -> None:
     assert wizard_launch < theme_sync
 
 
+def test_startbiglive_resets_early_portals_before_gnome(tmp_path: Path) -> None:
+    source = STARTBIGLIVE.read_text(encoding="utf-8")
+    function_start = source.index("_reset_gnome_portals() {")
+    function_end = source.index("\n}\n", function_start) + 3
+    function = source[function_start:function_end]
+    command_log = tmp_path / "commands"
+    result = run_bash(
+        f"""
+dbus-update-activation-environment() {{
+    printf 'dbus:%s\\n' "$*" >>"$COMMAND_LOG"
+}}
+systemctl() {{
+    printf 'systemctl:%s\\n' "$*" >>"$COMMAND_LOG"
+}}
+{function}
+_reset_gnome_portals
+""",
+        environment={"COMMAND_LOG": str(command_log)},
+    )
+    assert result.returncode == 0, result.stderr
+    assert command_log.read_text(encoding="utf-8").splitlines() == [
+        (
+            "dbus:--systemd DESKTOP_SESSION XDG_SESSION_DESKTOP "
+            "GDMSESSION XDG_CURRENT_DESKTOP"
+        ),
+        (
+            "systemctl:--user import-environment DESKTOP_SESSION "
+            "XDG_SESSION_DESKTOP GDMSESSION XDG_CURRENT_DESKTOP"
+        ),
+        (
+            "systemctl:--user stop xdg-desktop-portal.service "
+            "xdg-desktop-portal-gtk.service "
+            "xdg-desktop-portal-gnome.service"
+        ),
+    ]
+    gnome_branch = source.index('elif [[ "$display_manager" == "gdm" ]]')
+    reset = source.index("_reset_gnome_portals", gnome_branch)
+    session = source.index("exec startgnome-community", gnome_branch)
+    assert reset < session
+
+
 def test_wizard_defers_noninitial_pages_and_accessibility_backends() -> None:
     app_window = (
         PACKAGE / "usr/share/biglinux/livecd/ui/app_window.py"

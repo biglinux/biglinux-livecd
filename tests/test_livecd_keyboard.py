@@ -90,6 +90,7 @@ def test_startbiglive_applies_saved_keyboard_layout(tmp_path: Path) -> None:
     result = run_bash(
         f"""
 _log() {{ :; }}
+display_manager=sddm
 live_state_path() {{ printf '%s\\n' "$STATE_FILE"; }}
 setxkbmap() {{ printf 'setxkbmap:%s\\n' "$*" >>"$COMMAND_LOG"; }}
 sudo() {{ printf 'sudo:%s\\n' "$*" >>"$COMMAND_LOG"; }}
@@ -105,6 +106,7 @@ sudo() {{ printf 'sudo:%s\\n' "$*" >>"$COMMAND_LOG"; }}
 
     assert result.returncode == 0, result.stderr
     kxkbrc = (home / ".config/kxkbrc").read_text(encoding="utf-8")
+    fcitx_profile = (home / ".config/fcitx5/profile").read_text(encoding="utf-8")
     commands = command_log.read_text(encoding="utf-8")
     assert "setxkbmap:us -variant intl\n" in commands
     assert (
@@ -113,3 +115,8 @@ sudo() {{ printf 'sudo:%s\\n' "$*" >>"$COMMAND_LOG"; }}
     )
     assert "LayoutList=us\n" in kxkbrc
     assert "VariantList=intl\n" in kxkbrc
+    assert 'Name="Live Keyboard"\n' in fcitx_profile
+    assert "Default Layout=us\n" in fcitx_profile
+    assert "DefaultIM=keyboard-us-intl\n" in fcitx_profile
+    assert "Name=keyboard-us-intl\n" in fcitx_profile
+    assert '0="Live Keyboard"\n' in fcitx_profile
