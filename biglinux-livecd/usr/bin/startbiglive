@@ -398,6 +398,7 @@ _apply_default_config() {
 	_log "Applying default configuration (wizard was skipped)"
 	write_live_state language en_US
 	write_live_state desktop-theme breeze
+	write_live_state desktop 'startkde-biglinux classic'
 }
 
 #-------------------------------------------------------------------------------
@@ -694,6 +695,29 @@ _reset_gnome_portals() {
 		2>/dev/null || true
 }
 
+_plasma_live_layout_name() {
+	local desktop_state desktop_state_file layout
+	desktop_state_file=$(live_state_path desktop) || return 1
+	[[ -f $desktop_state_file && ! -L $desktop_state_file ]] || return 1
+	desktop_state=$(<"$desktop_state_file")
+	layout=$(cut -f2 -d" " <<<"$desktop_state")
+	[[ $layout =~ ^[A-Za-z0-9_.+-]+$ ]] || return 1
+	printf '%s\n' "$layout"
+}
+
+_prepare_plasma_live_defaults() {
+	local layout
+	if ! install_live_state_defaults; then
+		_log "WARNING - Could not install Plasma live defaults"
+		return 0
+	fi
+	[[ -n ${HOME:-} && $HOME != / ]] || return 0
+	rm -f -- "$HOME/.big_desktop_theme" "$HOME/.kdebiglinux/lastlogin" "$HOME/.kdebiglinux/lastused"
+	if layout=$(_plasma_live_layout_name); then
+		rm -rf -- "$HOME/.kdebiglinux/$layout"
+	fi
+}
+
 # libadwaita apps use their own color-scheme setting and can ignore GTK INI files
 # in non-GNOME sessions. GNOME reads color-scheme from dconf directly, and the
 # forced override would fight the wizard's choice there, so skip it on gdm.
@@ -736,6 +760,7 @@ elif [[ -e /usr/share/wayland-sessions/hyprland.desktop ]]; then
 
 elif [[ "$display_manager" == "sddm" || "$display_manager" == "lxdm" ]]; then
 	# KDE Plasma
+	_prepare_plasma_live_defaults
 	if [[ "$session_type" == "x11" ]]; then
 		exec startkde-biglinux
 	else

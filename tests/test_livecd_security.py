@@ -326,6 +326,67 @@ _reset_gnome_portals
     assert reset < session
 
 
+def test_live_state_defaults_publish_plasma_contract(tmp_path: Path) -> None:
+    state_directory = tmp_path / "state"
+    default_config = tmp_path / "etc/big-default-config"
+    legacy_theme = tmp_path / "etc/default-theme-biglinux"
+    legacy_desktop = tmp_path / "etc/big_desktop_changed"
+    state_directory.mkdir()
+    default_config.mkdir(parents=True)
+    (default_config / "jamesdsp").write_text("stale", encoding="utf-8")
+    (default_config / "display-profile").write_text("stale", encoding="utf-8")
+    result = run_bash(
+        """
+source "$LIVE_STATE"
+sudo() {
+    if [[ ${1:-} == -n ]]; then
+        shift
+    fi
+    "$@"
+}
+live_state_directory=$STATE_DIRECTORY
+live_state_default_config_directory=$DEFAULT_CONFIG
+live_state_legacy_theme_path=$LEGACY_THEME
+live_state_legacy_desktop_path=$LEGACY_DESKTOP
+write_live_state desktop-theme biglinux
+write_live_state desktop classic
+install_live_state_defaults
+""",
+        environment={
+            "LIVE_STATE": str(LIVE_STATE),
+            "STATE_DIRECTORY": str(state_directory),
+            "DEFAULT_CONFIG": str(default_config),
+            "LEGACY_THEME": str(legacy_theme),
+            "LEGACY_DESKTOP": str(legacy_desktop),
+        },
+    )
+    assert result.returncode == 0, result.stderr
+    assert (default_config / "theme").read_text(encoding="utf-8") == "biglinux"
+    assert (default_config / "desktop").read_text(encoding="utf-8") == "classic"
+    assert legacy_theme.read_text(encoding="utf-8") == "biglinux"
+    assert legacy_desktop.read_text(encoding="utf-8") == "classic"
+    assert not (default_config / "jamesdsp").exists()
+    assert not (default_config / "display-profile").exists()
+
+
+def test_startbiglive_prepares_plasma_defaults_before_session() -> None:
+    source = STARTBIGLIVE.read_text(encoding="utf-8")
+    function_start = source.index("_prepare_plasma_live_defaults() {")
+    function_end = source.index("\n}\n", function_start) + 3
+    function = source[function_start:function_end]
+    assert "install_live_state_defaults" in function
+    assert 'rm -f -- "$HOME/.big_desktop_theme"' in function
+    assert '"$HOME/.kdebiglinux/lastlogin"' in function
+    assert '"$HOME/.kdebiglinux/lastused"' in function
+
+    plasma_branch = source.index(
+        'elif [[ "$display_manager" == "sddm" || "$display_manager" == "lxdm" ]]'
+    )
+    prepare = source.index("_prepare_plasma_live_defaults", plasma_branch)
+    session = source.index("exec startkde-biglinux", plasma_branch)
+    assert prepare < session
+
+
 def test_wizard_defers_noninitial_pages_and_accessibility_backends() -> None:
     app_window = (
         PACKAGE / "usr/share/biglinux/livecd/ui/app_window.py"

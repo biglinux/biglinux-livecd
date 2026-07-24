@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 live_state_directory=/tmp
+live_state_default_config_directory=/etc/big-default-config
+live_state_legacy_theme_path=/etc/default-theme-biglinux
+live_state_legacy_desktop_path=/etc/big_desktop_changed
 
 live_state_path() {
 	case "$1" in
@@ -53,7 +56,27 @@ initialize_default_live_state() {
 }
 
 install_live_state_defaults() {
+	local desktop_state theme_state
 	require_live_state_directory || return 1
-	sudo install -m 0644 -- "$(live_state_path desktop-theme)" /etc/default-theme-biglinux
-	sudo install -m 0644 -- "$(live_state_path desktop)" /etc/big_desktop_changed
+	theme_state=$(live_state_path desktop-theme) || return 1
+	desktop_state=$(live_state_path desktop) || return 1
+	[[ -f $theme_state && ! -L $theme_state ]] || return 1
+	[[ -f $desktop_state && ! -L $desktop_state ]] || return 1
+
+	sudo -n install -d -m 0755 -- "$live_state_default_config_directory"
+	sudo -n install -m 0644 -- "$theme_state" "$live_state_default_config_directory/theme"
+	sudo -n install -m 0644 -- "$desktop_state" "$live_state_default_config_directory/desktop"
+	sudo -n install -m 0644 -- "$theme_state" "$live_state_legacy_theme_path"
+	sudo -n install -m 0644 -- "$desktop_state" "$live_state_legacy_desktop_path"
+
+	if [[ -f $(live_state_path enable-jamesdsp) && ! -L $(live_state_path enable-jamesdsp) ]]; then
+		sudo -n install -m 0644 -- "$(live_state_path enable-jamesdsp)" "$live_state_default_config_directory/jamesdsp"
+	else
+		sudo -n rm -f -- "$live_state_default_config_directory/jamesdsp"
+	fi
+	if [[ -f $(live_state_path improve-display) && ! -L $(live_state_path improve-display) ]]; then
+		sudo -n install -m 0644 -- "$(live_state_path improve-display)" "$live_state_default_config_directory/display-profile"
+	else
+		sudo -n rm -f -- "$live_state_default_config_directory/display-profile"
+	fi
 }
