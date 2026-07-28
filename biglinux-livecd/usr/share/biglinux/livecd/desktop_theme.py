@@ -7,11 +7,15 @@ import stat
 from collections.abc import Mapping
 from typing import Protocol
 
+from gnome_layout import LAYOUT_NAMES
+
 logger = logging.getLogger(__name__)
 GNOME_LIGHT_STYLE_UUID = "light-style@gnome-shell-extensions.gcampax.github.com"
 GNOME_USER_THEME_UUID = "user-theme@gnome-shell-extensions.gcampax.github.com"
 GNOME_KIWI_UUID = "kiwi@kemma"
 GNOME_DTP_UUID = "dash-to-panel@jderose9.github.com"
+GNOME_ALWAYS_DARK_LAYOUTS = frozenset({"biggnome", "g-unity", "minimal"})
+GNOME_ORCHIS_LAYOUTS = frozenset({"biggnome", "desk-ux"})
 MAX_SETTINGS_BYTES = 1024 * 1024
 
 SettingsChanges = Mapping[str, Mapping[str, str]]
@@ -22,6 +26,7 @@ class ThemeHost(Protocol):
     theme_list_script: str
     theme_apply_script: str
     theme_state_file: str
+    gnome_layout_state_file: str
 
     def _run_command(
         self,
@@ -205,23 +210,35 @@ def _settings_key_values(
 
 
 def _gnome_extension_changes(
-    settings_file: str, dark: bool
+    settings_file: str,
+    *,
+    user_theme: bool,
+    light_style: bool,
 ) -> dict[str, dict[str, str]]:
     values = _settings_key_values(settings_file, "org/gnome/shell")
     if values is None:
         return {}
     enabled = _parse_settings_list(values.get("enabled-extensions", "[]"))
     disabled = _parse_settings_list(values.get("disabled-extensions", "[]"))
-    if dark:
-        enabled = [item for item in enabled if item != GNOME_LIGHT_STYLE_UUID]
+    enabled = [
+        item
+        for item in enabled
+        if item not in {GNOME_USER_THEME_UUID, GNOME_LIGHT_STYLE_UUID}
+    ]
+    disabled = [
+        item
+        for item in disabled
+        if item not in {GNOME_USER_THEME_UUID, GNOME_LIGHT_STYLE_UUID}
+    ]
+    if user_theme:
         disabled = [item for item in disabled if item != GNOME_USER_THEME_UUID]
         enabled.append(GNOME_USER_THEME_UUID)
-        disabled.append(GNOME_LIGHT_STYLE_UUID)
     else:
-        enabled = [item for item in enabled if item != GNOME_USER_THEME_UUID]
-        disabled = [item for item in disabled if item != GNOME_LIGHT_STYLE_UUID]
-        enabled.append(GNOME_LIGHT_STYLE_UUID)
         disabled.append(GNOME_USER_THEME_UUID)
+    if light_style:
+        enabled.append(GNOME_LIGHT_STYLE_UUID)
+    else:
+        disabled.append(GNOME_LIGHT_STYLE_UUID)
     return {
         "org/gnome/shell": {
             "enabled-extensions": repr(list(dict.fromkeys(enabled))),
@@ -231,19 +248,39 @@ def _gnome_extension_changes(
 
 
 def _gnome_layout_class(settings_file: str) -> str:
-    values = _settings_key_values(settings_file, "org/gnome/shell")
-    if values is None:
-        return "biggnome"
-    enabled = _parse_settings_list(values.get("enabled-extensions", "[]"))
+    shell_values = _settings_key_values(settings_file, "org/gnome/shell") or {}
+    user_theme_values = (
+        _settings_key_values(
+            settings_file,
+            "org/gnome/shell/extensions/user-theme",
+        )
+        or {}
+    )
+    enabled = _parse_settings_list(shell_values.get("enabled-extensions", "[]"))
+    user_theme_name = user_theme_values.get("name", "").strip().strip("'\"")
+    if user_theme_name:
+        return "desk-ux" if GNOME_DTP_UUID in enabled else "biggnome"
     if GNOME_KIWI_UUID in enabled:
-        return "kiwi"
-    if GNOME_DTP_UUID in enabled:
-        return "panel"
-    return "biggnome"
+        return "minimal"
+    return "hybrid"
+
+
+def _selected_gnome_layout(host: ThemeHost) -> str:
+    state_file = getattr(host, "gnome_layout_state_file", "")
+    if not state_file:
+        return ""
+    try:
+        layout = _read_regular_text(state_file).strip()
+    except (OSError, UnicodeError):
+        return ""
+    return layout if layout in LAYOUT_NAMES else ""
 
 
 def _desktop_changes(
-    desktop_environment: str, settings_file: str, dark: bool
+    desktop_environment: str,
+    settings_file: str,
+    dark: bool,
+    gnome_layout: str = "",
 ) -> dict[str, dict[str, str]]:
     color_scheme = "'prefer-dark'" if dark else "'default'"
     gtk_theme = "'adw-gtk3-dark'" if dark else "'adw-gtk3'"
@@ -264,16 +301,31 @@ def _desktop_changes(
             "name": "'Big-Orange'" if dark else "'Big-Orange-Light'"
         }
     elif desktop_environment == "GNOME":
-        layout_class = _gnome_layout_class(settings_file)
-        if dark and layout_class != "kiwi":
-            changes["org/gnome/shell/extensions/user-theme"] = {"name": "'Big-Blue'"}
-            changes.update(_gnome_extension_changes(settings_file, dark=True))
-        elif not dark and layout_class == "biggnome":
-            changes["org/gnome/shell/extensions/user-theme"] = {"name": "'Big-Blue'"}
-            changes.update(_gnome_extension_changes(settings_file, dark=True))
-        elif not dark and layout_class == "panel":
-            changes["org/gnome/shell/extensions/user-theme"] = {"name": "'Big-Blue'"}
-            changes.update(_gnome_extension_changes(settings_file, dark=False))
+        layout = (
+            gnome_layout
+            if gnome_layout in LAYOUT_NAMES
+            else _gnome_layout_class(settings_file)
+        )
+        orchis = layout in GNOME_ORCHIS_LAYOUTS
+        shell_theme = (
+            "'Big-Blue-Light'"
+            if layout == "desk-ux" and not dark
+            else "'Big-Blue'"
+            if orchis
+            else "''"
+        )
+        changes["org/gnome/shell/extensions/user-theme"] = {"name": shell_theme}
+        changes.update(
+            _gnome_extension_changes(
+                settings_file,
+                user_theme=orchis,
+                light_style=(
+                    not dark
+                    and not orchis
+                    and layout not in GNOME_ALWAYS_DARK_LAYOUTS
+                ),
+            )
+        )
     return changes
 
 
@@ -298,13 +350,20 @@ def apply_simple_theme(host: ThemeHost, theme: str) -> bool:
         return False
     dark = theme == "dark"
     desktop_environment = host.get_desktop_environment()
+    gnome_layout = ""
     if desktop_environment == "GNOME":
         host._ensure_gnome_settings_file()
+        gnome_layout = _selected_gnome_layout(host)
     settings_file = settings_file_path(desktop_environment)
     if not modify_settings_file(
         host,
         settings_file,
-        _desktop_changes(desktop_environment, settings_file, dark),
+        _desktop_changes(
+            desktop_environment,
+            settings_file,
+            dark,
+            gnome_layout=gnome_layout,
+        ),
     ):
         return False
     if desktop_environment == "XFCE":

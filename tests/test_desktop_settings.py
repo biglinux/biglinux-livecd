@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import os
 import sys
 from pathlib import Path
@@ -11,11 +12,10 @@ LIBRARY = REPOSITORY / "biglinux-livecd/usr/share/biglinux/livecd"
 sys.path.insert(0, str(LIBRARY))
 
 from desktop_theme import (  # noqa: E402
-    GNOME_DTP_UUID,
-    GNOME_KIWI_UUID,
     GNOME_LIGHT_STYLE_UUID,
     GNOME_USER_THEME_UUID,
     _desktop_changes,
+    _selected_gnome_layout,
     apply_packaged_theme,
     apply_simple_theme,
     update_settings_text,
@@ -177,31 +177,63 @@ def test_gnome_layout_normalization_is_monitor_independent() -> None:
     assert "unrelated='kept'" in normalized
 
 
+@pytest.mark.parametrize("dark", [False, True], ids=["light", "dark"])
 @pytest.mark.parametrize(
-    ("extensions", "expected_enabled", "has_user_theme"),
+    ("layout", "user_theme", "light_style", "light_name", "dark_name"),
     [
-        (["dash-to-dock@micxgx.gmail.com"], GNOME_USER_THEME_UUID, True),
-        ([GNOME_DTP_UUID], GNOME_LIGHT_STYLE_UUID, True),
-        ([GNOME_KIWI_UUID], "", False),
+        ("biggnome", True, False, "'Big-Blue'", "'Big-Blue'"),
+        ("desk-ux", True, False, "'Big-Blue-Light'", "'Big-Blue'"),
+        ("hybrid", False, True, "''", "''"),
+        ("classic", False, True, "''", "''"),
+        ("g-unity", False, False, "''", "''"),
+        ("minimal", False, False, "''", "''"),
     ],
 )
-def test_gnome_light_theme_respects_layout_shell_contract(
+def test_gnome_theme_matrix_respects_each_layout_shell_contract(
     tmp_path: Path,
-    extensions: list[str],
-    expected_enabled: str,
-    has_user_theme: bool,
+    layout: str,
+    user_theme: bool,
+    light_style: bool,
+    light_name: str,
+    dark_name: str,
+    dark: bool,
 ) -> None:
     settings = tmp_path / "settings.gnome"
     settings.write_text(
         "[org/gnome/shell]\n"
-        f"enabled-extensions={extensions!r}\n"
+        f"enabled-extensions={[GNOME_USER_THEME_UUID, GNOME_LIGHT_STYLE_UUID]!r}\n"
         "disabled-extensions=[]\n",
         encoding="utf-8",
     )
-    changes = _desktop_changes("GNOME", str(settings), dark=False)
-    shell_changes = changes.get("org/gnome/shell", {})
-    if expected_enabled:
-        assert expected_enabled in shell_changes["enabled-extensions"]
-    else:
-        assert shell_changes == {}
-    assert ("org/gnome/shell/extensions/user-theme" in changes) is has_user_theme
+    changes = _desktop_changes(
+        "GNOME",
+        str(settings),
+        dark=dark,
+        gnome_layout=layout,
+    )
+    shell_changes = changes["org/gnome/shell"]
+    enabled = ast.literal_eval(shell_changes["enabled-extensions"])
+    disabled = ast.literal_eval(shell_changes["disabled-extensions"])
+    expected_light_style = light_style and not dark
+
+    assert (GNOME_USER_THEME_UUID in enabled) is user_theme
+    assert (GNOME_USER_THEME_UUID in disabled) is not user_theme
+    assert (GNOME_LIGHT_STYLE_UUID in enabled) is expected_light_style
+    assert (GNOME_LIGHT_STYLE_UUID in disabled) is not expected_light_style
+    assert changes["org/gnome/shell/extensions/user-theme"] == {
+        "name": dark_name if dark else light_name
+    }
+    assert changes["org/gnome/desktop/interface"]["color-scheme"] == (
+        "'prefer-dark'" if dark else "'default'"
+    )
+
+
+def test_selected_gnome_layout_uses_live_state(tmp_path: Path) -> None:
+    state = tmp_path / "big_gnome_layout"
+    state.write_text("hybrid\n", encoding="utf-8")
+    host = type("Host", (), {"gnome_layout_state_file": str(state)})()
+
+    assert _selected_gnome_layout(host) == "hybrid"
+
+    state.write_text("../../invalid\n", encoding="utf-8")
+    assert _selected_gnome_layout(host) == ""
