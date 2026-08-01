@@ -447,16 +447,10 @@ def publish_suggestion(suggestion: LanguageSuggestion) -> None:
             separators=(",", ":"),
         ).encode("utf-8")
         os.write(descriptor, payload)
-        os.fsync(descriptor)
         os.fchmod(descriptor, 0o644)
         os.close(descriptor)
         descriptor = -1
         os.replace(temporary_path, RESULT_PATH)
-        directory_descriptor = os.open(WORK_DIRECTORY, os.O_RDONLY | os.O_DIRECTORY)
-        try:
-            os.fsync(directory_descriptor)
-        finally:
-            os.close(directory_descriptor)
     finally:
         if descriptor >= 0:
             os.close(descriptor)

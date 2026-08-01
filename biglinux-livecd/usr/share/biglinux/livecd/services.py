@@ -150,8 +150,6 @@ class SystemService:
             ) as temporary_file:
                 temporary_path = temporary_file.name
                 temporary_file.write(content)
-                temporary_file.flush()
-                os.fsync(temporary_file.fileno())
             os.chmod(temporary_path, 0o600)
             os.replace(temporary_path, filepath)
             temporary_path = ""
@@ -165,7 +163,6 @@ class SystemService:
                     directory_stat.st_ino,
                 ):
                     raise OSError("live state directory changed while writing")
-                os.fsync(directory_fd)
             finally:
                 os.close(directory_fd)
             return True
@@ -193,13 +190,6 @@ class SystemService:
         except OSError as error:
             logger.error(f"Error removing {filepath}: {error}")
             return False
-        directory_fd = os.open(
-            self.live_state_dir, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
-        )
-        try:
-            os.fsync(directory_fd)
-        finally:
-            os.close(directory_fd)
         return True
 
     def _write_user_config_file(self, filepath: str, content: str) -> bool:

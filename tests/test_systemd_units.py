@@ -68,6 +68,12 @@ def test_language_suggestion_unit_is_valid_for_staged_payload(
         "/usr/lib/biglinux-livecd/language_suggestion_probe.py",
         "usr/lib/biglinux-livecd/language_suggestion_probe.py",
     )
+    wanted_unit = (
+        PACKAGE
+        / "usr/lib/systemd/system/graphical.target.wants/biglinux-language-suggestion.service"
+    )
+    assert wanted_unit.is_symlink()
+    assert wanted_unit.readlink() == Path("../biglinux-language-suggestion.service")
 
 
 def test_integrity_check_starts_only_after_wizard_is_visible(tmp_path: Path) -> None:

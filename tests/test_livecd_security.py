@@ -388,14 +388,17 @@ def test_startbiglive_prepares_plasma_defaults_before_session() -> None:
 
 
 def test_wizard_defers_noninitial_pages_and_accessibility_backends() -> None:
-    app_window = (
-        PACKAGE / "usr/share/biglinux/livecd/ui/app_window.py"
-    ).read_text(encoding="utf-8")
+    app_window = (PACKAGE / "usr/share/biglinux/livecd/ui/app_window.py").read_text(
+        encoding="utf-8"
+    )
     imports = app_window.split("logger = get_logger()", 1)[0]
     assert "from ui.keyboard_view import KeyboardView" not in imports
     assert "from ui.desktop_view import DesktopView" not in imports
     assert "from ui.theme_view import ThemeView" not in imports
     assert "GLib.timeout_add(500, ensure_orca_disabled)" in app_window
+    assert '"ui.keyboard_view"' in app_window
+    assert "GLib.idle_add(self._preload_next_module)" in app_window
+    assert "if not lang_code or not is_accessibility_enabled():" in app_window
 
     language_view = (
         PACKAGE / "usr/share/biglinux/livecd/ui/language_view.py"

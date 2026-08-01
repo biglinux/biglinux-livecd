@@ -126,6 +126,11 @@ def test_user_config_writes_atomically_inside_home(
     home = tmp_path / "home"
     home.mkdir()
     monkeypatch.setenv("HOME", str(home))
+
+    def reject_fsync(_descriptor: int) -> None:
+        raise AssertionError("live user config must not call fsync")
+
+    monkeypatch.setattr(os, "fsync", reject_fsync)
     target = home / ".config/app/settings.ini"
     write_text(str(target), "value\n")
     assert target.read_text(encoding="utf-8") == "value\n"

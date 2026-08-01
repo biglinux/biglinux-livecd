@@ -1,5 +1,7 @@
 # ui/theme_view.py
 
+from dataclasses import dataclass
+
 import gi
 
 gi.require_version("Gtk", "4.0")
@@ -14,6 +16,31 @@ from translations import _
 from ui.base_view import BaseItemView
 
 logger = get_logger()
+
+
+@dataclass(frozen=True)
+class ThemeRuntimeState:
+    jamesdsp_available: bool
+    contrast_available: bool
+    total_ram_gb: float
+    is_virtual_machine: bool
+
+    @classmethod
+    def detect(
+        cls, system_service: SystemService, simplified_mode: bool
+    ) -> "ThemeRuntimeState":
+        return cls(
+            jamesdsp_available=system_service.check_jamesdsp_availability(),
+            contrast_available=(
+                False
+                if simplified_mode
+                else system_service.check_enhanced_contrast_availability()
+            ),
+            total_ram_gb=system_service.get_total_memory_gb(),
+            is_virtual_machine=(
+                False if simplified_mode else system_service.is_virtual_machine()
+            ),
+        )
 
 
 class ThemeListItem(GObject.Object):
@@ -32,14 +59,18 @@ class ThemeView(BaseItemView):
     sig_theme_selected = GObject.Signal("theme-selected", arg_types=[str])
 
     def __init__(
-        self, system_service: SystemService, simplified_mode: bool = False, **kwargs
+        self,
+        system_service: SystemService,
+        runtime_state: ThemeRuntimeState,
+        simplified_mode: bool = False,
+        **kwargs,
     ):
         self.jamesdsp_switch: Gtk.Switch | None = None
         self.contrast_switch: Gtk.Switch | None = None
         self._system_service = system_service  # Store reference for ICC callbacks
         self.simplified_mode = simplified_mode
 
-        self.jamesdsp_available = system_service.check_jamesdsp_availability()
+        self.jamesdsp_available = runtime_state.jamesdsp_available
 
         # Contrast toggle disabled in simplified mode (GNOME/XFCE/Cinnamon)
         if simplified_mode:
@@ -48,16 +79,11 @@ class ThemeView(BaseItemView):
             self.contrast_available = False
             logger.info(f"Contrast disabled in simplified mode for {desktop_env}")
         else:
-            self.contrast_available = (
-                system_service.check_enhanced_contrast_availability()
-            )
+            self.contrast_available = runtime_state.contrast_available
             logger.info(f"Contrast available in full mode: {self.contrast_available}")
 
-        total_ram_gb = system_service.get_total_memory_gb()
-        self.default_jamesdsp_state = total_ram_gb > 7.0
-
-        is_vm = system_service.is_virtual_machine()
-        self.default_contrast_state = not is_vm
+        self.default_jamesdsp_state = runtime_state.total_ram_gb > 7.0
+        self.default_contrast_state = not runtime_state.is_virtual_machine
 
         # Call the parent's __init__ which will build the UI
         super().__init__(system_service=system_service, **kwargs)
@@ -183,9 +209,9 @@ class ThemeView(BaseItemView):
         self.jamesdsp_switch = Gtk.Switch(
             valign=Gtk.Align.CENTER, active=self.default_jamesdsp_state
         )
-        self.jamesdsp_switch.update_relation(
-            [Gtk.AccessibleRelation.LABELLED_BY],
-            [self.jamesdsp_title_label],
+        self.jamesdsp_switch.update_property(
+            [Gtk.AccessibleProperty.LABEL],
+            [_("JamesDSP Audio")],
         )
         content.append(self.jamesdsp_switch)
 
@@ -243,9 +269,9 @@ class ThemeView(BaseItemView):
         self.contrast_switch = Gtk.Switch(
             valign=Gtk.Align.CENTER, active=self.default_contrast_state
         )
-        self.contrast_switch.update_relation(
-            [Gtk.AccessibleRelation.LABELLED_BY],
-            [self.contrast_title_label],
+        self.contrast_switch.update_property(
+            [Gtk.AccessibleProperty.LABEL],
+            [_("Image quality")],
         )
         # Connect callback to apply ICC profile immediately when switch state changes
         self.contrast_switch.connect("notify::active", self._on_contrast_switch_toggled)

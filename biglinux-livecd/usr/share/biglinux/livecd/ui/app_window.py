@@ -3,12 +3,17 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 gi.require_version("GdkPixbuf", "2.0")
+import importlib
 import os
+import threading
+from collections.abc import Callable
+from concurrent.futures import Future, ThreadPoolExecutor
 from typing import Any
 
 from accessibility import (
     announce,
     ensure_orca_disabled,
+    is_accessibility_enabled,
     set_accessibility_enabled,
     speak,
 )
@@ -78,6 +83,19 @@ class AppWindow(Adw.ApplicationWindow):
         self.system_service = system_service
         self.config = SetupConfig()
         self.completed_steps: set[str] = set()  # Track completed steps
+        self._system_updates = ThreadPoolExecutor(
+            max_workers=1, thread_name_prefix="livecd-system-update"
+        )
+        self._last_system_update: Future[Any] | None = None
+        self._speechd_client: Any | None = None
+        self._preload_modules = [
+            "ui.keyboard_view",
+            "ui.desktop_view",
+            "ui.theme_view",
+        ]
+        self._theme_runtime_states: dict[bool, Any] = {}
+        self._pending_view_name: str | None = None
+        self._preload_started = False
         self.has_desktop_step = system_service.has_desktop_layout_step()
         self.uses_simple_theme = system_service.uses_simple_theme_selector()
         # Ensure ORCA is not running — user activates it manually via Super+Alt+S
@@ -129,6 +147,7 @@ class AppWindow(Adw.ApplicationWindow):
         key_controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
         key_controller.connect("key-pressed", self._on_key_press_event)
         self.add_controller(key_controller)
+        self.connect("map", self._schedule_initial_preload)
 
     def _build_ui(self):
         root_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
@@ -247,8 +266,14 @@ class AppWindow(Adw.ApplicationWindow):
             if hasattr(view, "_retranslate_ui"):
                 view._retranslate_ui()
 
-    def _ensure_view(self, view_name: str, *args):
+    def _ensure_view(self, view_name: str, *args) -> bool:
         """Creates and adds a view to the stack if it doesn't exist."""
+        if self.stack.get_child_by_name(view_name):
+            return True
+        if view_name in {"theme", "simple_theme"}:
+            simplified_mode = view_name == "simple_theme"
+            if simplified_mode not in self._theme_runtime_states:
+                return False
         if not self.stack.get_child_by_name(view_name):
             if view_name == "keyboard":
                 self._add_keyboard_view(*args)
@@ -258,6 +283,86 @@ class AppWindow(Adw.ApplicationWindow):
                 self._add_theme_view()
             elif view_name == "simple_theme":
                 self._add_simple_theme_view()
+        return self.stack.get_child_by_name(view_name) is not None
+
+    def _schedule_initial_preload(self, *_args) -> None:
+        if self._preload_started:
+            return
+        self._preload_started = True
+        GLib.idle_add(self._preload_next_module)
+
+    def _preload_next_module(self) -> bool:
+        if not self._preload_modules:
+            return GLib.SOURCE_REMOVE
+        module_name = self._preload_modules.pop(0)
+        importlib.import_module(module_name)
+        if module_name == "ui.keyboard_view":
+            self._ensure_view("keyboard", "us")
+        elif module_name == "ui.theme_view":
+            self._start_theme_runtime_detection()
+        return bool(self._preload_modules)
+
+    def _start_theme_runtime_detection(self) -> None:
+        from ui.theme_view import ThemeRuntimeState
+
+        modes = {self.uses_simple_theme, not self.uses_simple_theme}
+
+        def detect() -> None:
+            states = {
+                mode: ThemeRuntimeState.detect(self.system_service, mode)
+                for mode in modes
+            }
+            GLib.idle_add(self._store_theme_runtime_states, states)
+
+        threading.Thread(target=detect, daemon=True).start()
+
+    def _store_theme_runtime_states(self, states: dict[bool, Any]) -> bool:
+        self._theme_runtime_states.update(states)
+        if "language" in self.completed_steps:
+            self._preload_following_views()
+        if self._pending_view_name and self._ensure_view(self._pending_view_name):
+            view_name = self._pending_view_name
+            self._pending_view_name = None
+            self.stack.set_visible_child_name(view_name)
+        return GLib.SOURCE_REMOVE
+
+    def _preload_following_views(self) -> bool:
+        if self.has_desktop_step:
+            self._ensure_view("desktop")
+        theme_name = "simple_theme" if self.uses_simple_theme else "theme"
+        self._ensure_view(theme_name)
+        for view_name in ("desktop", theme_name):
+            view = self.stack.get_child_by_name(view_name)
+            if view is not None and hasattr(view, "load_items"):
+                view.load_items()
+        return GLib.SOURCE_REMOVE
+
+    def _submit_system_update(self, operation: Callable[..., Any], *args: Any) -> None:
+        self._last_system_update = self._system_updates.submit(
+            self._run_system_update, operation, args
+        )
+
+    @staticmethod
+    def _run_system_update(
+        operation: Callable[..., Any], args: tuple[Any, ...]
+    ) -> None:
+        try:
+            operation(*args)
+        except Exception:
+            logger.exception("Background live-session update failed")
+
+    def _wait_for_system_updates(self) -> None:
+        if self._last_system_update is not None:
+            self._last_system_update.result()
+
+    def _shutdown_background_services(self) -> None:
+        if self._speechd_client is not None:
+            try:
+                self._speechd_client.close()
+            except Exception:
+                pass
+            self._speechd_client = None
+        self._system_updates.shutdown(wait=False)
 
     _STEP_LABELS = {
         "language": lambda: _("Language"),
@@ -378,13 +483,8 @@ class AppWindow(Adw.ApplicationWindow):
         self.stack.add_titled(view, "language", _("Language"))
 
     def _on_language_selected(self, view, selection):
-        from ui.keyboard_view import KeyboardView
-
         self.config.language = selection
         params = selection.url_params
-        self.system_service.apply_language_settings(
-            params["language"], params["timezone"]
-        )
 
         # --- DYNAMIC TRANSLATION ---
         # 1. Set the new language for the entire application
@@ -395,26 +495,14 @@ class AppWindow(Adw.ApplicationWindow):
         self._retranslate_ui()
         # --- END DYNAMIC TRANSLATION ---
 
-        # Set speech-dispatcher language so ORCA uses correct TTS voice
-        self._set_speechd_language(lang_code)
+        locale_code = getattr(selection, "code", lang_code)
+        os.environ["LANG"] = f"{locale_code}.UTF-8"
 
         # Mark language step as completed
         self.completed_steps.add("language")
 
         if lang_code_full := getattr(selection, "code", None):
-            if step := next((s for s in self.steps if s["name"] == "language"), None):
-                if img := step.get("img"):
-                    candidate = os.path.join(
-                        ASSETS_DIR, f"headerbar-locale-{lang_code_full}.svg"
-                    )
-                    path = (
-                        candidate
-                        if os.path.exists(candidate)
-                        else os.path.join(ASSETS_DIR, "headerbar-locale.svg")
-                    )
-                    texture = load_svg_texture(path, 48)
-                    img.set_from_paintable(texture)
-                    img.set_pixel_size(48)
+            GLib.timeout_add(50, self._update_language_step_icon, lang_code_full)
 
         keyboard_layout = params.get("keyboard", "us")
 
@@ -426,6 +514,8 @@ class AppWindow(Adw.ApplicationWindow):
         # LAZY LOADING: Ensure keyboard view exists before updating or showing it
         self._ensure_view("keyboard", keyboard_layout)
 
+        from ui.keyboard_view import KeyboardView
+
         if isinstance(
             keyboard_view := self.stack.get_child_by_name("keyboard"), KeyboardView
         ):
@@ -433,12 +523,45 @@ class AppWindow(Adw.ApplicationWindow):
 
         if keyboard_layout not in ["us", "latam"]:
             self.stack.set_visible_child_name("keyboard")
+            self._submit_system_update(
+                self._apply_language_settings,
+                params["language"],
+                params["timezone"],
+                lang_code,
+            )
         else:
             # Also skip for us(intl) if the user doesn't need to see the choice
+            self._submit_system_update(
+                self._apply_language_settings,
+                params["language"],
+                params["timezone"],
+                lang_code,
+            )
             if keyboard_layout == "us(intl)":
                 self._on_keyboard_selected(None, keyboard_layout)
             else:
                 self._on_keyboard_selected(None, keyboard_layout)
+        GLib.timeout_add(100, self._preload_following_views)
+
+    def _update_language_step_icon(self, language_code: str) -> bool:
+        step = next((s for s in self.steps if s["name"] == "language"), None)
+        if not step or not (image := step.get("img")):
+            return GLib.SOURCE_REMOVE
+        candidate = os.path.join(ASSETS_DIR, f"headerbar-locale-{language_code}.svg")
+        path = (
+            candidate
+            if os.path.exists(candidate)
+            else os.path.join(ASSETS_DIR, "headerbar-locale.svg")
+        )
+        image.set_from_paintable(load_svg_texture(path, 48))
+        image.set_pixel_size(48)
+        return GLib.SOURCE_REMOVE
+
+    def _apply_language_settings(
+        self, language: str, timezone: str, speech_language: str
+    ) -> None:
+        self.system_service.apply_language_settings(language, timezone)
+        self._set_speechd_language(speech_language)
 
     def _add_keyboard_view(self, primary_layout):
         from ui.keyboard_view import KeyboardView
@@ -449,19 +572,21 @@ class AppWindow(Adw.ApplicationWindow):
 
     def _on_keyboard_selected(self, view, layout):
         self.config.keyboard_layout = layout
-        self.system_service.apply_keyboard_layout(layout)
 
         # Mark keyboard step as completed
         self.completed_steps.add("keyboard")
 
         if not self.has_desktop_step:
             # Navigate to simple theme view for simplified environments (GNOME/XFCE/Cinnamon)
-            self._ensure_view("simple_theme")
-            self.stack.set_visible_child_name("simple_theme")
+            if self._ensure_view("simple_theme"):
+                self.stack.set_visible_child_name("simple_theme")
+            else:
+                self._pending_view_name = "simple_theme"
         else:
             # LAZY LOADING: Ensure desktop view exists before showing it
             self._ensure_view("desktop")
             self.stack.set_visible_child_name("desktop")
+        self._submit_system_update(self.system_service.apply_keyboard_layout, layout)
 
     def _add_desktop_view(self):
         from ui.desktop_view import DesktopView
@@ -474,32 +599,40 @@ class AppWindow(Adw.ApplicationWindow):
         logger.debug(f"AppWindow received desktop-selected signal for: {layout}")
         if layout != "default":
             self.config.desktop_layout = layout
-            self.system_service.apply_desktop_layout(layout)
+            self._submit_system_update(self.system_service.apply_desktop_layout, layout)
 
         # Mark desktop step as completed
         self.completed_steps.add("desktop")
 
         if self.uses_simple_theme:
             # GNOME has a layout step, but still uses the light/dark theme chooser.
-            self._ensure_view("simple_theme")
-            logger.debug("Navigating to simple theme view...")
-            self.stack.set_visible_child_name("simple_theme")
+            if self._ensure_view("simple_theme"):
+                logger.debug("Navigating to simple theme view...")
+                self.stack.set_visible_child_name("simple_theme")
+            else:
+                self._pending_view_name = "simple_theme"
         else:
             # LAZY LOADING: Ensure theme view exists before showing it
-            self._ensure_view("theme")
-            logger.debug("Navigating to theme view...")
-            self.stack.set_visible_child_name("theme")
+            if self._ensure_view("theme"):
+                logger.debug("Navigating to theme view...")
+                self.stack.set_visible_child_name("theme")
+            else:
+                self._pending_view_name = "theme"
 
     def _add_theme_view(self):
         from ui.theme_view import ThemeView
 
-        view = ThemeView(system_service=self.system_service)
+        view = ThemeView(
+            system_service=self.system_service,
+            runtime_state=self._theme_runtime_states[False],
+        )
         view.connect("theme-selected", self._on_theme_selected)
         self.stack.add_titled(view, "theme", _("Theme"))
 
     def _on_theme_selected(self, view, theme):
         from ui.theme_view import ThemeView
 
+        self._wait_for_system_updates()
         if theme != "default":
             self.config.theme = theme
             self.system_service.apply_theme(theme)
@@ -517,13 +650,18 @@ class AppWindow(Adw.ApplicationWindow):
             self.system_service.apply_jamesdsp_settings(self.config.enable_jamesdsp)
 
         self.system_service.finalize_setup(self.config)
+        self._shutdown_background_services()
         self.close()
 
     def _add_simple_theme_view(self):
         """Creates and adds the simplified theme view for GNOME/XFCE/Cinnamon."""
         from ui.theme_view import ThemeView
 
-        view = ThemeView(system_service=self.system_service, simplified_mode=True)
+        view = ThemeView(
+            system_service=self.system_service,
+            runtime_state=self._theme_runtime_states[True],
+            simplified_mode=True,
+        )
         view.connect("theme-selected", self._on_simple_theme_selected)
         self.stack.add_titled(view, "simple_theme", _("Theme"))
 
@@ -534,6 +672,7 @@ class AppWindow(Adw.ApplicationWindow):
         logger.info(f"========== SIMPLE THEME SELECTED: {theme} ==========")
 
         try:
+            self._wait_for_system_updates()
             # Mark theme step as completed
             self.completed_steps.add("theme")
             logger.debug(
@@ -567,6 +706,7 @@ class AppWindow(Adw.ApplicationWindow):
             logger.info("Finalizing setup...")
             self.system_service.finalize_setup(self.config)
             logger.info("Setup finalized. Closing application...")
+            self._shutdown_background_services()
             self.close()
             logger.info("Application closed successfully")
         except Exception as e:
@@ -581,6 +721,9 @@ class AppWindow(Adw.ApplicationWindow):
             and state & Gdk.ModifierType.ALT_MASK
         ):
             set_accessibility_enabled(True)
+            if self.config.language is not None:
+                lang_code = self.config.language.url_params.get("lang")
+                self._submit_system_update(self._set_speechd_language, lang_code)
             lang_view = self.stack.get_child_by_name("language")
             if isinstance(lang_view, LanguageView):
                 lang_view.enable_voice_preview()
@@ -593,16 +736,13 @@ class AppWindow(Adw.ApplicationWindow):
 
     def _set_speechd_language(self, lang_code: str) -> None:
         """Set speech-dispatcher language so ORCA speaks in the selected language."""
-        if not lang_code:
+        if not lang_code or not is_accessibility_enabled():
             return
         try:
             import speechd
 
-            client = speechd.SSIPClient("biglinux-wizard-lang")
-            client.set_language(lang_code)
-            client.close()
+            if self._speechd_client is None:
+                self._speechd_client = speechd.SSIPClient("biglinux-wizard-lang")
+            self._speechd_client.set_language(lang_code)
         except Exception:
             pass
-        # Also update LANG for any newly spawned TTS processes
-        locale_code = getattr(self.config.language, "code", lang_code)
-        os.environ["LANG"] = f"{locale_code}.UTF-8"

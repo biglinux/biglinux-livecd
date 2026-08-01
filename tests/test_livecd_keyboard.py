@@ -15,6 +15,23 @@ sys.path.insert(0, str(LIVECD_SRC))
 from services import SystemService  # noqa: E402
 
 
+def test_live_state_atomic_publish_does_not_request_durability(
+    monkeypatch, tmp_path: Path
+) -> None:
+    service = SystemService()
+    service.live_state_dir = str(tmp_path)
+    state_file = tmp_path / "big_keyboard"
+
+    def reject_fsync(_descriptor: int) -> None:
+        raise AssertionError("live state must not call fsync")
+
+    monkeypatch.setattr(os, "fsync", reject_fsync)
+
+    assert service._write_live_state_file(str(state_file), "br")
+    assert state_file.read_text(encoding="utf-8") == "br"
+    assert list(tmp_path.glob(".big_keyboard.*")) == []
+
+
 def run_bash(
     script: str, *, environment: dict[str, str]
 ) -> subprocess.CompletedProcess[str]:
@@ -46,8 +63,9 @@ def test_wizard_writes_complete_plasma_keyboard_config(
     monkeypatch.setattr(
         service,
         "_run_command",
-        lambda command, **kwargs: commands.append((command.copy(), kwargs))
-        or (True, ""),
+        lambda command, **kwargs: (
+            commands.append((command.copy(), kwargs)) or (True, "")
+        ),
     )
 
     service.apply_keyboard_layout("us(intl)")
@@ -79,7 +97,8 @@ def test_startbiglive_applies_saved_keyboard_layout(tmp_path: Path) -> None:
         "#-------------------------------------------------------------------------------\n# Apply keyboard layout"
     )
     block_end = source.index(
-        "\n#-------------------------------------------------------------------------------\n# Create user directories", block_start
+        "\n#-------------------------------------------------------------------------------\n# Create user directories",
+        block_start,
     )
     block = source[block_start:block_end]
     state_file = tmp_path / "big_keyboard"
@@ -172,9 +191,7 @@ apply_installed_keyboard_config
     ) == "br\n"
     for config_root in (root / "etc/skel/.config", user_home / ".config"):
         kxkbrc = (config_root / "kxkbrc").read_text(encoding="utf-8")
-        fcitx_profile = (config_root / "fcitx5/profile").read_text(
-            encoding="utf-8"
-        )
+        fcitx_profile = (config_root / "fcitx5/profile").read_text(encoding="utf-8")
         assert "LayoutList=br\n" in kxkbrc
         assert "VariantList=\n" in kxkbrc
         assert "Default Layout=br\n" in fcitx_profile
