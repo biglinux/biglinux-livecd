@@ -571,9 +571,6 @@ class LanguageView(Adw.Bin):
             root_box.set_cursor(Gdk.Cursor.new_from_name("pointer", None))
         except Exception:
             pass
-        motion_controller = Gtk.EventControllerMotion.new()
-        motion_controller.connect("motion", self._on_mouse_motion_item, list_item)
-        root_box.add_controller(motion_controller)
 
     @staticmethod
     def _build_language_labels() -> tuple[Gtk.Label, Gtk.Label]:
@@ -591,12 +588,6 @@ class LanguageView(Adw.Bin):
         )
         orig_name_label.add_css_class("caption")
         return name_label, orig_name_label
-
-    def _on_mouse_motion_item(self, controller, x, _y, list_item):
-        position = list_item.get_position()
-        if position != Gtk.INVALID_LIST_POSITION:
-            if self.selection_model.get_selected() != position:
-                self.selection_model.set_selected(position)
 
     def _on_factory_bind(self, factory, list_item):
         item = list_item.get_item()

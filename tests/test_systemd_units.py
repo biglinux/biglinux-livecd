@@ -68,6 +68,12 @@ def test_language_suggestion_unit_is_valid_for_staged_payload(
         "/usr/lib/biglinux-livecd/language_suggestion_probe.py",
         "usr/lib/biglinux-livecd/language_suggestion_probe.py",
     )
+    unit = (
+        PACKAGE
+        / "usr/lib/systemd/system/biglinux-language-suggestion.service"
+    ).read_text(encoding="utf-8")
+    assert "Before=display-manager.service" not in unit
+
     wanted_unit = (
         PACKAGE
         / "usr/lib/systemd/system/graphical.target.wants/biglinux-language-suggestion.service"
