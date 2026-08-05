@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parent.parent
 TARGETS = (
     (ROOT / "biglinux-livecd/usr/lib/calamares/modules/btrfs-fix/main.py", None),
     (ROOT / "biglinux-livecd/usr/lib/calamares/modules/grubcfg-fix/main.py", None),
+    (ROOT / "biglinux-livecd/usr/lib/calamares/modules/luks-pbkdf/main.py", None),
     (
         ROOT / "biglinux-livecd/usr/share/biglinux/livecd/main.py",
         ROOT / "biglinux-livecd/usr/share/biglinux/livecd",
