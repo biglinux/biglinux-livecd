@@ -14,6 +14,7 @@ depends=(
     'calamares'
     'circle-flags'
     'curl'
+    'dbus'
     'e2fsprogs'
     'gettext'
     'gtk4'
@@ -24,9 +25,16 @@ depends=(
     'python-cairo'
     'python-gobject'
     'qefientrymanager'
+    'sudo'
     'util-linux'
+    'xdg-user-dirs'
+    'xorg-xrandr'
 )
-optdepends=('speech-dispatcher: spoken feedback in the live-session wizard')
+optdepends=(
+    'speech-dispatcher: spoken feedback in the live-session wizard'
+    'openssh: remote access to the live session with the sshenable boot argument'
+    'shadow: set the temporary password the sshenable boot argument uses'
+)
 makedepends=('git')
 source=("git+https://github.com/biglinux/biglinux-livecd.git")
 sha256sums=('SKIP')
@@ -41,10 +49,15 @@ package() {
         locale=${catalog##*/}
         locale=${locale%.po}
         install -d "${pkgdir}/usr/share/locale/${locale}/LC_MESSAGES"
-        msgfmt --check-format "$catalog" \
+        msgfmt -c "$catalog" \
             -o "${pkgdir}/usr/share/locale/${locale}/LC_MESSAGES/${pkgname}.mo"
     done
+    # All four trees, not just the live wizard: the installer wizard, the
+    # shared probes and the Calamares job modules were shipping uncompiled.
     python -m compileall -q -j1 -s "${pkgdir}" -p / \
-        "${pkgdir}/usr/share/biglinux/livecd" || return 1
+        "${pkgdir}/usr/share/biglinux/livecd" \
+        "${pkgdir}/usr/share/biglinux/calamares" \
+        "${pkgdir}/usr/lib/biglinux-livecd" \
+        "${pkgdir}/usr/lib/calamares/modules" || return 1
     install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }

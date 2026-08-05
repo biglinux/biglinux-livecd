@@ -743,5 +743,6 @@ def test_packaging_no_longer_replaces_distribution_binaries() -> None:
     ).read_text(encoding="utf-8")
     pkgbuild = (REPOSITORY / "pkgbuild/PKGBUILD").read_text(encoding="utf-8")
     assert "for catalog in biglinux-livecd/locale/*.po" in pkgbuild
-    assert "msgfmt --check-format" in pkgbuild
+    # -c is --check-format plus the header and domain checks.
+    assert "msgfmt -c" in pkgbuild
     assert "python -m compileall" in pkgbuild

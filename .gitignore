@@ -169,3 +169,6 @@ CLAUDE.md
 # Agent workspace bookkeeping, not part of the package
 progress-state.json
 workspace-manifest.json
+
+# Compiled catalogs: the PKGBUILD builds these from locale/*.po at package time
+biglinux-livecd/usr/share/locale/
