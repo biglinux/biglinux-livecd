@@ -452,6 +452,27 @@ def test_biglinux_tunes_luks_for_the_bootloader() -> None:
         check_luks_tuning(profile)
 
 
+def test_every_module_instance_in_a_sequence_is_declared() -> None:
+    # A "module@instance" step whose instance is not declared does not fail the
+    # install: Calamares falls back to the module's stock configuration, and for
+    # shellprocess that is the upstream example, which runs a command that does
+    # not exist and aborts the install at the very end.
+    profiles = REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles"
+    for settings_file in sorted(profiles.glob("*/settings*.conf")):
+        settings = yaml.safe_load(settings_file.read_text(encoding="utf-8"))
+        declared = {instance["id"]: instance for instance in settings.get("instances", [])}
+        for phase in settings["sequence"]:
+            for steps in phase.values():
+                for step in steps:
+                    if "@" not in step:
+                        continue
+                    module, _, instance = step.partition("@")
+                    assert instance in declared, f"{settings_file}: {step} has no instance"
+                    assert declared[instance]["module"] == module
+                    config = settings_file.parent / "modules" / declared[instance]["config"]
+                    assert config.is_file(), f"{settings_file}: {config.name} is missing"
+
+
 def test_partition_template_selects_luks2() -> None:
     # The wizard writes this template over the profile's partition.conf, so the
     # LUKS generation has to be set here too.

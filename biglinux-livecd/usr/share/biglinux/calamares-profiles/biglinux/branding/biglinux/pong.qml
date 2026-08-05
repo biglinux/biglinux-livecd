@@ -78,7 +78,11 @@ Item {
         id: gameArea
 
         anchors.fill: parent
-        radius: 10
+        // The panel next to it starts 11 pixels down, and the two should line
+        // up. The strip left above shows the window background, exactly as it
+        // does above the sidebar, so no band of another colour appears.
+        anchors.topMargin: 11
+        radius: 12
         clip: true
 
         gradient: Gradient {
