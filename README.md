@@ -89,8 +89,8 @@ biglinux-livecd/         files installed on the system, mirroring their paths
   usr/lib/calamares/modules/ Calamares job modules
   usr/share/biglinux/livecd/     setup wizard
   usr/share/biglinux/calamares/  installer wizard
-  usr/share/biglinux/calamares-profiles/  per-product Calamares profiles
-  usr/share/calamares/branding/  QML branding for the installer
+  usr/share/biglinux/calamares-profiles/  per-product Calamares profiles,
+                                         each with its own QML branding
 pkgbuild/                PKGBUILD and install scriptlet
 tests/                   test suite
 ```

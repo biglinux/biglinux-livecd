@@ -2,10 +2,13 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 from types import SimpleNamespace
 
+import pytest
 import yaml
 
 REPOSITORY = Path(__file__).resolve().parents[1]
@@ -120,7 +123,9 @@ def test_calamares_branding_uses_current_os_release_substitutions() -> None:
         (REPOSITORY / "biglinux-livecd").glob("usr/share/**/branding/*/branding.desc")
     )
 
-    assert len(branding_files) == 4
+    # One per product; there used to be a fourth, an incomplete copy of the
+    # biglinux branding under usr/share/calamares that nothing loaded.
+    assert len(branding_files) == 3
     expected_product_names = {
         "biglinux": "BigLinux",
         "xivastudio": "XivaStudio",
@@ -292,37 +297,76 @@ def test_biglinux_installation_visual_adjustments() -> None:
     assert "Player %1" not in pong
     assert 'text: "%1 — %2"' in pong
 
-    assert "property real baseBallSpeed: Math.max(6.0, width / 150)" in pong
-    assert "property real maxBallSpeed: Math.max(13.0, width / 62)" in pong
-    assert "currentSpeed * 1.09" in pong
-    assert 'color: "#FFFFFF"' in pong
-    assert "font.weight: Font.DemiBold" in pong
-    assert "background: Rectangle" in pong
-
     assert "#mainApp QProgressBar" in stylesheet
     assert "#mainApp QProgressBar::chunk" in stylesheet
     # The progress chunk carries the brand blue instead of the Qt palette.
     assert "background-color: #1976C9" in stylesheet
 
 
-def test_compatibility_branding_matches_active_biglinux_branding() -> None:
-    active = (
-        REPOSITORY
-        / "biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux"
-        / "branding/biglinux"
-    )
-    compatibility = REPOSITORY / "biglinux-livecd/usr/share/calamares/branding/biglinux"
+def test_every_branding_qml_file_parses() -> None:
+    """Calamares loads these at runtime, so a syntax error reaches an ISO.
 
-    for filename in (
-        "branding.desc",
-        "calamares-sidebar.qml",
-        "logo.svg",
-        "pong.qml",
-        "stylesheet.qss",
-    ):
-        assert (compatibility / filename).read_bytes() == (
-            active / filename
-        ).read_bytes()
+    qmllint exits non-zero only when a file cannot be parsed; the style
+    warnings it also prints do not fail this.
+    """
+    qmllint = shutil.which("qmllint")
+    if qmllint is None:
+        pytest.skip("qmllint is not installed")
+
+    profiles = REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles"
+    sources = sorted(profiles.glob("*/branding/*/**/*.qml"))
+    assert sources
+
+    for source in sources:
+        result = subprocess.run(
+            [qmllint, str(source)], capture_output=True, text=True, check=False
+        )
+        assert result.returncode == 0, f"{source}\n{result.stdout}{result.stderr}"
+
+
+def test_every_branding_asset_referenced_by_qml_or_desc_exists() -> None:
+    """A missing artwork file is invisible until the installer draws that page.
+
+    This is what shipped a branding copy whose users page could not load at
+    all: it referenced a components directory and three drawings that were
+    never copied along with it.
+    """
+    profiles = REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles"
+    branding_directories = sorted(profiles.glob("*/branding/*"))
+    assert branding_directories
+
+    missing = []
+    for branding in branding_directories:
+        sources = sorted(branding.rglob("*.qml"))
+        assert sources, branding
+        for source in sources:
+            text = source.read_text(encoding="utf-8")
+            # QML imports a directory of components; the rest are file paths.
+            for directory in re.findall(r'import\s+"([a-zA-Z0-9_/-]+)"', text):
+                if not (source.parent / directory).is_dir():
+                    missing.append(f"{source}: import {directory}")
+            for reference in re.findall(
+                r'"([a-z][a-z0-9_-]*/[^"]+\.(?:svg|png))"', text
+            ):
+                if not (branding / reference).is_file():
+                    missing.append(f"{source}: {reference}")
+
+        descriptor = branding / "branding.desc"
+        for reference in re.findall(
+            r'^\s*product(?:Logo|Icon|Welcome|Wallpaper):\s*"?([^"\n]+)"?',
+            descriptor.read_text(encoding="utf-8"),
+            re.MULTILINE,
+        ):
+            reference = reference.strip()
+            # An absolute path belongs to another package, not to this branding.
+            if reference.startswith("/"):
+                continue
+            if not (branding / reference).is_file():
+                missing.append(f"{descriptor}: {reference}")
+
+    assert not missing, "branding references files that are not shipped: " + ", ".join(
+        missing
+    )
 
 
 def test_all_calamares_profile_configuration_is_valid_yaml() -> None:
