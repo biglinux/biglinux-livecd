@@ -39,53 +39,6 @@ Page {
             description: root.tr("Create your account and choose the name used by this computer on the network.")
         }
 
-        // Two passwords in a row need explaining, and the disk one carries a
-        // restriction the boot prompt cannot state by itself. Whether the user
-        // asked for encryption is not knowable here: the partition module only
-        // records that once the installation starts, so the text is worded for
-        // both cases instead of appearing conditionally.
-        Rectangle {
-            Layout.fillWidth: true
-            Layout.preferredHeight: diskNotice.implicitHeight + 20
-            radius: 8
-            color: Qt.rgba(root.palette.highlight.r, root.palette.highlight.g,
-                           root.palette.highlight.b, 0.10)
-            border.width: 1
-            border.color: Qt.rgba(root.palette.highlight.r, root.palette.highlight.g,
-                                  root.palette.highlight.b, 0.35)
-
-            Accessible.role: Accessible.StaticText
-            Accessible.name: diskNoticeTitle.text + ". " + diskNoticeBody.text
-
-            ColumnLayout {
-                id: diskNotice
-
-                anchors.fill: parent
-                anchors.margins: 10
-                spacing: 2
-
-                Label {
-                    id: diskNoticeTitle
-
-                    Layout.fillWidth: true
-                    text: root.tr("If you turned on disk encryption")
-                    color: root.palette.windowText
-                    font.weight: Font.DemiBold
-                    wrapMode: Text.WordWrap
-                }
-
-                Label {
-                    id: diskNoticeBody
-
-                    Layout.fillWidth: true
-                    text: root.tr("The disk password from the previous screen must have no accents and no letter c-cedilla: at boot the keyboard is not configured yet and the disk would not unlock. The password below is a different one, for signing in to your account.")
-                    color: root.palette.windowText
-                    opacity: 0.85
-                    wrapMode: Text.WordWrap
-                }
-            }
-        }
-
         RowLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true

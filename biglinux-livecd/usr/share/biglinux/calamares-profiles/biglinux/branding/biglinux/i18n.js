@@ -23,9 +23,7 @@ var pt = {
     "Example: %1": "Exemplo: %1",
 
     "User account": "Conta de usuário",
-    "If you turned on disk encryption": "Se você ativou a criptografia do disco",
     "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Se criptografar o disco, a senha não pode ter acentos nem a letra ç",
-    "The disk password from the previous screen must have no accents and no letter c-cedilla: at boot the keyboard is not configured yet and the disk would not unlock. The password below is a different one, for signing in to your account.": "A senha do disco, da tela anterior, não pode ter acentos nem a letra ç: na inicialização o teclado ainda não está configurado e o disco não seria destravado. A senha abaixo é outra, para entrar na sua conta.",
     "Create your account and choose the name used by this computer on the network.": "Crie sua conta e escolha o nome usado por este computador na rede.",
     "Identity": "Identidade",
     "Your name": "Seu nome",
