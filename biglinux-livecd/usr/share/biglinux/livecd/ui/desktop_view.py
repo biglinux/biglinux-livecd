@@ -61,7 +61,6 @@ class DesktopView(BaseItemView):
             try:
                 pixbuf = GdkPixbuf.Pixbuf.new_from_file(item.image_path)
                 picture = Gtk.Picture.new_for_pixbuf(pixbuf)
-                picture.set_keep_aspect_ratio(True)
                 picture.set_hexpand(True)
                 picture.set_vexpand(True)
                 picture.set_can_shrink(True)

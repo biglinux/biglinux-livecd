@@ -100,9 +100,9 @@ class CalamaresApp(Adw.Application):
         if not self.window:
             return
 
-        about_dialog = Adw.AboutWindow(
-            transient_for=self.window,
-            modal=True,
+        # Adw.AboutWindow is deprecated since libadwaita 1.6; the dialog takes
+        # its parent when presented rather than at construction.
+        about_dialog = Adw.AboutDialog(
             application_name=_("BigLinux Calamares Config"),
             application_icon="system-software-install",
             version="1.0.0",
@@ -126,49 +126,9 @@ class CalamaresApp(Adw.Application):
             "https://github.com/biglinux/biglinux-calamares-config/wiki",
         )
 
-        about_dialog.present()
+        about_dialog.present(self.window)
 
     def on_start_orca_action(self, _action, _param):
         """Start ORCA screen reader via Super+Alt+S."""
         self.logger.info("Starting ORCA screen reader")
         start_orca()
-
-    def show_error_dialog(self, title, message, details=None):
-        """Show error dialog to user"""
-        if not self.window:
-            return
-
-        dialog = Adw.MessageDialog(
-            transient_for=self.window, modal=True, heading=title, body=message
-        )
-
-        if details:
-            dialog.set_body_use_markup(True)
-            dialog.set_body(f"{message}\n\n<tt>{details}</tt>")
-
-        dialog.add_response("ok", _("OK"))
-        dialog.set_default_response("ok")
-        dialog.set_close_response("ok")
-
-        dialog.present()
-
-    def show_confirmation_dialog(self, title, message, callback):
-        """Show confirmation dialog with callback"""
-        if not self.window:
-            return
-
-        dialog = Adw.MessageDialog(
-            transient_for=self.window, modal=True, heading=title, body=message
-        )
-
-        dialog.add_response("cancel", _("Cancel"))
-        dialog.add_response("confirm", _("Confirm"))
-        dialog.set_default_response("confirm")
-        dialog.set_close_response("cancel")
-
-        def on_response(dialog, response):
-            if response == "confirm" and callback:
-                callback()
-
-        dialog.connect("response", on_response)
-        dialog.present()

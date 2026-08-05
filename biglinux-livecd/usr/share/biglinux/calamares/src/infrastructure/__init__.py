@@ -22,12 +22,11 @@ from .file_operations import (
     validate_package_name,
     write_text_file,
 )
-from .i18n import _, setup_i18n
+from .i18n import _
 from .subprocesses import get_command_output, pacman_query_installed
 
 __all__ = [
     "_",
-    "setup_i18n",
     "APP_NAME",
     "APP_ID",
     "APP_VERSION",

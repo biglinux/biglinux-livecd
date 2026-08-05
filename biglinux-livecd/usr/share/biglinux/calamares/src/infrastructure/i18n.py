@@ -12,12 +12,3 @@ gettext.textdomain("biglinux-livecd")
 
 # Export _ directly as the translation function
 _ = gettext.gettext
-
-
-def setup_i18n():
-    """Setup internationalization (already configured above)
-
-    Returns:
-        The translation function
-    """
-    return _

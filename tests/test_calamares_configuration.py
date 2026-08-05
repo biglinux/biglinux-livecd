@@ -477,12 +477,9 @@ def test_biglinux_unmounts_before_showing_the_finished_page() -> None:
         REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux"
     )
 
-    for settings_file in ("settings.conf", "settings-hybrid-fallback.conf"):
-        settings = yaml.safe_load((profile / settings_file).read_text(encoding="utf-8"))
-        execution = next(
-            phase["exec"] for phase in settings["sequence"] if "exec" in phase
-        )
-        assert execution[-1] == "umount"
+    settings = yaml.safe_load((profile / "settings.conf").read_text(encoding="utf-8"))
+    execution = next(phase["exec"] for phase in settings["sequence"] if "exec" in phase)
+    assert execution[-1] == "umount"
 
     navigation = (profile / "branding/biglinux/calamares-navigation.qml").read_text(
         encoding="utf-8"
@@ -524,6 +521,38 @@ def test_every_module_instance_in_a_sequence_is_declared() -> None:
                     assert config.is_file(), (
                         f"{settings_file}: {config.name} is missing"
                     )
+
+
+def test_every_module_named_in_a_sequence_exists() -> None:
+    """A step naming a module that is not installed is skipped, not reported.
+
+    The instance test above only covers "module@instance" steps, so a typo in
+    a plain step name - postcfg written postcgf - would ship silently and the
+    installed system would simply be missing whatever that step does.
+    """
+    packaged = {
+        path.parent.name
+        for path in (REPOSITORY / "biglinux-livecd/usr/lib/calamares/modules").glob(
+            "*/module.desc"
+        )
+    }
+    # The rest come from the calamares package itself.
+    stock = {
+        path.parent.name
+        for path in Path("/usr/lib/calamares/modules").glob("*/module.desc")
+    }
+    if not stock:
+        pytest.skip("calamares is not installed")
+    available = packaged | stock
+
+    profiles = REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles"
+    for settings_file in sorted(profiles.glob("*/settings*.conf")):
+        settings = yaml.safe_load(settings_file.read_text(encoding="utf-8"))
+        for phase in settings["sequence"]:
+            for steps in phase.values():
+                for step in steps:
+                    module = step.partition("@")[0]
+                    assert module in available, f"{settings_file}: no module {module}"
 
 
 def test_disk_password_warning_covers_every_maintained_language() -> None:

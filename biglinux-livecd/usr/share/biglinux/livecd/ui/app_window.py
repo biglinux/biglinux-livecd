@@ -537,10 +537,7 @@ class AppWindow(Adw.ApplicationWindow):
                 params["timezone"],
                 lang_code,
             )
-            if keyboard_layout == "us(intl)":
-                self._on_keyboard_selected(None, keyboard_layout)
-            else:
-                self._on_keyboard_selected(None, keyboard_layout)
+            self._on_keyboard_selected(None, keyboard_layout)
         GLib.timeout_add(100, self._preload_following_views)
 
     def _update_language_step_icon(self, language_code: str) -> bool:

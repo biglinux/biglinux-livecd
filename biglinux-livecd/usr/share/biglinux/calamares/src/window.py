@@ -210,11 +210,8 @@ class CalamaresWindow(Adw.ApplicationWindow):
         announce(self, title, assertive=True)
 
     def navigate_back(self, button=None):
-        current_page_name = self.stack.get_visible_child_name()
-        if current_page_name in ["maintenance", "minimal", "tips"]:
-            self.navigate_to("main")
-        else:
-            self.navigate_to("main")
+        # Every page that offers Back is one level below the main page.
+        self.navigate_to("main")
 
     def clear_nav_boxes(self):
         """Remove all children from navigation boxes."""
