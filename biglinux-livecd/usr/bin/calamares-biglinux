@@ -167,6 +167,24 @@ prepare_calamares_runtime() {
 		cleanup_profile_runtime
 		return 1
 	fi
+	# Calamares asks geoip where the machine is and falls back to the region
+	# and zone in this file when it cannot ask. That fallback was a fixed
+	# value, so an install with no network landed in the wrong timezone.
+	#
+	# The setup wizard already knows better: every language it offers carries
+	# a timezone, and picking one runs timedatectl. Reading the live session's
+	# timezone back turns the user's own choice into the fallback.
+	live_timezone=$(readlink -f /etc/localtime 2>/dev/null)
+	live_timezone=${live_timezone#/usr/share/zoneinfo/}
+	# Region is the first component and zone is the rest, which keeps the
+	# three-part names such as America/Argentina/Buenos_Aires intact.
+	if [[ $live_timezone == */* && $live_timezone != /* && $live_timezone != *[[:space:]]* ]]; then
+		sed -i -e "s|^region:.*|region: \"${live_timezone%%/*}\"|" \
+			-e "s|^zone:.*|zone: \"${live_timezone#*/}\"|" \
+			"$temporary_directory/modules/locale.conf" ||
+			printf '%s\n' 'calamares-biglinux: could not apply the live timezone' >&2
+	fi
+
 	if [[ $driver == free ]] &&
 		! sed -i '/^[[:space:]]*- mhwdcfg[[:space:]]*$/d' "$temporary_directory/settings.conf"; then
 		cleanup_profile_runtime

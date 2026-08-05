@@ -523,6 +523,56 @@ def test_every_module_instance_in_a_sequence_is_declared() -> None:
                     )
 
 
+def test_every_profile_falls_back_to_the_live_timezone(tmp_path: Path) -> None:
+    """Without a network, geoip cannot answer and Calamares uses region/zone.
+
+    The setup wizard has already set the live session's timezone from the
+    language the user picked, so the launcher copies that into the profile it
+    materialises. Two profiles used to ship no locale.conf at all, which left
+    them on the Calamares default of America/New_York.
+    """
+    profiles = REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles"
+    for profile in sorted(profiles.glob("*/")):
+        configuration = profile / "modules/locale.conf"
+        assert configuration.is_file(), f"{profile.name} ships no locale.conf"
+        parsed = yaml.safe_load(configuration.read_text(encoding="utf-8"))
+        assert parsed["region"] and parsed["zone"]
+
+    # The launcher rewrites both keys; run its substitution over a real file.
+    script = (REPOSITORY / "biglinux-livecd/usr/bin/calamares-biglinux").read_text(
+        encoding="utf-8"
+    )
+    assert "live_timezone=$(readlink -f /etc/localtime" in script
+
+    work = tmp_path / "locale.conf"
+    for timezone, region, zone in (
+        ("America/Sao_Paulo", "America", "Sao_Paulo"),
+        ("Europe/Minsk", "Europe", "Minsk"),
+        # Three-part names have to keep everything after the region.
+        ("America/Argentina/Buenos_Aires", "America", "Argentina/Buenos_Aires"),
+    ):
+        work.write_text(
+            (profiles / "biglinux/modules/locale.conf").read_text(encoding="utf-8"),
+            encoding="utf-8",
+        )
+        subprocess.run(
+            [
+                "sed",
+                "-i",
+                "-e",
+                f's|^region:.*|region: "{timezone.split("/", 1)[0]}"|',
+                "-e",
+                f's|^zone:.*|zone: "{timezone.split("/", 1)[1]}"|',
+                str(work),
+            ],
+            check=True,
+        )
+        parsed = yaml.safe_load(work.read_text(encoding="utf-8"))
+        assert (parsed["region"], parsed["zone"]) == (region, zone)
+        # geoip still decides when it can reach the network.
+        assert parsed["geoip"]["url"]
+
+
 def test_every_module_named_in_a_sequence_exists() -> None:
     """A step naming a module that is not installed is skipped, not reported.
 
