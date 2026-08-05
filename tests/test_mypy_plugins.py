@@ -9,7 +9,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 TARGETS = (
-    (ROOT / "biglinux-livecd/usr/lib/calamares/modules/btrfs/main.py", None),
     (ROOT / "biglinux-livecd/usr/lib/calamares/modules/btrfs-fix/main.py", None),
     (ROOT / "biglinux-livecd/usr/lib/calamares/modules/grubcfg-fix/main.py", None),
     (
