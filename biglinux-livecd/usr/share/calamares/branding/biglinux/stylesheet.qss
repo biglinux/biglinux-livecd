@@ -78,23 +78,25 @@
     background-color: #1976C9;
 }
 
-/* The disk passphrase is easy to mistake for the login password, and it sits in
- * the middle of the partitioning page. Giving the block a surface of its own
- * separates it from the disk choices above it. The class name is the widget's
- * own, which is all a stylesheet can reach: the field belongs to the partition
- * module, so its labels and layout are not ours to change. */
-EncryptWidget {
-    margin: 6px 0 2px 0;
-    padding: 10px 12px;
-    background-color: palette(alternate-base);
-    border: 1px solid palette(mid);
-    border-radius: 8px;
+/* The disk passphrase field belongs to the partition module, so its labels and
+ * layout are not ours to change. Its container is a plain QWidget subclass
+ * without WA_StyledBackground, which means a background or a border set on the
+ * class itself is never painted; what does take effect is styling the standard
+ * widgets inside it. */
+EncryptWidget QCheckBox {
+    padding: 4px 0;
+    font-weight: bold;
 }
 
 EncryptWidget QLineEdit {
-    min-height: 24px;
-    padding: 2px 6px;
-    border: 1px solid palette(mid);
-    border-radius: 4px;
+    min-height: 26px;
+    padding: 3px 8px;
+    color: palette(text);
     background-color: palette(base);
+    border: 1px solid palette(mid);
+    border-radius: 6px;
+}
+
+EncryptWidget QLineEdit:focus {
+    border: 1px solid palette(highlight);
 }
