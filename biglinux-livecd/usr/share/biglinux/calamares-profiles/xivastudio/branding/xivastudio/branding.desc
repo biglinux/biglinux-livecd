@@ -1,0 +1,39 @@
+---
+componentName: xivastudio
+
+welcomeStyleCalamares: false
+welcomeExpandingLogo: true
+
+windowExpanding: normal
+windowSize: 960px,640px
+windowPlacement: center
+
+sidebar: qml,left
+navigation: widget,bottom
+
+strings:
+    productName: XivaStudio
+    shortProductName: XivaStudio
+    version: "${BUILD_ID}"
+    shortVersion: "${BUILD_ID}"
+    versionedName: "${PRETTY_NAME}"
+    shortVersionedName: "XivaStudio ${BUILD_ID}"
+    bootloaderEntryName: XivaStudio
+    productUrl: https://www.biglinux.com.br
+    supportUrl: https://forum.biglinux.com.br
+    knownIssuesUrl: https://github.com/biglinux/biglinux-livecd/issues
+    releaseNotesUrl: https://www.biglinux.com.br
+
+images:
+    productLogo: "logo.svg"
+    productIcon: "/usr/share/icons/hicolor/scalable/apps/icon-big-hd-install.svg"
+    productWelcome: "big-welcome.svg"
+
+slideshow: "pong.qml"
+slideshowAPI: 2
+
+style:
+    SidebarBackground: "#251A3D"
+    SidebarText: "#F8FAFC"
+    SidebarBackgroundCurrent: "#8B5CF6"
+    SidebarTextCurrent: "#FFFFFF"

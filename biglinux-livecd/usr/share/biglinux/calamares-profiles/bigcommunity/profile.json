@@ -1,0 +1,7 @@
+{
+  "id": "bigcommunity",
+  "display_name": "BigCommunity",
+  "branding": "bigcommunity",
+  "netinstall": false,
+  "warn_old_release": false
+}

@@ -1,0 +1,92 @@
+- name: "Imagem"
+  #description: "Editores de Imagem"
+  critical: false
+  hidden: false
+  selected: false
+  packages:
+    - gimp
+    - inkscape
+    - krita
+    - darktable
+    - rawtherapee
+    - hugin
+    - digikam
+    - glabels
+    - lightzone
+    - luminancehdr
+    - opentoonz
+    - scribus
+    - synfigstudio
+
+- name: "Video"
+  #description: "Instalação do Plasma"
+  critical: false
+  hidden: false
+  selected: false
+  packages:
+    - kdenlive
+    - shotcut
+    - natron
+    - blender
+    - flowblade
+    - handbrake
+    - openshot
+    - cinelerra-gg
+    - aegisub
+    - obs-studio
+    - gyroflow-bin
+
+- name: "Audio"
+  #description: "Instalação do Meta Desktop UaiSO"
+  critical: false
+  hidden: false
+  selected: false
+  packages:
+    - ardour
+    - lmms
+    - audacity
+    - mixxx
+    - carla
+    - hydrogen
+    - frescobaldi
+    - lilypond
+    - guitarix
+    - musescore
+    - qsynth
+    - qtractor
+    - rakarrack
+    - soundconverter
+    - calf
+    - eq10q
+    - avldrums.lv2
+    - linuxsampler
+    - lsp-plugins
+    - qsampler
+    - reaper
+
+- name: "3D & CAD"
+  #description: "Complementos para Estação de Trabalho"
+  critical: false
+  hidden: false
+  selected: false
+  packages:
+    - blender
+    - natron-bin
+    - freecad
+    - librecad
+    - makehuman
+    - openscad
+    - sweethome3d
+
+- name: "Browser"
+  #description: "Complementos para Estação de Trabalho"
+  critical: false
+  hidden: false
+  selected: false
+  packages:
+    - brave-browser
+    - firefox
+    - chromium
+    - vivaldi
+    - opera
+    - falkon

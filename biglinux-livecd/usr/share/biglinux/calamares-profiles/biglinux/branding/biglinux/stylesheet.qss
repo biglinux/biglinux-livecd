@@ -1,0 +1,79 @@
+/*
+ * BigLinux Calamares hybrid theme.
+ *
+ * Interactive widgets deliberately keep the active Qt style. This makes the
+ * QML shell and the QWidget partition page look like parts of one desktop app.
+ */
+
+#mainApp {
+    color: palette(window-text);
+    background-color: palette(window);
+}
+
+#mainApp QWidget,
+#mainApp QLabel {
+    color: palette(window-text);
+}
+
+#mainApp QLabel {
+    background-color: transparent;
+}
+
+/* The slideshow lives in a tab widget whose pane draws a 1px outline around
+ * the game. The QML already rounds its own corners. */
+#mainApp QTabWidget::pane {
+    border: none;
+}
+
+/* Keep operational pages neutral. Do not redraw native controls. */
+#mainApp #partitionPage,
+#mainApp #Page_UserSetup,
+#mainApp #summaryStep,
+#mainApp #finishedPage {
+    background-color: palette(window);
+}
+
+/* Small hierarchy improvements for the QWidget summary page. */
+#mainApp #summaryTitle {
+    padding: 6px 12px 9px 12px;
+    color: palette(mid);
+    background-color: transparent;
+    font-size: 13px;
+}
+
+#mainApp #summaryItemTitle {
+    margin: 6px 12px 2px 12px;
+    color: palette(window-text);
+    background-color: transparent;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+#mainApp #summaryItemBody {
+    margin: 0 12px 4px 24px;
+    padding: 8px 10px;
+    color: palette(text);
+    background-color: palette(base);
+    border: 1px solid palette(mid);
+    border-radius: 4px;
+}
+
+/* Keep installation progress compact, clear and consistent with the theme.
+ * QSS paints the percentage in one color over both the trough and the chunk,
+ * so both backgrounds are fixed dark brand blues that white text passes on. */
+#mainApp QProgressBar {
+    min-height: 20px;
+    max-height: 20px;
+    margin: 4px 0 4px 0;
+    color: #FFFFFF;
+    border: 1px solid palette(mid);
+    border-radius: 10px;
+    background-color: #16273C;
+    text-align: center;
+}
+
+#mainApp QProgressBar::chunk {
+    margin: 1px;
+    border-radius: 8px;
+    background-color: #1976C9;
+}

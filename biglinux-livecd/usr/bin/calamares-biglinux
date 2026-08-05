@@ -1,26 +1,12 @@
 #!/usr/bin/env bash
 set -uo pipefail
-#===============================================================================
-# Script Name: calamares-biglinux
-# Description: BigLinux System Installer Launcher
-#              Prepares the system for installation, runs integrity checks,
-#              configures Calamares, and handles post-installation tasks.
-# Package:     biglinux-livecd
-#
-# Dependencies:
-#   - python3 (installer interface & GTK4 dialogs)
-#   - calamares (installation backend)
-#===============================================================================
 
 # shellcheck disable=SC1091
 source /usr/lib/biglinux-livecd/kernel-options
 # shellcheck disable=SC1091
 source /usr/lib/biglinux-livecd/storage-probe
 
-#-------------------------------------------------------------------------------
-# Translation Setup
-#-------------------------------------------------------------------------------
-export TEXTDOMAINDIR="/usr/share/locale"
+export TEXTDOMAINDIR=/usr/share/locale
 export TEXTDOMAIN=biglinux-livecd
 
 _() {
@@ -37,6 +23,7 @@ if [[ $user_home != /home/* || ! -d $user_home || -L $user_home ]] || [[ $(stat 
 	printf '%s\n' 'calamares-biglinux: unsafe live-session home directory' >&2
 	exit 1
 fi
+
 calamares_state_directory=/run/biglinux-live/calamares
 integrity_state_directory=/run/biglinux-live/integrity
 if [[ ! -d $calamares_state_directory || -L $calamares_state_directory ]] ||
@@ -45,314 +32,183 @@ if [[ ! -d $calamares_state_directory || -L $calamares_state_directory ]] ||
 	exit 1
 fi
 
-#-------------------------------------------------------------------------------
-# Detect Available Text Editor
-#-------------------------------------------------------------------------------
-text_editor=
-if [[ -x /usr/bin/kate ]]; then
-	text_editor=/usr/bin/kate
-elif [[ -x /usr/bin/xed ]]; then
-	text_editor=/usr/bin/xed
-elif [[ -x /usr/bin/gnome-text-editor ]]; then
-	text_editor=/usr/bin/gnome-text-editor
-fi
-
-#-------------------------------------------------------------------------------
-# GTK4 Dialog Helper
-#-------------------------------------------------------------------------------
 gtk_dialog=(/usr/bin/python3 /usr/share/biglinux/calamares/gtk_dialog.py)
 
-#-------------------------------------------------------------------------------
-# Wait for MD5 Verification (if running)
-#-------------------------------------------------------------------------------
-verification_is_running() {
-	pgrep -f '(^|/)biglinux-verify-md5sum([[:space:]]|$)' >/dev/null
-}
-
-# Avoid flashing a dialog when verification is about to finish.
-if verification_is_running; then
-	for ((attempt = 0; attempt < 10; attempt++)); do
-		sleep 0.1
-		verification_is_running || break
-	done
-fi
-
 wait_for_verification() {
-	local verification_state=
-	while verification_is_running; do
+	local verification_state="" attempt
+	for ((attempt = 0; attempt < 18000; attempt++)); do
+		if [[ -f $integrity_state_directory/verified && ! -L $integrity_state_directory/verified ]]; then
+			IFS= read -r verification_state <"$integrity_state_directory/verified" || true
+			break
+		fi
+		if [[ -f $integrity_state_directory/failed && ! -L $integrity_state_directory/failed ]]; then
+			verification_state=failed
+			break
+		fi
 		sleep 0.2
 	done
-	if [[ -f $integrity_state_directory/verified && ! -L $integrity_state_directory/verified ]]; then
-		IFS= read -r verification_state <"$integrity_state_directory/verified" || true
-	fi
-	if [[ $verification_state == verified ]]; then
-		printf '%s\n' verified
-	else
-		printf '%s\n' failed
-	fi
+	[[ $verification_state == verified ]] && printf '%s\n' verified || printf '%s\n' failed
 }
 
-if verification_is_running; then
-	wait_for_verification | "${gtk_dialog[@]}" integrity-wait \
+if [[ ! -f $integrity_state_directory/verified && ! -f $integrity_state_directory/failed ]]; then
+	if ! /usr/bin/systemctl start --no-block biglinux-integrity-check.service; then
+		printf '%s\n' 'calamares-biglinux: failed to start the integrity verification service' >&2
+		exit 1
+	fi
+	verification_result=$(wait_for_verification | "${gtk_dialog[@]}" integrity-wait \
 		--title="$(_ "Please wait...")" \
 		--text="$(_ "Checking the integrity of the download and storage device...")" \
 		--success-title="$(_ "Verification complete")" \
-		--success-text="$(_ "The files are intact.")" || true
+		--success-text="$(_ "The files are intact.")" || printf '%s\n' failed)
+	[[ $verification_result == verified ]] || exit 1
 fi
 
-#-------------------------------------------------------------------------------
-# Verify ISO Checksum
-#-------------------------------------------------------------------------------
-if ! /usr/bin/biglinux-verify-md5sum; then
+calamares_profile_resolver=/usr/lib/biglinux-livecd/resolve-profile
+calamares_profile_directory=$($calamares_profile_resolver --path) || {
+	printf '%s\n' 'calamares-biglinux: failed to resolve the live Calamares profile' >&2
 	exit 1
-fi
+}
+calamares_profile_id=${calamares_profile_directory##*/}
 
-#-------------------------------------------------------------------------------
-# Alert if ISO is Older Than 30 Days
-#-------------------------------------------------------------------------------
+profile_warn_old_release() {
+	/usr/bin/python3 - "$1/profile.json" <<'PY'
+import json
+import sys
+
+try:
+    with open(sys.argv[1], encoding="utf-8") as profile_file:
+        profile = json.load(profile_file)
+except (OSError, ValueError):
+    raise SystemExit(2)
+
+if not isinstance(profile, dict) or not isinstance(
+    profile.get("warn_old_release", True), bool
+):
+    raise SystemExit(2)
+
+raise SystemExit(0 if profile.get("warn_old_release", True) else 1)
+PY
+}
+
 release_day=$(awk -F= '$1 == "UNIX_TIMESTAMP" { print $2; exit }' /etc/big-release 2>/dev/null || true)
 current_day=$(($(date +%s) / 86400))
-if [[ $release_day =~ ^[0-9]+$ ]] && ((current_day > release_day + 30)) && ! grep -qi community /etc/os-release; then
+profile_warning_status=1
+profile_warn_old_release "$calamares_profile_directory" || profile_warning_status=$?
+if ((profile_warning_status == 2)); then
+	printf '%s\n' 'calamares-biglinux: invalid profile metadata' >&2
+	exit 1
+fi
+if [[ $release_day =~ ^[0-9]+$ ]] && ((current_day > release_day + 30)) && ((profile_warning_status == 0)); then
 	if ! "${gtk_dialog[@]}" question \
-		--icon-name=emblem-warning \
-		--width=500 \
+		--icon-name=emblem-warning --width=500 \
 		--title="$(_ "Outdated Version")" \
 		--text="$(_ "Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version.")" \
-		--ok-label="$(_ "Continue")" \
-		--cancel-label="$(_ "Close")"; then
+		--ok-label="$(_ "Continue")" --cancel-label="$(_ "Close")"; then
 		exit 1
 	fi
 fi
 
-#-------------------------------------------------------------------------------
-# Disable Non-ZRAM Swap Partitions
-# Prevents interference with installation partition operations
-#-------------------------------------------------------------------------------
 while IFS= read -r swap_device; do
 	[[ -n $swap_device && $swap_device != /dev/zram* && -b $swap_device ]] || continue
 	swapoff -- "$swap_device"
 done < <(swapon --show=NAME --noheadings --raw)
 
-#-------------------------------------------------------------------------------
-# Configure Calamares Installer
-#-------------------------------------------------------------------------------
-if [[ ! -f /etc/calamares/biglinux ]]; then
+# The kernel keeps unmounted Btrfs members registered, holding the disk open.
+# Partitioning over an existing Btrfs install fails while they are registered.
+btrfs device scan --forget || true
 
-	# Generate welcome.conf with system requirements
-	echo '---
-showSupportUrl:         false
-showKnownIssuesUrl:     false
-showReleaseNotesUrl:    false
+calamares_config_directory=/etc/calamares
+calamares_lock_file=$calamares_state_directory/lock
 
-requirements:
-    internetCheckUrl: https://google.com
-    requiredStorage:    4
-    requiredRam:        0.5
-    check:
-      - storage
-      - ram
-      - power
-      - internet
-      - root
-    required:
-      - storage
-      - ram
-      - root
+exec {calamares_lock_fd}>"$calamares_lock_file" || {
+	printf '%s\n' 'calamares-biglinux: could not open the installer lock' >&2
+	exit 1
+}
+if ! flock -n "$calamares_lock_fd"; then
+	printf '%s\n' 'calamares-biglinux: another installer instance is already running' >&2
+	exit 1
+fi
 
-geoip:
-    style:    "xml"
-    url:      "https://geoip.kde.org/v1/ubiquity"
-    selector: "CountryCode"
-      ' >/etc/calamares/modules/welcome.conf
+export CALAMARES_BRANDING=$calamares_profile_id
+export CALAMARES_PROFILE_ID=$calamares_profile_id
+export CALAMARES_PROFILE_DIRECTORY=$calamares_config_directory
 
-	# Force btrfs compression using zstd
-	sed -i '/filesystem: btrfs/!b; :a; n; /^\s\{6\}options:/ s/defaults.*/defaults, noatime, compress-force=zstd ]\n      ssdOptions: [ discard=async ]\n      hddOptions: [ autodefrag ]/; ta' /usr/share/calamares/modules/mount.conf
+prepare_calamares_runtime() {
+	local temporary_directory keyfile keyring_name driver
+	cleanup_profile_runtime() {
+		[[ -n ${temporary_directory:-} ]] && rm -rf -- "$temporary_directory"
+	}
 
-	# Set btrfs as default filesystem instead of ext4
-	sed -i 's|defaultFileSystemType.*"ext4"|defaultFileSystemType:  "btrfs"|g' /usr/share/calamares/modules/partition.conf
+	[[ -f $calamares_profile_directory/settings.conf ]] || return 1
+	[[ -f $calamares_profile_directory/profile.json ]] || return 1
+	[[ -d $calamares_profile_directory/modules ]] || return 1
+	[[ -d $calamares_profile_directory/branding ]] || return 1
 
-	# Use recursive package removal (-Rcs instead of -Rs)
-	sed -i 's|"-Rs",|"-Rcs",|g' /usr/lib/calamares/modules/packages/main.py
-
-	# Ensure services.conf has the necessary entries
-	if [[ "$(cat /etc/calamares/modules/services.conf | wc -l)" -lt "15" ]]; then
-
-		echo 'services:
-    - name: bluetooth
-      mandatory: false
-
-    - name: cronie
-      mandatory: false
-
-    - name: ModemManager
-      mandatory: false
-
-    - name: NetworkManager
-      mandatory: false
-
-    - name: cups
-      mandatory: false
-
-    - name: haveged
-      mandatory: false
-
-    - name: fstrim.timer
-      mandatory: false
-
-    - name: pkgfile-update.timer
-      mandatory: false
-
-    - name: vboxservice
-      mandatory: false
-
-    - name: ufw
-      mandatory: false
-
-    - name: nmb
-      mandatory: false
-
-    - name: smb
-      mandatory: false
-
-    - name: set-cfs-tweaks
-      mandatory: false
-
-    - name: dnsmasq
-      mandatory: false
-
-    - name: cups-browsed
-      mandatory: false
-
-    - name: sddm
-      mandatory: false
-
-targets:
-    - name: "graphical"
-      mandatory: true
-
-disable:
-    - name: pacman-init
-      mandatory: false' >/etc/calamares/modules/services.conf
-
+	temporary_directory=$(mktemp -d -- "$calamares_state_directory/profile.XXXXXX") || return 1
+	if ! cp -a -- "$calamares_profile_directory"/. "$temporary_directory"/; then
+		cleanup_profile_runtime
+		return 1
 	fi
 
-	# Remove any 'timers:' lines from services.conf
-	sed -i 's|timers:||g' /etc/calamares/modules/services.conf
+	if find "$temporary_directory" -type l -print -quit | grep -q .; then
+		printf '%s\n' 'calamares-biglinux: profile contains an unsupported symbolic link' >&2
+		cleanup_profile_runtime
+		return 1
+	fi
 
-	# Configure user settings
-	echo "
----
-defaultGroups:
-    - cdrom
-    - floppy
-    - audio
-    - dip
-    - video
-    - plugdev
-    - netdev
-    - lpadmin
-    - scanner
-    - bluetooth
-    - vboxsf
-    - sambashare
-    - input
-    - scard
-    - lp
-    - network
-    - power
-    - sys
-    - wheel
-autologinGroup:  autologin
-doAutologin:     false
-sudoersGroup:    wheel
-setRootPassword: false
-doReusePassword: false
-availableShells: /bin/bash, /bin/zsh
-avatarFilePath:  ~/.face
-userShell:       /bin/bash
-passwordRequirements:
-    nonempty: true" >/etc/calamares/modules/users.conf
-
-	# Clean postcfg
-	echo '---
-keyrings:' >/etc/calamares/modules/postcfg.conf
-
-	# Add packaged keyrings except Pacman's runtime databases.
+	driver=$(kernel_driver) || {
+		cleanup_profile_runtime
+		return 1
+	}
+	if ! grep -q '^driver:' "$temporary_directory/modules/mhwdcfg.conf" ||
+		! sed -i "s/^driver:.*/driver: $driver/" "$temporary_directory/modules/mhwdcfg.conf"; then
+		cleanup_profile_runtime
+		return 1
+	fi
+	if [[ $driver == free ]] &&
+		! sed -i '/^[[:space:]]*- mhwdcfg[[:space:]]*$/d' "$temporary_directory/settings.conf"; then
+		cleanup_profile_runtime
+		return 1
+	fi
+	if ! printf '%s\n' '---' 'keyrings:' >"$temporary_directory/modules/postcfg.conf"; then
+		cleanup_profile_runtime
+		return 1
+	fi
 	for keyfile in /usr/share/pacman/keyrings/*.gpg; do
 		[[ -f $keyfile ]] || continue
-		keyring_name=$(basename -- "$keyfile")
+		keyring_name=${keyfile##*/}
 		case "$keyring_name" in
 		pubring.gpg | trustdb.gpg) continue ;;
 		esac
-		printf '    - %s\n' "${keyring_name%.gpg}" >>/etc/calamares/modules/postcfg.conf
+		if ! printf '    - %s\n' "${keyring_name%.gpg}" >>"$temporary_directory/modules/postcfg.conf"; then
+			cleanup_profile_runtime
+			return 1
+		fi
 	done
 
-	# General Calamares settings
-	echo '---
-modules-search: [ local ]
-
-sequence:
-    - show:
-        - welcome
-        - locale
-        - keyboard
-        - partition
-        - users
-        - summary
-    - exec:
-        - partition
-        - mount
-        - unpackfs
-        - networkcfg
-        - machineid
-        - fstab
-        - locale
-        - keyboard
-        - localecfg
-        - luksopenswaphookcfg
-        - luksbootkeyfile
-        - initcpiocfg
-        - initcpio
-        - users
-        - displaymanager
-        - mhwdcfg
-        - hwclock
-        - services
-        - grubcfg
-        - bootloader
-        - grubcfg-fix
-        - postcfg
-        - btrfs-fix
-        - umount
-    - show:
-        - finished   
-
-branding: biglinux
-
-prompt-install: true
-
-dont-chroot: false
-oem-setup: false
-disable-cancel: false
-disable-cancel-during-exec: false
-quit-at-end: false' >/etc/calamares/settings.conf
-
-	# Remove mhwdcfg if using free drivers
-	if kernel_has_argument driver=free; then
-		sed -i '/- mhwdcfg/d' /etc/calamares/settings.conf
+	if [[ -e $calamares_config_directory || -L $calamares_config_directory ]]; then
+		if [[ -L $calamares_config_directory || ! -d $calamares_config_directory ]]; then
+			printf '%s\n' 'calamares-biglinux: unsafe /etc/calamares path' >&2
+			cleanup_profile_runtime
+			return 1
+		fi
+		if ! rm -rf -- "$calamares_config_directory"; then
+			cleanup_profile_runtime
+			return 1
+		fi
 	fi
+	if ! mv -- "$temporary_directory" "$calamares_config_directory"; then
+		cleanup_profile_runtime
+		return 1
+	fi
+	temporary_directory=
+}
 
-	# Mark Calamares as configured
-	: >/etc/calamares/biglinux
+if ! prepare_calamares_runtime; then
+	printf '%s\n' 'calamares-biglinux: failed to prepare the selected Calamares profile' >&2
+	exit 1
 fi
 
-# Disable pacman-key population in postcfg
-sed -i '/init_keyring/s/^/#/' /usr/lib/calamares/modules/postcfg/main.py
-sed -i '/self.populate_keyring/s/^/#/' /usr/lib/calamares/modules/postcfg/main.py
-
-#-------------------------------------------------------------------------------
-# Detect non-live EFI system partitions without mounting them.
-#-------------------------------------------------------------------------------
 if ! efi_partition_count=$(count_non_live_efi_partitions /run/miso/bootmnt); then
 	"${gtk_dialog[@]}" info \
 		--title="$(_ "Could not inspect EFI partitions")" \
@@ -361,62 +217,27 @@ if ! efi_partition_count=$(count_non_live_efi_partitions /run/miso/bootmnt); the
 	exit 1
 fi
 
-#-------------------------------------------------------------------------------
-# EFI/Legacy Boot Mode Compatibility Check
-#-------------------------------------------------------------------------------
-
-# Case 1: EFI boot without EFI partition detected
 if [[ -d /sys/firmware/efi ]] && ((efi_partition_count == 0)); then
-	efi_question=$(_ "Do you want to proceed with the installation in EFI mode?")
-	efi_explanation=$(_ "The current boot is using EFI mode, but I did not find any EFI partition on this computer. If this computer already has another system installed and you intend to keep it installed, you will probably need to change the configuration in the BIOS to boot in Legacy mode, also called BIOS mode.")
-	if ! "${gtk_dialog[@]}" question \
-		--icon-name=drive-harddisk \
-		--width=500 \
+	if ! "${gtk_dialog[@]}" question --icon-name=drive-harddisk --width=500 \
 		--title="$(_ "Install the system")" \
-		--text="$efi_question $efi_explanation" \
-		--ok-label="$(_ "Continue")" \
-		--cancel-label="$(_ "Close")"; then
+		--text="$(_ "Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer.")" \
+		--ok-label="$(_ "Continue")" --cancel-label="$(_ "Close")"; then
 		exit 1
 	fi
 fi
-
-# Case 2: Legacy boot with EFI partition detected
 if [[ ! -d /sys/firmware/efi ]] && ((efi_partition_count > 0)); then
-	legacy_question=$(_ "Do you want to proceed with the installation in Legacy/BIOS mode?")
-	legacy_explanation=$(_ "The current boot is using Legacy/BIOS mode, but I found at least one EFI partition on this computer. For the installation to be successful, you will probably need to change the configuration in the BIOS to boot in EFI or UEFI mode.")
-	if ! "${gtk_dialog[@]}" question \
-		--icon-name=drive-harddisk \
-		--width=500 \
+	if ! "${gtk_dialog[@]}" question --icon-name=drive-harddisk --width=500 \
 		--title="$(_ "Install the system")" \
-		--text="$legacy_question $legacy_explanation" \
-		--ok-label="$(_ "Continue")" \
-		--cancel-label="$(_ "Close")"; then
+		--text="$(_ "Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer.")" \
+		--ok-label="$(_ "Continue")" --cancel-label="$(_ "Close")"; then
 		exit 1
 	fi
 fi
 
-#-------------------------------------------------------------------------------
-# Kernel 6.14+ CRC32C Compatibility Fix
-#-------------------------------------------------------------------------------
-IFS=. read -r kernel_major kernel_minor _ < <(uname -r)
-if ((kernel_major > 6 || (kernel_major == 6 && kernel_minor >= 14))); then
-	# Intel crc32c module renamed in kernel 6.14+
-	sed -i 's/crc32c-intel/crc32c/' /usr/lib/calamares/modules/initcpiocfg/main.py
-fi
-
-#-------------------------------------------------------------------------------
-# Launch Installer Interface
-#-------------------------------------------------------------------------------
 rm -f -- "$calamares_state_directory/start_calamares"
-
-# Launch the GTK4/Adwaita interface for installation options
 python3 /usr/share/biglinux/calamares/main.py
 
-#-------------------------------------------------------------------------------
-# Start Calamares Installation (if user confirmed)
-#-------------------------------------------------------------------------------
 if [[ -f $calamares_state_directory/start_calamares && ! -L $calamares_state_directory/start_calamares ]]; then
-	# Copy KDE theme settings to root for Calamares Qt theming
 	if [[ -e /usr/share/biglinux/themes/biglinux/.config/kdeglobals ]]; then
 		cp -f /usr/share/biglinux/themes/biglinux/.config/kdeglobals /root/.config/kdeglobals
 		cp -Rf /usr/share/biglinux/themes/biglinux/.config/Kvantum /root/.config/Kvantum
@@ -425,81 +246,31 @@ if [[ -f $calamares_state_directory/start_calamares && ! -L $calamares_state_dir
 		cp -Rf /etc/skel/.config/Kvantum /root/.config/Kvantum
 	fi
 
-	# Run Calamares with Qt KDE platform theme
-	QT_QPA_PLATFORMTHEME=kde QT_QUICK_BACKEND=software dbus-launch /usr/bin/calamares
+	QT_QPA_PLATFORMTHEME=kde QT_QUICK_BACKEND=software dbus-launch \
+		/usr/bin/calamares
 
 	session_log=/root/.cache/calamares/session.log
 	if [[ ! -f $session_log || -L $session_log ]]; then
-		"${gtk_dialog[@]}" info \
-			--title="$(_ "Installation log unavailable")" \
-			--text="$(_ "Calamares did not create a valid installation log. Close the installer and try again.")" \
-			--width=480
+		"${gtk_dialog[@]}" info --title="$(_ "Installation log unavailable")" \
+			--text="$(_ "Calamares did not create a valid installation log. Close the installer and try again.")" --width=480
 		exit 1
 	fi
 
 	copy_installation_log() {
-		local destination_name=$1
-		local log_size destination
+		local destination_name=$1 destination log_size
 		log_size=$(stat -c '%s' -- "$session_log") || return 1
 		((log_size <= 32 * 1024 * 1024)) || return 1
 		destination=$user_home/$destination_name
-		# The destination is opened by the unprivileged user. A malicious
-		# symlink can therefore affect only files that user may already write.
+		# The inner shell expands $1 after runuser sets its argument vector.
 		# shellcheck disable=SC2016
 		/usr/bin/cat -- "$session_log" | /usr/bin/runuser -u "$user" -- \
 			/usr/bin/bash -c 'umask 077; cat >"$1"' _ "$destination"
 	}
 
-	copy_installation_log calamares_complete.log || {
-		"${gtk_dialog[@]}" info \
-			--title="$(_ "Could not save the installation log")" \
-			--text="$(_ "The log could not be copied to your home folder. Check the installation log before closing Calamares.")" \
-			--width=480
-	}
-
-	#---------------------------------------------------------------------------
-	# Installation Result Handling
-	#---------------------------------------------------------------------------
+	copy_installation_log calamares_complete.log || true
 	if ! grep -w completion "$session_log" | grep -v bash-completion | grep -qE ':[[:space:]]*succeeded[[:space:]]*$'; then
-		# Installation failed - save error log
 		copy_installation_log calamares_error.log || true
-
-		# Handle specific efibootmgr error (EFI entry write failure)
-		if grep -q 'grub-install: error: efibootmgr failed to register the boot entry: Input/output error.' "$session_log"; then
-			if "${gtk_dialog[@]}" question \
-				--width=480 \
-				--title="$(_ "Calamares log")" \
-				--text="$(_ "It was not possible to write the EFI entry to the motherboard, likely due to insufficient space. Check the EFI manager for any entries that can be deleted and try installing the system again.")" \
-				--ok-label="$(_ "Open the EFI manager")" \
-				--cancel-label="$(_ "Close")"; then
-				QEFIEntryManager
-			fi
-		fi
-
-		# Keep diagnostics local; raw installer logs may contain user and disk data.
-		log_action=$("${gtk_dialog[@]}" list \
-			--width=480 \
-			--height=350 \
-			--title="Calamares LOG" \
-			--text="$(_ "The installation failed. You can open the local log for review. It is not uploaded automatically because it may contain user and disk details.")" \
-			--radiolist \
-			--hide-column=2 \
-			--print-column=2 \
-			--column="" --column="ID" --column="$(_ "Action")" \
-			--row TRUE --row "open" --row "$(_ "Open")" \
-			--row FALSE --row "close" --row "$(_ "Close")")
-
-		case "$log_action" in
-		"open")
-			if [[ -n $text_editor && -f $user_home/calamares_error.log ]]; then
-				sudo -u "$user" -- "$text_editor" "$user_home/calamares_error.log"
-			else
-				"${gtk_dialog[@]}" info \
-					--title="$(_ "Installation log saved")" \
-					--text="$(_ "The log is available at:") $user_home/calamares_error.log" \
-					--width=480
-			fi
-			;;
-		esac
+		"${gtk_dialog[@]}" info --title="$(_ "Installation failed")" \
+			--text="$(_ "The installation failed. The local error log was saved in your home folder.")" --width=480
 	fi
 fi

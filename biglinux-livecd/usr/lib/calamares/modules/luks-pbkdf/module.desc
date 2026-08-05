@@ -1,6 +1,5 @@
-# Syntax is YAML 1.2
 ---
 type:       "job"
-name:       "btrfs"
+name:       "luks-pbkdf"
 interface:  "python"
 script:     "main.py"
