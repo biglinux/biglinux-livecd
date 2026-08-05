@@ -461,17 +461,25 @@ def test_every_module_instance_in_a_sequence_is_declared() -> None:
     profiles = REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles"
     for settings_file in sorted(profiles.glob("*/settings*.conf")):
         settings = yaml.safe_load(settings_file.read_text(encoding="utf-8"))
-        declared = {instance["id"]: instance for instance in settings.get("instances", [])}
+        declared = {
+            instance["id"]: instance for instance in settings.get("instances", [])
+        }
         for phase in settings["sequence"]:
             for steps in phase.values():
                 for step in steps:
                     if "@" not in step:
                         continue
                     module, _, instance = step.partition("@")
-                    assert instance in declared, f"{settings_file}: {step} has no instance"
+                    assert instance in declared, (
+                        f"{settings_file}: {step} has no instance"
+                    )
                     assert declared[instance]["module"] == module
-                    config = settings_file.parent / "modules" / declared[instance]["config"]
-                    assert config.is_file(), f"{settings_file}: {config.name} is missing"
+                    config = (
+                        settings_file.parent / "modules" / declared[instance]["config"]
+                    )
+                    assert config.is_file(), (
+                        f"{settings_file}: {config.name} is missing"
+                    )
 
 
 def test_disk_password_warning_covers_every_maintained_language() -> None:
@@ -509,9 +517,7 @@ def test_navigation_hint_points_at_the_partition_step() -> None:
     navigation = (
         profiles / "biglinux/branding/biglinux/calamares-navigation.qml"
     ).read_text(encoding="utf-8")
-    declared = int(
-        re.search(r"partitionStepIndex: (\d+)", navigation).group(1)
-    )
+    declared = int(re.search(r"partitionStepIndex: (\d+)", navigation).group(1))
     for settings_file in sorted(profiles.glob("*/settings*.conf")):
         settings = yaml.safe_load(settings_file.read_text(encoding="utf-8"))
         shown = next(phase["show"] for phase in settings["sequence"] if "show" in phase)

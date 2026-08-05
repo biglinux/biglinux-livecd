@@ -4,8 +4,11 @@ set -euo pipefail
 # shellcheck disable=SC1091
 source /usr/lib/biglinux-livecd/live-state
 
-initialize_default_live_state
-install_live_state_defaults
+# Best-effort: the installer has to start even when the live state cannot be
+# written. Under set -e a sudo without a matching sudoers rule aborted the
+# script before the exec below.
+initialize_default_live_state || true
+install_live_state_defaults || true
 
 if [[ -x /usr/bin/konsole ]]; then
 	/usr/bin/konsole -e /usr/bin/nmtui-connect

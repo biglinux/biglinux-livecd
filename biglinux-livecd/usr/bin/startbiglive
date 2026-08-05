@@ -396,9 +396,7 @@ _start_mutter_wizard() {
 #-------------------------------------------------------------------------------
 _apply_default_config() {
 	_log "Applying default configuration (wizard was skipped)"
-	write_live_state language en_US
-	write_live_state desktop-theme breeze
-	write_live_state desktop 'startkde-biglinux classic'
+	initialize_default_live_state
 }
 
 #-------------------------------------------------------------------------------
@@ -408,8 +406,8 @@ display_manager_service=$(readlink -f /etc/systemd/system/display-manager.servic
 display_manager=${display_manager_service##*/}
 display_manager=${display_manager%.service}
 case $display_manager in
-	sddm | gdm | lightdm | lxdm) ;;
-	*) display_manager=unknown ;;
+sddm | gdm | lightdm | lxdm) ;;
+*) display_manager=unknown ;;
 esac
 # LightDM may omit this for X11 live sessions.
 session_type="${XDG_SESSION_TYPE:-x11}"
@@ -456,13 +454,17 @@ fi
 # SDDM: Disable screen lock and kwallet for live session
 #-------------------------------------------------------------------------------
 if [[ $display_manager == sddm ]]; then
-	if ! grep -q 'Autolock=false' ~/.config/kscreenlockerrc 2>/dev/null; then
-		sed -i '/^\[Daemon\]$/a Autolock=false\nLockOnResume=false' "$HOME/.config/kscreenlockerrc"
+	# Neither file need exist yet on a fresh live session, and sed cannot add a
+	# line to a section that is not there: appending the section whole works in
+	# both cases, and KConfig merges a repeated group header.
+	mkdir -p "$HOME/.config"
+	if ! grep -q 'Autolock=false' "$HOME/.config/kscreenlockerrc" 2>/dev/null; then
+		printf '%s\n' '[Daemon]' 'Autolock=false' 'LockOnResume=false' \
+			>>"$HOME/.config/kscreenlockerrc"
 	fi
 	# Disable kwallet to prevent password prompts during the live KDE session.
-	if ! grep -q 'Enabled=false' ~/.config/kwalletrc 2>/dev/null; then
-		echo '[Wallet]
-Enabled=false' >>~/.config/kwalletrc
+	if ! grep -q 'Enabled=false' "$HOME/.config/kwalletrc" 2>/dev/null; then
+		printf '%s\n' '[Wallet]' 'Enabled=false' >>"$HOME/.config/kwalletrc"
 	fi
 fi
 
@@ -512,7 +514,13 @@ else
 
 		# Start kwin_wayland with health check and software rendering fallback
 		if ! _start_kwin_wizard; then
-			_log "Wizard could not start, applying defaults and continuing to desktop"
+			_log "Compositor could not start on any renderer"
+		fi
+		# The wizard records every choice in the live state, so that is what
+		# says whether it ran. The compositor surviving three seconds never
+		# did: a wizard that died at the fourth left the desktop with no
+		# settings at all and nothing noticed.
+		if [[ ! -f $(live_state_path language) ]]; then
 			_apply_default_config
 		fi
 	elif [[ "$display_manager" == "gdm" ]]; then
@@ -529,7 +537,9 @@ else
 
 		# Start mutter with health check and software rendering fallback
 		if ! _start_mutter_wizard; then
-			_log "Wizard could not start (GNOME), applying defaults and continuing to desktop"
+			_log "Compositor could not start on any renderer (GNOME)"
+		fi
+		if [[ ! -f $(live_state_path language) ]]; then
 			_apply_default_config
 		fi
 	fi
@@ -613,7 +623,7 @@ install -m 0755 -- /usr/share/applications/com.biglinux.calamares-config.desktop
 # written at the moment Plasma builds its menu cache, and Plasma kept showing
 # the entry anyway. The live user has passwordless sudo; -n keeps a missing rule
 # from blocking the session on a password prompt.
-sudo -n rm -f /usr/share/applications/calamares.desktop 2>/dev/null || \
+sudo -n rm -f /usr/share/applications/calamares.desktop 2>/dev/null ||
 	_log "WARNING - Could not remove the generic Calamares menu entry"
 
 cd -- "$HOME" || exit 1

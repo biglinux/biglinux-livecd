@@ -104,12 +104,21 @@ printf 'missing=%s\\n' "$(kernel_driver)"
     assert result.returncode == 0
     assert result.stdout.strip() == "nonfree"
 
-    cmdline.write_text("driver=free driver=nonfree\n", encoding="utf-8")
-    result = run_bash(
-        'source "$KERNEL_OPTIONS"; kernel_cmdline_path=$CMDLINE; kernel_driver',
-        environment={"KERNEL_OPTIONS": str(KERNEL_OPTIONS), "CMDLINE": str(cmdline)},
-    )
-    assert result.returncode != 0
+    # An unusable argument falls back to the default and says so, rather than
+    # failing: livecd-tweaks used to mark its whole unit failed over this, and
+    # calamares-biglinux used to refuse to prepare the installer profile.
+    for unusable in ("driver=free driver=nonfree\n", "driver=nvidia\n"):
+        cmdline.write_text(unusable, encoding="utf-8")
+        result = run_bash(
+            'source "$KERNEL_OPTIONS"; kernel_cmdline_path=$CMDLINE; kernel_driver',
+            environment={
+                "KERNEL_OPTIONS": str(KERNEL_OPTIONS),
+                "CMDLINE": str(cmdline),
+            },
+        )
+        assert result.returncode == 0, result.stderr
+        assert result.stdout.strip() == "free"
+        assert "unusable driver=" in result.stderr
 
 
 def test_grub_update_is_atomic_filtered_and_shell_safe(tmp_path: Path) -> None:

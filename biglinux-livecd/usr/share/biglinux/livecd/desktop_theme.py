@@ -3,6 +3,7 @@ from __future__ import annotations
 import ast
 import logging
 import os
+import shutil
 import stat
 from collections.abc import Mapping
 from typing import Protocol
@@ -381,10 +382,15 @@ def apply_simple_theme(host: ThemeHost, theme: str) -> bool:
     source_name = "biglinux-dark" if dark else "biglinux"
     kdeglobals_source = f"/usr/share/sync-kde-and-gtk-places/{source_name}"
     if os.path.isfile(kdeglobals_source):
-        success, _output = host._run_command(
-            ["cp", "-f", kdeglobals_source, os.path.join(home, ".config", "kdeglobals")]
-        )
-        if not success:
+        # _run_command spawns and returns, so it reported success the moment cp
+        # started and the check below could never fire. Copying in process both
+        # finishes before the caller is told it did and saves the fork.
+        try:
+            shutil.copyfile(
+                kdeglobals_source, os.path.join(home, ".config", "kdeglobals")
+            )
+        except OSError as error:
+            logger.error("Could not install the KDE theme settings: %s", error)
             return False
     else:
         logger.warning("KDE theme settings are unavailable")

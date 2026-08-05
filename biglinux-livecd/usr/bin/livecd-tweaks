@@ -119,7 +119,7 @@ main() {
 	remove_live_login_delays || return 1
 	preload_wizard_runtime
 	local driver
-	driver=$(kernel_driver) || return 1
+	driver=$(kernel_driver)
 	case $driver in
 	free) disable_free_driver_detection || return 1 ;;
 	nonfree) install_runtime_mkinitcpio_shim || return 1 ;;

@@ -171,6 +171,10 @@ class LanguageRow(Gtk.Box):
         self.flag = Gtk.Image()
         self.name_label = Gtk.Label()
         self.orig_label = Gtk.Label()
+        # The row outlives the language shown in it: GridView recycles rows as
+        # the list scrolls or is filtered. The click handler reads this rather
+        # than closing over whichever item happened to be bound at the time.
+        self.item: LanguageListItem | None = None
 
 
 class LanguageView(Adw.Bin):
@@ -321,10 +325,17 @@ class LanguageView(Adw.Bin):
         if self._speak_timeout_id > 0:
             GLib.source_remove(self._speak_timeout_id)
             self._speak_timeout_id = 0
-        # Kill any ongoing TTS process
+        # Kill any ongoing TTS process. Terminating is not enough: without a
+        # wait the child stays a zombie, and hovering the language list leaves
+        # one behind per language.
         if self._espeak_proc and self._espeak_proc.poll() is None:
             self._espeak_proc.terminate()
-            self._espeak_proc = None
+            try:
+                self._espeak_proc.wait(timeout=1)
+            except subprocess.TimeoutExpired:
+                self._espeak_proc.kill()
+                self._espeak_proc.wait()
+        self._espeak_proc = None
         self._tts_gen += 1
         # Always update the global speak voice for other screens
         selected = selection_model.get_selected()
@@ -566,6 +577,12 @@ class LanguageView(Adw.Bin):
         root_box.flag = flag_widget
         root_box.name_label = name_label
         root_box.orig_label = orig_name_label
+        # Once per row, not once per bind: a controller added on bind stays on
+        # the recycled row, so after a little scrolling one click fired several
+        # times, each for a language the row no longer showed.
+        click_gesture = Gtk.GestureClick.new()
+        click_gesture.connect("released", self._on_item_clicked)
+        root_box.add_controller(click_gesture)
         list_item.set_child(root_box)
         try:
             root_box.set_cursor(Gdk.Cursor.new_from_name("pointer", None))
@@ -609,14 +626,14 @@ class LanguageView(Adw.Bin):
         root_box.orig_label.set_label(item.name)
 
         root_box.flag.set_from_icon_name(item.flag_icon_name)
+        root_box.item = item
 
-        click_gesture = Gtk.GestureClick.new()
-        click_gesture.connect("released", self._on_item_clicked, item)
-        root_box.add_controller(click_gesture)
-
-    def _on_item_clicked(self, gesture, n_press, x, _y, item):
-        if n_press == 1 and gesture.get_current_button() == Gdk.BUTTON_PRIMARY:
-            self._activate_item(item)
+    def _on_item_clicked(self, gesture, n_press, _x, _y):
+        if n_press != 1 or gesture.get_current_button() != Gdk.BUTTON_PRIMARY:
+            return
+        row = gesture.get_widget()
+        if isinstance(row, LanguageRow) and row.item is not None:
+            self._activate_item(row.item)
 
     def handle_global_key_press(self, keyval):
         if keyval == Gdk.KEY_Return or keyval == Gdk.KEY_KP_Enter:

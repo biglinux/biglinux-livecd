@@ -628,6 +628,7 @@ class SystemService:
                 capture_output=True,
                 text=True,
                 check=True,
+                timeout=10,
             )
             profile_directory = result.stdout.strip()
             profile_path = os.path.join(profile_directory, "profile.json")
@@ -636,7 +637,16 @@ class SystemService:
             if not isinstance(profile, dict):
                 raise ValueError("profile metadata is not an object")
             profile["directory"] = profile_directory
-        except (OSError, subprocess.CalledProcessError):
+        # A hand-edited or truncated profile.json raises JSONDecodeError, and a
+        # profile that is not an object raises ValueError below: neither was
+        # caught, so either one aborted the wizard on startup instead of
+        # falling back to the defaults this except clause exists to provide.
+        except (
+            OSError,
+            ValueError,
+            subprocess.CalledProcessError,
+            subprocess.TimeoutExpired,
+        ):
             profile = {
                 "id": "biglinux",
                 "display_name": "BigLinux",

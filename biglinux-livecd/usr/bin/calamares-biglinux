@@ -55,12 +55,17 @@ if [[ ! -f $integrity_state_directory/verified && ! -f $integrity_state_director
 		printf '%s\n' 'calamares-biglinux: failed to start the integrity verification service' >&2
 		exit 1
 	fi
-	verification_result=$(wait_for_verification | "${gtk_dialog[@]}" integrity-wait \
+	# The dialog reads the outcome from the pipe and reports it as its exit
+	# status. Reading it from stdout, which is what this used to do, compared
+	# an always-empty string against "verified" and so refused to install
+	# whenever the check had not already finished at boot.
+	if ! wait_for_verification | "${gtk_dialog[@]}" integrity-wait \
 		--title="$(_ "Please wait...")" \
 		--text="$(_ "Checking the integrity of the download and storage device...")" \
 		--success-title="$(_ "Verification complete")" \
-		--success-text="$(_ "The files are intact.")" || printf '%s\n' failed)
-	[[ $verification_result == verified ]] || exit 1
+		--success-text="$(_ "The files are intact.")"; then
+		exit 1
+	fi
 fi
 
 calamares_profile_resolver=/usr/lib/biglinux-livecd/resolve-profile
@@ -156,10 +161,7 @@ prepare_calamares_runtime() {
 		return 1
 	fi
 
-	driver=$(kernel_driver) || {
-		cleanup_profile_runtime
-		return 1
-	}
+	driver=$(kernel_driver)
 	if ! grep -q '^driver:' "$temporary_directory/modules/mhwdcfg.conf" ||
 		! sed -i "s/^driver:.*/driver: $driver/" "$temporary_directory/modules/mhwdcfg.conf"; then
 		cleanup_profile_runtime
@@ -238,6 +240,11 @@ rm -f -- "$calamares_state_directory/start_calamares"
 python3 /usr/share/biglinux/calamares/main.py
 
 if [[ -f $calamares_state_directory/start_calamares && ! -L $calamares_state_directory/start_calamares ]]; then
+	# Calamares runs as root and reads its theme from root's config. On an
+	# image where root has never had one, both copies below failed and the
+	# installer came up unthemed - silently, since this script does not run
+	# under set -e.
+	mkdir -p /root/.config
 	if [[ -e /usr/share/biglinux/themes/biglinux/.config/kdeglobals ]]; then
 		cp -f /usr/share/biglinux/themes/biglinux/.config/kdeglobals /root/.config/kdeglobals
 		cp -Rf /usr/share/biglinux/themes/biglinux/.config/Kvantum /root/.config/Kvantum

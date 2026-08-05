@@ -4,9 +4,13 @@ set -euo pipefail
 # shellcheck disable=SC1091
 source /usr/lib/biglinux-livecd/live-state
 
-initialize_default_live_state
-/usr/bin/biglinux-themes.sh --apply breeze
-/usr/bin/change-plasma-theme --apply classic quiet
-install_live_state_defaults
+# Preparing the session is best-effort. A live session that comes up unthemed
+# is still a session; one that never starts is not. Under set -e the first
+# sudo without a matching sudoers rule aborted the script right here, before
+# the exec below ever ran.
+initialize_default_live_state || true
+/usr/bin/biglinux-themes.sh --apply breeze || true
+/usr/bin/change-plasma-theme --apply classic quiet || true
+install_live_state_defaults || true
 
 exec /usr/bin/startplasma-wayland

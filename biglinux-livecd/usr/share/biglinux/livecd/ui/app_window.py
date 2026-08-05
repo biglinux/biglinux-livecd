@@ -344,8 +344,16 @@ class AppWindow(Adw.ApplicationWindow):
             logger.exception("Background live-session update failed")
 
     def _wait_for_system_updates(self) -> None:
-        if self._last_system_update is not None:
-            self._last_system_update.result()
+        # Both callers are GTK signal handlers, so this blocks the main loop:
+        # the window stops drawing until sudo timedatectl and localectl come
+        # back. They are quick, but an unbounded wait on a hung child froze the
+        # wizard with no way out, and the settings are not worth that.
+        if self._last_system_update is None:
+            return
+        try:
+            self._last_system_update.result(timeout=15)
+        except Exception as error:
+            logger.warning("A system settings update did not finish: %s", error)
 
     def _shutdown_background_services(self) -> None:
         if self._speechd_client is not None:
@@ -723,6 +731,16 @@ class AppWindow(Adw.ApplicationWindow):
             return True
         current_view = self.stack.get_visible_child()
         if isinstance(current_view, LanguageView):
+            # Type-ahead search must not swallow accelerators. Ctrl+Q carries
+            # the same printable keyval as Q, and this controller runs in the
+            # capture phase, so the language search was typing a "q" and
+            # returning True before the shortcut could reach anything.
+            if state & (
+                Gdk.ModifierType.CONTROL_MASK
+                | Gdk.ModifierType.ALT_MASK
+                | Gdk.ModifierType.SUPER_MASK
+            ):
+                return False
             return current_view.handle_global_key_press(keyval)
         return False
 

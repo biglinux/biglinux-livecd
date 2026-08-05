@@ -12,6 +12,7 @@ from ..infrastructure import (
     load_json_file,
     pacman_query_installed,
     validate_package_name,
+    write_text_file,
 )
 
 
@@ -47,8 +48,14 @@ class PackageService:
             ]
 
         self._installed_packages = set(pacman_query_installed())
-        TEMP_FILES["installed_packages"].write_text(
-            "\n".join(sorted(self._installed_packages)), encoding="utf-8"
+        # This runs from the window constructor. Writing straight to the file
+        # raised FileNotFoundError whenever the tmpfiles.d unit that creates
+        # /run/biglinux-live had not run yet, and the installer window then
+        # never appeared at all. write_text_file creates the directory and
+        # reports failure instead.
+        write_text_file(
+            "\n".join(sorted(self._installed_packages)),
+            TEMP_FILES["installed_packages"],
         )
 
     def cleanup(self) -> None:
@@ -65,8 +72,9 @@ class PackageService:
             for name in self._minimal_packages
             if validate_package_name(name) and name in self._installed_packages
         ]
-        TEMP_FILES["available_to_remove"].write_text(
-            "\n".join(package.name for package in packages), encoding="utf-8"
+        write_text_file(
+            "\n".join(package.name for package in packages),
+            TEMP_FILES["available_to_remove"],
         )
         return packages
 
@@ -78,7 +86,5 @@ class PackageService:
             and name in self._installed_packages
             and name in self._minimal_packages
         ]
-        TEMP_FILES["packages_to_remove"].write_text(
-            "\n".join(packages), encoding="utf-8"
-        )
+        write_text_file("\n".join(packages), TEMP_FILES["packages_to_remove"])
         return packages
