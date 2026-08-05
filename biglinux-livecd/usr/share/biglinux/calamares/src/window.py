@@ -6,7 +6,6 @@ Manages navigation between different pages using Gtk.Stack
 """
 
 import logging
-import os
 
 import gi
 
@@ -24,20 +23,8 @@ from .infrastructure.accessibility import (
 from .infrastructure.constants import DEFAULTS
 from .infrastructure.i18n import _
 from .pages import MainPage, MaintenancePage, MinimalPage, TipsPage
-
-# XivaStudio detection paths
-XIVASTUDIO_LOGO_PNG = "/usr/share/pixmaps/icon-logo-xivastudio.png"
-XIVASTUDIO_LOGO_GIF = "/usr/share/pixmaps/icon-logo-xivastudio.gif"
-
-
-def is_xivastudio_system() -> bool:
-    """
-    Check if the system is XivaStudio by looking for logo files.
-
-    Returns:
-        True if XivaStudio is detected, False otherwise.
-    """
-    return os.path.exists(XIVASTUDIO_LOGO_PNG) or os.path.exists(XIVASTUDIO_LOGO_GIF)
+from .profile import load_profile
+from .services import InstallService, PackageService, SystemService
 
 
 class CalamaresWindow(Adw.ApplicationWindow):
@@ -47,14 +34,19 @@ class CalamaresWindow(Adw.ApplicationWindow):
         super().__init__(**kwargs)
 
         self.logger = logging.getLogger(__name__)
+        self.system_service = SystemService()
+        self.package_service = PackageService()
+        self.install_service = InstallService(self.system_service)
+        self.system_service.initialize()
+        self.package_service.initialize()
+        self.install_service.initialize()
         self.continue_signal_handler = None
         self.check_all_handler = None
         self.uncheck_all_handler = None
         self.back_signal_handler = None
 
-        # Detect XivaStudio system for branding
-        self.is_xivastudio = is_xivastudio_system()
-        self.distro_name = "XivaStudio" if self.is_xivastudio else "BigLinux"
+        profile = load_profile()
+        self.distro_name = profile["display_name"]
 
         self.setup_window()
         self.create_layout()
@@ -169,9 +161,9 @@ class CalamaresWindow(Adw.ApplicationWindow):
     def create_pages(self):
         """Create and add all pages to the stack."""
         self.pages = {
-            "main": MainPage(),
-            "maintenance": MaintenancePage(),
-            "minimal": MinimalPage(),
+            "main": MainPage(self.system_service, self.install_service),
+            "maintenance": MaintenancePage(self.system_service, self.install_service),
+            "minimal": MinimalPage(self.package_service, self.install_service),
             "tips": TipsPage(),
         }
 
@@ -327,4 +319,7 @@ class CalamaresWindow(Adw.ApplicationWindow):
         for page in self.pages.values():
             if hasattr(page, "cleanup"):
                 page.cleanup()
+        self.install_service.cleanup()
+        self.package_service.cleanup()
+        self.system_service.cleanup()
         self.logger.info("Window cleanup completed")

@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly marker=/etc/biglinux-livecd/profile
+readonly builtin_root=/usr/share/biglinux/calamares-profiles
+readonly custom_root=/etc/biglinux-livecd/calamares-profiles
+
+die() {
+	printf 'biglinux-livecd: %s\n' "$*" >&2
+	exit 1
+}
+
+read_profile_id() {
+	local value=
+	if [[ ! -e $marker ]]; then
+		printf '%s\n' biglinux
+		return
+	fi
+	[[ -f $marker && ! -L $marker ]] || die "unsafe profile marker: $marker"
+	[[ $(stat -c '%u' -- "$marker") == 0 ]] || die "profile marker must be root-owned: $marker"
+	[[ $(stat -c '%a' -- "$marker") =~ ^[4567][04][04]$ ]] || die "profile marker permissions must be 400, 404, 440, 444, 600, 604, 640, 644, 700, 704, 740, or 744: $marker"
+	IFS= read -r value <"$marker" || die "could not read profile marker: $marker"
+	[[ $value =~ ^[a-z0-9][a-z0-9_-]{0,31}$ ]] || die "invalid live profile id: $value"
+	printf '%s\n' "$value"
+}
+
+profile_path() {
+	local profile_id=$1 root candidate
+	for root in "$custom_root" "$builtin_root"; do
+		[[ -d $root && ! -L $root ]] || continue
+		candidate=$root/$profile_id
+		if [[ -d $candidate && ! -L $candidate && -f $candidate/settings.conf && -f $candidate/profile.json && -d $candidate/modules && -d $candidate/branding ]]; then
+			printf '%s\n' "$candidate"
+			return
+		fi
+	done
+	die "live profile is not installed: $profile_id"
+}
+
+profile_id=$(read_profile_id)
+profile_directory=$(profile_path "$profile_id")
+
+if [[ $# -ne 0 && ${1:-} != --path ]]; then
+	die "usage: resolve-profile [--path]"
+fi
+
+printf '%s\n' "$profile_directory"

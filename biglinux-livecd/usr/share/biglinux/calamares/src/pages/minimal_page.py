@@ -16,7 +16,7 @@ from gi.repository import Adw, GLib, GObject, Gtk
 
 from ..infrastructure.accessibility import announce, set_description, set_label
 from ..infrastructure.i18n import _
-from ..services import get_install_service, get_package_service
+from ..services import InstallService, PackageService
 from ..services.package_service import Package
 
 
@@ -25,11 +25,13 @@ class MinimalPage(Gtk.Box):
 
     __gsignals__ = {"navigate": (GObject.SignalFlags.RUN_FIRST, None, (str, object))}
 
-    def __init__(self):
+    def __init__(
+        self, package_service: PackageService, install_service: InstallService
+    ):
         super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=0)
         self.logger = logging.getLogger(__name__)
-        self.package_service = get_package_service()
-        self.install_service = get_install_service()
+        self.package_service = package_service
+        self.install_service = install_service
 
         self.packages: list[Package] = []
         self.package_rows: dict[str, Adw.ActionRow] = {}

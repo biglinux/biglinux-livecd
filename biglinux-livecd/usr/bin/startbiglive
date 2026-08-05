@@ -616,17 +616,6 @@ install -m 0755 -- /usr/share/applications/com.biglinux.calamares-config.desktop
 sudo -n rm -f /usr/share/applications/calamares.desktop 2>/dev/null || \
 	_log "WARNING - Could not remove the generic Calamares menu entry"
 
-# On XivaStudio a launcher points at /usr/bin/calamares-xivalinux_polkit, a name
-# nothing provides -- the session reports "could not find the program" while
-# calamares-biglinux_polkit runs fine from a terminal. Linked rather than
-# renamed: five launchers still call calamares-biglinux_polkit, including the
-# desktop shortcut installed just above, and renaming would break all of them.
-if [[ $USER == "xivastudio" ]]; then
-	sudo -n ln -sfn /usr/bin/calamares-biglinux_polkit \
-		/usr/bin/calamares-xivalinux_polkit 2>/dev/null || \
-		_log "WARNING - Could not provide calamares-xivalinux_polkit"
-fi
-
 cd -- "$HOME" || exit 1
 
 #-------------------------------------------------------------------------------

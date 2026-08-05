@@ -28,34 +28,26 @@ logger = get_logger()
 
 ASSETS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets"))
 
-# Default BigLinux logo paths
+# Default logo paths
 DEFAULT_LOGO_PATH = os.path.join(ASSETS_DIR, "logo.png")
 DEFAULT_COMM_LOGO_PATH = os.path.join(ASSETS_DIR, "comm-logo.png")
 
 
 def get_logo_path(system_service: SystemService | None = None):
-    """
-    Returns the appropriate logo path for the current distribution.
-    XivaStudio custom logos take precedence if they exist.
-    """
+    """Return the selected profile logo or the BigLinux fallback."""
     if system_service:
-        xiva_logo = system_service.get_xivastudio_logo_path()
-        if xiva_logo:
-            return xiva_logo
-    # Fallback to default BigLinux logo
+        profile_logo = system_service.get_profile_logo_path()
+        if profile_logo:
+            return profile_logo
     return DEFAULT_LOGO_PATH
 
 
 def get_comm_logo_path(system_service: SystemService | None = None):
-    """
-    Returns the appropriate simplified/community logo path.
-    XivaStudio custom logos take precedence if they exist.
-    """
+    """Return the selected profile logo or the community fallback."""
     if system_service:
-        xiva_logo = system_service.get_xivastudio_logo_path()
-        if xiva_logo:
-            return xiva_logo
-    # Fallback to default BigLinux comm logo
+        profile_logo = system_service.get_profile_logo_path()
+        if profile_logo:
+            return profile_logo
     return DEFAULT_COMM_LOGO_PATH
 
 

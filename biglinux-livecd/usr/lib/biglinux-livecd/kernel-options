@@ -30,6 +30,20 @@ kernel_option_value() {
 	printf '%s\n' "$value"
 }
 
+kernel_driver() {
+	local value status
+	if value=$(kernel_option_value driver); then
+		case $value in
+		free | nonfree) printf '%s\n' "$value"; return 0 ;;
+		*) return 1 ;;
+		esac
+	else
+		status=$?
+	fi
+	((status == 1)) && printf '%s\n' free
+	return $((status == 1 ? 0 : 1))
+}
+
 live_boot_command_path() {
 	case "$1" in
 	only-calamares) printf '%s\n' /usr/bin/only-calamares ;;

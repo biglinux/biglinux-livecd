@@ -21,6 +21,7 @@ depends=(
     'mtools'
     'python'
     'python-babel'
+    'python-cairo'
     'python-gobject'
     'qefientrymanager'
     'util-linux'

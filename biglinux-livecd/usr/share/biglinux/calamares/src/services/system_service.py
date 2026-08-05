@@ -7,11 +7,12 @@ Handles system detection and information gathering
 
 import logging
 import os
+import shutil
 import sys
 from pathlib import Path
 from typing import Optional
 
-from ..infrastructure import COMMANDS, _, check_command_exists, get_command_output
+from ..infrastructure import _, get_command_output
 
 _installed_library = Path("/usr/lib/biglinux-livecd")
 _development_library = Path(__file__).resolve().parents[5] / "lib/biglinux-livecd"
@@ -83,13 +84,17 @@ class SystemService:
             return "Unknown"
 
     def _detect_session_type(self) -> str:
-        """Detect graphical session type"""
-        try:
-            session_type = os.environ.get("XDG_SESSION_TYPE", "").lower()
-            return session_type.title() if session_type else "Unknown"
-        except Exception as e:
-            self.logger.warning(f"Failed to detect session type: {e}")
-            return "Unknown"
+        """Detect the graphical session type, empty when it cannot be told.
+
+        The installer runs through a privilege boundary that keeps only a few
+        session variables, so XDG_SESSION_TYPE is often absent.
+        """
+        session_type = os.environ.get("XDG_SESSION_TYPE", "").lower()
+        if session_type == "wayland" or os.environ.get("WAYLAND_DISPLAY"):
+            return "Wayland"
+        if session_type == "x11" or os.environ.get("DISPLAY"):
+            return "X11"
+        return ""
 
     def _detect_architecture(self) -> str:
         """Detect system architecture"""
@@ -135,7 +140,7 @@ class SystemService:
         return self._system_info.get("kernel_version", "Unknown")
 
     def get_session_type(self) -> str:
-        return self._system_info.get("session_type", "Unknown")
+        return self._system_info.get("session_type", "")
 
     def is_live_mode(self) -> bool:
         return self._system_info.get("live_mode", False)
@@ -148,20 +153,24 @@ class SystemService:
 
     def get_efi_manager_command(self) -> Optional[str]:
         """Get the command to manage EFI entries if available."""
-        command_name = COMMANDS.get("efi_manager")
-        if command_name:
-            # Check availability of the main executable
-            executable = command_name.split()[0]
-            if check_command_exists(executable):
-                return command_name
-        return None
+        executable = "/usr/bin/bigsudo"
+        return f"{executable} QEFIEntryManager" if shutil.which(executable) else None
 
     def can_manage_efi_entries(self) -> bool:
         """Check if EFI entries can be managed."""
         return self.is_efi_system() and self.get_efi_manager_command() is not None
 
     def get_system_summary(self) -> str:
-        boot_mode = self.get_boot_mode()
-        kernel = self.get_kernel_version()
         session = self.get_session_type()
-        return f"{_('The system is in')} {boot_mode}, Linux {kernel} {_('and graphical mode')} {session}."
+        if session:
+            template = _(
+                "The system is in {boot_mode}, Linux {kernel} "
+                "and graphical mode {session}."
+            )
+        else:
+            template = _("The system is in {boot_mode}, Linux {kernel}.")
+        return template.format(
+            boot_mode=self.get_boot_mode(),
+            kernel=self.get_kernel_version(),
+            session=session,
+        )

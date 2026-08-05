@@ -75,11 +75,6 @@ class CalamaresApp(Adw.Application):
         """Called when application is activated"""
         self.logger.info("Application activated")
 
-        # Initialize services first
-        from .services import initialize_services
-
-        initialize_services()
-
         # Create main window if it doesn't exist
         if not self.window:
             self.window = CalamaresWindow(application=self)

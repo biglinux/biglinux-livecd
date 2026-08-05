@@ -12,6 +12,11 @@ systemctl_bin=/usr/bin/systemctl
 mount_bin=/usr/bin/mount
 mountpoint_bin=/usr/bin/mountpoint
 chpasswd_bin=/usr/bin/chpasswd
+sshd_bin=/usr/sbin/sshd
+sshd_config=/etc/ssh/sshd_config
+sshd_config_directory=/etc/ssh/sshd_config.d
+sshd_dropin=$sshd_config_directory/90-biglinux-live.conf
+sshd_include_pattern='^[[:space:]]*Include[[:space:]]+/etc/ssh/sshd_config\.d/\*\.conf'
 sed_bin=/usr/bin/sed
 lightdm_wallpaper_config=/etc/lightdm/lightdm.conf.d/99-comm-sync-wallpaper.conf
 lightdm_autologin_pam=/etc/pam.d/lightdm-autologin
@@ -38,12 +43,49 @@ install_runtime_mkinitcpio_shim() {
 }
 
 enable_live_ssh() {
-	local warning
+	local warning live_user temporary_dropin effective
+	live_user=$(id -nu 1000 2>/dev/null) || {
+		log 'the default live user (UID 1000) was not found'
+		return 1
+	}
+	[[ $live_user != root && $live_user =~ ^[a-z_][a-z0-9_-]*[$]?$ ]] || {
+		log 'the default live user is invalid'
+		return 1
+	}
 	printf -v warning '%s' 'WARNING: Live SSH enabled with the documented support password; disconnect untrusted networks.'
 	printf '%s\n' "$warning" >"$console_path" || true
-	log "$warning"
-	printf '%s\n' 'biglinux:biglinux' | "$chpasswd_bin" || return 1
-	"$systemctl_bin" start sshd.service
+	log "$warning User: $live_user"
+	printf '%s:%s\n' "$live_user" big | "$chpasswd_bin" || return 1
+
+	[[ -f $sshd_config && ! -L $sshd_config ]] || {
+		log 'sshd_config is missing or unsafe'
+		return 1
+	}
+	/usr/bin/grep -Eq "$sshd_include_pattern" "$sshd_config" || {
+		log 'sshd_config does not include the runtime drop-in directory'
+		return 1
+	}
+	[[ -d $sshd_config_directory && ! -L $sshd_config_directory ]] || return 1
+	temporary_dropin=$(mktemp "$sshd_config_directory/.biglinux-live.XXXXXX") || return 1
+	if ! printf '%s\n' \
+		'PermitRootLogin no' \
+		"Match User $live_user" \
+		'    PasswordAuthentication yes' \
+		'    KbdInteractiveAuthentication no' \
+		'Match All' >"$temporary_dropin"; then
+		unlink -- "$temporary_dropin"
+		return 1
+	fi
+	chmod 0644 -- "$temporary_dropin"
+	mv -T -- "$temporary_dropin" "$sshd_dropin" || return 1
+	"$sshd_bin" -t || return 1
+	effective=$("$sshd_bin" -T -C "user=$live_user,addr=127.0.0.1,host=localhost") || return 1
+	grep -Eiq '^passwordauthentication yes$' <<<"$effective" || return 1
+	grep -Eiq '^kbdinteractiveauthentication no$' <<<"$effective" || return 1
+	effective=$("$sshd_bin" -T -C 'user=root,addr=127.0.0.1,host=localhost') || return 1
+	grep -Eiq '^permitrootlogin no$' <<<"$effective" || return 1
+	"$systemctl_bin" restart sshd.service || return 1
+	"$systemctl_bin" is-active --quiet sshd.service
 }
 
 is_owned_regular_file() {
@@ -72,12 +114,12 @@ main() {
 	[[ -e $live_marker ]] || return 0
 	remove_live_login_delays || return 1
 	preload_wizard_runtime
-	if kernel_has_argument driver=free; then
-		disable_free_driver_detection || return 1
-	fi
-	if kernel_has_argument driver=nonfree; then
-		install_runtime_mkinitcpio_shim || return 1
-	fi
+	local driver
+	driver=$(kernel_driver) || return 1
+	case $driver in
+	free) disable_free_driver_detection || return 1 ;;
+	nonfree) install_runtime_mkinitcpio_shim || return 1 ;;
+	esac
 	if kernel_has_argument sshenable; then
 		enable_live_ssh || return 1
 	fi

@@ -1,3 +1,2 @@
 enable livecd-tweaks.service
 enable biglinux-language-suggestion.service
-enable biglinux-integrity-check.path

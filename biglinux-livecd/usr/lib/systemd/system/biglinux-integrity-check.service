@@ -9,7 +9,6 @@ Type=oneshot
 User=root
 Group=root
 ExecStart=/usr/bin/biglinux-verify-md5sum --no-gui
-SuccessExitStatus=1
 TimeoutStartSec=infinity
 RemainAfterExit=true
 Nice=19
