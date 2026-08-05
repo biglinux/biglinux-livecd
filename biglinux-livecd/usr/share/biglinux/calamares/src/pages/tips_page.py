@@ -54,6 +54,27 @@ class TipsPage(Gtk.Box):
         )
         self.page.add(tips_group)
 
+        encryption_group = Adw.PreferencesGroup(
+            title=_("If You Encrypt the Disk"),
+            description=_(
+                "The disk password is typed at boot, before the system starts."
+            ),
+        )
+        self.page.add(encryption_group)
+
+        # GRUB asks for the passphrase before any keyboard layout is loaded, so
+        # characters that need a dead key or AltGr cannot be typed there.
+        encryption_row = Adw.ActionRow(
+            title=_("Do not use accents or the letter c-cedilla"),
+            subtitle=_(
+                "At boot the keyboard is not configured yet, and a password with"
+                " these characters cannot be typed to unlock the disk."
+            ),
+        )
+        encryption_row.set_title_lines(1)
+        encryption_row.set_subtitle_lines(2)
+        encryption_group.add(encryption_row)
+
         tips_data = [
             {
                 "title": _("Use BTRFS"),

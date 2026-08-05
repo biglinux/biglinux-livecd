@@ -21,3 +21,24 @@
     min-height: 34px;
     padding: 7px 18px;
 }
+
+/* The disk passphrase is easy to mistake for the login password, and it sits in
+ * the middle of the partitioning page. Giving the block a surface of its own
+ * separates it from the disk choices above it. The class name is the widget's
+ * own, which is all a stylesheet can reach: the field belongs to the partition
+ * module, so its labels and layout are not ours to change. */
+EncryptWidget {
+    margin: 6px 0 2px 0;
+    padding: 10px 12px;
+    background-color: palette(alternate-base);
+    border: 1px solid palette(mid);
+    border-radius: 8px;
+}
+
+EncryptWidget QLineEdit {
+    min-height: 24px;
+    padding: 2px 6px;
+    border: 1px solid palette(mid);
+    border-radius: 4px;
+    background-color: palette(base);
+}
