@@ -1,34 +1,43 @@
 ---
-componentName:           biglinux
-welcomeStyleCalamares:   true
-welcomeExpandingLogo:    true
-windowSize:         1024px,735px
+componentName: biglinux
 
+# The main installer window remains native. QML provides the shell and the
+# supported view modules; partitioning keeps the official Qt Widgets module.
+welcomeStyleCalamares: false
+welcomeExpandingLogo: false
+
+windowExpanding: normal
+windowSize: 1024px,680px
+windowPlacement: center
+
+sidebar: qml,left
+navigation: qml,bottom
 
 strings:
-    productName:         BigLinux
-    shortProductName:    BigLinux
-    version:             1
-    shortVersion:        1
-    versionedName:       BigLinux
-    shortVersionedName:  BigLinux
+    productName: BigLinux
+    shortProductName: BigLinux
+    version: "${BUILD_ID}"
+    shortVersion: "${BUILD_ID}"
+    versionedName: "${PRETTY_NAME}"
+    shortVersionedName: "BigLinux ${BUILD_ID}"
     bootloaderEntryName: BigLinux
-    productUrl:          https://www.biglinux.com.br
-    supportUrl:          https://www.biglinux.com.br
-    releaseNotesUrl:     https://www.biglinux.com.br
+    productUrl: https://www.biglinux.com.br
+    supportUrl: https://forum.biglinux.com.br
+    knownIssuesUrl: https://github.com/biglinux/biglinux-livecd/issues
+    releaseNotesUrl: https://www.biglinux.com.br
+    donateUrl: ""
 
 images:
-    productLogo:         "logo.svg"
-    productIcon:         "/usr/share/icons/hicolor/scalable/apps/icon-big-hd-install.svg"
-    productWelcome:      "big-welcome.svg"
+    productLogo: "logo.svg"
+    productIcon: "/usr/share/icons/hicolor/scalable/apps/icon-big-hd-install.svg"
+    # Static fallback used only if the traditional welcome module is restored.
+    productWelcome: "welcome-illustration.svg"
 
-slideshow:               "pong.qml"
-slideshowAPI:            1
+slideshow: "pong.qml"
+slideshowAPI: 2
 
 style:
-   SidebarBackground:    "#31363b"
-   SidebarText:          "#ffffff"
-   SidebarTextSelect:    "#00ffff"
-   SidebarTextHighlight: "#00ff00"
-
-sidebar: qml
+    SidebarBackground: "#172B46"
+    SidebarText: "#EAF2FC"
+    SidebarBackgroundCurrent: "#1976C9"
+    SidebarTextCurrent: "#FFFFFF"
