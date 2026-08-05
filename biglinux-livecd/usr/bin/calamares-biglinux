@@ -268,7 +268,10 @@ if [[ -f $calamares_state_directory/start_calamares && ! -L $calamares_state_dir
 	}
 
 	copy_installation_log calamares_complete.log || true
-	if ! grep -w completion "$session_log" | grep -v bash-completion | grep -qE ':[[:space:]]*succeeded[[:space:]]*$'; then
+	# Calamares writes this line only when the installation actually ran, with
+	# succeeded or failed. Closing the installer before starting leaves no line
+	# at all, and that is not a failure to report.
+	if grep -w completion "$session_log" | grep -v bash-completion | grep -qE ':[[:space:]]*failed[[:space:]]*$'; then
 		copy_installation_log calamares_error.log || true
 		"${gtk_dialog[@]}" info --title="$(_ "Installation failed")" \
 			--text="$(_ "The installation failed. The local error log was saved in your home folder.")" --width=480

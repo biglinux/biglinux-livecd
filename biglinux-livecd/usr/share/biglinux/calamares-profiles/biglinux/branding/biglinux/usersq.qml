@@ -19,42 +19,6 @@ Page {
 
     function tr(source) { return I18n.translate(source, localeKey) }
 
-    // Set on the partitioning page, which is the screen right before this one.
-    property bool diskEncrypted: false
-    property bool diskPasswordReadable: false
-    property bool diskPasswordUntypable: false
-
-    // GRUB asks for the disk password before any keyboard layout is loaded, so
-    // anything outside printable ASCII needs a dead key or AltGr and cannot be
-    // typed to unlock the disk.
-    function refreshDiskPasswordState() {
-        const partitions = Global.value("partitions") || []
-        let encrypted = false
-        let readable = false
-        let untypable = false
-        for (var i = 0; i < partitions.length; ++i) {
-            const partition = partitions[i]
-            if (!partition.luksMapperName && !partition.luksPassphrase) {
-                continue
-            }
-            encrypted = true
-            const passphrase = partition.luksPassphrase || ""
-            if (passphrase !== "") {
-                readable = true
-                if (/[^\x20-\x7E]/.test(passphrase)) {
-                    untypable = true
-                }
-            }
-        }
-        diskEncrypted = encrypted
-        diskPasswordReadable = readable
-        diskPasswordUntypable = untypable
-    }
-
-    function onActivate() { refreshDiskPasswordState() }
-
-    Component.onCompleted: refreshDiskPasswordState()
-
     function initials(name) {
         var parts = String(name).trim().split(/\s+/)
         if (!parts.length || parts[0] === "") return "?"
@@ -75,22 +39,20 @@ Page {
             description: root.tr("Create your account and choose the name used by this computer on the network.")
         }
 
-        // Two passwords in a row is confusing, and the disk one has a
-        // restriction the boot prompt cannot explain by itself.
+        // Two passwords in a row need explaining, and the disk one carries a
+        // restriction the boot prompt cannot state by itself. Whether the user
+        // asked for encryption is not knowable here: the partition module only
+        // records that once the installation starts, so the text is worded for
+        // both cases instead of appearing conditionally.
         Rectangle {
             Layout.fillWidth: true
             Layout.preferredHeight: diskNotice.implicitHeight + 20
-            visible: root.diskEncrypted
             radius: 8
-            color: root.diskPasswordUntypable
-                ? Qt.rgba(0.85, 0.33, 0.10, 0.13)
-                : Qt.rgba(root.palette.highlight.r, root.palette.highlight.g,
-                          root.palette.highlight.b, 0.10)
+            color: Qt.rgba(root.palette.highlight.r, root.palette.highlight.g,
+                           root.palette.highlight.b, 0.10)
             border.width: 1
-            border.color: root.diskPasswordUntypable
-                ? Qt.rgba(0.85, 0.33, 0.10, 0.55)
-                : Qt.rgba(root.palette.highlight.r, root.palette.highlight.g,
-                          root.palette.highlight.b, 0.35)
+            border.color: Qt.rgba(root.palette.highlight.r, root.palette.highlight.g,
+                                  root.palette.highlight.b, 0.35)
 
             Accessible.role: Accessible.StaticText
             Accessible.name: diskNoticeTitle.text + ". " + diskNoticeBody.text
@@ -106,9 +68,7 @@ Page {
                     id: diskNoticeTitle
 
                     Layout.fillWidth: true
-                    text: root.diskPasswordUntypable
-                        ? root.tr("The disk password cannot be typed at boot")
-                        : root.tr("This password is not the disk password")
+                    text: root.tr("If you turned on disk encryption")
                     color: root.palette.windowText
                     font.weight: Font.DemiBold
                     wrapMode: Text.WordWrap
@@ -118,11 +78,7 @@ Page {
                     id: diskNoticeBody
 
                     Layout.fillWidth: true
-                    text: root.diskPasswordUntypable
-                        ? root.tr("Go back and remove the accents and the letter c-cedilla from it: the boot keyboard cannot type them, and the disk would not unlock.")
-                        : root.diskPasswordReadable
-                            ? root.tr("The password you set on the previous screen unlocks the disk at boot. The one below is for signing in to your account.")
-                            : root.tr("The password you set on the previous screen unlocks the disk at boot, and must have no accents and no letter c-cedilla. The one below is for signing in to your account.")
+                    text: root.tr("The disk password from the previous screen must have no accents and no letter c-cedilla: at boot the keyboard is not configured yet and the disk would not unlock. The password below is a different one, for signing in to your account.")
                     color: root.palette.windowText
                     opacity: 0.85
                     wrapMode: Text.WordWrap

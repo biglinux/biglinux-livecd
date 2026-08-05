@@ -23,11 +23,8 @@ var pt = {
     "Example: %1": "Exemplo: %1",
 
     "User account": "Conta de usuário",
-    "This password is not the disk password": "Esta senha não é a senha do disco",
-    "The disk password cannot be typed at boot": "A senha do disco não pode ser digitada na inicialização",
-    "The password you set on the previous screen unlocks the disk at boot. The one below is for signing in to your account.": "A senha definida na tela anterior destrava o disco na inicialização. A de baixo é para entrar na sua conta.",
-    "The password you set on the previous screen unlocks the disk at boot, and must have no accents and no letter c-cedilla. The one below is for signing in to your account.": "A senha definida na tela anterior destrava o disco na inicialização e não pode ter acentos nem a letra ç. A de baixo é para entrar na sua conta.",
-    "Go back and remove the accents and the letter c-cedilla from it: the boot keyboard cannot type them, and the disk would not unlock.": "Volte e remova os acentos e a letra ç: o teclado da inicialização não digita esses caracteres e o disco não seria destravado.",
+    "If you turned on disk encryption": "Se você ativou a criptografia do disco",
+    "The disk password from the previous screen must have no accents and no letter c-cedilla: at boot the keyboard is not configured yet and the disk would not unlock. The password below is a different one, for signing in to your account.": "A senha do disco, da tela anterior, não pode ter acentos nem a letra ç: na inicialização o teclado ainda não está configurado e o disco não seria destravado. A senha abaixo é outra, para entrar na sua conta.",
     "Create your account and choose the name used by this computer on the network.": "Crie sua conta e escolha o nome usado por este computador na rede.",
     "Identity": "Identidade",
     "Your name": "Seu nome",
