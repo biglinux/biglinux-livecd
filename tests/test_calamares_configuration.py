@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -471,6 +472,23 @@ def test_every_module_instance_in_a_sequence_is_declared() -> None:
                     assert declared[instance]["module"] == module
                     config = settings_file.parent / "modules" / declared[instance]["config"]
                     assert config.is_file(), f"{settings_file}: {config.name} is missing"
+
+
+def test_navigation_hint_points_at_the_partition_step() -> None:
+    # The bar shows the accent warning on the partitioning page, and identifies
+    # that page by position: the ViewManager exposes the current index but no
+    # module name. So the index in the QML has to match the show sequence.
+    profiles = REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles"
+    navigation = (
+        profiles / "biglinux/branding/biglinux/calamares-navigation.qml"
+    ).read_text(encoding="utf-8")
+    declared = int(
+        re.search(r"partitionStepIndex: (\d+)", navigation).group(1)
+    )
+    for settings_file in sorted(profiles.glob("*/settings*.conf")):
+        settings = yaml.safe_load(settings_file.read_text(encoding="utf-8"))
+        shown = next(phase["show"] for phase in settings["sequence"] if "show" in phase)
+        assert shown.index("partition") == declared, settings_file
 
 
 def test_partition_template_selects_luks2() -> None:
