@@ -13,6 +13,7 @@ mount_bin=/usr/bin/mount
 mountpoint_bin=/usr/bin/mountpoint
 chpasswd_bin=/usr/bin/chpasswd
 sshd_bin=/usr/sbin/sshd
+keygen_bin=/usr/bin/ssh-keygen
 sshd_config=/etc/ssh/sshd_config
 sshd_config_directory=/etc/ssh/sshd_config.d
 sshd_dropin=$sshd_config_directory/90-biglinux-live.conf
@@ -78,6 +79,9 @@ enable_live_ssh() {
 	fi
 	chmod 0644 -- "$temporary_dropin"
 	mv -T -- "$temporary_dropin" "$sshd_dropin" || return 1
+	# The live media ships no host keys, and sshd refuses to even check its
+	# configuration without them.
+	"$keygen_bin" -A || return 1
 	"$sshd_bin" -t || return 1
 	effective=$("$sshd_bin" -T -C "user=$live_user,addr=127.0.0.1,host=localhost") || return 1
 	grep -Eiq '^passwordauthentication yes$' <<<"$effective" || return 1
@@ -121,7 +125,7 @@ main() {
 	nonfree) install_runtime_mkinitcpio_shim || return 1 ;;
 	esac
 	if kernel_has_argument sshenable; then
-		enable_live_ssh || return 1
+		enable_live_ssh || log 'live SSH could not be enabled'
 	fi
 }
 
