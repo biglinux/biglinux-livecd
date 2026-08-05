@@ -3,204 +3,43 @@
 # This file is distributed under the same license as the biglinux-livecd
 # package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
-#
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version:  biglinux-livecd\n"
+"Project-Id-Version: biglinux-livecd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-03 23:41+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hr\n"
 "Language-Team: hr <LL@li.org>\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || "
+"n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py,
-# line: 30
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:35
-msgid "Choose a Desktop Layout"
-msgstr "Odaberite raspored radne površine"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
-# line: 243
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:242
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:267
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:465
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:49
-msgid "Desktop Layout"
-msgstr "Raspored radne površine"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 60
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:92
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:124
-msgid "Settings"
-msgstr "Postavke"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 107
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:128
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:144
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:175
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:302
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:323
-msgid "JamesDSP Audio"
-msgstr "Zvuk JamesDSP"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 109
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:130
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:145
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:178
-msgid "Enable audio improvements"
-msgstr "Omogući poboljšanja zvuka"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 144
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:134
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:204
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:235
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:304
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:328
-msgid "Image quality"
-msgstr "Kvaliteta slike"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 146
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:136
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:205
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:238
-msgid "Enable enhanced contrast"
-msgstr "Omogući poboljšani kontrast"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 143
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 203
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:147
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:207
-msgid "press Enter or Space to toggle"
-msgstr "pritisnite Enter ili razmaknicu za prebacivanje"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 269
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 282
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:265
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:275
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:321
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:326
-msgid "enabled"
-msgstr "omogućeno"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 269
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 282
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:265
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:275
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:321
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:326
-msgid "disabled"
-msgstr "onemogućeno"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 228
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:335
-msgid "Choose a Theme Style"
-msgstr "Odaberite stil teme"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 166
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:336
-msgid "Choose a System Theme"
-msgstr "Odaberite sustavsku temu"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 259
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:361
-msgid "Dark Theme"
-msgstr "Tamna tema"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 262
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:361
-msgid "Light Theme"
-msgstr "Svijetla tema"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py,
-# line: 35
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:41
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:90
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:112
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:246
-msgid "Choose Your Keyboard Layout"
-msgstr "Odaberite raspored tipkovnice"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py,
-# line: 93
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:68
-msgid "Keyboard layout preview"
-msgstr "Pregled rasporeda tipkovnice"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py,
-# line: 135
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:145
-#, python-format
-msgid "Keyboard layout: %s"
-msgstr "Raspored tipkovnice: %s"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py,
-# line: 65
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:171
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:175
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:203
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:212
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:214
-msgid "Search for a language..."
-msgstr "Pretraži jezik..."
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py,
-# line: 114
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:242
-msgid "Could not load language data."
-msgstr "Nije moguće učitati jezične podatke."
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py,
-# line: 167
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:484
-#, python-format
-msgid "%d results"
-msgstr "%d rezultata"
-
+"X-Generator: attranslate\n"
+msgid "__biglinux_language_marker__"
+msgstr "__biglinux_language_marker__"
+msgid "%1 logo"
+msgstr "%1 logotip"
+msgid "Current installation step"
+msgstr "Trenutni korak instalacije"
+msgid "Completed installation step"
+msgstr "Završena instalacija koraka"
+msgid "Pending installation step"
+msgstr "Korak instalacije na čekanju"
+msgid "Pong game"
+msgstr "Pong igra"
+msgid "Move the left paddle with the mouse or the up and down arrow keys. Press Space to pause or resume."
+msgstr ""
+"Pomaknite lijevu palicu mišem ili tipkama sa strelicama gore i dolje. Pritisnite razmaknicu za "
+"pauzu ili nastavak."
+msgid "Paused"
+msgstr "Pauzirano"
+msgid "Resume"
+msgstr "Životopis"
+msgid "Pause or resume the Pong game"
+msgstr "Pauziraj ili nastavi Pong igru"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
 # line: 36
@@ -213,7 +52,6 @@ msgstr "%d rezultata"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:213
 msgid "BigLinux Setup"
 msgstr "Postavljanje BigLinuxa"
-
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
 # line: 80
@@ -225,7 +63,6 @@ msgstr "Postavljanje BigLinuxa"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:215
 msgid "press Super+Alt+S to start the screen reader"
 msgstr "pritisnite Super+Alt+S za pokretanje čitača zaslona"
-
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
 # line: 160
@@ -235,7 +72,6 @@ msgstr "pritisnite Super+Alt+S za pokretanje čitača zaslona"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:204
 msgid "BigLinux Logo"
 msgstr "Logotip BigLinuxa"
-
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
 # line: 187
@@ -244,7 +80,6 @@ msgstr "Logotip BigLinuxa"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:378
 msgid "Language"
 msgstr "Jezik"
-
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
 # line: 227
@@ -253,7 +88,15 @@ msgstr "Jezik"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:444
 msgid "Keyboard"
 msgstr "Tipkovnica"
-
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
+# line: 243
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:242
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:267
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:465
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:49
+msgid "Desktop Layout"
+msgstr "Raspored radne površine"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
 # line: 262
@@ -264,133 +107,218 @@ msgstr "Tipkovnica"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:516
 msgid "Theme"
 msgstr "Tema"
-
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
 # line: 584
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:573
 msgid "Accessibility enabled. Use arrow keys to navigate."
 msgstr "Pristupačnost je omogućena. Za navigaciju koristite tipke sa strelicama."
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:154
-msgid "Snapshot and backups"
-msgstr "Snimke sustava i sigurnosne kopije"
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:155
-msgid "Restore restore points of the installed system."
-msgstr "Vratite točke vraćanja instaliranog sustava."
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:156
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:168
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:181
-msgid "Start"
-msgstr "Početak"
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:164
-msgid "Restore system settings"
-msgstr "Vrati postavke sustava"
-
 # File:
-# calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
-# line: 78
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:166
-msgid ""
-"Utility that facilitates the restoration of the installed system, especially"
-" the restoration of the system boot (Grub).\n"
-"\n"
-"It can also be used to access the package manager and terminal of the "
-"installed system."
-msgstr ""
-"Alat koji olakšava vraćanje instaliranog sustava, posebno vraćanje "
-"pokretanja sustava (Grub).\n"
-"\n"
-"Također se može koristiti za pristup upravitelju paketa i terminalu "
-"instaliranog sustava."
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:177
-msgid "EFI Entry Manager"
-msgstr "Upravitelj EFI zapisa"
-
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 60
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:92
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:124
+msgid "Settings"
+msgstr "Postavke"
 # File:
-# calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
-# line: 90
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:179
-msgid "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
-msgstr ""
-"Napredni alat za dodavanje, uklanjanje ili promjenu stavki pokretanja u UEFI"
-" firmveru."
-
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 107
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:128
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:144
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:175
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:302
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:323
+msgid "JamesDSP Audio"
+msgstr "Zvuk JamesDSP"
 # File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
-# line: 171
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:202
-msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
-msgstr "Održavanje sustava: odaberite snimku, vraćanje ili upravitelj EFI zapisa"
-
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 109
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:130
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:145
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:178
+msgid "Enable audio improvements"
+msgstr "Omogući poboljšanja zvuka"
 # File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py,
-# line: 159
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:168
-msgid "This is a collaborative system, if you need help consult our forum."
-msgstr "Ovaj sustav razvija zajednica. Ako trebate pomoć, posjetite naš forum."
-
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 144
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:134
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:204
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:235
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:304
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:328
+msgid "Image quality"
+msgstr "Kvaliteta slike"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 146
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:136
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:205
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:238
+msgid "Enable enhanced contrast"
+msgstr "Omogući poboljšani kontrast"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 143
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 203
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:147
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:207
+msgid "press Enter or Space to toggle"
+msgstr "pritisnite Enter ili razmaknicu za prebacivanje"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 269
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 282
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:265
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:275
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:321
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:326
+msgid "enabled"
+msgstr "omogućeno"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 269
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 282
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:265
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:275
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:321
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:326
+msgid "disabled"
+msgstr "onemogućeno"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 228
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:335
+msgid "Choose a Theme Style"
+msgstr "Odaberite stil teme"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 166
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:336
+msgid "Choose a System Theme"
+msgstr "Odaberite sustavsku temu"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 259
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:361
+msgid "Dark Theme"
+msgstr "Tamna tema"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
+# line: 262
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:361
+msgid "Light Theme"
+msgstr "Svijetla tema"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py,
+# line: 65
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:171
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:175
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:203
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:212
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:214
+msgid "Search for a language..."
+msgstr "Pretraži jezik..."
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py,
+# line: 114
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:242
+msgid "Could not load language data."
+msgstr "Nije moguće učitati jezične podatke."
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py,
+# line: 167
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:484
+#, python-format
+msgid "%d results"
+msgstr "%d rezultata"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py,
+# line: 35
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:41
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:90
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:112
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:246
+msgid "Choose Your Keyboard Layout"
+msgstr "Odaberite raspored tipkovnice"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py,
+# line: 93
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:68
+msgid "Keyboard layout preview"
+msgstr "Pregled rasporeda tipkovnice"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py,
+# line: 135
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:145
+#, python-format
+msgid "Keyboard layout: %s"
+msgstr "Raspored tipkovnice: %s"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py,
+# line: 30
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:35
+msgid "Choose a Desktop Layout"
+msgstr "Odaberite raspored radne površine"
+# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 46
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 156
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 162
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 99
+#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:111
+msgid "BigLinux Calamares Config"
+msgstr "Postavke Calamaresa za BigLinux"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 116
+#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:128
+msgid "Forum"
+msgstr "Forum"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 117
+#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:130
+msgid "Documentation"
+msgstr "Dokumentacija"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 149
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:447
+#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:154
+msgid "OK"
+msgstr "U redu"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 167
+#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:169
+msgid "Cancel"
+msgstr "Otkaži"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 168
+#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:170
+msgid "Confirm"
+msgstr "Potvrdi"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 213
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:84
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:212
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:267
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:272
+#, python-brace-format
+msgid "{distro} Installation"
+msgstr "Instalacija sustava {distro}"
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:206
-msgid "Maintenance"
-msgstr "Održavanje"
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:208
-msgid "Tools that facilitate the maintenance of the installed system."
-msgstr "Alati koji olakšavaju održavanje instaliranog sustava."
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:210
-msgid "Restore"
-msgstr "Obnovi"
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:218
-msgid "Installation"
-msgstr "Instalacija"
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:219
-msgid "The system is in live mode, which has limitations."
-msgstr "Sustav radi u načinu uživo, koji ima određena ograničenja."
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:220
-msgid "Install it for a complete experience."
-msgstr "Instalirajte ga za potpuno korisničko iskustvo."
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:221
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:269
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:297
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:301
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:317
-msgid "Install"
-msgstr "Instaliraj"
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:229
-msgid "Minimal"
-msgstr "Minimalno"
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py,
-# line: 99
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:231
-msgid "Remove pre-selected software to create a lean, personalized system."
-msgstr ""
-"Uklonite unaprijed odabrani softver kako biste stvorili lagan, prilagođen "
-"sustav."
-
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:146
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:160
+msgid "Back"
+msgstr "Natrag"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 96
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:149
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:162
+msgid "Keep All"
+msgstr "Zadrži sve"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 99
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:152
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:164
+msgid "Remove All"
+msgstr "Ukloni sve"
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:213
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:233
@@ -401,7 +329,152 @@ msgstr ""
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:309
 msgid "Continue"
 msgstr "Nastavi"
-
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py,
+# line: 133
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:161
+msgid "Return to the previous page"
+msgstr "Povratak na prethodnu stranicu"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py,
+# line: 135
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:163
+msgid "Keep all packages selected"
+msgstr "Zadrži sve pakete odabranima"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py,
+# line: 137
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:165
+msgid "Mark all packages for removal"
+msgstr "Označi sve pakete za uklanjanje"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py,
+# line: 139
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:167
+msgid "Proceed to the next step"
+msgstr "Nastavi na sljedeći korak"
+# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 157
+# File:
+# calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
+# line: 76
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:213
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:268
+msgid "System Maintenance"
+msgstr "Održavanje sustava"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:214
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:269
+msgid "Uncheck the programs you want to remove"
+msgstr "Odznačite programe koje želite ukloniti"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 159
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:215
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:270
+msgid "Installation Tips"
+msgstr "Savjeti za instalaciju"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/services/system_service.py, line: 167
+#, python-brace-format
+msgid "The system is in {boot_mode}, Linux {kernel} and graphical mode {session}."
+msgstr "Sustav je u {boot_mode}, Linux {kernel} i grafičkom načinu {session}."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/services/system_service.py, line: 171
+#, python-brace-format
+msgid "The system is in {boot_mode}, Linux {kernel}."
+msgstr "Sustav je u {boot_mode}, Linux {kernel}."
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:154
+msgid "Snapshot and backups"
+msgstr "Snimke sustava i sigurnosne kopije"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:155
+msgid "Restore restore points of the installed system."
+msgstr "Vratite točke vraćanja instaliranog sustava."
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:156
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:168
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:181
+msgid "Start"
+msgstr "Početak"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:164
+msgid "Restore system settings"
+msgstr "Vrati postavke sustava"
+# File:
+# calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
+# line: 78
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:166
+msgid ""
+"Utility that facilitates the restoration of the installed system, especially the restoration of the "
+"system boot (Grub).\n"
+"\n"
+"It can also be used to access the package manager and terminal of the installed system."
+msgstr ""
+"Alat koji olakšava vraćanje instaliranog sustava, posebno vraćanje pokretanja sustava (Grub).\n"
+"\n"
+"Također se može koristiti za pristup upravitelju paketa i terminalu instaliranog sustava."
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:177
+msgid "EFI Entry Manager"
+msgstr "Upravitelj EFI zapisa"
+# File:
+# calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
+# line: 90
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:179
+msgid "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
+msgstr "Napredni alat za dodavanje, uklanjanje ili promjenu stavki pokretanja u UEFI firmveru."
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
+# line: 171
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:202
+msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
+msgstr "Održavanje sustava: odaberite snimku, vraćanje ili upravitelj EFI zapisa"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
+# line: 59
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:68
+msgid "Loading packages"
+msgstr "Učitavanje paketa"
+# File:
+# calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py,
+# line: 123
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:70
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:74
+msgid "Loading packages..."
+msgstr "Učitavanje paketa..."
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
+# line: 71
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:85
+msgid "Package list"
+msgstr "Popis paketa"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
+# line: 73
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:87
+msgid "Toggle switches to keep or remove packages"
+msgstr "Prekidači za zadržavanje ili uklanjanje paketa"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
+# line: 110
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:127
+#, python-brace-format
+msgid "{count} packages loaded"
+msgstr "Učitano paketa: {count}"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
+# line: 135
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:152
+#, python-brace-format
+msgid "Keep {name}"
+msgstr "Zadrži {name}"
+# File:
+# calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py,
+# line: 242
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:178
+#, python-brace-format
+msgid "Failed to load packages: {}"
+msgstr "Nije moguće učitati pakete: {}"
 # #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
 # File:
 # calamares-biglinux/usr/share/biglinux/calamares/src/widgets/system_info.py,
@@ -421,266 +494,190 @@ msgstr "Nastavi"
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:214
 msgid "Starting..."
 msgstr "Pokretanje..."
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py,
-# line: 206
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:278
-msgid "Checking connection..."
-msgstr "Provjera veze..."
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py,
-# line: 218
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:289
-msgid "Configuring..."
-msgstr "Konfiguriranje..."
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py,
-# line: 294
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:318
-msgid "Main page: choose Maintenance, Installation, or Minimal"
-msgstr "Glavna stranica: odaberite Održavanje, Instalaciju ili Minimalno"
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 39
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:40
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:42
-msgid "Important Tips"
-msgstr "Važni savjeti"
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 48
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:50
-msgid "Manual Partitioning Recommendations"
-msgstr "Preporuke za ručno particioniranje"
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 49
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:52
-msgid "If you opt for automatic partitioning, these tips will be applied by default."
-msgstr ""
-"Ako odaberete automatsko particioniranje, ove će se preporuke primijeniti "
-"prema zadanim postavkama."
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 54
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:59
-msgid "Use BTRFS"
-msgstr "Koristite BTRFS"
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:61
-msgid "This file system allows for automatic compression and restore points."
-msgstr "Ovaj datotečni sustav omogućuje automatsku kompresiju i točke vraćanja."
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 55
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:65
-msgid "Keep /boot within the / partition"
-msgstr "Zadržite /boot unutar particije /"
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:67
-msgid "Placing it in a separate partition hampers BTRFS snapshots."
-msgstr "Smještanje /boot u zasebnu particiju otežava izradu BTRFS snimki."
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 56
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:71
-msgid "Do not create a SWAP partition"
-msgstr "Nemojte stvarati SWAP particiju"
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 56
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:73
-msgid ""
-"We have implemented dynamic virtual memory management with Zram and SWAP "
-"files. SWAP partitions will not be used."
-msgstr ""
-"Implementirali smo dinamičko upravljanje virtualnom memorijom pomoću Zrama i"
-" SWAP datoteka. SWAP particije neće se koristiti."
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 83
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:103
-msgid "Installation tips: read the recommendations before proceeding"
-msgstr "Savjeti za instalaciju: prije nastavka pročitajte preporuke"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 59
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:68
-msgid "Loading packages"
-msgstr "Učitavanje paketa"
-
-# File:
-# calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 123
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:70
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:74
-msgid "Loading packages..."
-msgstr "Učitavanje paketa..."
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 71
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:85
-msgid "Package list"
-msgstr "Popis paketa"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 73
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:87
-msgid "Toggle switches to keep or remove packages"
-msgstr "Prekidači za zadržavanje ili uklanjanje paketa"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 110
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:127
-#, python-brace-format
-msgid "{count} packages loaded"
-msgstr "Učitano paketa: {count}"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 135
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:152
-#, python-brace-format
-msgid "Keep {name}"
-msgstr "Zadrži {name}"
-
-# File:
-# calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 242
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:178
-#, python-brace-format
-msgid "Failed to load packages: {}"
-msgstr "Nije moguće učitati pakete: {}"
-
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
 # line: 220
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:240
 msgid "Minimal installation: select packages to keep or remove"
 msgstr "Minimalna instalacija: odaberite pakete koje želite zadržati ili ukloniti"
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 213
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:84
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:212
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:267
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:272
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py,
+# line: 159
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:168
+msgid "This is a collaborative system, if you need help consult our forum."
+msgstr "Ovaj sustav razvija zajednica. Ako trebate pomoć, posjetite naš forum."
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:206
+msgid "Maintenance"
+msgstr "Održavanje"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:208
+msgid "Tools that facilitate the maintenance of the installed system."
+msgstr "Alati koji olakšavaju održavanje instaliranog sustava."
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:210
+msgid "Restore"
+msgstr "Obnovi"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:218
+msgid "Installation"
+msgstr "Instalacija"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:219
+msgid "The system is in live mode, which has limitations."
+msgstr "Sustav radi u načinu uživo, koji ima određena ograničenja."
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:220
+msgid "Install it for a complete experience."
+msgstr "Instalirajte ga za potpuno korisničko iskustvo."
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:221
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:269
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:297
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:301
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:317
+msgid "Install"
+msgstr "Instaliraj"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:229
+msgid "Minimal"
+msgstr "Minimalno"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py,
+# line: 99
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:231
+msgid "Remove pre-selected software to create a lean, personalized system."
+msgstr "Uklonite unaprijed odabrani softver kako biste stvorili lagan, prilagođen sustav."
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py,
+# line: 218
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:289
+msgid "Configuring..."
+msgstr "Konfiguriranje..."
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py,
+# line: 294
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:318
+msgid "Main page: choose Maintenance, Installation, or Minimal"
+msgstr "Glavna stranica: odaberite Održavanje, Instalaciju ili Minimalno"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
+# line: 39
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:40
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:42
+msgid "Important Tips"
+msgstr "Važni savjeti"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
+# line: 48
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:50
+msgid "Manual Partitioning Recommendations"
+msgstr "Preporuke za ručno particioniranje"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
+# line: 49
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:52
+msgid "If you opt for automatic partitioning, these tips will be applied by default."
+msgstr "Ako odaberete automatsko particioniranje, ove će se preporuke primijeniti prema zadanim postavkama."
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
+# line: 54
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:59
+msgid "Use BTRFS"
+msgstr "Koristite BTRFS"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:61
+msgid "This file system allows for automatic compression and restore points."
+msgstr "Ovaj datotečni sustav omogućuje automatsku kompresiju i točke vraćanja."
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
+# line: 55
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:65
+msgid "Keep /boot within the / partition"
+msgstr "Zadržite /boot unutar particije /"
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:67
+msgid "Placing it in a separate partition hampers BTRFS snapshots."
+msgstr "Smještanje /boot u zasebnu particiju otežava izradu BTRFS snimki."
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
+# line: 56
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:71
+msgid "Do not create a SWAP partition"
+msgstr "Nemojte stvarati SWAP particiju"
+# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
+# line: 56
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:73
+msgid ""
+"We have implemented dynamic virtual memory management with Zram and SWAP files. SWAP partitions "
+"will not be used."
+msgstr ""
+"Implementirali smo dinamičko upravljanje virtualnom memorijom pomoću Zrama i SWAP datoteka. SWAP "
+"particije neće se koristiti."
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py,
+# line: 83
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:103
+msgid "Installation tips: read the recommendations before proceeding"
+msgstr "Savjeti za instalaciju: prije nastavka pročitajte preporuke"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
+# line: 223
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
+# line: 254
+msgid "Please wait..."
+msgstr "Pričekajte..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 42
+#: biglinux-livecd/usr/bin/calamares-biglinux:74
+msgid "Checking the integrity of the download and storage device..."
+msgstr "Provjerava se cjelovitost preuzimanja i uređaja za pohranu..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 43
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
+msgid "Checking system integrity"
+msgstr "Provjerava se cjelovitost sustava"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 44
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:158
+msgid "Checking for download or USB drive errors, this may take a few minutes..."
+msgstr "Provjeravaju se pogreške pri preuzimanju ili na USB uređaju. To može potrajati nekoliko minuta..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 45
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:180
+msgid "Verification progress"
+msgstr "Napredak provjere"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 46
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:264
 #, python-brace-format
-msgid "{distro} Installation"
-msgstr "Instalacija sustava {distro}"
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:146
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:160
-msgid "Back"
-msgstr "Natrag"
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 96
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:149
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:162
-msgid "Keep All"
-msgstr "Zadrži sve"
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 99
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:152
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:164
-msgid "Remove All"
-msgstr "Ukloni sve"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py,
-# line: 133
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:161
-msgid "Return to the previous page"
-msgstr "Povratak na prethodnu stranicu"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py,
-# line: 135
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:163
-msgid "Keep all packages selected"
-msgstr "Zadrži sve pakete odabranima"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py,
-# line: 137
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:165
-msgid "Mark all packages for removal"
-msgstr "Označi sve pakete za uklanjanje"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py,
-# line: 139
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:167
-msgid "Proceed to the next step"
-msgstr "Nastavi na sljedeći korak"
-
-# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 157
-# File:
-# calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
-# line: 76
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:213
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:268
-msgid "System Maintenance"
-msgstr "Održavanje sustava"
-
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:214
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:269
-msgid "Uncheck the programs you want to remove"
-msgstr "Odznačite programe koje želite ukloniti"
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 159
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:215
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:270
-msgid "Installation Tips"
-msgstr "Savjeti za instalaciju"
-
-# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 46
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 156
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 162
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 99
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:111
-msgid "BigLinux Calamares Config"
-msgstr "Postavke Calamaresa za BigLinux"
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 116
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:128
-msgid "Forum"
-msgstr "Forum"
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 117
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:130
-msgid "Documentation"
-msgstr "Dokumentacija"
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 149
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:447
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:154
-msgid "OK"
-msgstr "U redu"
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 167
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:169
-msgid "Cancel"
-msgstr "Otkaži"
-
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 168
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:170
-msgid "Confirm"
-msgstr "Potvrdi"
-
+msgid "Checking the file: {filename}"
+msgstr "Provjerava se datoteka: {filename}"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 47
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:292
+msgid "Verification failed"
+msgstr "Provjera nije uspjela"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 49
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:294
+msgid "The live media could not be verified. Download the system again or use another USB drive."
+msgstr ""
+"Nije bilo moguće provjeriti medij sa sustavom uživo. Ponovno preuzmite sustav ili upotrijebite "
+"drugi USB uređaj."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 52
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
+msgid "Verification complete"
+msgstr "Provjera je dovršena"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 53
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
+msgid "The files are intact."
+msgstr "Datoteke su neoštećene."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 54
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
+msgid "Verification canceled"
+msgstr "Provjera je otkazana"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 55
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:311
+msgid "The integrity check was not completed."
+msgstr "Provjera integriteta nije dovršena."
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
 # line: 85
@@ -691,16 +688,6 @@ msgstr "Potvrdi"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:114
 msgid "Progress"
 msgstr "Napredak"
-
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 223
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 254
-msgid "Please wait..."
-msgstr "Pričekajte..."
-
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
 # line: 168
@@ -711,7 +698,6 @@ msgstr "Pričekajte..."
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:240
 msgid "Question"
 msgstr "Pitanje"
-
 # #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
@@ -739,7 +725,6 @@ msgstr "Pitanje"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:443
 msgid "Close"
 msgstr "Zatvori"
-
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
 # line: 236
@@ -750,7 +735,6 @@ msgstr "Zatvori"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:290
 msgid "Error"
 msgstr "Greška"
-
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
 # line: 277
@@ -761,7 +745,6 @@ msgstr "Greška"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:341
 msgid "Information"
 msgstr "Informacije"
-
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
 # line: 318
@@ -772,62 +755,3 @@ msgstr "Informacije"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:465
 msgid "Select"
 msgstr "Odaberi"
-
-#: biglinux-livecd/usr/bin/calamares-biglinux:74
-msgid "Checking the integrity of the download and storage device..."
-msgstr "Provjerava se cjelovitost preuzimanja i uređaja za pohranu..."
-
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
-msgid "Checking system integrity"
-msgstr "Provjerava se cjelovitost sustava"
-
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:158
-msgid "Checking for download or USB drive errors, this may take a few minutes..."
-msgstr ""
-"Provjeravaju se pogreške pri preuzimanju ili na USB uređaju. To može "
-"potrajati nekoliko minuta..."
-
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:180
-msgid "Verification progress"
-msgstr "Napredak provjere"
-
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:264
-#, python-brace-format
-msgid "Checking the file: {filename}"
-msgstr "Provjerava se datoteka: {filename}"
-
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:292
-msgid "Verification failed"
-msgstr "Provjera nije uspjela"
-
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:294
-msgid ""
-"The live media could not be verified. Download the system again or use "
-"another USB drive."
-msgstr ""
-"Nije bilo moguće provjeriti medij sa sustavom uživo. Ponovno preuzmite "
-"sustav ili upotrijebite drugi USB uređaj."
-
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
-msgid "Verification complete"
-msgstr "Provjera je dovršena"
-
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
-msgid "The files are intact."
-msgstr "Datoteke su neoštećene."
-
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
-msgid "Verification canceled"
-msgstr "Provjera je otkazana"
-
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:311
-msgid "The integrity check was not completed."
-msgstr "Provjera integriteta nije dovršena."
-
-#: biglinux-livecd/usr/bin/calamares-biglinux:263
-msgid "Installation failed"
-msgstr "Instalacija nije uspjela"
-
-#: biglinux-livecd/usr/bin/calamares-biglinux:264
-msgid "The installation failed. The local error log was saved in your home folder."
-msgstr "Instalacija nije uspjela. Lokalni zapisnik pogrešaka spremljen je u vašu osobnu mapu."
