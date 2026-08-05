@@ -103,8 +103,10 @@ libadwaita.
 ```bash
 python -m pytest tests/      # test suite
 ruff check                   # lint
-ruff format                  # formatter used by this project
+ruff format --check          # formatting
 ```
+
+All three pass on a clean checkout, so a failure means the change under review.
 
 The test suite is the quality gate. Besides covering behaviour, it type-checks
 the Calamares modules and the two wizards by running `mypy` against each entry

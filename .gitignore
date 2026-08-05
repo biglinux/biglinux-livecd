@@ -165,3 +165,7 @@ cython_debug/
 # Claude Code
 .claude
 CLAUDE.md
+
+# Agent workspace bookkeeping, not part of the package
+progress-state.json
+workspace-manifest.json

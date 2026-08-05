@@ -320,9 +320,7 @@ def _desktop_changes(
                 settings_file,
                 user_theme=orchis,
                 light_style=(
-                    not dark
-                    and not orchis
-                    and layout not in GNOME_ALWAYS_DARK_LAYOUTS
+                    not dark and not orchis and layout not in GNOME_ALWAYS_DARK_LAYOUTS
                 ),
             )
         )

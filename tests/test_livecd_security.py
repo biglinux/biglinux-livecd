@@ -98,7 +98,7 @@ printf 'missing=%s\\n' "$(kernel_driver)"
 
     cmdline.write_text("driver=nonfree\n", encoding="utf-8")
     result = run_bash(
-        "source \"$KERNEL_OPTIONS\"; kernel_cmdline_path=$CMDLINE; kernel_driver",
+        'source "$KERNEL_OPTIONS"; kernel_cmdline_path=$CMDLINE; kernel_driver',
         environment={"KERNEL_OPTIONS": str(KERNEL_OPTIONS), "CMDLINE": str(cmdline)},
     )
     assert result.returncode == 0
@@ -106,7 +106,7 @@ printf 'missing=%s\\n' "$(kernel_driver)"
 
     cmdline.write_text("driver=free driver=nonfree\n", encoding="utf-8")
     result = run_bash(
-        "source \"$KERNEL_OPTIONS\"; kernel_cmdline_path=$CMDLINE; kernel_driver",
+        'source "$KERNEL_OPTIONS"; kernel_cmdline_path=$CMDLINE; kernel_driver',
         environment={"KERNEL_OPTIONS": str(KERNEL_OPTIONS), "CMDLINE": str(cmdline)},
     )
     assert result.returncode != 0

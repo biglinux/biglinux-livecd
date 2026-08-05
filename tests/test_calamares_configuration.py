@@ -102,7 +102,9 @@ def test_profile_metadata_is_loaded_from_the_materialized_directory(
     }
 
 
-def test_profile_metadata_falls_back_for_invalid_json(monkeypatch, tmp_path: Path) -> None:
+def test_profile_metadata_falls_back_for_invalid_json(
+    monkeypatch, tmp_path: Path
+) -> None:
     (tmp_path / "profile.json").write_text("[]", encoding="utf-8")
     monkeypatch.setenv("CALAMARES_PROFILE_DIRECTORY", str(tmp_path))
 
@@ -114,9 +116,7 @@ def test_profile_metadata_falls_back_for_invalid_json(monkeypatch, tmp_path: Pat
 
 def test_calamares_branding_uses_current_os_release_substitutions() -> None:
     branding_files = sorted(
-        (REPOSITORY / "biglinux-livecd").glob(
-            "usr/share/**/branding/*/branding.desc"
-        )
+        (REPOSITORY / "biglinux-livecd").glob("usr/share/**/branding/*/branding.desc")
     )
 
     assert len(branding_files) == 4
@@ -201,9 +201,7 @@ def test_profiles_mount_target_virtual_filesystems() -> None:
 
     for mount_file in mount_files:
         config = yaml.safe_load(mount_file.read_text(encoding="utf-8"))
-        extra_mounts = {
-            entry["mountPoint"]: entry for entry in config["extraMounts"]
-        }
+        extra_mounts = {entry["mountPoint"]: entry for entry in config["extraMounts"]}
         assert extra_mounts["/proc"] == {
             "device": "proc",
             "fs": "proc",
@@ -260,9 +258,10 @@ def test_biglinux_install_navigation_layout() -> None:
     assert navigation.index("visible: root.actionsOnRight") < navigation.index(
         "text: root.cleanLabel(ViewManager.quitLabel)"
     )
-    assert navigation.count(
-        "visible: ViewManager.backAndNextVisible && !root.finalStep"
-    ) == 2
+    assert (
+        navigation.count("visible: ViewManager.backAndNextVisible && !root.finalStep")
+        == 2
+    )
 
 
 def test_biglinux_installation_visual_adjustments() -> None:
@@ -296,8 +295,8 @@ def test_biglinux_installation_visual_adjustments() -> None:
     assert "property real maxBallSpeed: Math.max(13.0, width / 62)" in pong
     assert "currentSpeed * 1.09" in pong
     assert 'color: "#FFFFFF"' in pong
-    assert 'font.weight: Font.DemiBold' in pong
-    assert 'background: Rectangle' in pong
+    assert "font.weight: Font.DemiBold" in pong
+    assert "background: Rectangle" in pong
 
     assert "#mainApp QProgressBar" in stylesheet
     assert "#mainApp QProgressBar::chunk" in stylesheet
@@ -320,7 +319,9 @@ def test_compatibility_branding_matches_active_biglinux_branding() -> None:
         "pong.qml",
         "stylesheet.qss",
     ):
-        assert (compatibility / filename).read_bytes() == (active / filename).read_bytes()
+        assert (compatibility / filename).read_bytes() == (
+            active / filename
+        ).read_bytes()
 
 
 def test_all_calamares_profile_configuration_is_valid_yaml() -> None:
@@ -349,9 +350,9 @@ def test_profiles_ship_complete_mhwd_configuration() -> None:
 
 
 def test_launcher_preserves_mhwd_configuration_and_skips_free_driver_job() -> None:
-    launcher = (
-        REPOSITORY / "biglinux-livecd/usr/bin/calamares-biglinux"
-    ).read_text(encoding="utf-8")
+    launcher = (REPOSITORY / "biglinux-livecd/usr/bin/calamares-biglinux").read_text(
+        encoding="utf-8"
+    )
 
     assert "printf '%s\\n' '---' \"driver: $driver\"" not in launcher
     assert 'sed -i "s/^driver:.*/driver: $driver/"' in launcher
@@ -428,18 +429,19 @@ def test_biglinux_finished_page_animates_on_entrance() -> None:
 
 def test_biglinux_unmounts_before_showing_the_finished_page() -> None:
     profile = (
-        REPOSITORY
-        / "biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux"
+        REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux"
     )
 
     for settings_file in ("settings.conf", "settings-hybrid-fallback.conf"):
         settings = yaml.safe_load((profile / settings_file).read_text(encoding="utf-8"))
-        execution = next(phase["exec"] for phase in settings["sequence"] if "exec" in phase)
+        execution = next(
+            phase["exec"] for phase in settings["sequence"] if "exec" in phase
+        )
         assert execution[-1] == "umount"
 
-    navigation = (
-        profile / "branding/biglinux/calamares-navigation.qml"
-    ).read_text(encoding="utf-8")
+    navigation = (profile / "branding/biglinux/calamares-navigation.qml").read_text(
+        encoding="utf-8"
+    )
     # Global is only bound in module QML, so navigation cannot read it.
     assert "Global" not in navigation
 
@@ -475,16 +477,20 @@ def check_luks_tuning(profile) -> None:
 
     for settings_file in sorted(profile.glob("settings*.conf")):
         settings = yaml.safe_load(settings_file.read_text(encoding="utf-8"))
-        execution = next(phase["exec"] for phase in settings["sequence"] if "exec" in phase)
+        execution = next(
+            phase["exec"] for phase in settings["sequence"] if "exec" in phase
+        )
         # The keyslot has to be retuned before anything writes to the volume.
         assert execution.index("luks-pbkdf") == execution.index("partition") + 1
         assert execution.index("luks-pbkdf") < execution.index("bootloader")
         # The themed prompt lives in the core image grub-install just wrote.
-        assert execution.index("shellprocess@grub_crypt") == execution.index("bootloader") + 1
+        assert (
+            execution.index("shellprocess@grub_crypt")
+            == execution.index("bootloader") + 1
+        )
 
     module = (
-        REPOSITORY
-        / "biglinux-livecd/usr/lib/calamares/modules/luks-pbkdf/main.py"
+        REPOSITORY / "biglinux-livecd/usr/lib/calamares/modules/luks-pbkdf/main.py"
     ).read_text(encoding="utf-8")
     assert "luksConvertKey" in module
     assert '"--pbkdf",\n            "argon2id",' in module

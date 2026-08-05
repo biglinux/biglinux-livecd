@@ -65,16 +65,19 @@ def test_portuguese_installer_failure_translation() -> None:
     )
 
     assert translation.gettext("Installation failed") == "Falha na instalação"
-    assert translation.gettext(
-        "The installation failed. The local error log was saved in your home folder."
-    ) == "A instalação falhou. O log de erro local foi salvo na sua pasta pessoal."
+    assert (
+        translation.gettext(
+            "The installation failed. The local error log was saved in your home folder."
+        )
+        == "A instalação falhou. O log de erro local foi salvo na sua pasta pessoal."
+    )
 
 
 def test_installer_launcher_translates_failure_dialog() -> None:
     launcher = (PACKAGE / "usr/bin/calamares-biglinux").read_text(encoding="utf-8")
 
-    assert '--title="$(_ \"Installation failed\")"' in launcher
+    assert '--title="$(_ "Installation failed")"' in launcher
     assert (
-        '--text="$(_ \"The installation failed. The local error log was saved in your home folder.\")"'
+        '--text="$(_ "The installation failed. The local error log was saved in your home folder.")"'
         in launcher
     )
