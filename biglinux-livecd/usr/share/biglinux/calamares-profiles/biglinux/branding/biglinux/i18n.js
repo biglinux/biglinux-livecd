@@ -69,12 +69,98 @@ var pt = {
     "The installation log is available in the live user's home directory and in /var/log/installation.log on the installed system.": "O registro da instalação está disponível na pasta pessoal do usuário live e em /var/log/installation.log no sistema instalado."
 }
 
-function isPortuguese(localeKey) {
-    var localeName = String(localeKey).split("|")[0].toLowerCase()
-    return localeName === "pt" || localeName.indexOf("pt_") === 0 || localeName.indexOf("pt-") === 0
+// Portuguese carries the whole interface. The other languages carry the one
+// string that must not be missed whatever the installer runs in: a disk
+// password it rules out leaves a machine nobody can unlock at boot.
+var byLanguage = {
+    "be": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Калі вы зашыфруеце дыск, пароль не можа мець дыякрытычных знакаў ці літары ç"
+    },
+    "bg": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Ако шифровате диска, паролата не може да съдържа знаци с ударение или буквата ç"
+    },
+    "cs": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Pokud disk zašifrujete, heslo nesmí obsahovat diakritiku ani znak ç"
+    },
+    "da": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Hvis du krypterer disken, må adgangskoden ikke indeholde accenttegn eller bogstavet ç"
+    },
+    "de": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Wenn Sie die Festplatte verschlüsseln, darf das Passwort keine Akzente und kein ç enthalten"
+    },
+    "el": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Αν κρυπτογραφήσετε τον δίσκο, ο κωδικός δεν μπορεί να έχει τόνους ή το γράμμα ç"
+    },
+    "es": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Si cifra el disco, la contraseña no puede tener acentos ni la letra ç"
+    },
+    "et": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Kui krüpteerite ketta, ei tohi paroolis olla täpitähti ega tähte ç"
+    },
+    "fi": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Jos salaat levyn, salasanassa ei voi olla aksentteja eikä ç-kirjainta"
+    },
+    "fr": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Si vous chiffrez le disque, le mot de passe ne peut pas contenir d'accents ni la lettre ç"
+    },
+    "he": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "אם תצפין את הדיסק, הסיסמה לא יכולה לכלול סימני הטעמה או האות ç"
+    },
+    "hr": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Ako šifrirate disk, lozinka ne može sadržavati dijakritičke znakove ni slovo ç"
+    },
+    "hu": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Ha titkosítja a lemezt, a jelszó nem tartalmazhat ékezetes karaktert vagy ç betűt"
+    },
+    "is": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Ef þú dulkóðar diskinn má lykilorðið ekki innihalda broddstafi eða bókstafinn ç"
+    },
+    "it": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Se cifri il disco, la password non può contenere accenti né la lettera ç"
+    },
+    "ja": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "ディスクを暗号化する場合、パスワードにアクセント記号や ç は使用できません"
+    },
+    "ko": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "디스크를 암호화하면 비밀번호에 악센트 문자나 ç 를 사용할 수 없습니다"
+    },
+    "nl": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Als u de schijf versleutelt, mag het wachtwoord geen accenttekens of de letter ç bevatten"
+    },
+    "no": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Hvis du krypterer disken, kan ikke passordet inneholde aksenttegn eller bokstaven ç"
+    },
+    "pl": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Jeśli zaszyfrujesz dysk, hasło nie może zawierać znaków diakrytycznych ani litery ç"
+    },
+    "ro": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Dacă criptați discul, parola nu poate conține diacritice sau litera ç"
+    },
+    "ru": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Если вы зашифруете диск, пароль не может содержать символы с диакритикой или букву ç"
+    },
+    "sk": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Ak disk zašifrujete, heslo nesmie obsahovať diakritiku ani znak ç"
+    },
+    "sv": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Om du krypterar disken kan lösenordet inte innehålla accenttecken eller bokstaven ç"
+    },
+    "tr": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Diski şifrelerseniz, parola aksanlı harfler veya ç harfi içeremez"
+    },
+    "uk": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "Якщо ви зашифруєте диск, пароль не може містити символи з діакритикою або літеру ç"
+    },
+    "zh": {
+        "If you encrypt the disk, the password cannot have accents or the letter c-cedilla": "如果加密磁盘，密码不能包含带重音符号的字符或字母 ç"
+    },
+    "pt": pt
 }
 
 function translate(source, localeKey) {
-    if (isPortuguese(localeKey) && pt[source] !== undefined) return pt[source]
+    var name = String(localeKey).split("|")[0].toLowerCase().replace("-", "_")
+    var language = byLanguage[name] !== undefined ? name : name.split("_")[0]
+    var catalog = byLanguage[language]
+    if (catalog !== undefined && catalog[source] !== undefined) return catalog[source]
     return source
 }

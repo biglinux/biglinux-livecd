@@ -474,6 +474,33 @@ def test_every_module_instance_in_a_sequence_is_declared() -> None:
                     assert config.is_file(), f"{settings_file}: {config.name} is missing"
 
 
+def test_disk_password_warning_covers_every_maintained_language() -> None:
+    # A password this warning would have prevented leaves a machine that cannot
+    # be unlocked at boot, so it is the one branding string that has to exist in
+    # every language the package ships a catalog for.
+    warning = (
+        "If you encrypt the disk, the password cannot have accents"
+        " or the letter c-cedilla"
+    )
+    catalogs = (
+        REPOSITORY
+        / "biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux"
+        / "branding/biglinux/i18n.js"
+    ).read_text(encoding="utf-8")
+    languages = {
+        path.stem
+        for path in (REPOSITORY / "biglinux-livecd/locale").glob("*.po")
+        # English is the source text, and Portuguese points at the full map.
+        if path.stem not in {"en", "pt"}
+    }
+    for language in sorted(languages):
+        block = catalogs.split(f'"{language}": {{', 1)
+        assert len(block) == 2, f"{language} has no entry in i18n.js"
+        assert warning in block[1].split("}", 1)[0], language
+    assert '"pt": pt' in catalogs
+    assert warning in catalogs.split("var pt = {", 1)[1]
+
+
 def test_navigation_hint_points_at_the_partition_step() -> None:
     # The bar shows the accent warning on the partitioning page, and identifies
     # that page by position: the ViewManager exposes the current index but no
