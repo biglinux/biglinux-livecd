@@ -22,11 +22,11 @@ msgstr "__biglinux_language_marker__"
 msgid "%1 logo"
 msgstr "%1 logo"
 msgid "Current installation step"
-msgstr "Huidige installatie stap"
+msgstr "Huidige installatiestap"
 msgid "Completed installation step"
-msgstr "Voltooid installatie stap"
+msgstr "Voltooide installatiestap"
 msgid "Pending installation step"
-msgstr "In afwachting van installatie stap"
+msgstr "Openstaande installatiestap"
 msgid "Pong game"
 msgstr "Pong-spel"
 msgid "Move the left paddle with the mouse or the up and down arrow keys. Press Space to pause or resume."
@@ -34,7 +34,7 @@ msgstr ""
 "Beweeg de linker paddle met de muis of de pijltoetsen omhoog en omlaag. Druk op Spatie om te "
 "pauzeren of te hervatten."
 msgid "Paused"
-msgstr "Pauze"
+msgstr "Gepauzeerd"
 msgid "Resume"
 msgstr "Hervatten"
 msgid "Pause or resume the Pong game"
@@ -530,7 +530,7 @@ msgstr "Minimale installatie: selecteer pakketten om te behouden of te verwijder
 # line: 159
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:168
 msgid "This is a collaborative system, if you need help consult our forum."
-msgstr "Dit systeem wordt gezamenlijk ontwikkeld. Raadpleeg ons forum als je hulp nodig hebt."
+msgstr "Dit systeem wordt gezamenlijk ontwikkeld. Raadpleeg ons forum als u hulp nodig heeft."
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:206
 msgid "Maintenance"
@@ -624,7 +624,7 @@ msgstr "Houd /boot binnen de /-partitie"
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:67
 msgid "Placing it in a separate partition hampers BTRFS snapshots."
-msgstr "Als /boot op een afzonderlijke partitie staat, wordt het maken van BTRFS-snapshots bemoeilijkt."
+msgstr "Als /boot op een afzonderlijke partitie staat, wordt het maken van BTRFS-momentopnamen bemoeilijkt."
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
 # line: 56
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:71

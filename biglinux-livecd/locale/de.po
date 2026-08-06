@@ -24,21 +24,21 @@ msgstr "%1 Logo"
 msgid "Current installation step"
 msgstr "Aktueller Installationsschritt"
 msgid "Completed installation step"
-msgstr "Abschluss des Installationsschrittes"
+msgstr "Abgeschlossener Installationsschritt"
 msgid "Pending installation step"
 msgstr "Ausstehender Installationsschritt"
 msgid "Pong game"
 msgstr "Pong-Spiel"
 msgid "Move the left paddle with the mouse or the up and down arrow keys. Press Space to pause or resume."
 msgstr ""
-"Bewege den linken Schläger mit der Maus oder den Pfeiltasten nach oben und unten. Drücke die "
-"Leertaste, um zu pausieren oder fortzufahren."
+"Bewegen Sie den linken Schläger mit der Maus oder den Pfeiltasten nach oben und unten. Drücken "
+"Sie die Leertaste zum Pausieren oder Fortsetzen."
 msgid "Paused"
 msgstr "Pausiert"
 msgid "Resume"
-msgstr "Lebenslauf"
+msgstr "Fortsetzen"
 msgid "Pause or resume the Pong game"
-msgstr "Pausiere oder setze das Pong-Spiel fort"
+msgstr "Pong-Spiel anhalten oder fortsetzen"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
 # line: 36
@@ -406,7 +406,7 @@ msgstr "Das System befindet sich im {boot_mode}, Linux {kernel}."
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:154
 msgid "Snapshot and backups"
-msgstr "Snapshot und Backups"
+msgstr "Schnappschuss und Backups"
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:155
 msgid "Restore restore points of the installed system."
@@ -451,7 +451,7 @@ msgstr "Erweitertes Werkzeug zum Hinzufügen, Entfernen oder Ändern von Startei
 # line: 171
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:202
 msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
-msgstr "Systemwartung: Wählen Sie Snapshot, Wiederherstellung oder EFI-Verwaltung"
+msgstr "Systemwartung: Wählen Sie Schnappschuss, Wiederherstellung oder EFI-Verwaltung"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
 # line: 59

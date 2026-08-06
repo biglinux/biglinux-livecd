@@ -22,9 +22,9 @@ msgstr "__biglinux_language_marker__"
 msgid "%1 logo"
 msgstr "%1 logo"
 msgid "Current installation step"
-msgstr "Nuværende installations trin"
+msgstr "Nuværende installationstrin"
 msgid "Completed installation step"
-msgstr "Installerings trin fuldført"
+msgstr "Fuldført installationstrin"
 msgid "Pending installation step"
 msgstr "Afventende installationstrin"
 msgid "Pong game"
@@ -34,9 +34,9 @@ msgstr ""
 "Flyt venstre paddle med musen eller op- og ned-piletasterne. Tryk på mellemrumstasten for at pause "
 "eller genoptage."
 msgid "Paused"
-msgstr "Pauset"
+msgstr "Sat på pause"
 msgid "Resume"
-msgstr "Genoptagelse"
+msgstr "Genoptag"
 msgid "Pause or resume the Pong game"
 msgstr "Pause eller genoptag Pong-spillet"
 # File:
@@ -607,7 +607,7 @@ msgstr "Behold /boot i /-partitionen"
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:67
 msgid "Placing it in a separate partition hampers BTRFS snapshots."
-msgstr "Hvis /boot placeres på en separat partition, begrænses BTRFS-snapshots."
+msgstr "Hvis /boot placeres på en separat partition, begrænses BTRFS-øjebliksbilleder."
 # File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
 # line: 56
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:71
@@ -701,7 +701,7 @@ msgstr "Integritetskontrollen blev ikke fuldført."
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:89
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:114
 msgid "Progress"
-msgstr "Fremskridt"
+msgstr "Fremdrift"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
 # line: 168

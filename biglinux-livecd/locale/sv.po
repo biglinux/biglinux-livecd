@@ -22,9 +22,9 @@ msgstr "__biglinux_language_marker__"
 msgid "%1 logo"
 msgstr "%1 logotyp"
 msgid "Current installation step"
-msgstr "Aktuell installationssteg"
+msgstr "Aktuellt installationssteg"
 msgid "Completed installation step"
-msgstr "Installationsteget är slutfört."
+msgstr "Slutfört installationssteg"
 msgid "Pending installation step"
 msgstr "Väntande installationssteg"
 msgid "Pong game"
@@ -688,7 +688,7 @@ msgstr "Integritetskontrollen slutfördes inte."
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:89
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:114
 msgid "Progress"
-msgstr "Framsteg"
+msgstr "Förlopp"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
 # line: 168
