@@ -1,0 +1,85 @@
+name: Build Package
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # The test suite is this package's quality gate: it covers the privilege
+      # boundaries, the kernel-argument parsing and the Calamares profiles, and
+      # it type-checks every plugin entry point. Running it here is what keeps
+      # a broken tree from reaching a package.
+      - name: Install the checks
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck shfmt gettext \
+            python3-gi python3-gi-cairo python3-cairo \
+            gir1.2-gtk-4.0 gir1.2-adw-1
+          python3 -m pip install --break-system-packages pytest pyyaml mypy ruff
+
+      # Discovered by shebang rather than listed, so a new script cannot be
+      # added without being checked.
+      - name: Check the shell scripts
+        shell: bash
+        run: |
+          mapfile -t scripts < <(
+            git ls-files |
+              while read -r file; do
+                [ -f "$file" ] || continue
+                head -c 40 "$file" | grep -qE '^#!.*(bash|sh)' && printf '%s\n' "$file"
+              done
+          )
+          printf 'checking %s scripts\n' "${#scripts[@]}"
+          shellcheck -x "${scripts[@]}" pkgbuild/PKGBUILD
+          shfmt -d "${scripts[@]}"
+
+      # -c adds the header and domain checks that --check-format leaves out.
+      - name: Check the translation catalogs
+        shell: bash
+        run: |
+          for catalog in biglinux-livecd/locale/*.po; do
+            msgfmt -c -o /dev/null "$catalog"
+          done
+
+      - name: Run the test suite
+        shell: bash
+        run: |
+          ruff check
+          ruff format --check
+          python3 -m pytest tests/ -q
+
+      # The branch name reaches this step from the event, so it goes through
+      # the environment and jq rather than being pasted into the JSON: a branch
+      # named with a quote would otherwise break out of it.
+      - name: Send Hooks BigLinux Build Package
+        shell: bash
+        env:
+          WEBHOOK_TOKEN: ${{ secrets.WEBHOOK_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          payload=$(jq -n \
+            --arg repository "$REPOSITORY" \
+            --arg branch "$BRANCH" \
+            '{event_type: $repository,
+              client_payload: {
+                branch: $branch,
+                url: ("https://github.com/" + $repository),
+                version: "1.2.3"
+              }}')
+          curl -X POST \
+            -H "Accept: application/json" \
+            -H "Authorization: token $WEBHOOK_TOKEN" \
+            --data "$payload" \
+            https://api.github.com/repos/BigLinux-Package-Build/build-package/dispatches
