@@ -110,11 +110,21 @@ def test_portuguese_installer_failure_translation(locale_root: Path) -> None:
     )
 
 
-def test_installer_launcher_translates_failure_dialog() -> None:
-    launcher = (PACKAGE / "usr/bin/calamares-biglinux").read_text(encoding="utf-8")
+def test_every_launcher_message_is_extractable() -> None:
+    """The pipeline reads shell strings with `bash --dump-po-strings`.
 
-    assert '--title="$(_ "Installation failed")"' in launcher
-    assert (
-        '--text="$(_ "The installation failed. The local error log was saved in your home folder.")"'
-        in launcher
-    )
+    It sees only bash's own $"..." form, so a message passed to gettext any
+    other way is dropped from every catalog on the next run - which is exactly
+    what happened to the two failure-dialog messages below.
+    """
+    launcher = PACKAGE / "usr/bin/calamares-biglinux"
+    assert "$(_ " not in launcher.read_text(encoding="utf-8")
+
+    extracted = subprocess.run(
+        ["bash", "--dump-po-strings", str(launcher)],
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout
+    for message in INSTALLER_FAILURE_MESSAGES:
+        assert f'msgid "{message}"' in extracted, message

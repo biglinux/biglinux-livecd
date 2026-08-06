@@ -6,12 +6,14 @@ source /usr/lib/biglinux-livecd/kernel-options
 # shellcheck disable=SC1091
 source /usr/lib/biglinux-livecd/storage-probe
 
+# Every user-visible string below uses bash's own translated-string form rather
+# than a call to gettext. Two reasons: bash translates those itself, against
+# the domain declared here, with no fork per string; and the translation
+# pipeline extracts shell strings with `bash --dump-po-strings`, which sees
+# only that form. Written the other way, these messages were dropped from the
+# catalogs on the next pipeline run and every dialog came back in English.
 export TEXTDOMAINDIR=/usr/share/locale
 export TEXTDOMAIN=biglinux-livecd
-
-_() {
-	/usr/bin/gettext -- "$1"
-}
 
 user=${BIGLINUX_LIVE_USER:-}
 if [[ ! $user =~ ^[a-z_][a-z0-9_-]*[$]?$ ]] || ! user_id=$(id -u -- "$user") || ((user_id == 0)); then
@@ -60,10 +62,10 @@ if [[ ! -f $integrity_state_directory/verified && ! -f $integrity_state_director
 	# an always-empty string against "verified" and so refused to install
 	# whenever the check had not already finished at boot.
 	if ! wait_for_verification | "${gtk_dialog[@]}" integrity-wait \
-		--title="$(_ "Please wait...")" \
-		--text="$(_ "Checking the integrity of the download and storage device...")" \
-		--success-title="$(_ "Verification complete")" \
-		--success-text="$(_ "The files are intact.")"; then
+		--title=$"Please wait..." \
+		--text=$"Checking the integrity of the download and storage device..." \
+		--success-title=$"Verification complete" \
+		--success-text=$"The files are intact."; then
 		exit 1
 	fi
 fi
@@ -106,9 +108,9 @@ fi
 if [[ $release_day =~ ^[0-9]+$ ]] && ((current_day > release_day + 30)) && ((profile_warning_status == 0)); then
 	if ! "${gtk_dialog[@]}" question \
 		--icon-name=emblem-warning --width=500 \
-		--title="$(_ "Outdated Version")" \
-		--text="$(_ "Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version.")" \
-		--ok-label="$(_ "Continue")" --cancel-label="$(_ "Close")"; then
+		--title=$"Outdated Version" \
+		--text=$"Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version." \
+		--ok-label=$"Continue" --cancel-label=$"Close"; then
 		exit 1
 	fi
 fi
@@ -231,25 +233,25 @@ fi
 
 if ! efi_partition_count=$(count_non_live_efi_partitions /run/miso/bootmnt); then
 	"${gtk_dialog[@]}" info \
-		--title="$(_ "Could not inspect EFI partitions")" \
-		--text="$(_ "The installer could not safely inspect the disk layout. Close the installer, reconnect the storage device, and try again.")" \
+		--title=$"Could not inspect EFI partitions" \
+		--text=$"The installer could not safely inspect the disk layout. Close the installer, reconnect the storage device, and try again." \
 		--width=480
 	exit 1
 fi
 
 if [[ -d /sys/firmware/efi ]] && ((efi_partition_count == 0)); then
 	if ! "${gtk_dialog[@]}" question --icon-name=drive-harddisk --width=500 \
-		--title="$(_ "Install the system")" \
-		--text="$(_ "Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer.")" \
-		--ok-label="$(_ "Continue")" --cancel-label="$(_ "Close")"; then
+		--title=$"Install the system" \
+		--text=$"Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer." \
+		--ok-label=$"Continue" --cancel-label=$"Close"; then
 		exit 1
 	fi
 fi
 if [[ ! -d /sys/firmware/efi ]] && ((efi_partition_count > 0)); then
 	if ! "${gtk_dialog[@]}" question --icon-name=drive-harddisk --width=500 \
-		--title="$(_ "Install the system")" \
-		--text="$(_ "Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer.")" \
-		--ok-label="$(_ "Continue")" --cancel-label="$(_ "Close")"; then
+		--title=$"Install the system" \
+		--text=$"Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer." \
+		--ok-label=$"Continue" --cancel-label=$"Close"; then
 		exit 1
 	fi
 fi
@@ -276,8 +278,8 @@ if [[ -f $calamares_state_directory/start_calamares && ! -L $calamares_state_dir
 
 	session_log=/root/.cache/calamares/session.log
 	if [[ ! -f $session_log || -L $session_log ]]; then
-		"${gtk_dialog[@]}" info --title="$(_ "Installation log unavailable")" \
-			--text="$(_ "Calamares did not create a valid installation log. Close the installer and try again.")" --width=480
+		"${gtk_dialog[@]}" info --title=$"Installation log unavailable" \
+			--text=$"Calamares did not create a valid installation log. Close the installer and try again." --width=480
 		exit 1
 	fi
 
@@ -298,7 +300,7 @@ if [[ -f $calamares_state_directory/start_calamares && ! -L $calamares_state_dir
 	# at all, and that is not a failure to report.
 	if grep -w completion "$session_log" | grep -v bash-completion | grep -qE ':[[:space:]]*failed[[:space:]]*$'; then
 		copy_installation_log calamares_error.log || true
-		"${gtk_dialog[@]}" info --title="$(_ "Installation failed")" \
-			--text="$(_ "The installation failed. The local error log was saved in your home folder.")" --width=480
+		"${gtk_dialog[@]}" info --title=$"Installation failed" \
+			--text=$"The installation failed. The local error log was saved in your home folder." --width=480
 	fi
 fi
