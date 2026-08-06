@@ -17,6 +17,108 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 "X-Generator: attranslate\n"
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
+# line: 223
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
+# line: 254
+msgid "Please wait..."
+msgstr "Veuillez patienter..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 42
+#: biglinux-livecd/usr/bin/calamares-biglinux:74
+msgid "Checking the integrity of the download and storage device..."
+msgstr "Vérification de l’intégrité du téléchargement et du périphérique de stockage..."
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 52
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
+msgid "Verification complete"
+msgstr "Vérification terminée"
+# 
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 53
+#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
+msgid "The files are intact."
+msgstr "Les fichiers sont intacts."
+msgid "Outdated Version"
+msgstr "Version obsolète"
+msgid ""
+"Do you want to proceed with the installation of this old version anyway? BigLinux is a system with "
+"weekly updates and this version was released more than a month ago. We recommend downloading a more "
+"recent version."
+msgstr ""
+"Voulez-vous procéder à l'installation de cette ancienne version malgré tout ? BigLinux est un "
+"système avec des mises à jour hebdomadaires et cette version a été publiée il y a plus d'un mois. "
+"Nous vous recommandons de télécharger une version plus récente."
+# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:213
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:233
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:218
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:155
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:166
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:294
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:309
+msgid "Continue"
+msgstr "Continuer"
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
+# line: 192
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
+# line: 256
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
+# line: 259
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
+# line: 297
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
+# line: 300
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
+# line: 401
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:212
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:283
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:285
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:333
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:335
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:443
+msgid "Close"
+msgstr "Fermer"
+msgid "Could not inspect EFI partitions"
+msgstr "Impossible d'inspecter les partitions EFI"
+msgid ""
+"The installer could not safely inspect the disk layout. Close the installer, reconnect the storage "
+"device, and try again."
+msgstr ""
+"L'installateur n'a pas pu inspecter en toute sécurité la disposition du disque. Fermez "
+"l'installateur, reconnectez le périphérique de stockage et réessayez."
+msgid "Install the system"
+msgstr "Installer le système"
+msgid ""
+"Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I "
+"did not find an EFI partition on this computer."
+msgstr ""
+"Voulez-vous procéder à l'installation en mode EFI ? Le démarrage actuel utilise le mode EFI, mais "
+"je n'ai pas trouvé de partition EFI sur cet ordinateur."
+msgid ""
+"Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this "
+"computer."
+msgstr ""
+"Voulez-vous procéder à l'installation en mode Héritage/BIOS ? J'ai trouvé une partition EFI sur cet "
+"ordinateur."
+msgid "Installation log unavailable"
+msgstr "Journal d'installation indisponible"
+msgid "Calamares did not create a valid installation log. Close the installer and try again."
+msgstr "Calamares n'a pas créé de journal d'installation valide. Fermez l'installateur et réessayez."
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Installation failed"
+msgstr "Échec de l'installation"
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "The installation failed. The local error log was saved in your home folder."
+msgstr "L'installation a échoué. Le journal d'erreurs local a été enregistré dans votre dossier personnel."
 msgid "__biglinux_language_marker__"
 msgstr "__biglinux_language_marker__"
 msgid "%1 logo"
@@ -283,35 +385,6 @@ msgstr "Documentation"
 # #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 447
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py,
-# line: 154
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:447
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:154
-msgid "OK"
-msgstr "OK"
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py,
-# line: 159
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 405
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py,
-# line: 151
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 151
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 147
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 149
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 167
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:169
-msgid "Cancel"
-msgstr "Annuler"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 168
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:170
-msgid "Confirm"
-msgstr "Confirmer"
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
 # line: 405
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py,
 # line: 159
@@ -340,16 +413,6 @@ msgstr "Tout conserver"
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:164
 msgid "Remove All"
 msgstr "Tout supprimer"
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:213
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:233
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:218
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:155
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:166
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:294
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:309
-msgid "Continue"
-msgstr "Continuer"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py,
 # line: 133
@@ -645,19 +708,6 @@ msgstr ""
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:103
 msgid "Installation tips: read the recommendations before proceeding"
 msgstr "Conseils d’installation : lisez les recommandations avant de continuer"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 223
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 254
-msgid "Please wait..."
-msgstr "Veuillez patienter..."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 42
-#: biglinux-livecd/usr/bin/calamares-biglinux:74
-msgid "Checking the integrity of the download and storage device..."
-msgstr "Vérification de l’intégrité du téléchargement et du périphérique de stockage..."
 # 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 43
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
@@ -694,16 +744,6 @@ msgstr ""
 "Le support live n’a pas pu être vérifié. Téléchargez de nouveau le système ou utilisez une autre "
 "clé USB."
 # 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 52
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
-msgid "Verification complete"
-msgstr "Vérification terminée"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 53
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
-msgid "The files are intact."
-msgstr "Les fichiers sont intacts."
-# 
 # File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 54
 #: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
 msgid "Verification canceled"
@@ -733,33 +773,6 @@ msgstr "Progrès"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:240
 msgid "Question"
 msgstr "Question"
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 192
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 256
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 259
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 297
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 300
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 401
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:212
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:283
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:285
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:333
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:335
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:443
-msgid "Close"
-msgstr "Fermer"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
 # line: 236
@@ -790,11 +803,13 @@ msgstr "Informations"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:465
 msgid "Select"
 msgstr "Sélectionner"
-
-# Installer launcher, usr/bin/calamares-biglinux
-msgid "Installation failed"
-msgstr "Échec de l'installation"
-
-# Installer launcher, usr/bin/calamares-biglinux
-msgid "The installation failed. The local error log was saved in your home folder."
-msgstr "L'installation a échoué. Le journal d'erreurs local a été enregistré dans votre dossier personnel."
+# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
+# File:
+# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
+# line: 447
+# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/app.py,
+# line: 154
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:447
+#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:154
+msgid "OK"
+msgstr "OK"
