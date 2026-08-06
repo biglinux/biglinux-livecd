@@ -605,31 +605,73 @@ def test_every_module_named_in_a_sequence_exists() -> None:
                     assert module in available, f"{settings_file}: no module {module}"
 
 
-def test_disk_password_warning_covers_every_maintained_language() -> None:
-    # A password this warning would have prevented leaves a machine that cannot
-    # be unlocked at boot, so it is the one branding string that has to exist in
-    # every language the package ships a catalog for.
-    warning = (
-        "If you encrypt the disk, the password cannot have accents"
-        " or the letter c-cedilla"
-    )
-    catalogs = (
+def test_branding_catalog_covers_every_string_and_language() -> None:
+    """The installer's own screens are translated here, not through gettext.
+
+    Calamares reads this catalog from the branding QML, so a string missing
+    from a language shows up in English on that screen and nothing else
+    notices. The file is evaluated rather than pattern-matched, because that
+    is what the QML engine does with it.
+    """
+    node = shutil.which("node") or shutil.which("nodejs")
+    if node is None:
+        pytest.skip("node is not installed")
+
+    branding = (
         REPOSITORY
         / "biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux"
-        / "branding/biglinux/i18n.js"
-    ).read_text(encoding="utf-8")
-    languages = {
+        / "branding/biglinux"
+    )
+    used = sorted(
+        {
+            match
+            for source in branding.rglob("*.qml")
+            for match in re.findall(
+                r'tr\("((?:[^"\\]|\\.)+)"\)', source.read_text(encoding="utf-8")
+            )
+        }
+    )
+    assert len(used) >= 44
+
+    # English is the source text; every other catalog the package ships needs
+    # an entry for each of these.
+    languages = sorted(
         path.stem
         for path in (REPOSITORY / "biglinux-livecd/locale").glob("*.po")
-        # English is the source text, and Portuguese points at the full map.
-        if path.stem not in {"en", "pt"}
-    }
-    for language in sorted(languages):
-        block = catalogs.split(f'"{language}": {{', 1)
-        assert len(block) == 2, f"{language} has no entry in i18n.js"
-        assert warning in block[1].split("}", 1)[0], language
-    assert '"pt": pt' in catalogs
-    assert warning in catalogs.split("var pt = {", 1)[1]
+        if path.stem != "en"
+    )
+
+    # eval is deliberate and the input is not untrusted: it is this repository's
+    # own i18n.js, and evaluating it is exactly what the QML engine does at
+    # runtime. Parsing it as text instead would test the file's formatting
+    # rather than the lookups the installer actually performs.
+    program = f"""
+const fs = require("fs");
+const module_ = {{}};
+eval(fs.readFileSync({json.dumps(str(branding / "i18n.js"))}, "utf8")
+    .replace(".pragma library", "") + "; module_.b = byLanguage; module_.t = translate;");
+const used = {json.dumps(used)};
+const languages = {json.dumps(languages)};
+const missing = [];
+for (const language of languages) {{
+    if (module_.b[language] === undefined) {{ missing.push(language + ": absent"); continue; }}
+    for (const source of used) {{
+        const target = module_.t(source, language + "|marker");
+        if (module_.b[language][source] === undefined) missing.push(language + ": " + source);
+        // A placeholder dropped in translation shows a literal %1 to the user.
+        else if ((source.match(/%1/g) || []).length !== (target.match(/%1/g) || []).length)
+            missing.push(language + ": placeholder in " + source);
+    }}
+}}
+// An unknown locale has to fall back to the source text, not to undefined.
+if (module_.t("Review", "xx_YY|marker") !== "Review") missing.push("fallback broken");
+console.log(JSON.stringify(missing));
+"""
+    result = subprocess.run(
+        [node, "-e", program], capture_output=True, text=True, check=True
+    )
+    missing = json.loads(result.stdout)
+    assert not missing, missing[:10]
 
 
 def test_navigation_hint_points_at_the_partition_step() -> None:
