@@ -722,7 +722,7 @@ msgstr "La vérification de l’intégrité n’a pas été menée à terme."
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:89
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:114
 msgid "Progress"
-msgstr "Progrès"
+msgstr "Progression"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
 # line: 168

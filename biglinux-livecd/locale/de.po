@@ -105,7 +105,7 @@ msgstr "Desktop-Layout"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:490
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:516
 msgid "Theme"
-msgstr "Thema"
+msgstr "Design"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
 # line: 591
@@ -194,7 +194,7 @@ msgstr "deaktiviert"
 # line: 227
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:335
 msgid "Choose a Theme Style"
-msgstr "Wählen Sie einen Themenstil"
+msgstr "Wählen Sie einen Designstil"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
 # line: 166
@@ -206,13 +206,13 @@ msgstr "Wählen Sie ein Systemdesign aus"
 # line: 258
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:361
 msgid "Dark Theme"
-msgstr "Dunkles Thema"
+msgstr "Dunkles Design"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
 # line: 261
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:361
 msgid "Light Theme"
-msgstr "Helles Thema"
+msgstr "Helles Design"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py,
 # line: 65

@@ -118,7 +118,7 @@ msgstr "Accesibilidad habilitada. Usa las teclas de flecha para navegar."
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:92
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:124
 msgid "Settings"
-msgstr "Configuraciones"
+msgstr "Configuración"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
 # line: 107
@@ -420,7 +420,7 @@ msgstr "Iniciar"
 # #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:164
 msgid "Restore system settings"
-msgstr "Restaurar configuraciones del sistema"
+msgstr "Restaurar la configuración del sistema"
 # File:
 # calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
 # line: 78

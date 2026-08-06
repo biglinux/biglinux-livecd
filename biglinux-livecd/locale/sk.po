@@ -715,7 +715,7 @@ msgstr "Kontrola integrity nebola dokončená."
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:89
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:114
 msgid "Progress"
-msgstr "Pokrok"
+msgstr "Priebeh"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
 # line: 168

@@ -86,7 +86,7 @@ msgstr "Tungumál"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:266
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:444
 msgid "Keyboard"
-msgstr "Tangentbord"
+msgstr "Lyklaborð"
 # File:
 # biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
 # line: 243
