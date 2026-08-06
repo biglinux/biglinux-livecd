@@ -763,3 +763,39 @@ msgstr "Instalacija nije uspjela"
 # Installer launcher, usr/bin/calamares-biglinux
 msgid "The installation failed. The local error log was saved in your home folder."
 msgstr "Instalacija nije uspjela. Lokalni zapisnik pogrešaka spremljen je u vašu osobnu mapu."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Outdated Version"
+msgstr "Zastarjela verzija"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Install the system"
+msgstr "Instaliraj sustav"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Installation log unavailable"
+msgstr "Zapisnik instalacije nije dostupan"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Could not inspect EFI partitions"
+msgstr "Nije moguće pregledati EFI particije"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Calamares did not create a valid installation log. Close the installer and try again."
+msgstr "Calamares nije stvorio valjani zapisnik instalacije. Zatvorite instalacijski program i pokušajte ponovno."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "The installer could not safely inspect the disk layout. Close the installer, reconnect the storage device, and try again."
+msgstr "Instalacijski program nije mogao sigurno pregledati raspored diska. Zatvorite instalacijski program, ponovno priključite uređaj za pohranu i pokušajte ponovno."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer."
+msgstr "Želite li nastaviti instalaciju u EFI načinu? Trenutno pokretanje koristi EFI način, ali nisam pronašao EFI particiju na ovom računalu."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer."
+msgstr "Želite li nastaviti instalaciju u Legacy/BIOS načinu? Pronašao sam EFI particiju na ovom računalu."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version."
+msgstr "Želite li ipak nastaviti instalaciju ove stare verzije? BigLinux se ažurira tjedno, a ova je verzija objavljena prije više od mjesec dana. Preporučujemo preuzimanje novije verzije."

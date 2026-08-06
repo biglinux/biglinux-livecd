@@ -790,3 +790,39 @@ msgstr "Uppsetning mistókst"
 # Installer launcher, usr/bin/calamares-biglinux
 msgid "The installation failed. The local error log was saved in your home folder."
 msgstr "Uppsetningin mistókst. Staðbundna villuskráin var vistuð í heimamöppunni þinni."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Outdated Version"
+msgstr "Úrelt útgáfa"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Install the system"
+msgstr "Setja upp kerfið"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Installation log unavailable"
+msgstr "Uppsetningarskráin er ekki tiltæk"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Could not inspect EFI partitions"
+msgstr "Ekki tókst að skoða EFI disksneiðar"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Calamares did not create a valid installation log. Close the installer and try again."
+msgstr "Calamares bjó ekki til gilda uppsetningarskrá. Lokaðu uppsetningarforritinu og reyndu aftur."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "The installer could not safely inspect the disk layout. Close the installer, reconnect the storage device, and try again."
+msgstr "Uppsetningarforritinu tókst ekki að skoða skipulag disksins á öruggan hátt. Lokaðu uppsetningarforritinu, tengdu geymslutækið aftur og reyndu aftur."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer."
+msgstr "Viltu halda áfram uppsetningu í EFI-ham? Núverandi ræsing notar EFI-ham en ég fann enga EFI-disksneið á þessari tölvu."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer."
+msgstr "Viltu halda áfram uppsetningu í Legacy/BIOS-ham? Ég fann EFI-disksneið á þessari tölvu."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version."
+msgstr "Viltu samt halda áfram uppsetningu þessarar gömlu útgáfu? BigLinux uppfærist vikulega og þessi útgáfa kom út fyrir meira en mánuði. Við mælum með að sækja nýrri útgáfu."

@@ -791,3 +791,39 @@ msgstr "Inštalácia zlyhala"
 # Installer launcher, usr/bin/calamares-biglinux
 msgid "The installation failed. The local error log was saved in your home folder."
 msgstr "Inštalácia zlyhala. Miestny záznam chýb bol uložený do vášho domovského priečinka."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Outdated Version"
+msgstr "Zastaraná verzia"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Install the system"
+msgstr "Nainštalovať systém"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Installation log unavailable"
+msgstr "Záznam inštalácie nie je k dispozícii"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Could not inspect EFI partitions"
+msgstr "Oddiely EFI sa nepodarilo skontrolovať"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Calamares did not create a valid installation log. Close the installer and try again."
+msgstr "Calamares nevytvoril platný záznam inštalácie. Zatvorte inštalátor a skúste to znova."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "The installer could not safely inspect the disk layout. Close the installer, reconnect the storage device, and try again."
+msgstr "Inštalátoru sa nepodarilo bezpečne skontrolovať rozloženie disku. Zatvorte inštalátor, znova pripojte úložné zariadenie a skúste to znova."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer."
+msgstr "Chcete pokračovať v inštalácii v režime EFI? Aktuálne spustenie používa režim EFI, ale na tomto počítači som nenašiel oddiel EFI."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer."
+msgstr "Chcete pokračovať v inštalácii v režime Legacy/BIOS? Na tomto počítači som našiel oddiel EFI."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version."
+msgstr "Chcete napriek tomu pokračovať v inštalácii tejto starej verzie? BigLinux sa aktualizuje každý týždeň a táto verzia bola vydaná pred viac ako mesiacom. Odporúčame stiahnuť novšiu verziu."

@@ -798,3 +798,39 @@ msgstr "Η εγκατάσταση απέτυχε"
 # Installer launcher, usr/bin/calamares-biglinux
 msgid "The installation failed. The local error log was saved in your home folder."
 msgstr "Η εγκατάσταση απέτυχε. Το τοπικό αρχείο καταγραφής σφαλμάτων αποθηκεύτηκε στον προσωπικό σας φάκελο."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Outdated Version"
+msgstr "Παρωχημένη έκδοση"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Install the system"
+msgstr "Εγκατάσταση του συστήματος"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Installation log unavailable"
+msgstr "Το αρχείο καταγραφής εγκατάστασης δεν είναι διαθέσιμο"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Could not inspect EFI partitions"
+msgstr "Δεν ήταν δυνατός ο έλεγχος των κατατμήσεων EFI"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Calamares did not create a valid installation log. Close the installer and try again."
+msgstr "Το Calamares δεν δημιούργησε έγκυρο αρχείο καταγραφής εγκατάστασης. Κλείστε το πρόγραμμα εγκατάστασης και δοκιμάστε ξανά."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "The installer could not safely inspect the disk layout. Close the installer, reconnect the storage device, and try again."
+msgstr "Το πρόγραμμα εγκατάστασης δεν μπόρεσε να εξετάσει με ασφάλεια τη διάταξη του δίσκου. Κλείστε το πρόγραμμα εγκατάστασης, επανασυνδέστε τη συσκευή αποθήκευσης και δοκιμάστε ξανά."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer."
+msgstr "Θέλετε να συνεχίσετε την εγκατάσταση σε λειτουργία EFI; Η τρέχουσα εκκίνηση χρησιμοποιεί λειτουργία EFI, αλλά δεν βρήκα κατάτμηση EFI σε αυτόν τον υπολογιστή."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer."
+msgstr "Θέλετε να συνεχίσετε την εγκατάσταση σε λειτουργία Legacy/BIOS; Βρήκα μια κατάτμηση EFI σε αυτόν τον υπολογιστή."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version."
+msgstr "Θέλετε να συνεχίσετε ούτως ή άλλως την εγκατάσταση αυτής της παλιάς έκδοσης; Το BigLinux ενημερώνεται εβδομαδιαία και αυτή η έκδοση κυκλοφόρησε πριν από περισσότερο από έναν μήνα. Συνιστούμε να κατεβάσετε πιο πρόσφατη έκδοση."

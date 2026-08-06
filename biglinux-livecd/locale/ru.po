@@ -794,3 +794,39 @@ msgstr "Установка не удалась"
 # Installer launcher, usr/bin/calamares-biglinux
 msgid "The installation failed. The local error log was saved in your home folder."
 msgstr "Установка не удалась. Локальный журнал ошибок сохранён в вашей домашней папке."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Outdated Version"
+msgstr "Устаревшая версия"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Install the system"
+msgstr "Установить систему"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Installation log unavailable"
+msgstr "Журнал установки недоступен"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Could not inspect EFI partitions"
+msgstr "Не удалось проверить разделы EFI"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Calamares did not create a valid installation log. Close the installer and try again."
+msgstr "Calamares не создал корректный журнал установки. Закройте установщик и попробуйте снова."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "The installer could not safely inspect the disk layout. Close the installer, reconnect the storage device, and try again."
+msgstr "Установщику не удалось безопасно проверить структуру диска. Закройте установщик, переподключите накопитель и попробуйте снова."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer."
+msgstr "Продолжить установку в режиме EFI? Текущая загрузка использует режим EFI, но я не нашёл раздел EFI на этом компьютере."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer."
+msgstr "Продолжить установку в режиме Legacy/BIOS? Я нашёл раздел EFI на этом компьютере."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version."
+msgstr "Всё равно продолжить установку этой старой версии? BigLinux обновляется еженедельно, а эта версия вышла более месяца назад. Рекомендуем загрузить более свежую версию."

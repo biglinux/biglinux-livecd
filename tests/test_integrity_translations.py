@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import gettext
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -108,6 +109,40 @@ def test_portuguese_installer_failure_translation(locale_root: Path) -> None:
         )
         == "A instalação falhou. O log de erro local foi salvo na sua pasta pessoal."
     )
+
+
+def test_every_launcher_message_is_translated_everywhere(locale_root: Path) -> None:
+    """These are the dialogs the installer shows before Calamares starts.
+
+    Nine of them were missing from every catalog at once, because the
+    translation pipeline could not see them in the source and dropped them on
+    a later run. Nothing noticed until the dialogs came up in English.
+    """
+    launcher = PACKAGE / "usr/bin/calamares-biglinux"
+    declared = re.findall(
+        r'^msgid "((?:[^"\\]|\\.)+)"$',
+        subprocess.run(
+            ["bash", "--dump-po-strings", str(launcher)],
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout,
+        re.M,
+    )
+    assert len(set(declared)) >= 17
+
+    for catalog_path in sorted(locale_root.glob("*/LC_MESSAGES/biglinux-livecd.mo")):
+        language = catalog_path.parent.parent.name
+        if language == "en":
+            continue
+        with catalog_path.open("rb") as catalog_file:
+            translation = gettext.GNUTranslations(catalog_file)
+        missing = [
+            message
+            for message in set(declared)
+            if translation.gettext(message) == message
+        ]
+        assert not missing, f"{language}: {missing}"
 
 
 def test_every_launcher_message_is_extractable() -> None:

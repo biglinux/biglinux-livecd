@@ -793,3 +793,39 @@ msgstr "Инсталацията не бе успешна"
 # Installer launcher, usr/bin/calamares-biglinux
 msgid "The installation failed. The local error log was saved in your home folder."
 msgstr "Инсталацията не бе успешна. Локалният дневник с грешки беше запазен в домашната ви папка."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Outdated Version"
+msgstr "Остаряла версия"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Install the system"
+msgstr "Инсталиране на системата"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Installation log unavailable"
+msgstr "Дневникът на инсталацията не е достъпен"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Could not inspect EFI partitions"
+msgstr "Разделите EFI не можаха да бъдат проверени"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Calamares did not create a valid installation log. Close the installer and try again."
+msgstr "Calamares не създаде валиден дневник на инсталацията. Затворете инсталатора и опитайте отново."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "The installer could not safely inspect the disk layout. Close the installer, reconnect the storage device, and try again."
+msgstr "Инсталаторът не успя безопасно да провери подредбата на диска. Затворете инсталатора, свържете отново устройството за съхранение и опитайте отново."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer."
+msgstr "Искате ли да продължите инсталацията в режим EFI? Текущото стартиране използва режим EFI, но не намерих EFI дял на този компютър."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer."
+msgstr "Искате ли да продължите инсталацията в режим Legacy/BIOS? Намерих EFI дял на този компютър."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version."
+msgstr "Искате ли въпреки това да продължите инсталацията на тази стара версия? BigLinux се обновява седмично, а тази версия е издадена преди повече от месец. Препоръчваме да изтеглите по-нова версия."

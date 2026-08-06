@@ -786,3 +786,39 @@ msgstr "安装失败"
 # Installer launcher, usr/bin/calamares-biglinux
 msgid "The installation failed. The local error log was saved in your home folder."
 msgstr "安装失败。本地错误日志已保存到您的主文件夹中。"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Outdated Version"
+msgstr "版本过旧"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Install the system"
+msgstr "安装系统"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Installation log unavailable"
+msgstr "安装日志不可用"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Could not inspect EFI partitions"
+msgstr "无法检查 EFI 分区"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Calamares did not create a valid installation log. Close the installer and try again."
+msgstr "Calamares 未创建有效的安装日志。请关闭安装程序后重试。"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "The installer could not safely inspect the disk layout. Close the installer, reconnect the storage device, and try again."
+msgstr "安装程序无法安全地检查磁盘布局。请关闭安装程序，重新连接存储设备后重试。"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer."
+msgstr "要以 EFI 模式继续安装吗？当前启动使用 EFI 模式，但我在这台计算机上没有找到 EFI 分区。"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer."
+msgstr "要以 Legacy/BIOS 模式继续安装吗？我在这台计算机上找到了一个 EFI 分区。"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version."
+msgstr "仍要继续安装这个旧版本吗？BigLinux 每周更新，而这个版本发布于一个多月前。建议下载更新的版本。"

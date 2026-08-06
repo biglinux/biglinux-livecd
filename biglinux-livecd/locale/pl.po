@@ -767,3 +767,39 @@ msgstr "Instalacja nie powiodła się"
 # Installer launcher, usr/bin/calamares-biglinux
 msgid "The installation failed. The local error log was saved in your home folder."
 msgstr "Instalacja nie powiodła się. Lokalny dziennik błędów został zapisany w katalogu domowym."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Outdated Version"
+msgstr "Nieaktualna wersja"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Install the system"
+msgstr "Zainstaluj system"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Installation log unavailable"
+msgstr "Dziennik instalacji niedostępny"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Could not inspect EFI partitions"
+msgstr "Nie udało się sprawdzić partycji EFI"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Calamares did not create a valid installation log. Close the installer and try again."
+msgstr "Calamares nie utworzył prawidłowego dziennika instalacji. Zamknij instalator i spróbuj ponownie."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "The installer could not safely inspect the disk layout. Close the installer, reconnect the storage device, and try again."
+msgstr "Instalator nie mógł bezpiecznie sprawdzić układu dysku. Zamknij instalator, podłącz ponownie urządzenie pamięci masowej i spróbuj ponownie."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer."
+msgstr "Czy chcesz kontynuować instalację w trybie EFI? Bieżące uruchomienie używa trybu EFI, ale nie znalazłem partycji EFI na tym komputerze."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer."
+msgstr "Czy chcesz kontynuować instalację w trybie Legacy/BIOS? Znalazłem partycję EFI na tym komputerze."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version."
+msgstr "Czy mimo to chcesz kontynuować instalację tej starej wersji? BigLinux jest aktualizowany co tydzień, a ta wersja została wydana ponad miesiąc temu. Zalecamy pobranie nowszej wersji."

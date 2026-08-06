@@ -769,3 +769,39 @@ msgstr "A telepítés nem sikerült"
 # Installer launcher, usr/bin/calamares-biglinux
 msgid "The installation failed. The local error log was saved in your home folder."
 msgstr "A telepítés nem sikerült. A helyi hibanapló a saját mappájába lett mentve."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Outdated Version"
+msgstr "Elavult verzió"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Install the system"
+msgstr "A rendszer telepítése"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Installation log unavailable"
+msgstr "A telepítési napló nem érhető el"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Could not inspect EFI partitions"
+msgstr "Az EFI partíciók nem vizsgálhatók meg"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Calamares did not create a valid installation log. Close the installer and try again."
+msgstr "A Calamares nem hozott létre érvényes telepítési naplót. Zárja be a telepítőt, és próbálja újra."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "The installer could not safely inspect the disk layout. Close the installer, reconnect the storage device, and try again."
+msgstr "A telepítő nem tudta biztonságosan megvizsgálni a lemez felosztását. Zárja be a telepítőt, csatlakoztassa újra a tárolóeszközt, és próbálja újra."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer."
+msgstr "Folytatja a telepítést EFI módban? A jelenlegi indítás EFI módot használ, de nem találtam EFI partíciót ezen a számítógépen."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer."
+msgstr "Folytatja a telepítést Legacy/BIOS módban? Találtam egy EFI partíciót ezen a számítógépen."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version."
+msgstr "Mindenképp folytatja ennek a régi verziónak a telepítését? A BigLinux hetente frissül, és ez a verzió több mint egy hónapja jelent meg. Javasoljuk egy újabb verzió letöltését."

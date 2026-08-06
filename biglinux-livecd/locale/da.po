@@ -777,3 +777,39 @@ msgstr "Installationen mislykkedes"
 # Installer launcher, usr/bin/calamares-biglinux
 msgid "The installation failed. The local error log was saved in your home folder."
 msgstr "Installationen mislykkedes. Den lokale fejllog blev gemt i din hjemmemappe."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Outdated Version"
+msgstr "Forældet version"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Install the system"
+msgstr "Installer systemet"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Installation log unavailable"
+msgstr "Installationsloggen er ikke tilgængelig"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Could not inspect EFI partitions"
+msgstr "EFI-partitionerne kunne ikke undersøges"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Calamares did not create a valid installation log. Close the installer and try again."
+msgstr "Calamares oprettede ikke en gyldig installationslog. Luk installationsprogrammet, og prøv igen."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "The installer could not safely inspect the disk layout. Close the installer, reconnect the storage device, and try again."
+msgstr "Installationsprogrammet kunne ikke undersøge diskens opdeling sikkert. Luk installationsprogrammet, tilslut lagerenheden igen, og prøv igen."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer."
+msgstr "Vil du fortsætte installationen i EFI-tilstand? Den aktuelle opstart bruger EFI-tilstand, men jeg fandt ingen EFI-partition på denne computer."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer."
+msgstr "Vil du fortsætte installationen i Legacy/BIOS-tilstand? Jeg fandt en EFI-partition på denne computer."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version."
+msgstr "Vil du alligevel fortsætte installationen af denne gamle version? BigLinux opdateres ugentligt, og denne version udkom for mere end en måned siden. Vi anbefaler at hente en nyere version."

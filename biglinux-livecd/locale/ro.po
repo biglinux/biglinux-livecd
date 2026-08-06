@@ -793,3 +793,39 @@ msgstr "Instalarea a eșuat"
 # Installer launcher, usr/bin/calamares-biglinux
 msgid "The installation failed. The local error log was saved in your home folder."
 msgstr "Instalarea a eșuat. Jurnalul local de erori a fost salvat în dosarul dumneavoastră personal."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Outdated Version"
+msgstr "Versiune învechită"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Install the system"
+msgstr "Instalează sistemul"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Installation log unavailable"
+msgstr "Jurnalul de instalare nu este disponibil"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Could not inspect EFI partitions"
+msgstr "Partițiile EFI nu au putut fi inspectate"
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Calamares did not create a valid installation log. Close the installer and try again."
+msgstr "Calamares nu a creat un jurnal de instalare valid. Închideți programul de instalare și încercați din nou."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "The installer could not safely inspect the disk layout. Close the installer, reconnect the storage device, and try again."
+msgstr "Programul de instalare nu a putut inspecta în siguranță structura discului. Închideți programul de instalare, reconectați dispozitivul de stocare și încercați din nou."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer."
+msgstr "Doriți să continuați instalarea în modul EFI? Pornirea curentă folosește modul EFI, dar nu am găsit nicio partiție EFI pe acest computer."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer."
+msgstr "Doriți să continuați instalarea în modul Legacy/BIOS? Am găsit o partiție EFI pe acest computer."
+
+# Installer launcher, usr/bin/calamares-biglinux
+msgid "Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version."
+msgstr "Doriți totuși să continuați instalarea acestei versiuni vechi? BigLinux se actualizează săptămânal, iar această versiune a fost lansată acum mai bine de o lună. Recomandăm descărcarea unei versiuni mai recente."
