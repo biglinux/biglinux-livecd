@@ -19,6 +19,7 @@ strings:
     versionedName: "${PRETTY_NAME}"
     shortVersionedName: "BigCommunity ${BUILD_ID}"
     bootloaderEntryName: BigCommunity
+    # The site, forum and issue tracker are shared with BigLinux on purpose.
     productUrl: https://www.biglinux.com.br
     supportUrl: https://forum.biglinux.com.br
     knownIssuesUrl: https://github.com/biglinux/biglinux-livecd/issues
