@@ -7,8 +7,6 @@ import stat
 from collections.abc import Mapping
 from typing import Protocol
 
-from gnome_layout import LAYOUT_NAMES
-
 logger = logging.getLogger(__name__)
 GNOME_LIGHT_STYLE_UUID = "light-style@gnome-shell-extensions.gcampax.github.com"
 GNOME_USER_THEME_UUID = "user-theme@gnome-shell-extensions.gcampax.github.com"
@@ -16,6 +14,14 @@ GNOME_KIWI_UUID = "kiwi@kemma"
 GNOME_DTP_UUID = "dash-to-panel@jderose9.github.com"
 GNOME_ALWAYS_DARK_LAYOUTS = frozenset({"biggnome", "g-unity", "minimal"})
 GNOME_ORCHIS_LAYOUTS = frozenset({"biggnome", "desk-ux"})
+GNOME_THEME_LAYOUTS = (
+    GNOME_ALWAYS_DARK_LAYOUTS
+    | GNOME_ORCHIS_LAYOUTS
+    | {
+        "classic",
+        "hybrid",
+    }
+)
 MAX_SETTINGS_BYTES = 1024 * 1024
 
 SettingsChanges = Mapping[str, Mapping[str, str]]
@@ -273,7 +279,7 @@ def _selected_gnome_layout(host: ThemeHost) -> str:
         layout = _read_regular_text(state_file).strip()
     except (OSError, UnicodeError):
         return ""
-    return layout if layout in LAYOUT_NAMES else ""
+    return layout if layout in GNOME_THEME_LAYOUTS else ""
 
 
 def _desktop_changes(
@@ -303,7 +309,7 @@ def _desktop_changes(
     elif desktop_environment == "GNOME":
         layout = (
             gnome_layout
-            if gnome_layout in LAYOUT_NAMES
+            if gnome_layout in GNOME_THEME_LAYOUTS
             else _gnome_layout_class(settings_file)
         )
         orchis = layout in GNOME_ORCHIS_LAYOUTS
@@ -320,9 +326,7 @@ def _desktop_changes(
                 settings_file,
                 user_theme=orchis,
                 light_style=(
-                    not dark
-                    and not orchis
-                    and layout not in GNOME_ALWAYS_DARK_LAYOUTS
+                    not dark and not orchis and layout not in GNOME_ALWAYS_DARK_LAYOUTS
                 ),
             )
         )

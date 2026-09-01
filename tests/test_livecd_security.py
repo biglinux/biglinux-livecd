@@ -388,9 +388,9 @@ def test_startbiglive_prepares_plasma_defaults_before_session() -> None:
 
 
 def test_wizard_defers_noninitial_pages_and_accessibility_backends() -> None:
-    app_window = (
-        PACKAGE / "usr/share/biglinux/livecd/ui/app_window.py"
-    ).read_text(encoding="utf-8")
+    app_window = (PACKAGE / "usr/share/biglinux/livecd/ui/app_window.py").read_text(
+        encoding="utf-8"
+    )
     imports = app_window.split("logger = get_logger()", 1)[0]
     assert "from ui.keyboard_view import KeyboardView" not in imports
     assert "from ui.desktop_view import DesktopView" not in imports
@@ -447,6 +447,28 @@ current_gnome_settings_source "$HOMES" "$FALLBACK"
     )
     assert result.returncode == 0, result.stderr
     assert result.stdout.strip() == str(safe_settings.resolve())
+
+
+def test_installer_copies_layout_switcher_state_to_skel(tmp_path: Path) -> None:
+    root = tmp_path / "target"
+    root.mkdir()
+    source = tmp_path / "settings.json"
+    source.write_text('{"active_layout":"G-Unity"}\n', encoding="utf-8")
+    result = run_bash(
+        """
+source "$INSTALL_SETUP"
+root_mount=$TARGET_ROOT
+copy_gnome_app_settings_to_homes "$SOURCE"
+""",
+        environment={
+            "INSTALL_SETUP": str(INSTALL_SETUP),
+            "TARGET_ROOT": str(root),
+            "SOURCE": str(source),
+        },
+    )
+    assert result.returncode == 0, result.stderr
+    installed = root / "etc/skel/.config/big-appearance/settings.json"
+    assert installed.read_text(encoding="utf-8") == source.read_text(encoding="utf-8")
 
 
 def test_live_state_write_is_atomic_and_rejects_unknown_names(tmp_path: Path) -> None:

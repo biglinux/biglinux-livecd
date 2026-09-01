@@ -20,7 +20,6 @@ from desktop_theme import (  # noqa: E402
     apply_simple_theme,
     update_settings_text,
 )
-from gnome_layout import normalize_layout_text  # noqa: E402
 from user_config import update_ini_file, update_ini_text, write_text  # noqa: E402
 
 
@@ -159,22 +158,6 @@ def test_ini_update_handles_missing_file_and_rejects_fifo(
     os.mkfifo(fifo)
     with pytest.raises(OSError, match="regular file"):
         update_ini_file(str(fifo), "Settings", {"theme": "dark"})
-
-
-def test_gnome_layout_normalization_is_monitor_independent() -> None:
-    source = (
-        "preferred-monitor-by-connector='HDMI-1'\n"
-        "primary-monitor='HDMI-1'\n"
-        'panel-sizes=\'{"HDMI-1":48,"DP-1":32}\'\n'
-        "enabled-extensions=['dash-to-dock@micxgx.gmail.com']\n"
-        "unrelated='kept'\n"
-    )
-    normalized = normalize_layout_text(source)
-    assert "preferred-monitor-by-connector='primary'" in normalized
-    assert "primary-monitor=''" in normalized
-    assert "panel-sizes='{\"0\":48}'" in normalized
-    assert normalized.count("layout-switcher-helper@bigcommunity.org") == 1
-    assert "unrelated='kept'" in normalized
 
 
 @pytest.mark.parametrize("dark", [False, True], ids=["light", "dark"])

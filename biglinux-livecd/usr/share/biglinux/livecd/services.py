@@ -1,3 +1,4 @@
+import json
 import os
 import re
 import subprocess
@@ -14,7 +15,6 @@ from desktop_theme import (
 from desktop_theme import (
     apply_simple_theme as apply_simple_desktop_theme,
 )
-from gnome_layout import LAYOUT_DISPLAY_NAMES, LAYOUT_NAMES, normalize_layout_text
 from logging_config import get_logger
 from user_config import update_ini_file
 from user_config import write_text as write_user_config_text
@@ -47,13 +47,14 @@ class SystemService:
         self.assets_path = os.path.abspath(
             os.path.join(os.path.dirname(__file__), "assets")
         )
-        # GNOME layout definitions (.txt) and previews (.svg) come straight from
-        # the layout-switcher package — single source of truth, no longer
-        # duplicated under assets/gnome-layouts/. The GNOME layout chooser only
-        # runs on the GNOME profile, where layout-switcher is installed, so this
-        # is not a hard dependency of biglinux-livecd (KDE/XFCE ISOs don't use it).
-        self.gnome_layouts_path = "/usr/share/layout-switcher/layouts"
+        # Layout metadata, configuration, and preparation are owned by
+        # layout-switcher. This package only consumes its installer manifest.
         self.gnome_layouts_icons_path = "/usr/share/layout-switcher/icons"
+        self.gnome_layout_exporter = "/usr/bin/layout-switcher-export"
+        self.gnome_app_settings_file = os.path.expanduser(
+            "~/.config/big-appearance/settings.json"
+        )
+        self._gnome_catalog_cache: list[dict[str, str]] | None = None
 
         # Boot-scoped live state consumed by startbiglive and install setup.
         self.live_state_dir = "/tmp"
@@ -62,6 +63,7 @@ class SystemService:
         self.desktop_state_file = "/tmp/big_desktop_changed"
         self.gnome_layout_state_file = "/tmp/big_gnome_layout"
         self.gnome_settings_state_file = "/tmp/big_gnome_settings"
+        self.gnome_app_settings_state_file = "/tmp/big_gnome_app_settings"
         self.theme_state_file = "/tmp/big_desktop_theme"
         self.jamesdsp_state_file = "/tmp/big_enable_jamesdsp"
         self.display_profile_state_file = "/tmp/big_improve_display"
@@ -316,13 +318,9 @@ class SystemService:
     def get_available_desktops(self) -> List[str]:
         """Returns a list of available desktop layout names."""
         if self.get_desktop_environment() == "GNOME":
-            layouts = [
-                layout
-                for layout in LAYOUT_NAMES
-                if os.path.exists(self._get_gnome_layout_file_path(layout))
-            ]
+            layouts = [entry["id"] for entry in self._get_gnome_layout_catalog()]
             if not layouts:
-                logger.warning(f"No GNOME layouts found at {self.gnome_layouts_path}")
+                logger.warning("No GNOME layouts reported by layout-switcher")
             return layouts
 
         if not os.path.exists(self.desktop_list_script):
@@ -343,21 +341,43 @@ class SystemService:
 
     def apply_gnome_desktop_layout(self, layout: str):
         """Prepare the selected GNOME layout for startgnome-community."""
-        layout_file = self._get_gnome_layout_file_path(layout)
-        if not layout_file or not os.path.exists(layout_file):
-            logger.error(f"GNOME layout file not found for: {layout}")
+        available = {entry["id"] for entry in self._get_gnome_layout_catalog()}
+        if layout not in available:
+            logger.error(f"GNOME layout not reported by layout-switcher: {layout}")
             return
-
+        success, output = self._run_command(
+            [self.gnome_layout_exporter, layout, "--manifest"],
+            read_only=True,
+        )
+        if not success:
+            logger.error(f"Could not export GNOME layout {layout}: {output}")
+            return
         try:
-            with open(layout_file, "r", encoding="utf-8") as f:
-                layout_text = f.read()
-        except OSError as e:
-            logger.error(f"Failed to read GNOME layout {layout_file}: {e}")
+            manifest = json.loads(output)
+            settings_text = manifest["settings_gnome"]
+            app_settings = manifest["app_settings"]
+            if (
+                manifest.get("layout") != layout
+                or not isinstance(settings_text, str)
+                or not settings_text.strip()
+                or not isinstance(app_settings, dict)
+                or not isinstance(app_settings.get("active_layout"), str)
+            ):
+                raise ValueError("invalid layout manifest")
+        except (json.JSONDecodeError, KeyError, TypeError, ValueError) as error:
+            logger.error(f"Invalid layout-switcher export for {layout}: {error}")
             return
 
-        settings_text = normalize_layout_text(layout_text)
         settings_file = settings_file_path("GNOME")
         if not self._write_user_config_file(settings_file, settings_text):
+            return
+        app_settings_text = (
+            json.dumps(app_settings, ensure_ascii=False, indent=2) + "\n"
+        )
+        if not self._write_user_config_file(
+            self.gnome_app_settings_file,
+            app_settings_text,
+        ):
             return
 
         self._stamp_gnome_input_sources(settings_file)
@@ -428,7 +448,11 @@ class SystemService:
         return self.theme_image_path.format(theme_name)
 
     def get_desktop_display_name(self, layout_name: str) -> str:
-        return LAYOUT_DISPLAY_NAMES.get(layout_name, layout_name)
+        display_names = {
+            entry["id"]: entry["display_name"]
+            for entry in self._get_gnome_layout_catalog()
+        }
+        return display_names.get(layout_name, layout_name)
 
     def apply_jamesdsp_settings(self, enabled: bool):
         """
@@ -586,10 +610,39 @@ class SystemService:
         desktop_env = self.get_desktop_environment()
         return desktop_env == "GNOME" or not self.is_simplified_environment()
 
-    def _get_gnome_layout_file_path(self, layout: str) -> str:
-        if layout not in LAYOUT_NAMES:
-            return ""
-        return os.path.join(self.gnome_layouts_path, f"{layout}.txt")
+    def _get_gnome_layout_catalog(self) -> list[dict[str, str]]:
+        if self._gnome_catalog_cache is not None:
+            return self._gnome_catalog_cache
+        success, output = self._run_command(
+            [self.gnome_layout_exporter, "--catalog"],
+            read_only=True,
+        )
+        if not success:
+            logger.error(f"Could not query layout-switcher catalog: {output}")
+            return []
+        try:
+            payload = json.loads(output)
+            if not isinstance(payload, list):
+                raise ValueError("catalog is not a list")
+            catalog = []
+            for entry in payload:
+                if not isinstance(entry, dict):
+                    raise ValueError("catalog entry is not an object")
+                layout_id = entry.get("id")
+                display_name = entry.get("display_name")
+                if not isinstance(layout_id, str) or not re.fullmatch(
+                    r"[a-z0-9]+(?:-[a-z0-9]+)*",
+                    layout_id,
+                ):
+                    raise ValueError("invalid layout id")
+                if not isinstance(display_name, str) or not display_name:
+                    raise ValueError("invalid display name")
+                catalog.append({"id": layout_id, "display_name": display_name})
+        except (json.JSONDecodeError, TypeError, ValueError) as error:
+            logger.error(f"Invalid layout-switcher catalog: {error}")
+            return []
+        self._gnome_catalog_cache = catalog
+        return catalog
 
     @staticmethod
     def _split_xkb_layout(layout: str) -> tuple[str, str]:
@@ -611,7 +664,11 @@ class SystemService:
         settings_file = settings_file_path("GNOME")
         if os.path.exists(settings_file):
             return
-        default_layout = LAYOUT_NAMES[0]
+        catalog = self._get_gnome_layout_catalog()
+        if not catalog:
+            logger.error("Cannot create GNOME settings without layout-switcher catalog")
+            return
+        default_layout = catalog[0]["id"]
         logger.info(f"Creating GNOME settings from default layout: {default_layout}")
         self.apply_gnome_desktop_layout(default_layout)
 
@@ -624,6 +681,14 @@ class SystemService:
                 self._write_live_state_file(self.gnome_settings_state_file, f.read())
         except OSError as e:
             logger.error(f"Failed to sync GNOME settings temp file: {e}")
+        try:
+            with open(self.gnome_app_settings_file, "r", encoding="utf-8") as f:
+                self._write_live_state_file(
+                    self.gnome_app_settings_state_file,
+                    f.read(),
+                )
+        except OSError as e:
+            logger.error(f"Failed to sync GNOME app settings temp file: {e}")
 
     # XivaStudio detection with caching
     _xivastudio_cache: bool | None = None
