@@ -162,23 +162,20 @@ def test_ini_update_handles_missing_file_and_rejects_fifo(
 
 @pytest.mark.parametrize("dark", [False, True], ids=["light", "dark"])
 @pytest.mark.parametrize(
-    ("layout", "user_theme", "light_style", "light_name", "dark_name"),
+    ("layout", "light_style"),
     [
-        ("biggnome", True, False, "'Big-Blue'", "'Big-Blue'"),
-        ("desk-ux", True, False, "'Big-Blue-Light'", "'Big-Blue'"),
-        ("hybrid", False, True, "''", "''"),
-        ("classic", False, True, "''", "''"),
-        ("g-unity", False, False, "''", "''"),
-        ("minimal", False, False, "''", "''"),
+        ("biggnome", False),
+        ("desk-ux", False),
+        ("hybrid", True),
+        ("classic", True),
+        ("g-unity", False),
+        ("minimal", False),
     ],
 )
 def test_gnome_theme_matrix_respects_each_layout_shell_contract(
     tmp_path: Path,
     layout: str,
-    user_theme: bool,
     light_style: bool,
-    light_name: str,
-    dark_name: str,
     dark: bool,
 ) -> None:
     settings = tmp_path / "settings.gnome"
@@ -199,12 +196,12 @@ def test_gnome_theme_matrix_respects_each_layout_shell_contract(
     disabled = ast.literal_eval(shell_changes["disabled-extensions"])
     expected_light_style = light_style and not dark
 
-    assert (GNOME_USER_THEME_UUID in enabled) is user_theme
-    assert (GNOME_USER_THEME_UUID in disabled) is not user_theme
+    assert GNOME_USER_THEME_UUID not in enabled
+    assert GNOME_USER_THEME_UUID in disabled
     assert (GNOME_LIGHT_STYLE_UUID in enabled) is expected_light_style
     assert (GNOME_LIGHT_STYLE_UUID in disabled) is not expected_light_style
     assert changes["org/gnome/shell/extensions/user-theme"] == {
-        "name": dark_name if dark else light_name
+        "name": "''"
     }
     assert changes["org/gnome/desktop/interface"]["color-scheme"] == (
         "'prefer-dark'" if dark else "'default'"
