@@ -403,8 +403,24 @@ class SystemService:
         """
         Performs final setup steps, including creating flag files.
 
-        All config files are saved under /run/biglinux-live during the live session.
-        Calamares will copy them to /etc/big-default-config/ on the installed system.
+        State files are written to /tmp during the live session (see
+        ``live_state_dir``). On install, biglinux-install-setup.sh copies them into
+        /etc/big-default-config/ on the target system, renaming as it goes:
+
+            /tmp/big_desktop_theme    -> /etc/big-default-config/theme
+            /tmp/big_desktop_changed  -> /etc/big-default-config/desktop
+            /tmp/big_gnome_layout     -> /etc/big-default-config/gnome-layout
+            /tmp/big_enable_jamesdsp  -> /etc/big-default-config/jamesdsp
+            /tmp/big_improve_display  -> /etc/big-default-config/display-profile
+            /tmp/big_gnome_settings   -> /etc/big-default-config/gnome-settings
+                                         (also /etc/skel/.config/dconf/settings.gnome)
+
+        A missing state file means "not selected": copy_live_config skips it and the
+        installed system simply never sees the flag. The start<DE>-community scripts
+        read /etc/big-default-config/ on first boot to apply these choices.
+
+        Note that /run/biglinux-live/ is a different directory, used only by the
+        Calamares and integrity helpers.
         """
         logger.info("Finalizing setup...")
 

@@ -51,7 +51,7 @@ The configuration flow ensures a smooth transition from live media to permanent 
 graph TD
     A[Live Boot] --> B[biglinux-livecd wizard]
     B --> C{User Config}
-    C -->|Atomic writes| D["/run/biglinux-live state"]
+    C -->|Atomic writes| D["/tmp/big_* state"]
     D --> E[Calamares Installer]
     E -->|Copies| F["/etc/big-default-config/"]
     F --> G[First System Boot]
@@ -60,12 +60,23 @@ graph TD
 
 ### Configuration Storage
 
-| File | Description |
-|------|-------------|
-| `/run/biglinux-live/language` | System locale (for example, `pt_BR`) |
-| `/run/biglinux-live/keyboard` | X11 keyboard model and layout |
-| `/run/biglinux-live/desktop-theme` | Selected visual theme |
-| `/run/biglinux-live/enable-jamesdsp` | Audio enhancement state |
+The wizard writes state files to `/tmp` during the live session. On install,
+`biglinux-install-setup.sh` copies them into `/etc/big-default-config/`, renaming
+each one. A missing file means "not selected": `copy_live_config` skips it.
+
+| Live session | Installed system | Description |
+|---|---|---|
+| `/tmp/big_language` | applied directly | System locale (for example, `pt_BR`) |
+| `/tmp/big_keyboard` | `kxkbrc`, `fcitx5/` | Keyboard model and layout |
+| `/tmp/big_desktop_theme` | `theme` | Selected visual theme |
+| `/tmp/big_desktop_changed` | `desktop` | Desktop layout preset |
+| `/tmp/big_gnome_layout` | `gnome-layout` | GNOME layout preset |
+| `/tmp/big_gnome_settings` | `gnome-settings` | GNOME dconf settings |
+| `/tmp/big_enable_jamesdsp` | `jamesdsp` | Audio enhancement state |
+| `/tmp/big_improve_display` | `display-profile` | ICC colour profile state |
+
+`/run/biglinux-live/` is a different directory, used only by the Calamares and
+integrity helpers — not for the wizard's choices.
 
 See [LIVE-STATE.md](LIVE-STATE.md) for the complete producer, consumer, safety,
 and lifecycle contract.
