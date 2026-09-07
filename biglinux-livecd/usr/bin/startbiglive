@@ -241,6 +241,51 @@ _detect_multi_gpu() {
 }
 
 #-------------------------------------------------------------------------------
+# Accessibility for the setup wizard
+#
+# The wizard labels its controls for screen readers, but on this session none
+# of that reached the accessibility bus, so Orca had nothing to read and the
+# wizard was effectively unusable without sight. Two separate reasons:
+#
+#   * The GNOME autostart files that would enable it,
+#     /etc/xdg/autostart/at-spi-dbus-bus.desktop and orca-autostart.desktop,
+#     are OnlyShowIn=GNOME;Unity;. The live session exports
+#     XDG_CURRENT_DESKTOP=KDE, so neither ever runs and
+#     org.gnome.desktop.interface toolkit-accessibility stays false.
+#
+#   * The Wayland wizard runs on a private session bus (dbus-run-session, so
+#     its kwin cannot fight the Plasma session that follows over org.kde.KWin).
+#     /usr/share/dbus-1/services/org.a11y.Bus.service delegates activation to
+#     the user's systemd manager, which is attached to the *real* bus, so
+#     nothing ever serves org.a11y.Bus on the private one. GTK asks once while
+#     starting up and then disables the bridge for the life of the process.
+#-------------------------------------------------------------------------------
+_enable_accessibility() {
+	# GTK4 reads this at startup and never reconsiders; Qt needs telling
+	# separately because this is a KDE session with no accessibility settings
+	# of its own yet.
+	export GTK_A11Y=atspi
+	export QT_ACCESSIBILITY=1
+	export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1
+	gsettings set org.gnome.desktop.interface toolkit-accessibility true 2>/dev/null ||
+		_log "WARNING - Could not enable toolkit-accessibility"
+}
+
+# Runs a command on a private session bus that also serves org.a11y.Bus.
+# The launcher is started by path rather than through D-Bus activation: the
+# service file hands activation to systemd, which would start it against the
+# real bus and leave this one without a provider.
+#
+# Leading VAR=value arguments are applied to the command, which is why this
+# cannot be called through a plain `env` prefix: `env` execs a binary and this
+# is a shell function.
+_run_on_wizard_bus() {
+	dbus-run-session -- bash -c '
+		/usr/lib/at-spi-bus-launcher --launch-immediately &
+		exec env "$@"' _ "$@"
+}
+
+#-------------------------------------------------------------------------------
 # Start kwin_wayland compositor with health check and multi-stage fallback
 # Fallback chain:
 #   1. Default hardware rendering
@@ -253,11 +298,12 @@ _start_kwin_wizard() {
 	local -a kwin_args=(--drm --no-lockscreen --xwayland)
 	local kwin_pid
 
+	_enable_accessibility
 	_detect_multi_gpu
 
 	# Attempt 1: hardware-accelerated rendering (default GPU selection)
 	_log "Starting kwin_wayland (hardware rendering)..."
-	dbus-run-session kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
+	_run_on_wizard_bus kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
 	kwin_pid=$!
 
 	# Give kwin a few seconds to initialize; check it didn't crash immediately
@@ -281,8 +327,8 @@ _start_kwin_wizard() {
 			env_vars+=("__EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json")
 		fi
 
-		env "${env_vars[@]}" \
-			dbus-run-session kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
+		_run_on_wizard_bus "${env_vars[@]}" \
+			kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
 		kwin_pid=$!
 
 		sleep 3
@@ -300,9 +346,8 @@ _start_kwin_wizard() {
 	# Attempt 3: software rendering via llvmpipe
 	_log "Retrying with software rendering..."
 
-	LIBGL_ALWAYS_SOFTWARE=1 \
-		GALLIUM_DRIVER=llvmpipe \
-		dbus-run-session kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
+	_run_on_wizard_bus LIBGL_ALWAYS_SOFTWARE=1 GALLIUM_DRIVER=llvmpipe \
+		kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
 	kwin_pid=$!
 
 	sleep 3
@@ -328,6 +373,10 @@ _start_mutter_wizard() {
 	local wizard_cmd="/usr/bin/gnome-bbv-live-session"
 	local mutter_pid
 
+	# GNOME's own autostart files do apply in this session, but the wizard can
+	# start before they have, and mutter is launched without a private bus, so
+	# telling the toolkits directly is both harmless and sufficient.
+	_enable_accessibility
 	_detect_multi_gpu
 
 	# Attempt 1: hardware-accelerated rendering (default)
@@ -497,6 +546,9 @@ if [[ "$session_type" == "x11" ]]; then
 		systemctl --user start plasma-kglobalaccel.service 2>/dev/null
 	fi
 	_log "Starting setup wizard on X11"
+	# No private bus here, so D-Bus activation reaches the user's own
+	# at-spi-dbus-bus.service; only the toolkits still have to be told.
+	_enable_accessibility
 	python /usr/share/biglinux/livecd/main.py
 else
 	# Wayland session: launch appropriate compositor with setup wizard

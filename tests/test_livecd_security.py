@@ -279,13 +279,14 @@ printf '%s\\n' "$attempt_file"
 
 def test_startbiglive_passes_wizard_as_single_kwin_session(tmp_path: Path) -> None:
     source = STARTBIGLIVE.read_text(encoding="utf-8")
-    start = source.index("_start_kwin_wizard() {")
+    start = source.index("_enable_accessibility() {")
     end = source.index("\n# Start mutter compositor", start)
     function = source[start:end]
     capture = tmp_path / "kwin-arguments"
     result = run_bash(
         f"""
 _log() {{ :; }}
+gsettings() {{ :; }}
 _detect_multi_gpu() {{
     is_multi_gpu=0
     primary_card=
@@ -302,14 +303,23 @@ _start_kwin_wizard
         environment={"CAPTURE": str(capture)},
     )
     assert result.returncode == 0, result.stderr
-    assert capture.read_bytes().split(b"\0")[:-1] == [
+    arguments = capture.read_bytes().split(b"\0")[:-1]
+    # The wizard reaches kwin through the private accessibility bus, so the
+    # captured arguments start with dbus-run-session's own: "--", the shell
+    # that starts the AT-SPI launcher, and the "_" that separates $0 from the
+    # command. What matters here is what comes after it - the wizard command
+    # has to stay a single argument, or kwin takes "main.py" for one of its
+    # own options.
+    separator = arguments.index(b"_")
+    assert arguments[separator + 1 :] == [
         b"kwin_wayland",
         b"--drm",
         b"--no-lockscreen",
         b"--xwayland",
         b"--exit-with-session",
         b"/usr/bin/python /usr/share/biglinux/livecd/main.py",
-    ]
+    ], arguments
+    assert b"at-spi-bus-launcher" in arguments[separator - 1], arguments
 
 
 def test_startbiglive_defers_noncritical_work_until_after_wizard() -> None:
