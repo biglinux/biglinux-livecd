@@ -152,8 +152,6 @@ class SystemService:
             ) as temporary_file:
                 temporary_path = temporary_file.name
                 temporary_file.write(content)
-                temporary_file.flush()
-                os.fsync(temporary_file.fileno())
             os.chmod(temporary_path, 0o600)
             os.replace(temporary_path, filepath)
             temporary_path = ""
@@ -167,7 +165,6 @@ class SystemService:
                     directory_stat.st_ino,
                 ):
                     raise OSError("live state directory changed while writing")
-                os.fsync(directory_fd)
             finally:
                 os.close(directory_fd)
             return True
@@ -195,13 +192,6 @@ class SystemService:
         except OSError as error:
             logger.error(f"Error removing {filepath}: {error}")
             return False
-        directory_fd = os.open(
-            self.live_state_dir, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
-        )
-        try:
-            os.fsync(directory_fd)
-        finally:
-            os.close(directory_fd)
         return True
 
     def _write_user_config_file(self, filepath: str, content: str) -> bool:
@@ -706,31 +696,60 @@ class SystemService:
         except OSError as e:
             logger.error(f"Failed to sync GNOME app settings temp file: {e}")
 
-    # XivaStudio detection with caching
-    _xivastudio_cache: bool | None = None
+    _profile_cache: dict[str, object] | None = None
 
-    # XivaStudio custom logo paths
-    XIVASTUDIO_LOGO_PNG = "/usr/share/pixmaps/icon-logo-xivastudio.png"
-    XIVASTUDIO_LOGO_GIF = "/usr/share/pixmaps/icon-logo-xivastudio.gif"
+    def get_live_profile_data(self) -> dict[str, object]:
+        """Read the profile metadata used by the live wizard and installer."""
+        if SystemService._profile_cache is not None:
+            return SystemService._profile_cache
+        try:
+            result = subprocess.run(
+                ["/usr/lib/biglinux-livecd/resolve-profile", "--path"],
+                capture_output=True,
+                text=True,
+                check=True,
+                timeout=10,
+            )
+            profile_directory = result.stdout.strip()
+            profile_path = os.path.join(profile_directory, "profile.json")
+            with open(profile_path, encoding="utf-8") as profile_file:
+                profile = json.load(profile_file)
+            if not isinstance(profile, dict):
+                raise ValueError("profile metadata is not an object")
+            profile["directory"] = profile_directory
+        # A hand-edited or truncated profile.json raises JSONDecodeError, and a
+        # profile that is not an object raises ValueError below: neither was
+        # caught, so either one aborted the wizard on startup instead of
+        # falling back to the defaults this except clause exists to provide.
+        except (
+            OSError,
+            ValueError,
+            subprocess.CalledProcessError,
+            subprocess.TimeoutExpired,
+        ):
+            profile = {
+                "id": "biglinux",
+                "display_name": "BigLinux",
+                "directory": "/usr/share/biglinux/calamares-profiles/biglinux",
+            }
+        SystemService._profile_cache = profile
+        return profile
 
-    def is_xivastudio(self) -> bool:
-        """
-        Checks if running on XivaStudio variant.
-        Result is cached after first check.
-        """
-        if SystemService._xivastudio_cache is None:
-            SystemService._xivastudio_cache = os.path.exists(
-                self.XIVASTUDIO_LOGO_PNG
-            ) or os.path.exists(self.XIVASTUDIO_LOGO_GIF)
-        return SystemService._xivastudio_cache
+    def get_live_profile(self) -> str:
+        """Return the selected profile ID."""
+        profile_id = self.get_live_profile_data().get("id", "biglinux")
+        return profile_id if isinstance(profile_id, str) else "biglinux"
 
-    def get_xivastudio_logo_path(self) -> str | None:
-        """
-        Returns XivaStudio logo path if available.
-        PNG is preferred over GIF.
-        """
-        if os.path.exists(self.XIVASTUDIO_LOGO_PNG):
-            return self.XIVASTUDIO_LOGO_PNG
-        if os.path.exists(self.XIVASTUDIO_LOGO_GIF):
-            return self.XIVASTUDIO_LOGO_GIF
-        return None
+    def get_profile_logo_path(self) -> str | None:
+        """Return the logo declared by the selected profile."""
+        profile = self.get_live_profile_data()
+        directory = profile.get("directory")
+        if not isinstance(directory, str):
+            return None
+        logo = profile.get("wizard_logo")
+        if isinstance(logo, str):
+            logo_path = logo if os.path.isabs(logo) else os.path.join(directory, logo)
+        else:
+            profile_id = profile.get("id", "biglinux")
+            logo_path = os.path.join(directory, "branding", str(profile_id), "logo.svg")
+        return logo_path if os.path.isfile(logo_path) else None

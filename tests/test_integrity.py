@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import errno
 import hashlib
 import os
 import stat
@@ -80,7 +81,8 @@ def test_verify_iso_rejects_manifest_path_or_symlink(tmp_path: Path) -> None:
     manifest.symlink_to(real_manifest)
     symlink = verify_iso(tmp_path)
     assert symlink.status is VerificationStatus.FAILED
-    assert "Too many levels of symbolic links" in symlink.reason
+    # The reason carries the OS message, which is localized in the session locale.
+    assert os.strerror(errno.ELOOP) in symlink.reason
 
 
 def test_verify_iso_honors_cancellation_between_chunks(tmp_path: Path) -> None:

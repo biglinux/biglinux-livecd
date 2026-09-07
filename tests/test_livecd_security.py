@@ -83,6 +83,44 @@ printf '%s\n' "$?"
     assert result.stdout.strip() == "2"
 
 
+def test_driver_selection_has_one_unambiguous_value(tmp_path: Path) -> None:
+    cmdline = tmp_path / "cmdline"
+    result = run_bash(
+        """
+source "$KERNEL_OPTIONS"
+kernel_cmdline_path=$CMDLINE
+printf 'missing=%s\\n' "$(kernel_driver)"
+""",
+        environment={"KERNEL_OPTIONS": str(KERNEL_OPTIONS), "CMDLINE": str(cmdline)},
+    )
+    assert result.returncode == 0
+    assert result.stdout.strip() == "missing=free"
+
+    cmdline.write_text("driver=nonfree\n", encoding="utf-8")
+    result = run_bash(
+        'source "$KERNEL_OPTIONS"; kernel_cmdline_path=$CMDLINE; kernel_driver',
+        environment={"KERNEL_OPTIONS": str(KERNEL_OPTIONS), "CMDLINE": str(cmdline)},
+    )
+    assert result.returncode == 0
+    assert result.stdout.strip() == "nonfree"
+
+    # An unusable argument falls back to the default and says so, rather than
+    # failing: livecd-tweaks used to mark its whole unit failed over this, and
+    # calamares-biglinux used to refuse to prepare the installer profile.
+    for unusable in ("driver=free driver=nonfree\n", "driver=nvidia\n"):
+        cmdline.write_text(unusable, encoding="utf-8")
+        result = run_bash(
+            'source "$KERNEL_OPTIONS"; kernel_cmdline_path=$CMDLINE; kernel_driver',
+            environment={
+                "KERNEL_OPTIONS": str(KERNEL_OPTIONS),
+                "CMDLINE": str(cmdline),
+            },
+        )
+        assert result.returncode == 0, result.stderr
+        assert result.stdout.strip() == "free"
+        assert "unusable driver=" in result.stderr
+
+
 def test_grub_update_is_atomic_filtered_and_shell_safe(tmp_path: Path) -> None:
     root = tmp_path / "target"
     grub = root / "etc/default/grub"
@@ -396,6 +434,9 @@ def test_wizard_defers_noninitial_pages_and_accessibility_backends() -> None:
     assert "from ui.desktop_view import DesktopView" not in imports
     assert "from ui.theme_view import ThemeView" not in imports
     assert "GLib.timeout_add(500, ensure_orca_disabled)" in app_window
+    assert '"ui.keyboard_view"' in app_window
+    assert "GLib.idle_add(self._preload_next_module)" in app_window
+    assert "if not lang_code or not is_accessibility_enabled():" in app_window
 
     language_view = (
         PACKAGE / "usr/share/biglinux/livecd/ui/language_view.py"
@@ -555,6 +596,10 @@ def test_livecd_tweaks_requires_marker_and_exact_flags(tmp_path: Path) -> None:
     console = tmp_path / "console"
     wallpaper_config = tmp_path / "lightdm-wallpaper.conf"
     pam_config = tmp_path / "lightdm-autologin"
+    ssh_config = tmp_path / "sshd_config"
+    ssh_config_directory = tmp_path / "sshd_config.d"
+    ssh_config_directory.mkdir()
+    ssh_config.write_text("Include /etc/ssh/sshd_config.d/*.conf\n", encoding="utf-8")
     environment = {
         "KERNEL_OPTIONS": str(KERNEL_OPTIONS),
         "TEST_SCRIPT": str(test_script),
@@ -565,24 +610,41 @@ def test_livecd_tweaks_requires_marker_and_exact_flags(tmp_path: Path) -> None:
         "EXECUTABLE": str(executable),
         "WALLPAPER_CONFIG": str(wallpaper_config),
         "PAM_CONFIG": str(pam_config),
+        "SSH_CONFIG": str(ssh_config),
+        "SSH_CONFIG_DIRECTORY": str(ssh_config_directory),
     }
     command = """
 source "$TEST_SCRIPT"
 test_systemctl() { printf 'systemctl:%s\n' "$*" >>"$TEST_LOG"; }
 test_mount() { printf 'mount:%s\n' "$*" >>"$TEST_LOG"; }
 test_mountpoint() { return 1; }
-test_chpasswd() {
+    test_chpasswd() {
     local password
     IFS= read -r password
     printf 'chpasswd:%s\n' "$password" >>"$TEST_LOG"
-}
+    }
+    test_sshd() {
+        if [[ ${1:-} == -t ]]; then
+            return 0
+        fi
+        if [[ ${1:-} == -T && ${3:-} == user=root,* ]]; then
+            printf 'permitrootlogin no\\n'
+        else
+            printf 'passwordauthentication yes\\nkbdinteractiveauthentication no\\n'
+        fi
+    }
 kernel_cmdline_path=$CMDLINE
 live_marker=$MARKER
 console_path=$CONSOLE
 systemctl_bin=test_systemctl
 mount_bin=test_mount
 mountpoint_bin=test_mountpoint
-chpasswd_bin=test_chpasswd
+    chpasswd_bin=test_chpasswd
+        sshd_bin=test_sshd
+    sshd_config=$SSH_CONFIG
+    sshd_config_directory=$SSH_CONFIG_DIRECTORY
+    sshd_dropin=$SSH_CONFIG_DIRECTORY/90-biglinux-live.conf
+    sshd_include_pattern='^Include '
 lightdm_wallpaper_config=$WALLPAPER_CONFIG
 lightdm_autologin_pam=$PAM_CONFIG
 mkinitcpio_path=$EXECUTABLE
@@ -604,14 +666,14 @@ main
         "-session optional pam_kwallet5.so auto_start\n",
         encoding="utf-8",
     )
-    cmdline.write_text("driver=free driver=nonfree sshenable\n", encoding="utf-8")
+    cmdline.write_text("driver=free sshenable\n", encoding="utf-8")
     enabled = run_bash(command, environment=environment)
     assert enabled.returncode == 0, enabled.stderr
     calls = log.read_text(encoding="utf-8")
     assert "systemctl:mask --runtime --now mhwd-live.service" in calls
-    assert f"mount:--bind {executable} {executable}" in calls
-    assert "chpasswd:biglinux:biglinux" in calls
-    assert "systemctl:start sshd.service" in calls
+    assert f"mount:--bind {executable} {executable}" not in calls
+    assert "chpasswd:" in calls and ":big\n" in calls
+    assert "systemctl:restart sshd.service" in calls
     assert "WARNING: Live SSH enabled" in console.read_text(encoding="utf-8")
     assert "display-setup-script" not in wallpaper_config.read_text(encoding="utf-8")
     assert "pam_gnome_keyring" not in pam_config.read_text(encoding="utf-8")
@@ -703,5 +765,6 @@ def test_packaging_no_longer_replaces_distribution_binaries() -> None:
     ).read_text(encoding="utf-8")
     pkgbuild = (REPOSITORY / "pkgbuild/PKGBUILD").read_text(encoding="utf-8")
     assert "for catalog in biglinux-livecd/locale/*.po" in pkgbuild
-    assert "msgfmt --check-format" in pkgbuild
+    # -c is --check-format plus the header and domain checks.
+    assert "msgfmt -c" in pkgbuild
     assert "python -m compileall" in pkgbuild

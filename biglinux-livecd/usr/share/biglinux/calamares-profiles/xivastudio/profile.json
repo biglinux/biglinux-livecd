@@ -1,0 +1,7 @@
+{
+  "id": "xivastudio",
+  "display_name": "XivaStudio",
+  "branding": "xivastudio",
+  "netinstall": true,
+  "warn_old_release": true
+}

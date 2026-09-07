@@ -1,0 +1,7 @@
+{
+  "id": "biglinux",
+  "display_name": "BigLinux",
+  "branding": "biglinux",
+  "netinstall": false,
+  "warn_old_release": true
+}

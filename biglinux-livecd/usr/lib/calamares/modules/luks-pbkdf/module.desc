@@ -1,0 +1,5 @@
+---
+type:       "job"
+name:       "luks-pbkdf"
+interface:  "python"
+script:     "main.py"

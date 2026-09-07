@@ -56,15 +56,6 @@ def set_description(widget: Gtk.Accessible, description: str) -> None:
             logger.debug(f"set_description() failed: {e}")
 
 
-def set_labelled_by(widget: Gtk.Accessible, label_widget: Gtk.Accessible) -> None:
-    """Set LABELLED_BY relation so screen readers associate a widget with its label."""
-    if widget and label_widget:
-        try:
-            widget.update_relation([Gtk.AccessibleRelation.LABELLED_BY], [label_widget])
-        except Exception as e:
-            logger.debug(f"set_labelled_by() failed: {e}")
-
-
 def start_orca() -> bool:
     """Start ORCA screen reader if not already running."""
     try:

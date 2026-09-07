@@ -34,18 +34,9 @@ def write_text(filepath: str, content: str) -> None:
         ) as temporary_file:
             temporary_path = temporary_file.name
             temporary_file.write(content)
-            temporary_file.flush()
-            os.fsync(temporary_file.fileno())
         os.chmod(temporary_path, 0o600)
         os.replace(temporary_path, target)
         temporary_path = ""
-        directory_descriptor = os.open(
-            parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
-        )
-        try:
-            os.fsync(directory_descriptor)
-        finally:
-            os.close(directory_descriptor)
     finally:
         if temporary_path:
             try:

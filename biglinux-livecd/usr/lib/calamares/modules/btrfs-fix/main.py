@@ -1,40 +1,83 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-#
-# === This file is part of Calamares - <https://github.com/calamares> ===
-#
-#   Copyright 2014, Kevin Kofler <kevin.kofler@chello.at>
-#   Copyright 2016, Philip Müller <philm@manjaro.org>
-#   Copyright 2017, Alf Gaida <agaida@siduction.org>
-#
-#   Calamares is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation, either version 3 of the License, or
-#   (at your option) any later version.
-#
-#   Calamares is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#   GNU General Public License for more details.
-#
-#   You should have received a copy of the GNU General Public License
-#   along with Calamares. If not, see <http://www.gnu.org/licenses/>.
-#
-# Modified by Bruno Goncalves ( www.biglinux.com.br )
-#
 
+from __future__ import annotations
+
+import os
 import subprocess
+from pathlib import Path
 
 import libcalamares
 
 
-def run():
-    """
-    Generate machine-id using dbus and systemd.
+def run() -> tuple[str, str] | None:
+    requested_root = libcalamares.globalstorage.value("rootMountPoint")
+    if not isinstance(requested_root, str) or not requested_root:
+        return (
+            "Btrfs target missing",
+            "The installation target could not be determined.",
+        )
 
-    :return:
-    """
-    root_mount_point = libcalamares.globalstorage.value("rootMountPoint")
-    subprocess.call(["/usr/lib/calamares/modules/btrfs-fix/compress", root_mount_point])
+    root = Path(os.path.realpath(requested_root))
+    if root == Path("/") or not root.is_dir():
+        return (
+            "Unsafe installation target",
+            "The installation target is missing or resolves to the running system.",
+        )
 
+    filesystem = subprocess.run(
+        [
+            "/usr/bin/findmnt",
+            "--noheadings",
+            "--output",
+            "FSTYPE",
+            "--target",
+            str(root),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if filesystem.returncode != 0:
+        return (
+            "Could not identify the installation filesystem",
+            "findmnt could not determine whether the target uses Btrfs.",
+        )
+    if filesystem.stdout.strip() != "btrfs":
+        return None
+
+    for relative_path in ("usr/share/grub", "boot"):
+        target = root / relative_path
+        if not target.exists():
+            continue
+        if target.is_symlink():
+            return (
+                "Unsafe Btrfs target",
+                f"The installation path contains a symbolic link: {target}",
+            )
+        try:
+            resolved = target.resolve(strict=True)
+        except OSError as error:
+            return ("Could not resolve Btrfs target", str(error))
+        if root not in resolved.parents:
+            return (
+                "Unsafe Btrfs target",
+                f"The path escapes the installation root: {target}",
+            )
+        try:
+            subprocess.run(
+                [
+                    "/usr/bin/btrfs",
+                    "filesystem",
+                    "defragment",
+                    "--nocomp",
+                    "-r",
+                    str(resolved),
+                ],
+                check=True,
+            )
+        except (OSError, subprocess.CalledProcessError) as error:
+            return (
+                "Btrfs post-installation correction failed",
+                f"Could not defragment {resolved}: {error}",
+            )
     return None

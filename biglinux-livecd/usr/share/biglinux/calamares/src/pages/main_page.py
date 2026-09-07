@@ -19,21 +19,7 @@ from gi.repository import Adw, GLib, GObject, Gtk
 from ..infrastructure.accessibility import announce, set_label
 from ..infrastructure.i18n import _
 from ..infrastructure.widgets import create_option_card
-from ..services import get_install_service, get_system_service
-
-# XivaStudio detection paths
-XIVASTUDIO_LOGO_PNG = "/usr/share/pixmaps/icon-logo-xivastudio.png"
-XIVASTUDIO_LOGO_GIF = "/usr/share/pixmaps/icon-logo-xivastudio.gif"
-
-
-def is_xivastudio_system() -> bool:
-    """
-    Check if the system is XivaStudio by looking for logo files.
-
-    Returns:
-        True if XivaStudio is detected, False otherwise.
-    """
-    return os.path.exists(XIVASTUDIO_LOGO_PNG) or os.path.exists(XIVASTUDIO_LOGO_GIF)
+from ..services import InstallService, SystemService
 
 
 class MainPage(Gtk.Box):
@@ -41,7 +27,7 @@ class MainPage(Gtk.Box):
 
     __gsignals__ = {"navigate": (GObject.SignalFlags.RUN_FIRST, None, (str, object))}
 
-    def __init__(self):
+    def __init__(self, system_service: SystemService, install_service: InstallService):
         super().__init__(
             orientation=Gtk.Orientation.VERTICAL,
             spacing=24,
@@ -52,12 +38,8 @@ class MainPage(Gtk.Box):
         )
 
         self.logger = logging.getLogger(__name__)
-        self.system_service = get_system_service()
-        self.install_service = get_install_service()
-
-        # Detect XivaStudio for branding
-        self.is_xivastudio = is_xivastudio_system()
-        self.distro_name = "XivaStudio" if self.is_xivastudio else "BigLinux"
+        self.system_service = system_service
+        self.install_service = install_service
 
         self.add_css_class("main-page")
 
@@ -107,12 +89,27 @@ class MainPage(Gtk.Box):
     def _on_forum_link_activated(self, label, uri):
         """Handle forum link click - open with normal user, not root."""
         user = self._get_normal_user()
+        if uri != "https://forum.biglinux.com.br" and not uri.startswith(
+            "https://forum.biglinux.com.br/"
+        ):
+            self.logger.warning("Refusing an untrusted external link: %s", uri)
+            return True
 
         try:
             if user:
-                # Open browser as normal user using su
+                if not user.replace("_", "").replace("-", "").isalnum():
+                    self.logger.warning("Refusing an invalid desktop user: %s", user)
+                    return True
                 subprocess.Popen(
-                    ["su", user, "-c", f"xdg-open {uri}"],
+                    [
+                        "/usr/bin/runuser",
+                        "-u",
+                        user,
+                        "--",
+                        "/usr/bin/xdg-open",
+                        "--",
+                        uri,
+                    ],
                     start_new_session=True,
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
@@ -139,14 +136,19 @@ class MainPage(Gtk.Box):
         system_info_box.set_margin_start(12)
         system_info_box.set_margin_end(12)
 
-        boot_mode = self.system_service.get_boot_mode()
-        kernel_version = self.system_service.get_kernel_version()
-        session_type = self.system_service.get_session_type()
-
-        markup = (
-            f"{_('The system is in')} <b>{boot_mode}</b>, "
-            f"Linux <b>{kernel_version}</b> {_('and graphical mode')} <b>{session_type}</b>."
-        )
+        plain_info = self.system_service.get_system_summary()
+        # Emphasize the detected values inside the already translated sentence.
+        markup = GLib.markup_escape_text(plain_info)
+        for value in (
+            self.system_service.get_boot_mode(),
+            self.system_service.get_kernel_version(),
+            self.system_service.get_session_type(),
+        ):
+            if value:
+                markup = markup.replace(
+                    GLib.markup_escape_text(value),
+                    f"<b>{GLib.markup_escape_text(value)}</b>",
+                )
 
         info_label = Gtk.Label(
             use_markup=True,
@@ -154,11 +156,6 @@ class MainPage(Gtk.Box):
             wrap=True,
             justify=Gtk.Justification.CENTER,
             halign=Gtk.Align.CENTER,
-        )
-        # Accessible label (plain text, no markup)
-        plain_info = (
-            f"{_('The system is in')} {boot_mode}, "
-            f"Linux {kernel_version} {_('and graphical mode')} {session_type}."
         )
         set_label(info_label, plain_info)
         system_info_box.append(info_label)
@@ -248,14 +245,7 @@ class MainPage(Gtk.Box):
         self.emit("navigate", "maintenance", None)
 
     def on_installation_clicked(self, button):
-        """Handle installation button click.
-
-        For XivaStudio systems with internet:
-        - Configures Calamares to show netinstall page for multimedia packages
-
-        For all systems:
-        - Configures standard installation and proceeds to tips page
-        """
+        """Configure the standard installation and continue to the tips page."""
         self.logger.info("Installation option selected")
         try:
             button.set_sensitive(False)
@@ -268,23 +258,6 @@ class MainPage(Gtk.Box):
                 self.logger.warning(f"Installation requirements not met: {missing}")
                 self.reset_button_state(button, _("Install"))
                 return
-
-            # Configure XivaStudio netinstall if applicable
-            # This modifies Calamares settings to show multimedia package selection
-            if self.is_xivastudio:
-                self.logger.info(
-                    "XivaStudio detected, checking internet for netinstall..."
-                )
-                button.set_label(_("Checking connection..."))
-
-                if self.install_service.check_internet_connection():
-                    self.logger.info(
-                        "Internet available, configuring XivaStudio netinstall"
-                    )
-                    if not self.install_service.configure_xivastudio_netinstall():
-                        self.logger.warning("Failed to configure XivaStudio netinstall")
-                else:
-                    self.logger.info("No internet - XivaStudio netinstall disabled")
 
             button.set_label(_("Configuring..."))
 

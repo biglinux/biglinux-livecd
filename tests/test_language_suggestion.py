@@ -243,6 +243,11 @@ def test_published_result_is_atomic_and_read_only(
 ) -> None:
     monkeypatch.setattr(probe, "WORK_DIRECTORY", tmp_path)
     monkeypatch.setattr(probe, "RESULT_PATH", tmp_path / "suggestion.json")
+
+    def reject_fsync(_descriptor: int) -> None:
+        raise AssertionError("live suggestion must not call fsync")
+
+    monkeypatch.setattr(probe.os, "fsync", reject_fsync)
     probe.publish_suggestion(probe.LanguageSuggestion("pt_BR", "geoip"))
     assert json.loads(probe.RESULT_PATH.read_text(encoding="utf-8")) == {
         "locale": "pt_BR",

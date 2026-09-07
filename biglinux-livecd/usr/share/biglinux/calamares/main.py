@@ -6,6 +6,8 @@ Main entry point for the GTK4 application
 
 import gettext
 import logging
+import os
+import re
 import sys
 
 import gi
@@ -88,6 +90,16 @@ def setup_icon_theme():
         )
 
 
+def apply_decoration_layout():
+    """Follow the window button side of the session that launched us."""
+    layout = os.environ.get("BIGLINUX_DECORATION_LAYOUT", "")
+    if not re.fullmatch(r"[a-z]+[a-z,:]*", layout):
+        return
+    settings = Gtk.Settings.get_default()
+    if settings is not None:
+        settings.set_property("gtk-decoration-layout", layout)
+
+
 def main():
     """Main application entry point"""
     # Setup logging first
@@ -102,6 +114,11 @@ def main():
 
         # Initialize Adwaita
         Adw.init()
+
+        # The installer runs as root, so GTK reads root's settings.ini and can
+        # put the window buttons on the side the user did not choose. The
+        # wrapper passes what the session actually uses.
+        apply_decoration_layout()
 
         # Load custom application styling for effects like transparency.
         load_custom_css()

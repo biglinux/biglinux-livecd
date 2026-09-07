@@ -3,7 +3,6 @@ Description=Detect the likely BigLinux live-session language
 Documentation=https://github.com/biglinux/biglinux-livecd
 ConditionPathExists=/livefs-pkgs.txt
 After=local-fs.target NetworkManager.service systemd-networkd.service
-Before=display-manager.service
 
 [Service]
 Type=oneshot

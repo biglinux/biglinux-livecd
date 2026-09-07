@@ -16,7 +16,7 @@ from gi.repository import Adw, GObject, Gtk
 
 from ..infrastructure.accessibility import announce, set_description, set_label
 from ..infrastructure.i18n import _
-from ..services import get_install_service, get_system_service
+from ..services import InstallService, SystemService
 
 
 class MaintenancePage(Gtk.Box):
@@ -24,7 +24,7 @@ class MaintenancePage(Gtk.Box):
 
     __gsignals__ = {"navigate": (GObject.SignalFlags.RUN_FIRST, None, (str, object))}
 
-    def __init__(self):
+    def __init__(self, system_service: SystemService, install_service: InstallService):
         super().__init__(
             orientation=Gtk.Orientation.VERTICAL,
             spacing=24,
@@ -35,8 +35,8 @@ class MaintenancePage(Gtk.Box):
         )
 
         self.logger = logging.getLogger(__name__)
-        self.install_service = get_install_service()
-        self.system_service = get_system_service()
+        self.install_service = install_service
+        self.system_service = system_service
 
         self.add_css_class("maintenance-page")
         self.set_margin_top(24)

@@ -41,6 +41,14 @@ append_safe_environment() {
 	installer_environment+=("$name=$value")
 }
 
+# Running as root, GTK reads /root/.config, where the window buttons may sit on
+# the other side than the ones the user sees on every other window.
+decoration_layout=$(
+	awk -F= '$1 == "gtk-decoration-layout" { print $2; exit }' \
+		"${XDG_CONFIG_HOME:-${HOME:-}/.config}/gtk-4.0/settings.ini" 2>/dev/null || true
+)
+append_safe_environment BIGLINUX_DECORATION_LAYOUT "$decoration_layout" '^[a-z]+[a-z,:]*$'
+
 append_safe_environment DISPLAY "${DISPLAY:-}" '^([A-Za-z0-9._-]+)?:[0-9]+([.][0-9]+)?$'
 append_safe_environment WAYLAND_DISPLAY "${WAYLAND_DISPLAY:-}" '^wayland-[A-Za-z0-9._-]+$'
 if [[ ${XDG_RUNTIME_DIR:-} =~ ^/run/user/[0-9]+$ && -d ${XDG_RUNTIME_DIR:-} ]]; then

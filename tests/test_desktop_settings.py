@@ -125,6 +125,11 @@ def test_user_config_writes_atomically_inside_home(
     home = tmp_path / "home"
     home.mkdir()
     monkeypatch.setenv("HOME", str(home))
+
+    def reject_fsync(_descriptor: int) -> None:
+        raise AssertionError("live user config must not call fsync")
+
+    monkeypatch.setattr(os, "fsync", reject_fsync)
     target = home / ".config/app/settings.ini"
     write_text(str(target), "value\n")
     assert target.read_text(encoding="utf-8") == "value\n"
@@ -200,9 +205,7 @@ def test_gnome_theme_matrix_respects_each_layout_shell_contract(
     assert GNOME_USER_THEME_UUID in disabled
     assert (GNOME_LIGHT_STYLE_UUID in enabled) is expected_light_style
     assert (GNOME_LIGHT_STYLE_UUID in disabled) is not expected_light_style
-    assert changes["org/gnome/shell/extensions/user-theme"] == {
-        "name": "''"
-    }
+    assert changes["org/gnome/shell/extensions/user-theme"] == {"name": "''"}
     assert changes["org/gnome/desktop/interface"]["color-scheme"] == (
         "'prefer-dark'" if dark else "'default'"
     )

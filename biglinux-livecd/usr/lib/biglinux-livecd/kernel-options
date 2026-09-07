@@ -30,6 +30,25 @@ kernel_option_value() {
 	printf '%s\n' "$value"
 }
 
+# free and nonfree are the only values that mean anything. Anything else - a
+# typo, or two driver= arguments - is answered with the default rather than an
+# error: a cosmetic kernel argument is not worth refusing to set up the session
+# or to prepare the installer, which is what both callers used to do.
+kernel_driver() {
+	local value status=0
+	value=$(kernel_option_value driver) || status=$?
+	case $value in
+	free | nonfree) ;;
+	*)
+		# Status 1 is the argument being absent, which is the normal case.
+		((status == 1)) ||
+			printf 'biglinux-livecd: ignoring an unusable driver= on the kernel command line\n' >&2
+		value=free
+		;;
+	esac
+	printf '%s\n' "$value"
+}
+
 live_boot_command_path() {
 	case "$1" in
 	only-calamares) printf '%s\n' /usr/bin/only-calamares ;;

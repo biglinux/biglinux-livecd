@@ -368,7 +368,11 @@ def _show_integrity_wait(app: DialogApp, args):
     def show_result(status: str):
         global _exit_code
         GLib.source_remove(pulse_id)
-        _exit_code = 0
+        # This dialog reports its outcome through the exit status and prints
+        # nothing, so a verification that did not pass must not exit 0. It used
+        # to, and the caller - which compared an empty stdout against
+        # "verified" - could not tell the two apart.
+        _exit_code = 0 if status == "verified" else 1
         if status != "verified":
             app.quit()
             return False

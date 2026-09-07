@@ -1,0 +1,46 @@
+/*
+ * Keep QWidget overrides semantic and palette-neutral. The sidebar and the
+ * installation game are QML components and are styled in their own files.
+ */
+
+#mainApp #WelcomePage #mainText {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#mainApp #WelcomePage #subText {
+    font-size: 13px;
+}
+
+#mainApp #WelcomePage QComboBox {
+    min-height: 34px;
+    padding: 4px 10px;
+}
+
+#mainApp QPushButton {
+    min-height: 34px;
+    padding: 7px 18px;
+}
+
+/* The disk passphrase field belongs to the partition module, so its labels and
+ * layout are not ours to change. Its container is a plain QWidget subclass
+ * without WA_StyledBackground, which means a background or a border set on the
+ * class itself is never painted; what does take effect is styling the standard
+ * widgets inside it. */
+EncryptWidget QCheckBox {
+    padding: 4px 0;
+    font-weight: bold;
+}
+
+EncryptWidget QLineEdit {
+    min-height: 26px;
+    padding: 3px 8px;
+    color: palette(text);
+    background-color: palette(base);
+    border: 1px solid palette(mid);
+    border-radius: 6px;
+}
+
+EncryptWidget QLineEdit:focus {
+    border: 1px solid palette(highlight);
+}

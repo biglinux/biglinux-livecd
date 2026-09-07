@@ -1,5 +1,7 @@
 # ui/base_view.py
 
+import threading
+
 import gi
 
 gi.require_version("Gtk", "4.0")
@@ -26,15 +28,15 @@ class BaseItemView(Adw.Bin):
         self.system_service = system_service
         self.set_vexpand(True)
         self.items_loaded = False
+        self.items_loading = False
 
         self.set_child(self._build_ui())
         self.connect("map", self._on_map)
 
     def _on_map(self, *args):
         """Load items only when the view is first mapped (made visible)."""
-        if not self.items_loaded:
+        if not self.items_loaded and not self.items_loading:
             self.load_items()
-            self.items_loaded = True
         self.grab_focus()
         # Suppress selection-changed speak during initial selection
         self._suppress_speak = True
@@ -113,10 +115,30 @@ class BaseItemView(Adw.Bin):
             )
 
     def load_items(self):
-        items = self.get_items()
+        if self.items_loaded or self.items_loading:
+            return
+        self.items_loading = True
+        threading.Thread(target=self._load_items, daemon=True).start()
+
+    def _load_items(self) -> None:
+        try:
+            items = self.get_items()
+        except Exception as error:
+            GLib.idle_add(self._finish_loading_error, error)
+            return
+        GLib.idle_add(self._populate_items, items)
+
+    def _finish_loading_error(self, error: Exception) -> bool:
+        self.items_loading = False
+        logger.error("Could not load selection items: %s", error)
+        return GLib.SOURCE_REMOVE
+
+    def _populate_items(self, items: list) -> bool:
+        self.items_loading = False
+        self.items_loaded = True
         if not items:
             self.emit_signal("default")
-            return
+            return GLib.SOURCE_REMOVE
 
         for name in items:
             item_obj = self.create_item_gobject(name)
@@ -140,7 +162,8 @@ class BaseItemView(Adw.Bin):
 
             self.flow_box.append(flow_child)
 
-        # Selection and announce are done in _select_first_and_announce via _on_map
+        GLib.idle_add(self._select_first_item)
+        return GLib.SOURCE_REMOVE
 
     def grab_focus(self):
         self.flow_box.grab_focus()
