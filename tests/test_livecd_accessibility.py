@@ -97,26 +97,21 @@ echo survived
     )
 
 
-def test_the_wizard_bus_serves_the_accessibility_launcher(tmp_path: Path) -> None:
-    # The launcher and the compositor have to end up on the same private bus:
-    # a launcher on the real bus is exactly the state that left the wizard
-    # without an accessibility tree.
-    log = tmp_path / "record"
+def test_the_session_accessibility_bus_is_handed_to_the_wizard(
+    tmp_path: Path,
+) -> None:
+    # The wizard cannot ask for org.a11y.Bus itself: it runs on a private
+    # session bus and the service file delegates activation to the user's
+    # systemd manager on the real one. Starting a launcher inside the private
+    # bus would give the wizard an accessibility bus nobody else can reach,
+    # so the address is fetched from the real bus and exported.
     binaries = tmp_path / "bin"
     binaries.mkdir()
-    (binaries / "at-spi-bus-launcher").write_text(
-        "#!/bin/bash\n"
-        'printf "launcher:%s\\n" "$DBUS_SESSION_BUS_ADDRESS" >>"$RECORD"\n'
-        "sleep 5\n",
+    (binaries / "gdbus").write_text(
+        "#!/bin/bash\nprintf \"('unix:path=/run/user/1000/at-spi/bus',)\\n\"\n",
         encoding="utf-8",
     )
-    (binaries / "compositor").write_text(
-        "#!/bin/bash\n"
-        'printf "compositor:%s\\n" "$DBUS_SESSION_BUS_ADDRESS" >>"$RECORD"\n'
-        'printf "args:%s\\n" "$*" >>"$RECORD"\n'
-        'printf "forced:%s\\n" "${FORCED_VARIABLE:-unset}" >>"$RECORD"\n',
-        encoding="utf-8",
-    )
+    (binaries / "gsettings").write_text("#!/bin/bash\nexit 0\n", encoding="utf-8")
     for binary in binaries.iterdir():
         binary.chmod(0o755)
 
@@ -125,34 +120,55 @@ def test_the_wizard_bus_serves_the_accessibility_launcher(tmp_path: Path) -> Non
 set -euo pipefail
 _log() {{ :; }}
 {_helpers()}
-# The real helper calls the launcher by absolute path so that D-Bus activation
-# cannot hand the job to systemd on the outer bus.
-_run_on_wizard_bus() {{
-    dbus-run-session -- bash -c '
-        at-spi-bus-launcher --launch-immediately &
-        exec env "$@"' _ "$@"
-}}
-_run_on_wizard_bus FORCED_VARIABLE=yes compositor --drm --exit-with-session "wizard"
-sleep 1
+_enable_accessibility
+printf 'AT_SPI_BUS_ADDRESS=%s\\n' "${{AT_SPI_BUS_ADDRESS:-unset}}"
 """,
-        {"RECORD": str(log), "PATH": f"{binaries}:{os.environ['PATH']}"},
+        {"PATH": f"{binaries}:{os.environ['PATH']}"},
     )
 
     assert result.returncode == 0, result.stderr
-    record = dict(
-        line.split(":", 1) for line in log.read_text(encoding="utf-8").splitlines()
+    assert "AT_SPI_BUS_ADDRESS=unix:path=/run/user/1000/at-spi/bus" in result.stdout, (
+        result.stdout
     )
-    assert record["launcher"], record
-    assert record["launcher"] == record["compositor"], record
-    assert record["launcher"] != os.environ.get("DBUS_SESSION_BUS_ADDRESS", ""), record
-    assert record["forced"] == "yes", record
-    assert "--exit-with-session wizard" in record["args"], record
 
 
-def test_every_wizard_launch_goes_through_the_accessibility_bus() -> None:
+def test_a_session_without_an_accessibility_bus_still_starts(tmp_path: Path) -> None:
+    # No bus is a wizard nobody can read, which is bad, and a session that
+    # refuses to start, which is worse.
+    binaries = tmp_path / "bin"
+    binaries.mkdir()
+    (binaries / "gdbus").write_text("#!/bin/bash\nexit 1\n", encoding="utf-8")
+    (binaries / "gsettings").write_text("#!/bin/bash\nexit 0\n", encoding="utf-8")
+    for binary in binaries.iterdir():
+        binary.chmod(0o755)
+    log = tmp_path / "log"
+
+    result = _run(
+        f"""
+set -euo pipefail
+_log() {{ printf 'log:%s\\n' "$*" >>"$LOG"; }}
+{_helpers()}
+_enable_accessibility
+printf 'AT_SPI_BUS_ADDRESS=%s\\n' "${{AT_SPI_BUS_ADDRESS:-unset}}"
+""",
+        {"PATH": f"{binaries}:{os.environ['PATH']}", "LOG": str(log)},
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "AT_SPI_BUS_ADDRESS=unset" in result.stdout
+    assert "No accessibility bus available" in log.read_text(encoding="utf-8")
+
+
+def test_every_wizard_launch_carries_the_accessibility_environment() -> None:
     # Three fallback paths start the compositor (hardware, single GPU, software
-    # rendering). A plain dbus-run-session on any of them is a wizard without
-    # accessibility on that hardware only, which is the hardest kind to notice.
+    # rendering), and each one inherits the exported environment only if it
+    # goes through the same helper. A plain dbus-run-session on any of them is
+    # a wizard without accessibility on that hardware only, which is the
+    # hardest kind to notice.
     source = STARTBIGLIVE.read_text(encoding="utf-8")
     assert "dbus-run-session kwin_wayland" not in source
     assert source.count("_run_on_wizard_bus ") >= 3
+    # And the environment has to be set before any of them runs.
+    assert source.index("_enable_accessibility\n\t_detect_multi_gpu") < source.index(
+        "_run_on_wizard_bus kwin_wayland"
+    )

@@ -269,20 +269,42 @@ _enable_accessibility() {
 	export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1
 	gsettings set org.gnome.desktop.interface toolkit-accessibility true 2>/dev/null ||
 		_log "WARNING - Could not enable toolkit-accessibility"
+
+	# Hand the wizard the session's own accessibility bus.
+	#
+	# The Wayland wizard runs on a private session bus (dbus-run-session, so its
+	# kwin cannot fight the Plasma session that follows over org.kde.KWin) and
+	# org.a11y.Bus.service delegates activation to the user's systemd manager,
+	# which is attached to the real bus - so asking for org.a11y.Bus from inside
+	# the private bus yields nothing. Starting a launcher inside that private bus
+	# is worse than it looks: the wizard would get an accessibility bus of its
+	# own that nothing else in the session can reach, including the Orca the user
+	# may start. Ask the real bus for the address and export it; libatspi honours
+	# AT_SPI_BUS_ADDRESS ahead of any lookup.
+	local a11y_address
+	if a11y_address=$(gdbus call --session --dest org.a11y.Bus \
+		--object-path /org/a11y/bus --method org.a11y.Bus.GetAddress 2>/dev/null); then
+		# gdbus answers with a tuple: ('unix:path=/run/user/1000/at-spi/bus_0',)
+		a11y_address=${a11y_address#*\'}
+		a11y_address=${a11y_address%%\'*}
+		if [[ -n $a11y_address ]]; then
+			export AT_SPI_BUS_ADDRESS="$a11y_address"
+			_log "Accessibility bus for the wizard: $a11y_address"
+			return 0
+		fi
+	fi
+	_log "WARNING - No accessibility bus available; the wizard will not be readable"
 }
 
-# Runs a command on a private session bus that also serves org.a11y.Bus.
-# The launcher is started by path rather than through D-Bus activation: the
-# service file hands activation to systemd, which would start it against the
-# real bus and leave this one without a provider.
+# Runs a command on a private session bus, carrying any leading VAR=value
+# arguments. This cannot be called through a plain `env` prefix: `env` execs a
+# binary and this is a shell function.
 #
-# Leading VAR=value arguments are applied to the command, which is why this
-# cannot be called through a plain `env` prefix: `env` execs a binary and this
-# is a shell function.
+# The accessibility bus is deliberately not started here - see
+# _enable_accessibility, which points the wizard at the session's own bus so
+# that a screen reader outside this private bus can still read it.
 _run_on_wizard_bus() {
-	dbus-run-session -- bash -c '
-		/usr/lib/at-spi-bus-launcher --launch-immediately &
-		exec env "$@"' _ "$@"
+	dbus-run-session -- env "$@"
 }
 
 #-------------------------------------------------------------------------------
