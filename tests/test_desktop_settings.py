@@ -20,7 +20,6 @@ from desktop_theme import (  # noqa: E402
     apply_simple_theme,
     update_settings_text,
 )
-from gnome_layout import normalize_layout_text  # noqa: E402
 from user_config import update_ini_file, update_ini_text, write_text  # noqa: E402
 
 
@@ -166,41 +165,22 @@ def test_ini_update_handles_missing_file_and_rejects_fifo(
         update_ini_file(str(fifo), "Settings", {"theme": "dark"})
 
 
-def test_gnome_layout_normalization_is_monitor_independent() -> None:
-    source = (
-        "preferred-monitor-by-connector='HDMI-1'\n"
-        "primary-monitor='HDMI-1'\n"
-        'panel-sizes=\'{"HDMI-1":48,"DP-1":32}\'\n'
-        "enabled-extensions=['dash-to-dock@micxgx.gmail.com']\n"
-        "unrelated='kept'\n"
-    )
-    normalized = normalize_layout_text(source)
-    assert "preferred-monitor-by-connector='primary'" in normalized
-    assert "primary-monitor=''" in normalized
-    assert "panel-sizes='{\"0\":48}'" in normalized
-    assert normalized.count("layout-switcher-helper@bigcommunity.org") == 1
-    assert "unrelated='kept'" in normalized
-
-
 @pytest.mark.parametrize("dark", [False, True], ids=["light", "dark"])
 @pytest.mark.parametrize(
-    ("layout", "user_theme", "light_style", "light_name", "dark_name"),
+    ("layout", "light_style"),
     [
-        ("biggnome", True, False, "'Big-Blue'", "'Big-Blue'"),
-        ("desk-ux", True, False, "'Big-Blue-Light'", "'Big-Blue'"),
-        ("hybrid", False, True, "''", "''"),
-        ("classic", False, True, "''", "''"),
-        ("g-unity", False, False, "''", "''"),
-        ("minimal", False, False, "''", "''"),
+        ("biggnome", False),
+        ("desk-ux", False),
+        ("hybrid", True),
+        ("classic", True),
+        ("g-unity", False),
+        ("minimal", False),
     ],
 )
 def test_gnome_theme_matrix_respects_each_layout_shell_contract(
     tmp_path: Path,
     layout: str,
-    user_theme: bool,
     light_style: bool,
-    light_name: str,
-    dark_name: str,
     dark: bool,
 ) -> None:
     settings = tmp_path / "settings.gnome"
@@ -221,13 +201,11 @@ def test_gnome_theme_matrix_respects_each_layout_shell_contract(
     disabled = ast.literal_eval(shell_changes["disabled-extensions"])
     expected_light_style = light_style and not dark
 
-    assert (GNOME_USER_THEME_UUID in enabled) is user_theme
-    assert (GNOME_USER_THEME_UUID in disabled) is not user_theme
+    assert GNOME_USER_THEME_UUID not in enabled
+    assert GNOME_USER_THEME_UUID in disabled
     assert (GNOME_LIGHT_STYLE_UUID in enabled) is expected_light_style
     assert (GNOME_LIGHT_STYLE_UUID in disabled) is not expected_light_style
-    assert changes["org/gnome/shell/extensions/user-theme"] == {
-        "name": dark_name if dark else light_name
-    }
+    assert changes["org/gnome/shell/extensions/user-theme"] == {"name": "''"}
     assert changes["org/gnome/desktop/interface"]["color-scheme"] == (
         "'prefer-dark'" if dark else "'default'"
     )

@@ -12,6 +12,7 @@ readonly live_desktop_file=/tmp/big_desktop_changed
 readonly live_keyboard_file=/tmp/big_keyboard
 readonly live_gnome_layout_file=/tmp/big_gnome_layout
 readonly live_gnome_settings_file=/tmp/big_gnome_settings
+readonly live_gnome_app_settings_file=/tmp/big_gnome_app_settings
 readonly live_jamesdsp_file=/tmp/big_enable_jamesdsp
 readonly live_display_profile_file=/tmp/big_improve_display
 declare -a temporary_files=()
@@ -255,6 +256,29 @@ copy_gnome_settings_to_homes() {
 	done
 }
 
+copy_gnome_app_settings_to_homes() {
+	local source=$1 home_directory user_name settings_directory settings_file user_ids
+	local user_id group_id resolved_home
+	[[ -f $source && ! -L $source ]] || return 0
+	copy_live_config "$source" "$root_mount/etc/skel/.config/big-appearance/settings.json"
+	for home_directory in "$root_mount"/home/*; do
+		[[ -d $home_directory && ! -L $home_directory ]] || continue
+		resolved_home=$(realpath -e -- "$home_directory") || continue
+		path_is_within_root "$resolved_home" || die "home directory escapes installation root: $home_directory"
+		user_name=$(basename -- "$home_directory")
+		[[ $user_name =~ ^[a-z_][a-z0-9_-]*[$]?$ ]] || continue
+		user_ids=$(awk -F: -v user="$user_name" '$1 == user { print $3 ":" $4 }' "$root_mount/etc/passwd" 2>/dev/null || true)
+		[[ $user_ids =~ ^[0-9]+:[0-9]+$ ]] || continue
+		IFS=: read -r user_id group_id <<<"$user_ids"
+		((user_id > 0)) || continue
+		settings_directory=$home_directory/.config/big-appearance
+		settings_file=$settings_directory/settings.json
+		ensure_directory "$settings_directory"
+		copy_live_config "$source" "$settings_file"
+		chown "$user_id:$group_id" "$home_directory/.config" "$settings_directory" "$settings_file"
+	done
+}
+
 valid_xkb_component() {
 	[[ $1 =~ ^[A-Za-z0-9_.+-]+$ ]]
 }
@@ -429,6 +453,7 @@ main() {
 	copy_live_config "$live_gnome_layout_file" "$config_directory/gnome-layout"
 	gnome_settings_source=$(current_gnome_settings_source /home)
 	copy_gnome_settings_to_homes "$gnome_settings_source"
+	copy_gnome_app_settings_to_homes "$live_gnome_app_settings_file"
 	copy_live_config "$live_jamesdsp_file" "$config_directory/jamesdsp"
 	copy_live_config "$live_display_profile_file" "$config_directory/display-profile"
 	printf '%s\n' 'BigLinux installation setup completed successfully'

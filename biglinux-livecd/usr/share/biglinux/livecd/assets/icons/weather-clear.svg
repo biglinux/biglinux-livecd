@@ -1,11 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" version="1">
- <circle style="opacity:0.2" cx="23" cy="25" r="20"/>
- <circle style="fill:#0091cf" cx="23" cy="24" r="20"/>
- <path style="opacity:0.1;fill:#ffffff" d="M 23,4 A 20,20 0 0 0 3,24 20,20 0 0 0 3.0214844,24.582031 20,20 0 0 1 23,5 20,20 0 0 1 42.978516,24.417969 20,20 0 0 0 43,24 20,20 0 0 0 23,4 Z"/>
- <path style="opacity:0.2" d="m 31,3 -4,4 h -6 v 6 l -4,4 4,4 v 6 h 6 l 4,4 4,-4 h 6 v -6 l 4,-4 -4,-4 V 7 h -6 z"/>
- <path style="fill:#ff8a47" d="m 31,2 -4,4 h -6 v 6 l -4,4 4,4 v 6 h 6 l 4,4 4,-4 h 6 v -6 l 4,-4 -4,-4 V 6 h -6 z"/>
- <circle style="opacity:0.2" cx="31" cy="17" r="8"/>
- <circle style="fill:#ffcc42" cx="31" cy="16" r="8"/>
- <path style="opacity:0.2;fill:#ffffff" d="m 31,2 -4,4 h -6 v 1 h 6 l 4,-4 4,4 h 6 V 6 H 35 Z M 21,12 17,16 17.5,16.5 21,13 Z m 20,0 v 1 L 44.5,16.5 45,16 Z"/>
- <path style="opacity:0.2;fill:#ffffff" d="m 31,8 a 8,8 0 0 0 -8,8 8,8 0 0 0 0.02148,0.576172 A 8,8 0 0 1 31,9 8,8 0 0 1 38.978516,16.423828 8,8 0 0 0 39,16 8,8 0 0 0 31,8 Z"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><defs><linearGradient id="a" x1="150" x2="234" y1="119.2" y2="264.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fbbf24"/><stop offset=".5" stop-color="#fbbf24"/><stop offset="1" stop-color="#f59e0b"/></linearGradient><symbol id="b" viewBox="0 0 384 384"><circle cx="192" cy="192" r="84" fill="url(#a)" stroke="#f8af18" stroke-miterlimit="10" stroke-width="6"/><path fill="none" stroke="#fbbf24" stroke-linecap="round" stroke-miterlimit="10" stroke-width="24" d="M192 61.7V12m0 360v-49.7m92.2-222.5 35-35M64.8 319.2l35.1-35.1m0-184.4-35-35m254.5 254.5-35.1-35.1M61.7 192H12m360 0h-49.7"/></symbol></defs><use xlink:href="#b" width="384" height="384" transform="translate(64 64)"/></svg>

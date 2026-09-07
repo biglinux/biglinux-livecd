@@ -4,7 +4,7 @@ from pathlib import Path
 
 APP_NAME = "BigLinux Calamares Config"
 APP_ID = "com.biglinux.calamares-config"
-APP_VERSION = "1.3.13"
+APP_VERSION = "1.3.18"
 
 BASE_DIR = Path(__file__).parent.parent.parent
 DATA_DIR = BASE_DIR / "data"

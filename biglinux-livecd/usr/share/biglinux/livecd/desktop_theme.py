@@ -8,15 +8,12 @@ import stat
 from collections.abc import Mapping
 from typing import Protocol
 
-from gnome_layout import LAYOUT_NAMES
-
 logger = logging.getLogger(__name__)
 GNOME_LIGHT_STYLE_UUID = "light-style@gnome-shell-extensions.gcampax.github.com"
 GNOME_USER_THEME_UUID = "user-theme@gnome-shell-extensions.gcampax.github.com"
 GNOME_KIWI_UUID = "kiwi@kemma"
-GNOME_DTP_UUID = "dash-to-panel@jderose9.github.com"
-GNOME_ALWAYS_DARK_LAYOUTS = frozenset({"biggnome", "g-unity", "minimal"})
-GNOME_ORCHIS_LAYOUTS = frozenset({"biggnome", "desk-ux"})
+GNOME_ALWAYS_DARK_LAYOUTS = frozenset({"biggnome", "desk-ux", "g-unity", "minimal"})
+GNOME_THEME_LAYOUTS = GNOME_ALWAYS_DARK_LAYOUTS | {"classic", "hybrid"}
 MAX_SETTINGS_BYTES = 1024 * 1024
 
 SettingsChanges = Mapping[str, Mapping[str, str]]
@@ -213,7 +210,6 @@ def _settings_key_values(
 def _gnome_extension_changes(
     settings_file: str,
     *,
-    user_theme: bool,
     light_style: bool,
 ) -> dict[str, dict[str, str]]:
     values = _settings_key_values(settings_file, "org/gnome/shell")
@@ -231,11 +227,7 @@ def _gnome_extension_changes(
         for item in disabled
         if item not in {GNOME_USER_THEME_UUID, GNOME_LIGHT_STYLE_UUID}
     ]
-    if user_theme:
-        disabled = [item for item in disabled if item != GNOME_USER_THEME_UUID]
-        enabled.append(GNOME_USER_THEME_UUID)
-    else:
-        disabled.append(GNOME_USER_THEME_UUID)
+    disabled.append(GNOME_USER_THEME_UUID)
     if light_style:
         enabled.append(GNOME_LIGHT_STYLE_UUID)
     else:
@@ -250,17 +242,7 @@ def _gnome_extension_changes(
 
 def _gnome_layout_class(settings_file: str) -> str:
     shell_values = _settings_key_values(settings_file, "org/gnome/shell") or {}
-    user_theme_values = (
-        _settings_key_values(
-            settings_file,
-            "org/gnome/shell/extensions/user-theme",
-        )
-        or {}
-    )
     enabled = _parse_settings_list(shell_values.get("enabled-extensions", "[]"))
-    user_theme_name = user_theme_values.get("name", "").strip().strip("'\"")
-    if user_theme_name:
-        return "desk-ux" if GNOME_DTP_UUID in enabled else "biggnome"
     if GNOME_KIWI_UUID in enabled:
         return "minimal"
     return "hybrid"
@@ -274,7 +256,7 @@ def _selected_gnome_layout(host: ThemeHost) -> str:
         layout = _read_regular_text(state_file).strip()
     except (OSError, UnicodeError):
         return ""
-    return layout if layout in LAYOUT_NAMES else ""
+    return layout if layout in GNOME_THEME_LAYOUTS else ""
 
 
 def _desktop_changes(
@@ -304,25 +286,14 @@ def _desktop_changes(
     elif desktop_environment == "GNOME":
         layout = (
             gnome_layout
-            if gnome_layout in LAYOUT_NAMES
+            if gnome_layout in GNOME_THEME_LAYOUTS
             else _gnome_layout_class(settings_file)
         )
-        orchis = layout in GNOME_ORCHIS_LAYOUTS
-        shell_theme = (
-            "'Big-Blue-Light'"
-            if layout == "desk-ux" and not dark
-            else "'Big-Blue'"
-            if orchis
-            else "''"
-        )
-        changes["org/gnome/shell/extensions/user-theme"] = {"name": shell_theme}
+        changes["org/gnome/shell/extensions/user-theme"] = {"name": "''"}
         changes.update(
             _gnome_extension_changes(
                 settings_file,
-                user_theme=orchis,
-                light_style=(
-                    not dark and not orchis and layout not in GNOME_ALWAYS_DARK_LAYOUTS
-                ),
+                light_style=not dark and layout not in GNOME_ALWAYS_DARK_LAYOUTS,
             )
         )
     return changes
