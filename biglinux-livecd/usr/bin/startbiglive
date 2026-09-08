@@ -347,6 +347,29 @@ _run_on_wizard_bus() {
 	dbus-run-session -- env "$@"
 }
 
+# Claims the setup wizard for this session, if it has not run yet.
+#
+# SDDM autologins with Relogin=true, so when the live session ends - a
+# compositor that crashed, a session the installer took down - it is started
+# again from the top, and the wizard came back with it: during an installation
+# it appears in front of Calamares and takes the keyboard, so what the user
+# types next goes into the wizard. Twice, that turned a working installation
+# into a failed one.
+#
+# The wizard belongs to the first session of a boot. The marker lives in the
+# live state directory, which is a tmpfs, so a real reboot offers it again.
+_claim_setup_wizard() {
+	local marker
+	marker=$(live_state_path wizard-offered) || return 0
+	if [[ -f $marker ]]; then
+		_log "The setup wizard already ran in this boot; starting the desktop"
+		return 1
+	fi
+	write_live_state wizard-offered "$(date -u +%s)" ||
+		_log "WARNING - Could not record that the setup wizard ran"
+	return 0
+}
+
 #-------------------------------------------------------------------------------
 # Start kwin_wayland compositor with health check and multi-stage fallback
 # Fallback chain:
@@ -356,6 +379,7 @@ _run_on_wizard_bus() {
 # Returns 0 if the wizard completed, 1 if kwin could not start at all
 #-------------------------------------------------------------------------------
 _start_kwin_wizard() {
+	_claim_setup_wizard || return 0
 	local wizard_command="/usr/bin/python /usr/share/biglinux/livecd/main.py"
 	local -a kwin_args=(--drm --no-lockscreen --xwayland)
 	local kwin_pid
@@ -434,6 +458,7 @@ _start_kwin_wizard() {
 # Returns 0 if the wizard completed, 1 if mutter could not start at all
 #-------------------------------------------------------------------------------
 _start_mutter_wizard() {
+	_claim_setup_wizard || return 0
 	local wizard_cmd="/usr/bin/gnome-bbv-live-session"
 	local mutter_pid
 
@@ -612,8 +637,10 @@ if [[ "$session_type" == "x11" ]]; then
 	_log "Starting setup wizard on X11"
 	# No private bus here, so D-Bus activation reaches the user's own
 	# at-spi-dbus-bus.service; only the toolkits still have to be told.
-	_enable_accessibility
-	env "${wizard_environment[@]}" python /usr/share/biglinux/livecd/main.py
+	if _claim_setup_wizard; then
+		_enable_accessibility
+		env "${wizard_environment[@]}" python /usr/share/biglinux/livecd/main.py
+	fi
 else
 	# Wayland session: launch appropriate compositor with setup wizard
 	if [[ "$display_manager" == "sddm" ]]; then

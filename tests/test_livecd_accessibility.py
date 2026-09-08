@@ -269,3 +269,39 @@ def test_the_desktop_session_starts_on_a_working_accessibility_bus() -> None:
     assert source.index("\t_restore_accessibility_bus\n") < source.index(
         "\t\texec startkde-biglinux\n"
     )
+
+
+def test_the_wizard_is_offered_once_per_boot(tmp_path: Path) -> None:
+    # SDDM autologins with Relogin=true, so a live session that ends is started
+    # again from the top. The wizard came back with it, in front of Calamares,
+    # and took the keyboard: what the user typed next went into the wizard
+    # instead of into the account fields.
+    state_directory = tmp_path / "state"
+    state_directory.mkdir()
+    result = _run(
+        f"""
+set -euo pipefail
+_log() {{ printf 'log:%s\\n' "$*"; }}
+source {REPOSITORY}/biglinux-livecd/usr/lib/biglinux-livecd/live-state
+live_state_directory=$STATE_DIRECTORY
+{_helpers()}
+_claim_setup_wizard && printf 'first=offered\\n' || printf 'first=skipped\\n'
+_claim_setup_wizard && printf 'second=offered\\n' || printf 'second=skipped\\n'
+""",
+        {"STATE_DIRECTORY": str(state_directory)},
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "first=offered" in result.stdout, result.stdout
+    assert "second=skipped" in result.stdout, result.stdout
+    # The marker lives in the live state directory, which is a tmpfs, so a real
+    # reboot offers the wizard again.
+    assert (state_directory / "big_wizard_offered").exists()
+
+
+def test_every_wizard_path_asks_before_offering_it() -> None:
+    # Three paths start the wizard - kwin, mutter and the X11 fallback - and a
+    # path that forgets to ask replays it on exactly the machines whose
+    # compositor is least reliable.
+    source = STARTBIGLIVE.read_text(encoding="utf-8")
+    assert source.count("_claim_setup_wizard") == 4, source.count("_claim_setup_wizard")

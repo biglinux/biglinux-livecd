@@ -7,6 +7,8 @@ live_state_legacy_desktop_path=/etc/big_desktop_changed
 
 live_state_path() {
 	case "$1" in
+	# Set once the setup wizard has been offered in this boot.
+	wizard-offered) printf '%s\n' "$live_state_directory/big_wizard_offered" ;;
 	language) printf '%s\n' "$live_state_directory/big_language" ;;
 	keyboard) printf '%s\n' "$live_state_directory/big_keyboard" ;;
 	desktop) printf '%s\n' "$live_state_directory/big_desktop_changed" ;;
@@ -29,7 +31,7 @@ require_live_state_directory() {
 write_live_state() {
 	local name=$1 content=$2 temporary_file target
 	case "$name" in
-	language | keyboard | desktop | gnome-layout | gnome-settings | desktop-theme | enable-jamesdsp | improve-display) ;;
+	language | keyboard | desktop | gnome-layout | gnome-settings | desktop-theme | enable-jamesdsp | improve-display | wizard-offered) ;;
 	*)
 		printf 'biglinux-livecd: unsupported live state name: %s\n' "$name" >&2
 		return 1
