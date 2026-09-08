@@ -181,3 +181,91 @@ def test_every_wizard_launch_carries_the_accessibility_environment() -> None:
     assert source.index("_enable_accessibility\n\t_detect_multi_gpu") < source.index(
         '_run_on_wizard_bus "${wizard_environment[@]}"'
     )
+
+
+def test_a_stolen_accessibility_socket_is_restored_before_the_desktop(
+    tmp_path: Path,
+) -> None:
+    # at-spi-bus-launcher unlinks the session's socket before binding its own,
+    # so the launcher activated inside the wizard's private bus replaces it and
+    # removes it when that bus ends. The launcher on the real bus survives and
+    # keeps answering with the path it created, so the address looks fine and
+    # nothing can connect to it - which is how every application in the desktop,
+    # Orca included, ended up on "Failed to connect to socket".
+    binaries = tmp_path / "bin"
+    binaries.mkdir()
+    log = tmp_path / "log"
+    (binaries / "gdbus").write_text(
+        "#!/bin/bash\nprintf \"('unix:path=%s',)\\n\" \"$MISSING_SOCKET\"\n",
+        encoding="utf-8",
+    )
+    (binaries / "systemctl").write_text(
+        '#!/bin/bash\nprintf "systemctl:%s\\n" "$*" >>"$LOG"\n', encoding="utf-8"
+    )
+    for binary in binaries.iterdir():
+        binary.chmod(0o755)
+
+    result = _run(
+        f"""
+set -euo pipefail
+_log() {{ printf 'log:%s\\n' "$*" >>"$LOG"; }}
+{_helpers()}
+_restore_accessibility_bus
+""",
+        {
+            "PATH": f"{binaries}:{os.environ['PATH']}",
+            "LOG": str(log),
+            "MISSING_SOCKET": str(tmp_path / "at-spi/bus"),
+        },
+    )
+
+    assert result.returncode == 0, result.stderr
+    recorded = log.read_text(encoding="utf-8")
+    assert "systemctl:--user restart at-spi-dbus-bus.service" in recorded, recorded
+
+
+def test_a_live_accessibility_socket_is_left_alone(tmp_path: Path) -> None:
+    # Restarting a working bus would drop every client already on it: a toolkit
+    # connects once while starting up and never reconnects.
+    binaries = tmp_path / "bin"
+    binaries.mkdir()
+    log = tmp_path / "log"
+    socket = tmp_path / "bus"
+    (binaries / "gdbus").write_text(
+        "#!/bin/bash\nprintf \"('unix:path=%s',)\\n\" \"$LIVE_SOCKET\"\n",
+        encoding="utf-8",
+    )
+    (binaries / "systemctl").write_text(
+        '#!/bin/bash\nprintf "systemctl:%s\\n" "$*" >>"$LOG"\n', encoding="utf-8"
+    )
+    for binary in binaries.iterdir():
+        binary.chmod(0o755)
+
+    result = _run(
+        f"""
+set -euo pipefail
+_log() {{ printf 'log:%s\\n' "$*" >>"$LOG"; }}
+python3 -c 'import socket, sys; s = socket.socket(socket.AF_UNIX); s.bind(sys.argv[1])' \
+    {socket}
+{_helpers()}
+_restore_accessibility_bus
+""",
+        {
+            "PATH": f"{binaries}:{os.environ['PATH']}",
+            "LOG": str(log),
+            "LIVE_SOCKET": str(socket),
+        },
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert not log.exists() or "systemctl:" not in log.read_text(encoding="utf-8")
+
+
+def test_the_desktop_session_starts_on_a_working_accessibility_bus() -> None:
+    # The check belongs between the wizard and the session it hands over to:
+    # before, there is nothing to repair, and after the exec there is no shell
+    # left to repair it from.
+    source = STARTBIGLIVE.read_text(encoding="utf-8")
+    assert source.index("\t_restore_accessibility_bus\n") < source.index(
+        "\t\texec startkde-biglinux\n"
+    )

@@ -306,6 +306,36 @@ _enable_accessibility() {
 	_log "WARNING - No accessibility bus available; the wizard will not be readable"
 }
 
+# Puts the session's accessibility bus back after the wizard.
+#
+# at-spi-bus-launcher unlinks $XDG_RUNTIME_DIR/at-spi/bus before binding its
+# own, so the launcher that D-Bus activates inside the wizard's private session
+# replaces the session's socket - and takes it away when that bus ends. The
+# launcher on the real bus survives and keeps answering GetAddress with the
+# path it created, which no longer exists, so every application started
+# afterwards fails with "Failed to connect to socket
+# /run/user/1000/at-spi/bus" - Orca included. Nothing can still be using that
+# bus at this point, which is what makes restarting it safe here and nowhere
+# else.
+_restore_accessibility_bus() {
+	local address
+	address=$(gdbus call --session --dest org.a11y.Bus \
+		--object-path /org/a11y/bus --method org.a11y.Bus.GetAddress 2>/dev/null |
+		tr -dc 'a-zA-Z0-9:=/_.-')
+	case $address in
+	unix:path=/*)
+		[[ -S ${address#unix:path=} ]] && return 0
+		;;
+	# An abstract socket has no file to look at, and no launcher creates one.
+	unix:*)
+		return 0
+		;;
+	esac
+	_log "Accessibility bus lost with the wizard's session; restarting it"
+	systemctl --user restart at-spi-dbus-bus.service 2>/dev/null ||
+		_log "WARNING - Could not restart the accessibility bus"
+}
+
 # Runs a command on a private session bus, carrying any leading VAR=value
 # arguments. This cannot be called through a plain `env` prefix: `env` execs a
 # binary and this is a shell function.
@@ -853,6 +883,7 @@ elif [[ -e /usr/share/wayland-sessions/hyprland.desktop ]]; then
 elif [[ "$display_manager" == "sddm" || "$display_manager" == "lxdm" ]]; then
 	# KDE Plasma
 	_prepare_plasma_live_defaults
+	_restore_accessibility_bus
 	if [[ "$session_type" == "x11" ]]; then
 		exec startkde-biglinux
 	else
