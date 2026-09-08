@@ -309,8 +309,13 @@ _start_kwin_wizard
     # variables. What matters here is what comes after: the wizard command has
     # to stay a single argument, or kwin takes "main.py" for one of its own
     # options.
+    # dbus-run-session's own arguments come first, then "env" and whatever the
+    # wizard's environment carries; the command follows.
     assert arguments[:2] == [b"--", b"env"], arguments
-    assert arguments[2:] == [
+    command = arguments[2:]
+    while command and b"=" in command[0]:
+        command = command[1:]
+    assert command == [
         b"kwin_wayland",
         b"--drm",
         b"--no-lockscreen",

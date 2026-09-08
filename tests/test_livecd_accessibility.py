@@ -122,14 +122,19 @@ _log() {{ :; }}
 {_helpers()}
 _enable_accessibility
 printf 'AT_SPI_BUS_ADDRESS=%s\\n' "${{AT_SPI_BUS_ADDRESS:-unset}}"
+printf 'wizard_environment=%s\\n' "${{wizard_environment[*]:-unset}}"
 """,
         {"PATH": f"{binaries}:{os.environ['PATH']}"},
     )
 
     assert result.returncode == 0, result.stderr
-    assert "AT_SPI_BUS_ADDRESS=unix:path=/run/user/1000/at-spi/bus" in result.stdout, (
-        result.stdout
-    )
+    # Handed to the wizard's process, never exported: the shell that resolves it
+    # is the one that later execs the Plasma session, and an exported address
+    # outlives the socket it names.
+    assert (
+        "wizard_environment=AT_SPI_BUS_ADDRESS=unix:path=/run/user/1000/at-spi/bus"
+        in result.stdout
+    ), result.stdout
 
 
 def test_a_session_without_an_accessibility_bus_still_starts(tmp_path: Path) -> None:
@@ -150,6 +155,7 @@ _log() {{ printf 'log:%s\\n' "$*" >>"$LOG"; }}
 {_helpers()}
 _enable_accessibility
 printf 'AT_SPI_BUS_ADDRESS=%s\\n' "${{AT_SPI_BUS_ADDRESS:-unset}}"
+printf 'wizard_environment=%s\\n' "${{wizard_environment[*]:-unset}}"
 """,
         {"PATH": f"{binaries}:{os.environ['PATH']}", "LOG": str(log)},
     )
@@ -168,7 +174,10 @@ def test_every_wizard_launch_carries_the_accessibility_environment() -> None:
     source = STARTBIGLIVE.read_text(encoding="utf-8")
     assert "dbus-run-session kwin_wayland" not in source
     assert source.count("_run_on_wizard_bus ") >= 3
-    # And the environment has to be set before any of them runs.
+    # And every one of them carries the wizard's own environment, which is
+    # where the accessibility bus address lives now that it is not exported.
+    assert source.count('_run_on_wizard_bus "${wizard_environment[@]}"') >= 3
+    # The environment has to be built before any launch runs.
     assert source.index("_enable_accessibility\n\t_detect_multi_gpu") < source.index(
-        "_run_on_wizard_bus kwin_wayland"
+        '_run_on_wizard_bus "${wizard_environment[@]}"'
     )

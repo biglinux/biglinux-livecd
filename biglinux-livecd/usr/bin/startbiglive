@@ -260,6 +260,10 @@ _detect_multi_gpu() {
 #     nothing ever serves org.a11y.Bus on the private one. GTK asks once while
 #     starting up and then disables the bridge for the life of the process.
 #-------------------------------------------------------------------------------
+# Variables handed to the wizard's process only, never exported: this script
+# execs the desktop session once the wizard is done.
+wizard_environment=()
+
 _enable_accessibility() {
 	# GTK4 reads this at startup and never reconsiders; Qt needs telling
 	# separately because this is a KDE session with no accessibility settings
@@ -279,8 +283,14 @@ _enable_accessibility() {
 	# the private bus yields nothing. Starting a launcher inside that private bus
 	# is worse than it looks: the wizard would get an accessibility bus of its
 	# own that nothing else in the session can reach, including the Orca the user
-	# may start. Ask the real bus for the address and export it; libatspi honours
-	# AT_SPI_BUS_ADDRESS ahead of any lookup.
+	# may start. So the address is resolved here and handed to the wizard's own
+	# process, and deliberately NOT exported: this function runs in the shell
+	# that later execs the Plasma session, and an exported address outlives the
+	# socket it names. The bus is recreated when the session changes, and every
+	# application in Plasma inherited a path that no longer existed - "Failed to
+	# connect to socket /run/user/1000/at-spi/bus". Everything in the Plasma
+	# session resolves org.a11y.Bus for itself, which is what libatspi does when
+	# the variable is absent.
 	local a11y_address
 	if a11y_address=$(gdbus call --session --dest org.a11y.Bus \
 		--object-path /org/a11y/bus --method org.a11y.Bus.GetAddress 2>/dev/null); then
@@ -288,7 +298,7 @@ _enable_accessibility() {
 		a11y_address=${a11y_address#*\'}
 		a11y_address=${a11y_address%%\'*}
 		if [[ -n $a11y_address ]]; then
-			export AT_SPI_BUS_ADDRESS="$a11y_address"
+			wizard_environment=("AT_SPI_BUS_ADDRESS=$a11y_address")
 			_log "Accessibility bus for the wizard: $a11y_address"
 			return 0
 		fi
@@ -325,7 +335,8 @@ _start_kwin_wizard() {
 
 	# Attempt 1: hardware-accelerated rendering (default GPU selection)
 	_log "Starting kwin_wayland (hardware rendering)..."
-	_run_on_wizard_bus kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
+	_run_on_wizard_bus "${wizard_environment[@]}" \
+		kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
 	kwin_pid=$!
 
 	# Give kwin a few seconds to initialize; check it didn't crash immediately
@@ -349,7 +360,7 @@ _start_kwin_wizard() {
 			env_vars+=("__EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json")
 		fi
 
-		_run_on_wizard_bus "${env_vars[@]}" \
+		_run_on_wizard_bus "${wizard_environment[@]}" "${env_vars[@]}" \
 			kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
 		kwin_pid=$!
 
@@ -368,7 +379,8 @@ _start_kwin_wizard() {
 	# Attempt 3: software rendering via llvmpipe
 	_log "Retrying with software rendering..."
 
-	_run_on_wizard_bus LIBGL_ALWAYS_SOFTWARE=1 GALLIUM_DRIVER=llvmpipe \
+	_run_on_wizard_bus "${wizard_environment[@]}" \
+		LIBGL_ALWAYS_SOFTWARE=1 GALLIUM_DRIVER=llvmpipe \
 		kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
 	kwin_pid=$!
 
@@ -571,7 +583,7 @@ if [[ "$session_type" == "x11" ]]; then
 	# No private bus here, so D-Bus activation reaches the user's own
 	# at-spi-dbus-bus.service; only the toolkits still have to be told.
 	_enable_accessibility
-	python /usr/share/biglinux/livecd/main.py
+	env "${wizard_environment[@]}" python /usr/share/biglinux/livecd/main.py
 else
 	# Wayland session: launch appropriate compositor with setup wizard
 	if [[ "$display_manager" == "sddm" ]]; then
