@@ -265,16 +265,90 @@ if [[ -f $calamares_state_directory/start_calamares && ! -L $calamares_state_dir
 	# installer came up unthemed - silently, since this script does not run
 	# under set -e.
 	mkdir -p /root/.config
-	if [[ -e /usr/share/biglinux/themes/biglinux/.config/kdeglobals ]]; then
-		cp -f /usr/share/biglinux/themes/biglinux/.config/kdeglobals /root/.config/kdeglobals
-		cp -Rf /usr/share/biglinux/themes/biglinux/.config/Kvantum /root/.config/Kvantum
-	else
-		cp -f /etc/skel/.config/kdeglobals /root/.config/kdeglobals
-		cp -Rf /etc/skel/.config/Kvantum /root/.config/Kvantum
+	# The wizard writes the live user's kdeglobals and Kvantum theme from the
+	# light or dark choice it was given, so root's copy comes from there
+	# first: the packaged theme below is a single fixed palette, and using it
+	# unconditionally opened a light installer on a dark session. Both paths
+	# are checked for the live user's ownership and for not being links,
+	# because this runs as root over a directory the session can write.
+	live_theme_applied=0
+	live_kdeglobals=$user_home/.config/kdeglobals
+	live_kvantum=$user_home/.config/Kvantum
+	if [[ -f $live_kdeglobals && ! -L $live_kdeglobals ]] &&
+		[[ $(stat -c '%u' -- "$live_kdeglobals") == "$user_id" ]]; then
+		if cp -f -- "$live_kdeglobals" /root/.config/kdeglobals; then
+			live_theme_applied=1
+			if [[ -d $live_kvantum && ! -L $live_kvantum ]] &&
+				[[ $(stat -c '%u' -- "$live_kvantum") == "$user_id" ]]; then
+				rm -rf -- /root/.config/Kvantum
+				cp -Rf -- "$live_kvantum" /root/.config/Kvantum
+			fi
+		fi
+	fi
+	if ((live_theme_applied == 0)); then
+		if [[ -e /usr/share/biglinux/themes/biglinux/.config/kdeglobals ]]; then
+			cp -f /usr/share/biglinux/themes/biglinux/.config/kdeglobals /root/.config/kdeglobals
+			cp -Rf /usr/share/biglinux/themes/biglinux/.config/Kvantum /root/.config/Kvantum
+		else
+			cp -f /etc/skel/.config/kdeglobals /root/.config/kdeglobals
+			cp -Rf /etc/skel/.config/Kvantum /root/.config/Kvantum
+		fi
 	fi
 
-	QT_QPA_PLATFORMTHEME=kde QT_QUICK_BACKEND=software dbus-launch \
-		/usr/bin/calamares
+	# The session runs its Qt applications under Kvantum, which is what gives
+	# them their rounded widgets; the installer was started without the
+	# override and so fell back to Qt's built-in style, looking nothing like
+	# the rest of the desktop. The override is only set when the plugin is
+	# really installed, because naming a missing style lands Qt on that same
+	# fallback. The theme itself comes from the kvantum.kvconfig copied above.
+	calamares_environment=(QT_QPA_PLATFORMTHEME=kde QT_QUICK_BACKEND=software)
+	for qt_styles_directory in /usr/lib/qt6/plugins/styles /usr/lib/qt/plugins/styles; do
+		if [[ -e $qt_styles_directory/libkvantum.so ]]; then
+			calamares_environment+=(QT_STYLE_OVERRIDE=kvantum)
+			break
+		fi
+	done
+
+	# Kvantum is a QStyle, so it only reaches the Qt Widgets parts: the pages
+	# and the navigation are QtQuick Controls, which have a style of their own
+	# and were left on Qt's Basic default - square controls next to every
+	# other Qt application. org.kde.desktop hands their painting back to the
+	# QStyle, so they follow Kvantum like the widgets do; Fusion at least
+	# follows the palette when that style is not installed.
+	if [[ -d /usr/lib/qt6/qml/org/kde/desktop ]]; then
+		calamares_environment+=(QT_QUICK_CONTROLS_STYLE=org.kde.desktop)
+	else
+		calamares_environment+=(QT_QUICK_CONTROLS_STYLE=Fusion)
+	fi
+
+	# On Wayland the client draws its own title bar. The session asks Qt for
+	# the Adwaita decoration, and without it the installer came up with Qt's
+	# plain one: square buttons in a flat bar, nothing like the other windows.
+	for qt_decorations_directory in /usr/lib/qt6/plugins/wayland-decoration-client /usr/lib/qt/plugins/wayland-decoration-client; do
+		if [[ -e $qt_decorations_directory/libadwaita.so || -e $qt_decorations_directory/libqadwaitadecorations.so ]]; then
+			calamares_environment+=(QT_WAYLAND_DECORATION=adwaita)
+			break
+		fi
+	done
+
+	# That decoration takes its buttons and its light or dark shade from the
+	# GNOME preferences, which live in the user's dconf database - and this
+	# runs as root, where those keys do not exist, so it fell back to a single
+	# close button on a permanently light bar. Copying the two keys into
+	# root's database is the same move as the kdeglobals above.
+	copy_gnome_preference() {
+		local schema=$1 key=$2 path=$3 value=
+		value=$(runuser -u "$user" -- gsettings get "$schema" "$key" 2>/dev/null) || return 1
+		[[ -n $value ]] || return 1
+		dbus-launch dconf write "$path" "$value" >/dev/null 2>&1
+	}
+
+	copy_gnome_preference org.gnome.desktop.wm.preferences button-layout \
+		/org/gnome/desktop/wm/preferences/button-layout || true
+	copy_gnome_preference org.gnome.desktop.interface color-scheme \
+		/org/gnome/desktop/interface/color-scheme || true
+
+	env "${calamares_environment[@]}" dbus-launch /usr/bin/calamares
 
 	session_log=/root/.cache/calamares/session.log
 	if [[ ! -f $session_log || -L $session_log ]]; then

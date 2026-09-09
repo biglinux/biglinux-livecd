@@ -2,6 +2,7 @@
 set -euo pipefail
 
 readonly marker=/etc/biglinux-livecd/profile
+readonly os_release=/etc/os-release
 readonly builtin_root=/usr/share/biglinux/calamares-profiles
 readonly custom_root=/etc/biglinux-livecd/calamares-profiles
 
@@ -10,10 +11,30 @@ die() {
 	exit 1
 }
 
+# The image identifies itself in os-release, and its ID is the profile name.
+# Nothing writes the marker today - not this package, not the iso-profiles of
+# either project - so falling straight back to biglinux meant the bigcommunity
+# and xivastudio profiles were never selected: BigCommunity images opened the
+# installer with the BigLinux branding. Read without sourcing the file, since
+# it is shell syntax from outside this program.
+image_profile_id() {
+	local value= owner=
+	# On a systemd system /etc/os-release is a symlink into /usr/lib, so the
+	# link itself is expected; -f follows it, and what it resolves to has to
+	# be a root-owned regular file.
+	[[ -f $os_release ]] || return 1
+	owner=$(stat -L -c '%u' -- "$os_release" 2>/dev/null) || return 1
+	[[ $owner == 0 ]] || return 1
+	value=$(awk -F= '$1 == "ID" { gsub(/^"|"$/, "", $2); print $2; exit }' "$os_release" 2>/dev/null) || return 1
+	[[ $value =~ ^[a-z0-9][a-z0-9_-]{0,31}$ ]] || return 1
+	find_profile_path "$value" >/dev/null || return 1
+	printf '%s\n' "$value"
+}
+
 read_profile_id() {
 	local value=
 	if [[ ! -e $marker ]]; then
-		printf '%s\n' biglinux
+		image_profile_id || printf '%s\n' biglinux
 		return
 	fi
 	[[ -f $marker && ! -L $marker ]] || die "unsafe profile marker: $marker"
@@ -24,17 +45,23 @@ read_profile_id() {
 	printf '%s\n' "$value"
 }
 
-profile_path() {
+# Returns non-zero instead of exiting, so a profile id that turns out not to
+# be installed can be rejected and fall back rather than abort the caller.
+find_profile_path() {
 	local profile_id=$1 root candidate
 	for root in "$custom_root" "$builtin_root"; do
 		[[ -d $root && ! -L $root ]] || continue
 		candidate=$root/$profile_id
 		if [[ -d $candidate && ! -L $candidate && -f $candidate/settings.conf && -f $candidate/profile.json && -d $candidate/modules && -d $candidate/branding ]]; then
 			printf '%s\n' "$candidate"
-			return
+			return 0
 		fi
 	done
-	die "live profile is not installed: $profile_id"
+	return 1
+}
+
+profile_path() {
+	find_profile_path "$1" || die "live profile is not installed: $1"
 }
 
 profile_id=$(read_profile_id)
