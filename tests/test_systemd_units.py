@@ -81,27 +81,43 @@ def test_language_suggestion_unit_is_valid_for_staged_payload(
     assert wanted_unit.readlink() == Path("../biglinux-language-suggestion.service")
 
 
-def test_integrity_check_is_not_started_by_a_path_unit(tmp_path: Path) -> None:
+def test_integrity_check_starts_at_boot_with_the_lowest_priority(
+    tmp_path: Path,
+) -> None:
     verify_staged_unit(
         tmp_path,
         "biglinux-integrity-check.service",
         "/usr/bin/biglinux-verify-md5sum",
         "usr/bin/biglinux-verify-md5sum",
     )
-    preset = PACKAGE / "usr/lib/systemd/system-preset/50-biglinux-livecd.preset"
-    assert "biglinux-integrity-check.path" not in preset.read_text(encoding="utf-8")
+    preset = (
+        PACKAGE / "usr/lib/systemd/system-preset/50-biglinux-livecd.preset"
+    ).read_text(encoding="utf-8")
+    assert "enable biglinux-integrity-check.service" in preset
+    assert "biglinux-integrity-check.path" not in preset
     assert not (
         PACKAGE
         / "usr/lib/systemd/system/graphical.target.wants/biglinux-integrity-check.path"
     ).exists()
-    assert not (
+    # Started with the session instead of when the installer asks for the
+    # result, so the wait dialog only shows up on media slow enough that the
+    # check is still running by then.
+    wanted_unit = (
         PACKAGE
         / "usr/lib/systemd/system/graphical.target.wants/biglinux-integrity-check.service"
-    ).exists()
+    )
+    assert wanted_unit.is_symlink()
+    assert wanted_unit.readlink() == Path("../biglinux-integrity-check.service")
     unit = (
         PACKAGE / "usr/lib/systemd/system/biglinux-integrity-check.service"
     ).read_text(encoding="utf-8")
+    assert "WantedBy=graphical.target" in unit
+    assert "After=local-fs.target graphical.target" in unit
+    assert "Before=" not in unit
     assert "Nice=19" in unit
+    assert "CPUSchedulingPolicy=idle" in unit
+    assert "CPUWeight=1" in unit
     assert "IOSchedulingClass=idle" in unit
     assert "IOSchedulingPriority=7" in unit
+    assert "IOWeight=1" in unit
     assert "ConditionPathExists=/livefs-pkgs.txt" in unit

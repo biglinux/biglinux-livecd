@@ -460,17 +460,14 @@ def test_wizard_defers_noninitial_pages_and_accessibility_backends() -> None:
     )
 
 
-def test_integrity_check_waits_for_mapped_wizard() -> None:
+def test_wizard_does_not_gate_the_integrity_check() -> None:
+    # systemd starts the check with the session now, so the wizard no longer
+    # publishes a readiness marker for a path unit that no longer exists.
     application = (PACKAGE / "usr/share/biglinux/livecd/application.py").read_text(
         encoding="utf-8"
     )
-    assert 'self.win.connect("map", self._mark_wizard_visible)' in application
-    assert (
-        'marker = os.path.join(runtime_directory, "biglinux-live-wizard-ready")'
-        in application
-    )
-    assert "runtime_directory != expected_directory" in application
-    assert "os.O_NOFOLLOW" in application
+    assert "_mark_wizard_visible" not in application
+    assert "biglinux-live-wizard-ready" not in application
 
 
 def test_installer_prefers_current_gnome_settings_without_following_home_links(

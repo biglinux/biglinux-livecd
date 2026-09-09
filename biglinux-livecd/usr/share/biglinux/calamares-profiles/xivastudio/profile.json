@@ -2,6 +2,7 @@
   "id": "xivastudio",
   "display_name": "XivaStudio",
   "branding": "xivastudio",
+  "wizard_logo": "/usr/share/pixmaps/icon-logo-xivastudio.png",
   "netinstall": true,
   "warn_old_release": true
 }

@@ -741,15 +741,22 @@ class SystemService:
         return profile_id if isinstance(profile_id, str) else "biglinux"
 
     def get_profile_logo_path(self) -> str | None:
-        """Return the logo declared by the selected profile."""
+        """Return the wizard logo the selected profile explicitly declares.
+
+        Only an explicit "wizard_logo" counts. Guessing
+        branding/<id>/logo.svg made every profile override the wizard assets
+        with the Calamares branding logo, which is the same BigLinux mark in
+        all profiles, so BigCommunity lost its own header logo.
+        """
         profile = self.get_live_profile_data()
         directory = profile.get("directory")
-        if not isinstance(directory, str):
-            return None
         logo = profile.get("wizard_logo")
-        if isinstance(logo, str):
-            logo_path = logo if os.path.isabs(logo) else os.path.join(directory, logo)
+        if not isinstance(logo, str) or not logo:
+            return None
+        if os.path.isabs(logo):
+            logo_path = logo
+        elif isinstance(directory, str):
+            logo_path = os.path.join(directory, logo)
         else:
-            profile_id = profile.get("id", "biglinux")
-            logo_path = os.path.join(directory, "branding", str(profile_id), "logo.svg")
+            return None
         return logo_path if os.path.isfile(logo_path) else None
