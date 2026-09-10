@@ -22,11 +22,21 @@ Page {
             .replace(/BigLinux/g, Branding.string(Branding.ProductName))
     }
 
-    function summaryIcon(index) {
-        if (index === 0) return "icons/location-content.svg"
-        if (index === 1) return "icons/keyboard-content.svg"
-        if (index === 2) return "icons/partition-content.svg"
-        return "icons/summary-content.svg"
+    // One badge per step of the summary, in that step's own colour. The order
+    // is the show sequence of settings.conf, which is what fills the model.
+    function badgeIcon(index) {
+        if (index === 0) return "visuals/badge-location.svg"
+        if (index === 1) return "visuals/badge-keyboard.svg"
+        if (index === 2) return "visuals/badge-partition.svg"
+        if (index === 3) return "visuals/badge-users.svg"
+        return "visuals/badge-summary.svg"
+    }
+
+    function badgeTint(index) {
+        if (index === 1) return Qt.rgba(0.55, 0.36, 0.96, 0.16)
+        if (index === 2) return Qt.rgba(0.13, 0.63, 0.42, 0.16)
+        if (index === 3) return Qt.rgba(0.91, 0.51, 0.23, 0.16)
+        return Qt.rgba(0.13, 0.52, 0.82, 0.16)
     }
 
     function escapeHtml(value) {
@@ -71,46 +81,158 @@ Page {
         return String(message)
     }
 
+
+    // Pulled from the installer's translation of the confirmation dialog it
+    // replaces; see the frame that uses it below.
+    readonly property string undoWarning: {
+        const source = "The %1 installer is about to make changes to your disk "
+            + "in order to install %2.<br/><strong>You will not be able to "
+            + "undo these changes.</strong>"
+        const translated = qsTranslate(
+            "Calamares::ViewManager",
+            source,
+            "%1 is short product name, %2 is short product name with version")
+        // qsTranslate hands back the source when a language has no
+        // translation for it, which is exactly what the dialog itself showed
+        // in that case, so the warning is never dropped for want of one.
+        const bold = /<strong>(.*?)<\/strong>/.exec(translated)
+        return bold ? bold[1] : translated
+    }
+
     padding: 24
     background: Rectangle { color: root.palette.window }
 
+    // Every colour below is the accent at a low alpha over whatever the page
+    // background is, so one set of values reads on the light and on the dark
+    // palette; a solid panel would have to be maintained twice.
+    readonly property color infoTint: Qt.rgba(0.13, 0.52, 0.82, 0.12)
+    readonly property color infoLine: Qt.rgba(0.13, 0.52, 0.82, 0.38)
+    readonly property color infoMark: "#2185D0"
+    readonly property color warnTint: Qt.rgba(0.91, 0.51, 0.13, 0.13)
+    readonly property color warnLine: Qt.rgba(0.91, 0.51, 0.13, 0.42)
+    readonly property color warnMark: "#E8833A"
+
     ColumnLayout {
         anchors.fill: parent
-        spacing: 12
+        spacing: 10
 
+        // Only the title. The sentence that used to sit under it repeated
+        // what the panel below already says, and every line the heading takes
+        // is a line the choices lose - they were losing enough of them to
+        // need a scroll bar.
         PageHeader {
             Layout.fillWidth: true
             title: root.tr("Review")
-            description: root.tr("Check the choices below. The disks will not be changed until you confirm the installation.")
         }
 
-        NativeFrame {
+        // Side by side: what is still safe, and what will not be undone. They
+        // used to be stacked, which pushed the choices themselves off screen.
+        RowLayout {
             Layout.fillWidth: true
+            spacing: 12
 
-            RowLayout {
-                anchors.fill: parent
-                spacing: 12
+            // Both panels take the taller one's height, so they line up.
+            // Layout.fillHeight would do it, except that in a row inside a
+            // column it also makes the row itself claim the space the list
+            // below needs, and the list ends up with none.
+            readonly property real panelHeight:
+                Math.max(safePanel.implicitHeight, undoPanel.implicitHeight)
 
-                Image {
-                    Layout.preferredWidth: 42
-                    Layout.preferredHeight: 42
-                    source: "visuals/review-shield.svg"
-                    fillMode: Image.PreserveAspectFit
-                }
+            TintedFrame {
+                id: safePanel
+                Layout.fillWidth: true
+                Layout.preferredHeight: parent.panelHeight
+                tint: root.infoTint
+                line: root.infoLine
 
-                ColumnLayout {
-                    Layout.fillWidth: true
-                    spacing: 2
-                    Label {
-                        Layout.fillWidth: true
-                        text: root.tr("Nothing will be changed until you review and confirm.")
-                        font.weight: Font.DemiBold
-                        wrapMode: Text.WordWrap
+                RowLayout {
+                    anchors.fill: parent
+                    spacing: 12
+
+                    Rectangle {
+                        Layout.preferredWidth: 34
+                        Layout.preferredHeight: 34
+                        Layout.alignment: Qt.AlignTop
+                        radius: 17
+                        color: Qt.rgba(0.13, 0.52, 0.82, 0.22)
+
+                        Image {
+                            anchors.centerIn: parent
+                            width: 20
+                            height: 20
+                            source: "visuals/review-shield.svg"
+                            sourceSize.width: width
+                            sourceSize.height: height
+                            fillMode: Image.PreserveAspectFit
+                            smooth: true
+                        }
                     }
+
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        spacing: 2
+
+                        Label {
+                            Layout.fillWidth: true
+                            text: root.tr("Nothing will be changed until you review and confirm.")
+                            font.weight: Font.DemiBold
+                            wrapMode: Text.WordWrap
+                        }
+                        Label {
+                            Layout.fillWidth: true
+                            text: root.tr("You can still go back and adjust any choice before starting the installation.")
+                            color: root.palette.placeholderText
+                            wrapMode: Text.WordWrap
+                        }
+                    }
+                }
+            }
+
+            // The warning that used to sit in the "Continue with Installation?"
+            // dialog. That dialog said what this page already says, so it is
+            // switched off in settings.conf and the one sentence worth keeping
+            // moved here, above the list that scrolls: below it, the warning
+            // could be scrolled out of sight.
+            //
+            // The sentence is borrowed from the installer's own catalogue
+            // rather than translated again: it is the bold half of the
+            // dialog's question, so the translation already exists in every
+            // language Calamares ships.
+            TintedFrame {
+                id: undoPanel
+                Layout.fillWidth: true
+                Layout.preferredHeight: parent.panelHeight
+                tint: root.warnTint
+                line: root.warnLine
+
+                RowLayout {
+                    anchors.fill: parent
+                    spacing: 12
+
+                    Rectangle {
+                        Layout.preferredWidth: 34
+                        Layout.preferredHeight: 34
+                        Layout.alignment: Qt.AlignTop
+                        radius: 17
+                        color: Qt.rgba(0.91, 0.51, 0.13, 0.22)
+
+                        Image {
+                            anchors.centerIn: parent
+                            width: 20
+                            height: 20
+                            source: "visuals/status-alert.svg"
+                            sourceSize.width: width
+                            sourceSize.height: height
+                            fillMode: Image.PreserveAspectFit
+                            smooth: true
+                        }
+                    }
+
                     Label {
                         Layout.fillWidth: true
-                        text: root.tr("You can still go back and adjust any choice before starting the installation.")
-                        color: root.palette.placeholderText
+                        Layout.alignment: Qt.AlignVCenter
+                        text: root.undoWarning
+                        font.weight: Font.DemiBold
                         wrapMode: Text.WordWrap
                     }
                 }
@@ -134,28 +256,41 @@ Page {
             boundsBehavior: Flickable.StopAtBounds
             ScrollBar.vertical: ScrollBar { policy: ScrollBar.AsNeeded }
 
-            delegate: NativeFrame {
+            delegate: TintedFrame {
                 required property int index
                 required property string title
                 required property string message
+
                 width: ListView.view.width
+                padding: 12
 
                 RowLayout {
                     anchors.fill: parent
-                    spacing: 12
+                    spacing: 14
 
-                    Image {
-                        Layout.preferredWidth: 38
-                        Layout.preferredHeight: 38
+                    Rectangle {
+                        Layout.preferredWidth: 40
+                        Layout.preferredHeight: 40
                         Layout.alignment: Qt.AlignTop
-                        source: root.summaryIcon(index)
-                        fillMode: Image.PreserveAspectFit
-                        smooth: true
+                        radius: 20
+                        color: root.badgeTint(index)
+
+                        Image {
+                            anchors.centerIn: parent
+                            width: 22
+                            height: 22
+                            source: root.badgeIcon(index)
+                            sourceSize.width: width
+                            sourceSize.height: height
+                            fillMode: Image.PreserveAspectFit
+                            smooth: true
+                        }
                     }
 
                     ColumnLayout {
                         Layout.fillWidth: true
                         spacing: 4
+
                         Label {
                             Layout.fillWidth: true
                             text: title

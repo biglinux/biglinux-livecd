@@ -631,7 +631,9 @@ def test_branding_catalog_covers_every_string_and_language() -> None:
             )
         }
     )
-    assert len(used) >= 44
+    # One fewer since the review page dropped the description under its
+    # title; the floor only guards against the regex matching nothing.
+    assert len(used) >= 43
 
     # English is the source text; every other catalog the package ships needs
     # an entry for each of these.
