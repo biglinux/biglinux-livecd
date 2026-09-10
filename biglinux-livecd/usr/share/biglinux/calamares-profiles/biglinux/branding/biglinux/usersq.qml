@@ -19,12 +19,6 @@ Page {
 
     function tr(source) { return I18n.translate(source, localeKey) }
 
-    function initials(name) {
-        var parts = String(name).trim().split(/\s+/)
-        if (!parts.length || parts[0] === "") return "?"
-        if (parts.length === 1) return parts[0].charAt(0).toUpperCase()
-        return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase()
-    }
 
     padding: 20
     background: Rectangle { color: root.palette.window }
@@ -301,12 +295,20 @@ Page {
                         radius: 46
                         color: root.palette.highlight
 
-                        Label {
+                        // The avatar stays the symbolic user glyph whatever
+                        // the name is. It used to be the initials, falling
+                        // back to a question mark while the field was empty,
+                        // and that question mark read as an error rather than
+                        // as a field still to fill.
+                        Image {
                             anchors.centerIn: parent
-                            text: root.initials(config.fullName)
-                            color: root.palette.highlightedText
-                            font.pixelSize: 30
-                            font.weight: Font.DemiBold
+                            width: 46
+                            height: width
+                            source: "icons/users.svg"
+                            sourceSize.width: width
+                            sourceSize.height: height
+                            fillMode: Image.PreserveAspectFit
+                            smooth: true
                         }
                     }
 

@@ -24,6 +24,9 @@ ColumnLayout {
 
     Label {
         id: descriptionLabel
+        // A page with nothing to add under its title should not pay for an
+        // empty line; an invisible item is left out of the layout.
+        visible: text !== ""
         Layout.fillWidth: true
         color: root.descriptionColor
         font.pixelSize: Math.max(14, Math.round(Qt.application.font.pointSize * 1.28))
