@@ -307,8 +307,29 @@ Page {
                         radius: 46
                         color: root.palette.highlight
 
+                        readonly property bool hasName:
+                            String(config.fullName).trim() !== ""
+
+                        // With no name typed there are no initials, and the
+                        // placeholder was a question mark, which reads as an
+                        // error. The symbolic user glyph says the same thing
+                        // without alarming anyone; the initials replace it as
+                        // soon as there is a name.
+                        Image {
+                            anchors.centerIn: parent
+                            visible: !parent.hasName
+                            width: 46
+                            height: width
+                            source: "icons/users.svg"
+                            sourceSize.width: width
+                            sourceSize.height: height
+                            fillMode: Image.PreserveAspectFit
+                            smooth: true
+                        }
+
                         Label {
                             anchors.centerIn: parent
+                            visible: parent.hasName
                             text: root.initials(config.fullName)
                             color: root.palette.highlightedText
                             font.pixelSize: 30
