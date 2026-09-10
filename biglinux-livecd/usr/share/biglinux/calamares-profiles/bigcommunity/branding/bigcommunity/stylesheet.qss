@@ -100,3 +100,44 @@ EncryptWidget QLineEdit {
 EncryptWidget QLineEdit:focus {
     border: 1px solid palette(highlight);
 }
+
+/* Calamares builds its confirmations - cancelling the install, closing during
+ * it - as plain QMessageBox instances with no object name of its own, so this
+ * is the only handle on them. They came up cramped and with small buttons
+ * beside the roomy QML pages, which is what made them look out of place.
+ * CalamaresWindow applies this stylesheet to itself, and the dialogs are its
+ * children, so these rules reach them. */
+QMessageBox {
+    background-color: palette(window);
+}
+
+QMessageBox QLabel {
+    color: palette(window-text);
+    background-color: transparent;
+    font-size: 14px;
+}
+
+/* Qt gives its own children these names; the text one carries the message. */
+QMessageBox QLabel#qt_msgbox_label {
+    /* Wide enough for the longest of these messages to keep the two
+     * lines its own text is written as, instead of wrapping again. */
+    min-width: 460px;
+    padding: 22px 26px 18px 14px;
+}
+
+QMessageBox QLabel#qt_msgboxex_icon_label {
+    padding: 20px 4px 10px 20px;
+}
+
+QMessageBox QPushButton {
+    /* Calamares puts a tick and a cross on these buttons, which repeat what
+     * the labels already say and are the only icon-theme artwork in the
+     * dialog, so they were the least consistent part of it.
+     *
+     * Nothing else is set here on purpose. Giving these buttons a size or a
+     * padding makes the widget style draw its default-button frame around the
+     * box while the button paints inside it, which showed up as a second
+     * rectangle around the default button. Leaving the geometry alone keeps
+     * them identical to every other button the style draws. */
+    icon-size: 0px;
+}

@@ -25,12 +25,6 @@ Page {
             .replace(/BigLinux/g, Branding.string(Branding.ProductName))
     }
 
-    function initials(name) {
-        var parts = String(name).trim().split(/\s+/)
-        if (!parts.length || parts[0] === "") return "?"
-        if (parts.length === 1) return parts[0].charAt(0).toUpperCase()
-        return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase()
-    }
 
     padding: 20
     background: Rectangle { color: root.palette.window }
@@ -307,17 +301,13 @@ Page {
                         radius: 46
                         color: root.palette.highlight
 
-                        readonly property bool hasName:
-                            String(config.fullName).trim() !== ""
-
-                        // With no name typed there are no initials, and the
-                        // placeholder was a question mark, which reads as an
-                        // error. The symbolic user glyph says the same thing
-                        // without alarming anyone; the initials replace it as
-                        // soon as there is a name.
+                        // The avatar stays the symbolic user glyph whatever
+                        // the name is. It used to be the initials, falling
+                        // back to a question mark while the field was empty,
+                        // and that question mark read as an error rather than
+                        // as a field still to fill.
                         Image {
                             anchors.centerIn: parent
-                            visible: !parent.hasName
                             width: 46
                             height: width
                             source: "icons/users.svg"
@@ -325,15 +315,6 @@ Page {
                             sourceSize.height: height
                             fillMode: Image.PreserveAspectFit
                             smooth: true
-                        }
-
-                        Label {
-                            anchors.centerIn: parent
-                            visible: parent.hasName
-                            text: root.initials(config.fullName)
-                            color: root.palette.highlightedText
-                            font.pixelSize: 30
-                            font.weight: Font.DemiBold
                         }
                     }
 
