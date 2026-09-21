@@ -34,7 +34,7 @@ images:
     # Static fallback used only if the traditional welcome module is restored.
     productWelcome: "welcome-illustration.svg"
 
-slideshow: "BigBlocks.qml"
+slideshow: "BigPulse.qml"
 slideshowAPI: 2
 
 style:
