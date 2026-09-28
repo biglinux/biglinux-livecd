@@ -23,7 +23,11 @@ from .file_operations import (
     write_text_file,
 )
 from .i18n import _
-from .subprocesses import get_command_output, pacman_query_installed
+from .subprocesses import (
+    get_command_output,
+    pacman_query_installed,
+    pacman_required_by,
+)
 
 __all__ = [
     "_",
@@ -47,4 +51,5 @@ __all__ = [
     "validate_package_name",
     "get_command_output",
     "pacman_query_installed",
+    "pacman_required_by",
 ]

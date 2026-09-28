@@ -205,7 +205,9 @@ class MinimalPage(Gtk.Box):
     def do_continue_action(self, button):
         """This method is called by the main window's continue button."""
         self.logger.info("Continue with minimal installation")
-        packages_to_remove = [pkg.name for pkg in self.packages if not pkg.selected]
+        packages_to_remove = self.package_service.with_dependents(
+            [pkg.name for pkg in self.packages if not pkg.selected]
+        )
 
         if not packages_to_remove:
             self.logger.info(

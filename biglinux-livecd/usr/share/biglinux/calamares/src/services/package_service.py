@@ -11,6 +11,7 @@ from ..infrastructure import (
     TEMP_FILES,
     load_json_file,
     pacman_query_installed,
+    pacman_required_by,
     validate_package_name,
     write_text_file,
 )
@@ -88,3 +89,32 @@ class PackageService:
         ]
         write_text_file("\n".join(packages), TEMP_FILES["packages_to_remove"])
         return packages
+
+    def with_dependents(self, packages: list[str]) -> list[str]:
+        """Add every installed package that depends on one being removed.
+
+        Calamares removes with ``pacman -Rs``, which refuses to take away a
+        package that something still installed requires. Unchecking
+        LibreOffice left its language packs behind, so the whole
+        installation failed with "Package Manager error".
+        """
+        requested = [name for name in packages if name in self._installed_packages]
+        seen = set(requested)
+        added: list[str] = []
+        pending = requested
+        while pending:
+            dependents = pacman_required_by(pending)
+            pending = []
+            for names in dependents.values():
+                for name in names:
+                    if (
+                        name not in seen
+                        and name in self._installed_packages
+                        and validate_package_name(name)
+                    ):
+                        seen.add(name)
+                        added.append(name)
+                        pending.append(name)
+        if added:
+            self.logger.info("Also removing dependent packages: %s", " ".join(added))
+        return requested + added

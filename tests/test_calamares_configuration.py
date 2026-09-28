@@ -15,9 +15,9 @@ REPOSITORY = Path(__file__).resolve().parents[1]
 CALAMARES = REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares"
 sys.path.insert(0, str(CALAMARES))
 
-from src.infrastructure import file_operations  # noqa: E402
+from src.infrastructure import file_operations, subprocesses  # noqa: E402
 from src.profile import load_profile  # noqa: E402
-from src.services import install_service, system_service  # noqa: E402
+from src.services import install_service, package_service, system_service  # noqa: E402
 
 
 def test_atomic_text_write_preserves_old_file_on_replace_failure(
@@ -164,6 +164,55 @@ def test_packages_configuration_yaml_and_invalid_name(
     assert not install_service.InstallService._configure_package_settings(owner)
     config.packages_to_install = ["--cascade"]
     assert not install_service.InstallService._configure_package_settings(owner)
+
+
+def test_pacman_required_by_parses_wrapped_values(monkeypatch) -> None:
+    output = (
+        "Name            : libreoffice-fresh\n"
+        "Required By     : libreoffice-fresh-pt-br\n"
+        "                  kde-servicemenus-officeconverter\n"
+        "Optional For    : None\n"
+        "\n"
+        "Name            : jamesdsp\n"
+        "Required By     : None\n"
+    )
+    monkeypatch.setattr(subprocesses.shutil, "which", lambda _name: "/usr/bin/pacman")
+    monkeypatch.setattr(subprocesses, "get_command_output", lambda *_a, **_k: output)
+    assert subprocesses.pacman_required_by(["libreoffice-fresh", "jamesdsp"]) == {
+        "libreoffice-fresh": [
+            "libreoffice-fresh-pt-br",
+            "kde-servicemenus-officeconverter",
+        ],
+        "jamesdsp": [],
+    }
+
+
+def test_minimal_removal_includes_installed_dependents(monkeypatch) -> None:
+    # pacman -Rs aborts the whole installation when a package that stays
+    # installed still requires one being removed.
+    graph = {
+        "libreoffice-fresh": ["libreoffice-fresh-pt-br", "not-installed"],
+        "libreoffice-fresh-pt-br": ["pt-br-addon"],
+        "steam": [],
+    }
+    monkeypatch.setattr(
+        package_service,
+        "pacman_required_by",
+        lambda names: {name: graph.get(name, []) for name in names},
+    )
+    service = package_service.PackageService()
+    service._installed_packages = {
+        "libreoffice-fresh",
+        "libreoffice-fresh-pt-br",
+        "pt-br-addon",
+        "steam",
+    }
+    assert service.with_dependents(["libreoffice-fresh", "steam", "missing"]) == [
+        "libreoffice-fresh",
+        "steam",
+        "libreoffice-fresh-pt-br",
+        "pt-br-addon",
+    ]
 
 
 def test_install_only_journey_generates_packages_configuration(
