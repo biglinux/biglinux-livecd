@@ -2,12 +2,15 @@
 Description=Verify BigLinux live media in the background
 Documentation=https://github.com/biglinux/biglinux-livecd
 ConditionPathExists=/livefs-pkgs.txt
-# Starts as soon as the session target is reached, so the check runs while the
-# user is still picking a language instead of only when the installer is
-# opened, which left the wait dialog on screen for minutes. Nothing is ordered
-# before it and every scheduler knob below is the lowest one available, so it
-# only consumes the CPU and the media bandwidth the boot is not using.
-After=local-fs.target graphical.target
+# Starts with the display manager, so the check runs while the user is still
+# picking a language instead of only when the installer is opened, which left
+# the wait dialog on screen for minutes. It is not ordered after
+# graphical.target: that waits for multi-user.target and so for every unit
+# behind network-online.target, which held the check back for the whole
+# wait-online timeout. Nothing is ordered before it and every scheduler knob
+# below is the lowest one available, so it only consumes the CPU and the media
+# bandwidth the boot is not using.
+After=local-fs.target display-manager.service
 
 [Service]
 Type=oneshot

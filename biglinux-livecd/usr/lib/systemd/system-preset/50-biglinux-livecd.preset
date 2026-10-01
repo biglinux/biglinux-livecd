@@ -1,3 +1,16 @@
 enable livecd-tweaks.service
 enable biglinux-language-suggestion.service
 enable biglinux-integrity-check.service
+# The live image boots with an empty machine-id, so systemd applies the presets
+# on every boot, and systemd's own 90-systemd.preset turns on units the image
+# never asked for. NetworkManager owns the network here; networkd manages no
+# link, so wait-online held network-online.target - and with it
+# multi-user.target and graphical.target - for its full two-minute timeout on
+# every live boot. NetworkManager also writes resolv.conf itself, so resolved
+# only duplicated the lookups it serves, and the live user is a plain account
+# with no home area for homed. The installed system runs none of them.
+disable systemd-networkd.service
+disable systemd-networkd-wait-online.service
+disable systemd-resolved.service
+disable systemd-homed.service
+disable systemd-homed-activate.service

@@ -74,13 +74,26 @@ Item {
         }
     }
 
+    SystemPalette {
+        id: palette
+        colorGroup: SystemPalette.Active
+    }
+
+    // Calamares hosts the slideshow in a QQuickWidget, which clears to white
+    // instead of showing the window behind it, so a transparent root left a
+    // white band above the game and white rounded corners.
+    Rectangle {
+        anchors.fill: parent
+        color: palette.window
+    }
+
     Rectangle {
         id: gameArea
 
         anchors.fill: parent
         // The panel next to it starts 11 pixels down, and the two should line
-        // up. The strip left above shows the window background, exactly as it
-        // does above the sidebar, so no band of another colour appears.
+        // up. The strip left above shows the window colour painted behind it, the
+        // same as above the sidebar.
         anchors.topMargin: 11
         radius: 12
         clip: true

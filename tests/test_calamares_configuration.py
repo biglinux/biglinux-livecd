@@ -358,7 +358,10 @@ def test_every_branding_qml_file_parses() -> None:
     qmllint exits non-zero only when a file cannot be parsed; the style
     warnings it also prints do not fail this.
     """
-    qmllint = shutil.which("qmllint")
+    # Calamares runs on Qt 6; a Qt 5 qmllint first on PATH rejects its syntax.
+    qmllint = shutil.which("qmllint", path="/usr/lib/qt6/bin") or shutil.which(
+        "qmllint"
+    )
     if qmllint is None:
         pytest.skip("qmllint is not installed")
 

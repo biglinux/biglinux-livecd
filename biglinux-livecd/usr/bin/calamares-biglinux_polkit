@@ -50,9 +50,13 @@ decoration_layout=$(
 append_safe_environment BIGLINUX_DECORATION_LAYOUT "$decoration_layout" '^[a-z]+[a-z,:]*$'
 
 append_safe_environment DISPLAY "${DISPLAY:-}" '^([A-Za-z0-9._-]+)?:[0-9]+([.][0-9]+)?$'
-append_safe_environment WAYLAND_DISPLAY "${WAYLAND_DISPLAY:-}" '^wayland-[A-Za-z0-9._-]+$'
-if [[ ${XDG_RUNTIME_DIR:-} =~ ^/run/user/[0-9]+$ && -d ${XDG_RUNTIME_DIR:-} ]]; then
-	installer_environment+=("XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR")
+# The live user's runtime directory is not passed on: GLib and dconf running
+# as root created dconf/user there owned by root, and every gsettings write in
+# the session failed from then on. Wayland takes the socket as an absolute
+# path instead, which is all the installer needed that directory for.
+if [[ ${XDG_RUNTIME_DIR:-} =~ ^/run/user/[0-9]+$ && -d ${XDG_RUNTIME_DIR:-} &&
+	${WAYLAND_DISPLAY:-} =~ ^wayland-[A-Za-z0-9._-]+$ ]]; then
+	installer_environment+=("WAYLAND_DISPLAY=$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY")
 fi
 append_safe_environment XAUTHORITY "${XAUTHORITY:-}" '^/[^[:cntrl:]]+$'
 append_safe_environment DBUS_SESSION_BUS_ADDRESS "${DBUS_SESSION_BUS_ADDRESS:-}" '^[^[:space:][:cntrl:]]+$'

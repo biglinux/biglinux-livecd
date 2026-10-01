@@ -265,34 +265,18 @@ if [[ -f $calamares_state_directory/start_calamares && ! -L $calamares_state_dir
 	# installer came up unthemed - silently, since this script does not run
 	# under set -e.
 	mkdir -p /root/.config
-	# The wizard writes the live user's kdeglobals and Kvantum theme from the
-	# light or dark choice it was given, so root's copy comes from there
-	# first: the packaged theme below is a single fixed palette, and using it
-	# unconditionally opened a light installer on a dark session. Both paths
-	# are checked for the live user's ownership and for not being links,
-	# because this runs as root over a directory the session can write.
-	live_theme_applied=0
-	live_kdeglobals=$user_home/.config/kdeglobals
-	live_kvantum=$user_home/.config/Kvantum
-	if [[ -f $live_kdeglobals && ! -L $live_kdeglobals ]] &&
-		[[ $(stat -c '%u' -- "$live_kdeglobals") == "$user_id" ]]; then
-		if cp -f -- "$live_kdeglobals" /root/.config/kdeglobals; then
-			live_theme_applied=1
-			if [[ -d $live_kvantum && ! -L $live_kvantum ]] &&
-				[[ $(stat -c '%u' -- "$live_kvantum") == "$user_id" ]]; then
-				rm -rf -- /root/.config/Kvantum
-				cp -Rf -- "$live_kvantum" /root/.config/Kvantum
-			fi
-		fi
-	fi
-	if ((live_theme_applied == 0)); then
-		if [[ -e /usr/share/biglinux/themes/biglinux/.config/kdeglobals ]]; then
-			cp -f /usr/share/biglinux/themes/biglinux/.config/kdeglobals /root/.config/kdeglobals
-			cp -Rf /usr/share/biglinux/themes/biglinux/.config/Kvantum /root/.config/Kvantum
-		else
-			cp -f /etc/skel/.config/kdeglobals /root/.config/kdeglobals
-			cp -Rf /etc/skel/.config/Kvantum /root/.config/Kvantum
-		fi
+	# The installer always opens light, whatever the session uses: the
+	# partition page is a Qt Widgets page whose texts and charts were hard to
+	# read on the dark palette. The packaged BigLinux theme is that fixed light
+	# palette. Kvantum is removed first because cp -R into an existing
+	# directory nests the copy inside it instead of replacing it.
+	rm -rf -- /root/.config/Kvantum
+	if [[ -e /usr/share/biglinux/themes/biglinux/.config/kdeglobals ]]; then
+		cp -f /usr/share/biglinux/themes/biglinux/.config/kdeglobals /root/.config/kdeglobals
+		cp -Rf /usr/share/biglinux/themes/biglinux/.config/Kvantum /root/.config/Kvantum
+	else
+		cp -f /etc/skel/.config/kdeglobals /root/.config/kdeglobals
+		cp -Rf /etc/skel/.config/Kvantum /root/.config/Kvantum
 	fi
 
 	# The session runs its Qt applications under Kvantum, which is what gives
@@ -334,19 +318,19 @@ if [[ -f $calamares_state_directory/start_calamares && ! -L $calamares_state_dir
 	# That decoration takes its buttons and its light or dark shade from the
 	# GNOME preferences, which live in the user's dconf database - and this
 	# runs as root, where those keys do not exist, so it fell back to a single
-	# close button on a permanently light bar. Copying the two keys into
-	# root's database is the same move as the kdeglobals above.
+	# close button. The buttons are copied from the user; the shade is set
+	# light to match the palette above.
 	copy_gnome_preference() {
 		local schema=$1 key=$2 path=$3 value=
-		value=$(runuser -u "$user" -- gsettings get "$schema" "$key" 2>/dev/null) || return 1
+		# runuser keeps root's HOME, where the user's dconf database is not.
+	value=$(runuser -u "$user" -- env HOME="$user_home" gsettings get "$schema" "$key" 2>/dev/null) || return 1
 		[[ -n $value ]] || return 1
 		dbus-launch dconf write "$path" "$value" >/dev/null 2>&1
 	}
 
 	copy_gnome_preference org.gnome.desktop.wm.preferences button-layout \
 		/org/gnome/desktop/wm/preferences/button-layout || true
-	copy_gnome_preference org.gnome.desktop.interface color-scheme \
-		/org/gnome/desktop/interface/color-scheme || true
+	dbus-launch dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'" >/dev/null 2>&1 || true
 
 	env "${calamares_environment[@]}" dbus-launch /usr/bin/calamares
 

@@ -15,7 +15,11 @@ from accessibility import announce, set_speak_voice
 from config import LanguageSelection
 from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk
 from logging_config import get_logger
-from suggested_locale import language_sort_key, load_suggested_locale
+from suggested_locale import (
+    SUGGESTION_PATH,
+    language_sort_key,
+    load_suggested_locale,
+)
 from translations import _
 
 logger = get_logger()
@@ -190,6 +194,7 @@ class LanguageView(Adw.Bin):
         self.set_vexpand(True)
         self._store = Gio.ListStore(item_type=LanguageListItem)
         self.filter_timeout_id = 0
+        self._suggestion_monitor: Gio.FileMonitor | None = None
 
         self.set_child(self._build_ui())
         GLib.idle_add(self._load_languages)
@@ -265,6 +270,8 @@ class LanguageView(Adw.Bin):
             GLib.idle_add(self._post_load_setup)
             # Save for later precache when voice preview is enabled
             self._language_data = language_data
+            if suggested_locale is None:
+                self._watch_for_suggestion(supported_locales)
 
         except (FileNotFoundError, json.JSONDecodeError) as e:
             logger.error(f"Error loading languages: {e}")
@@ -495,9 +502,58 @@ class LanguageView(Adw.Bin):
                     continue
             self._kokoro_generate(voice, lang_code, text, cache_key)
 
+    def _watch_for_suggestion(self, supported_locales):
+        # The boot probe waits up to several seconds for the network to ask
+        # GeoIP, so the wizard often opens before it has an answer. The
+        # directory exists while the probe runs; watching it costs nothing
+        # until the result is written.
+        if not SUGGESTION_PATH.parent.is_dir():
+            return
+        try:
+            monitor = Gio.File.new_for_path(
+                str(SUGGESTION_PATH.parent)
+            ).monitor_directory(Gio.FileMonitorFlags.NONE, None)
+        except GLib.Error as error:
+            logger.warning(f"Cannot watch for the language suggestion: {error}")
+            return
+        monitor.connect(
+            "changed",
+            lambda *_args: self._apply_late_suggestion(supported_locales),
+        )
+        self._suggestion_monitor = monitor
+        # The result may have landed between the first read and the watch.
+        self._apply_late_suggestion(supported_locales)
+
+    def _stop_watching_suggestion(self):
+        if self._suggestion_monitor is not None:
+            self._suggestion_monitor.cancel()
+            self._suggestion_monitor = None
+
+    def _apply_late_suggestion(self, supported_locales):
+        suggested_locale = load_suggested_locale(supported_locales)
+        if suggested_locale is None:
+            return
+        self._stop_watching_suggestion()
+        # Moving the list under someone who already searched or picked another
+        # language would take their choice away; the suggestion only replaces
+        # the untouched default.
+        if self.search_entry.get_text() or self.selection_model.get_selected() not in (
+            0,
+            Gtk.INVALID_LIST_POSITION,
+        ):
+            return
+        language_data = sorted(
+            self._language_data,
+            key=lambda item: language_sort_key(item.code, item.name, suggested_locale),
+        )
+        self._store.splice(0, self._store.get_n_items(), language_data)
+        self._language_data = language_data
+        self._select_first_item_after_filter()
+
     def _activate_item(self, item):
         if not item:
             return
+        self._stop_watching_suggestion()
         params = parse_qs(urlparse(item.url).query)
         params_flat = {k: v[0] for k, v in params.items()}
         self.sig_language_selected.emit(  # type: ignore[arg-type]

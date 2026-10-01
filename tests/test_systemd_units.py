@@ -95,6 +95,7 @@ def test_integrity_check_starts_at_boot_with_the_lowest_priority(
     ).read_text(encoding="utf-8")
     assert "enable biglinux-integrity-check.service" in preset
     assert "biglinux-integrity-check.path" not in preset
+    assert "disable systemd-networkd-wait-online.service" in preset
     assert not (
         PACKAGE
         / "usr/lib/systemd/system/graphical.target.wants/biglinux-integrity-check.path"
@@ -112,7 +113,8 @@ def test_integrity_check_starts_at_boot_with_the_lowest_priority(
         PACKAGE / "usr/lib/systemd/system/biglinux-integrity-check.service"
     ).read_text(encoding="utf-8")
     assert "WantedBy=graphical.target" in unit
-    assert "After=local-fs.target graphical.target" in unit
+    # Ordered after graphical.target it waited for network-online.target too.
+    assert "\nAfter=local-fs.target display-manager.service\n" in unit
     assert "Before=" not in unit
     assert "Nice=19" in unit
     assert "CPUSchedulingPolicy=idle" in unit

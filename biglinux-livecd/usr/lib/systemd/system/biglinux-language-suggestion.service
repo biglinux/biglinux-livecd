@@ -2,14 +2,14 @@
 Description=Detect the likely BigLinux live-session language
 Documentation=https://github.com/biglinux/biglinux-livecd
 ConditionPathExists=/livefs-pkgs.txt
-After=local-fs.target NetworkManager.service systemd-networkd.service
+After=local-fs.target NetworkManager.service
 
 [Service]
 Type=oneshot
 User=root
 Group=root
 ExecStart=/usr/bin/python /usr/lib/biglinux-livecd/language_suggestion_probe.py
-TimeoutStartSec=3s
+TimeoutStartSec=10s
 RemainAfterExit=true
 RuntimeDirectory=biglinux-language-probe
 RuntimeDirectoryMode=0755

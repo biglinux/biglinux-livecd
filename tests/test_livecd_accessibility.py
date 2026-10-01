@@ -35,6 +35,10 @@ def _helpers() -> str:
     return source[start:end]
 
 
+# Commands the helpers call are replaced with shell functions, not stub
+# executables in tmp_path: where /tmp is mounted noexec, bash skips a stub it
+# cannot execute and runs the real command further down PATH, so the tests
+# talked to the host's own accessibility bus.
 def _run(script: str, environment: dict[str, str]) -> subprocess.CompletedProcess[str]:
     merged = os.environ.copy()
     merged.update(environment)
@@ -97,34 +101,24 @@ echo survived
     )
 
 
-def test_the_session_accessibility_bus_is_handed_to_the_wizard(
-    tmp_path: Path,
-) -> None:
+def test_the_session_accessibility_bus_is_handed_to_the_wizard() -> None:
     # The wizard cannot ask for org.a11y.Bus itself: it runs on a private
     # session bus and the service file delegates activation to the user's
     # systemd manager on the real one. Starting a launcher inside the private
     # bus would give the wizard an accessibility bus nobody else can reach,
     # so the address is fetched from the real bus and exported.
-    binaries = tmp_path / "bin"
-    binaries.mkdir()
-    (binaries / "gdbus").write_text(
-        "#!/bin/bash\nprintf \"('unix:path=/run/user/1000/at-spi/bus',)\\n\"\n",
-        encoding="utf-8",
-    )
-    (binaries / "gsettings").write_text("#!/bin/bash\nexit 0\n", encoding="utf-8")
-    for binary in binaries.iterdir():
-        binary.chmod(0o755)
-
     result = _run(
         f"""
 set -euo pipefail
 _log() {{ :; }}
+gdbus() {{ printf "('unix:path=/run/user/1000/at-spi/bus',)\\n"; }}
+gsettings() {{ :; }}
 {_helpers()}
 _enable_accessibility
 printf 'AT_SPI_BUS_ADDRESS=%s\\n' "${{AT_SPI_BUS_ADDRESS:-unset}}"
 printf 'wizard_environment=%s\\n' "${{wizard_environment[*]:-unset}}"
 """,
-        {"PATH": f"{binaries}:{os.environ['PATH']}"},
+        {},
     )
 
     assert result.returncode == 0, result.stderr
@@ -132,7 +126,7 @@ printf 'wizard_environment=%s\\n' "${{wizard_environment[*]:-unset}}"
     # is the one that later execs the Plasma session, and an exported address
     # outlives the socket it names.
     assert (
-        "wizard_environment=AT_SPI_BUS_ADDRESS=unix:path=/run/user/1000/at-spi/bus"
+        "wizard_environment=AT_SPI_BUS_ADDRESS=unix:path=/run/user/1000/at-spi/bus\n"
         in result.stdout
     ), result.stdout
 
@@ -140,24 +134,20 @@ printf 'wizard_environment=%s\\n' "${{wizard_environment[*]:-unset}}"
 def test_a_session_without_an_accessibility_bus_still_starts(tmp_path: Path) -> None:
     # No bus is a wizard nobody can read, which is bad, and a session that
     # refuses to start, which is worse.
-    binaries = tmp_path / "bin"
-    binaries.mkdir()
-    (binaries / "gdbus").write_text("#!/bin/bash\nexit 1\n", encoding="utf-8")
-    (binaries / "gsettings").write_text("#!/bin/bash\nexit 0\n", encoding="utf-8")
-    for binary in binaries.iterdir():
-        binary.chmod(0o755)
     log = tmp_path / "log"
 
     result = _run(
         f"""
 set -euo pipefail
 _log() {{ printf 'log:%s\\n' "$*" >>"$LOG"; }}
+gdbus() {{ return 1; }}
+gsettings() {{ :; }}
 {_helpers()}
 _enable_accessibility
 printf 'AT_SPI_BUS_ADDRESS=%s\\n' "${{AT_SPI_BUS_ADDRESS:-unset}}"
 printf 'wizard_environment=%s\\n' "${{wizard_environment[*]:-unset}}"
 """,
-        {"PATH": f"{binaries}:{os.environ['PATH']}", "LOG": str(log)},
+        {"LOG": str(log)},
     )
 
     assert result.returncode == 0, result.stderr
@@ -192,30 +182,20 @@ def test_a_stolen_accessibility_socket_is_restored_before_the_desktop(
     # keeps answering with the path it created, so the address looks fine and
     # nothing can connect to it - which is how every application in the desktop,
     # Orca included, ended up on "Failed to connect to socket".
-    binaries = tmp_path / "bin"
-    binaries.mkdir()
     log = tmp_path / "log"
-    (binaries / "gdbus").write_text(
-        "#!/bin/bash\nprintf \"('unix:path=%s',)\\n\" \"$MISSING_SOCKET\"\n",
-        encoding="utf-8",
-    )
-    (binaries / "systemctl").write_text(
-        '#!/bin/bash\nprintf "systemctl:%s\\n" "$*" >>"$LOG"\n', encoding="utf-8"
-    )
-    for binary in binaries.iterdir():
-        binary.chmod(0o755)
 
     result = _run(
         f"""
 set -euo pipefail
 _log() {{ printf 'log:%s\\n' "$*" >>"$LOG"; }}
+gdbus() {{ printf "('unix:path=%s',)\\n" "$FAKE_SOCKET"; }}
+systemctl() {{ printf 'systemctl:%s\\n' "$*" >>"$LOG"; }}
 {_helpers()}
 _restore_accessibility_bus
 """,
         {
-            "PATH": f"{binaries}:{os.environ['PATH']}",
             "LOG": str(log),
-            "MISSING_SOCKET": str(tmp_path / "at-spi/bus"),
+            "FAKE_SOCKET": str(tmp_path / "at-spi/bus"),
         },
     )
 
@@ -227,33 +207,23 @@ _restore_accessibility_bus
 def test_a_live_accessibility_socket_is_left_alone(tmp_path: Path) -> None:
     # Restarting a working bus would drop every client already on it: a toolkit
     # connects once while starting up and never reconnects.
-    binaries = tmp_path / "bin"
-    binaries.mkdir()
     log = tmp_path / "log"
     socket = tmp_path / "bus"
-    (binaries / "gdbus").write_text(
-        "#!/bin/bash\nprintf \"('unix:path=%s',)\\n\" \"$LIVE_SOCKET\"\n",
-        encoding="utf-8",
-    )
-    (binaries / "systemctl").write_text(
-        '#!/bin/bash\nprintf "systemctl:%s\\n" "$*" >>"$LOG"\n', encoding="utf-8"
-    )
-    for binary in binaries.iterdir():
-        binary.chmod(0o755)
 
     result = _run(
         f"""
 set -euo pipefail
 _log() {{ printf 'log:%s\\n' "$*" >>"$LOG"; }}
+gdbus() {{ printf "('unix:path=%s',)\\n" "$FAKE_SOCKET"; }}
+systemctl() {{ printf 'systemctl:%s\\n' "$*" >>"$LOG"; }}
 python3 -c 'import socket, sys; s = socket.socket(socket.AF_UNIX); s.bind(sys.argv[1])' \
     {socket}
 {_helpers()}
 _restore_accessibility_bus
 """,
         {
-            "PATH": f"{binaries}:{os.environ['PATH']}",
             "LOG": str(log),
-            "LIVE_SOCKET": str(socket),
+            "FAKE_SOCKET": str(socket),
         },
     )
 

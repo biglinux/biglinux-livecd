@@ -149,6 +149,51 @@ def test_btrfs_probe_mounts_at_subvolume_at_without_log_replay(
     assert calls[-1][0].endswith("umount")
 
 
+def test_debian_locale_file_is_read_when_locale_conf_is_absent(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # Debian, Ubuntu and Mint keep the language in /etc/default/locale only.
+    monkeypatch.setattr(probe, "WORK_DIRECTORY", tmp_path)
+    monkeypatch.setattr(probe, "is_block_device", lambda _path: True)
+
+    def btrfs(argv: list[str], _deadline: float) -> str | None:
+        if Path(argv[0]).name == "mount":
+            (Path(argv[-1]) / "etc/default").mkdir(parents=True)
+            (Path(argv[-1]) / "etc/default/locale").write_text(
+                'LANG="es_ES.UTF-8"\n', encoding="utf-8"
+            )
+        return ""
+
+    monkeypatch.setattr(probe, "run_text_command", btrfs)
+    assert probe.read_linux_locale("/dev/test", "btrfs", 0, time.monotonic() + 1) == (
+        "es_ES"
+    )
+
+    files = {"cat /etc/default/locale": "LANG=it_IT.UTF-8\n"}
+    monkeypatch.setattr(
+        probe, "run_text_command", lambda argv, _deadline: files.get(argv[2], "")
+    )
+    assert probe.read_linux_locale("/dev/test", "ext4", 0, time.monotonic() + 1) == (
+        "it_IT"
+    )
+
+
+def test_geoip_retries_until_the_network_answers(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # Before the DHCP lease every request fails at once; the probe must keep
+    # asking instead of giving up on the first failure.
+    responses = [None, None, "<Response><CountryCode>BR</CountryCode></Response>"]
+    monkeypatch.setattr(
+        probe, "run_text_command", lambda _argv, _deadline: responses.pop(0)
+    )
+    monkeypatch.setattr(probe, "GEOIP_RETRY_SECONDS", 0.01, raising=False)
+    assert probe.detect_geoip(("pt_BR",), time.monotonic() + 1) == (
+        probe.LanguageSuggestion("pt_BR", "geoip")
+    )
+    assert responses == []
+
+
 def test_btrfs_reader_rejects_symlinked_etc(tmp_path: Path) -> None:
     mounted = tmp_path / "mounted"
     outside = tmp_path / "outside"

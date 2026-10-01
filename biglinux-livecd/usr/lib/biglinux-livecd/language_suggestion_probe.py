@@ -37,6 +37,10 @@ COUNTRY_CODE_XML_PATTERN = re.compile(
     re.IGNORECASE,
 )
 MAX_TEXT_BYTES = 4096
+# Arch-based systems and Fedora name the language in /etc/locale.conf; Debian,
+# Ubuntu and Mint in /etc/default/locale, with the same LANG= line.
+LOCALE_FILES = (("etc", "locale.conf"), ("etc", "default", "locale"))
+GEOIP_RETRY_SECONDS = 0.5
 
 
 @dataclass(frozen=True)
@@ -289,10 +293,14 @@ def read_linux_locale(
     if not is_block_device(device):
         return None
     if filesystem == "ext4":
-        content = run_text_command(
-            ["/usr/bin/debugfs", "-R", "cat /etc/locale.conf", device], deadline
-        )
-        return parse_locale_configuration(content or "")
+        for relative in LOCALE_FILES:
+            content = run_text_command(
+                ["/usr/bin/debugfs", "-R", f"cat /{'/'.join(relative)}", device],
+                deadline,
+            )
+            if locale := parse_locale_configuration(content or ""):
+                return locale
+        return None
     if filesystem != "btrfs":
         return None
 
@@ -321,8 +329,11 @@ def read_linux_locale(
         )
         if not mounted:
             return None
-        content = read_bounded_file_beneath(mountpoint, ("etc", "locale.conf"))
-        return parse_locale_configuration(content or "")
+        for relative in LOCALE_FILES:
+            content = read_bounded_file_beneath(mountpoint, relative)
+            if locale := parse_locale_configuration(content or ""):
+                return locale
+        return None
     finally:
         if mounted:
             run_text_command(["/usr/bin/umount", "--", str(mountpoint)], deadline)
@@ -383,26 +394,33 @@ def detect_windows(
 def detect_geoip(
     supported_order: tuple[str, ...], deadline: float
 ) -> LanguageSuggestion | None:
-    response = run_text_command(
-        [
-            "/usr/bin/curl",
-            "--fail",
-            "--silent",
-            "--show-error",
-            "--location",
-            "--connect-timeout",
-            "1",
-            "--max-time",
-            f"{remaining_seconds(deadline):.3f}",
-            "--max-filesize",
-            "65536",
-            GEOIP_URL,
-        ],
-        deadline,
-    )
-    country = parse_geoip_country(response or "")
-    locale = locale_for_country(country or "", supported_order)
-    return LanguageSuggestion(locale, "geoip") if locale else None
+    # The probe starts with NetworkManager, before any link has an address, so
+    # the first requests fail at once. A request that failed is repeated until
+    # the deadline; an answer, even one without a usable country, is final.
+    while (timeout := remaining_seconds(deadline)) > 0:
+        response = run_text_command(
+            [
+                "/usr/bin/curl",
+                "--fail",
+                "--silent",
+                "--show-error",
+                "--location",
+                "--connect-timeout",
+                "1",
+                "--max-time",
+                f"{timeout:.3f}",
+                "--max-filesize",
+                "65536",
+                GEOIP_URL,
+            ],
+            deadline,
+        )
+        if response is not None:
+            country = parse_geoip_country(response)
+            locale = locale_for_country(country or "", supported_order)
+            return LanguageSuggestion(locale, "geoip") if locale else None
+        time.sleep(min(GEOIP_RETRY_SECONDS, remaining_seconds(deadline)))
+    return None
 
 
 Probe = Callable[[float], LanguageSuggestion | None]
@@ -413,7 +431,9 @@ def choose_suggestion(
     windows_probe: Probe,
     geoip_probe: Probe,
     *,
-    total_seconds: float = 2.4,
+    # The wizard picks up a suggestion that arrives after it opened, so the
+    # network gets the time a real DHCP lease takes, not only the boot's.
+    total_seconds: float = 8.0,
     linux_seconds: float = 1.4,
 ) -> LanguageSuggestion | None:
     started = time.monotonic()
