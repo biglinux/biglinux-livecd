@@ -330,7 +330,8 @@ if [[ -f $calamares_state_directory/start_calamares && ! -L $calamares_state_dir
 
 	copy_gnome_preference org.gnome.desktop.wm.preferences button-layout \
 		/org/gnome/desktop/wm/preferences/button-layout || true
-	dbus-launch dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'" >/dev/null 2>&1 || true
+	copy_gnome_preference org.gnome.desktop.interface color-scheme \
+		/org/gnome/desktop/interface/color-scheme || true
 
 	env "${calamares_environment[@]}" dbus-launch /usr/bin/calamares
 
