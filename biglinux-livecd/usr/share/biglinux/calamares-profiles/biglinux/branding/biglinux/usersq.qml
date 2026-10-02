@@ -76,6 +76,7 @@ Page {
 
                         Label { text: root.tr("Your name") }
                         TextField {
+                            Accessible.name: root.tr("Your name")
                             Layout.fillWidth: true
                             enabled: config.isEditable("fullName")
                             placeholderText: root.tr("Full name")
@@ -89,6 +90,7 @@ Page {
                             spacing: 2
 
                             TextField {
+                                Accessible.name: root.tr("Login name")
                                 Layout.fillWidth: true
                                 enabled: config.isEditable("loginName")
                                 text: config.loginName
@@ -110,6 +112,7 @@ Page {
                             spacing: 2
 
                             TextField {
+                                Accessible.name: root.tr("Computer name")
                                 Layout.fillWidth: true
                                 text: config.hostname
                                 onTextEdited: config.setHostName(text)
@@ -160,6 +163,7 @@ Page {
                         Label { text: root.tr("Password") }
                         TextField {
                             id: passwordField
+                            Accessible.name: root.tr("Password")
                             Layout.fillWidth: true
                             text: config.userPassword
                             echoMode: root.showPasswords ? TextInput.Normal : TextInput.Password
@@ -170,6 +174,7 @@ Page {
                         Label { text: root.tr("Repeat password") }
                         TextField {
                             id: repeatField
+                            Accessible.name: root.tr("Repeat password")
                             Layout.fillWidth: true
                             text: config.userPasswordSecondary
                             echoMode: root.showPasswords ? TextInput.Normal : TextInput.Password
@@ -244,6 +249,7 @@ Page {
 
                         Label { text: root.tr("Root password") }
                         TextField {
+                            Accessible.name: root.tr("Root password")
                             Layout.fillWidth: true
                             text: config.rootPassword
                             echoMode: root.showPasswords ? TextInput.Normal : TextInput.Password
@@ -252,6 +258,7 @@ Page {
 
                         Label { text: root.tr("Repeat root password") }
                         TextField {
+                            Accessible.name: root.tr("Repeat root password")
                             Layout.fillWidth: true
                             text: config.rootPasswordSecondary
                             echoMode: root.showPasswords ? TextInput.Normal : TextInput.Password

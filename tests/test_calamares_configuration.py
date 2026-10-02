@@ -376,6 +376,28 @@ def test_every_branding_qml_file_parses() -> None:
         assert result.returncode == 0, f"{source}\n{result.stdout}{result.stderr}"
 
 
+def test_every_branding_input_has_an_accessible_name() -> None:
+    """A screen reader announces a field by its accessible name.
+
+    Qt does not use the Label next to a field, nor its placeholder, as that
+    name, so every input declares one: without it Orca reads "edit text".
+    """
+    profiles = REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles"
+    unnamed = []
+    for source in sorted(profiles.glob("*/branding/*/**/*.qml")):
+        text = source.read_text(encoding="utf-8")
+        for match in re.finditer(r"\b(TextField|TextArea|ComboBox|SpinBox)\s*\{", text):
+            depth, end = 0, match.end() - 1
+            for end in range(match.end() - 1, len(text)):
+                depth += {"{": 1, "}": -1}.get(text[end], 0)
+                if depth == 0:
+                    break
+            if "Accessible.name" not in text[match.end():end]:
+                line = text.count("\n", 0, match.start()) + 1
+                unnamed.append(f"{source.relative_to(profiles)}:{line} {match.group(1)}")
+    assert unnamed == []
+
+
 def test_every_branding_asset_referenced_by_qml_or_desc_exists() -> None:
     """A missing artwork file is invisible until the installer draws that page.
 
