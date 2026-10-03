@@ -487,15 +487,17 @@ class AppWindow(Adw.ApplicationWindow):
         params = selection.url_params
 
         # --- DYNAMIC TRANSLATION ---
-        # 1. Set the new language for the entire application
+        # 1. Set the new language for the entire application. Use the full
+        # locale: "lang" is "pt" for both pt_BR and pt_PT, and gettext falls
+        # back from pt_BR to pt by itself.
         lang_code = params.get("lang")
-        set_language(lang_code)
+        locale_code = getattr(selection, "code", None) or lang_code
+        set_language(locale_code)
 
         # 2. Retranslate all existing UI elements
         self._retranslate_ui()
         # --- END DYNAMIC TRANSLATION ---
 
-        locale_code = getattr(selection, "code", lang_code)
         os.environ["LANG"] = f"{locale_code}.UTF-8"
 
         # Mark language step as completed
