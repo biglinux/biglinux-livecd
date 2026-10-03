@@ -1,802 +1,698 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2026 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the biglinux-livecd
-# package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
-# 
+# Translations for biglinux-livecd.
+# This file is distributed under the same license as the biglinux-livecd package.
+# Plural forms follow GTK 4 (gtk40.mo), locale sv.
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2026-10-03 09:25+0000\n"
+"PO-Revision-Date: 2026-10-03 09:23+0000\n"
+"Last-Translator: Codex (AI-assisted review)\n"
+"Language-Team: sv\n"
 "Language: sv\n"
-"Language-Team: sv <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.18.0\n"
-"X-Generator: attranslate\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Codex\n"
+
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-navigation.qml:40
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-sidebar.qml:23
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/finishedq.qml:14
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/summaryq.qml:16
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/usersq.qml:16
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/welcomeq.qml:17
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-navigation.qml:40
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-sidebar.qml:23
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/finishedq.qml:12
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/pong.qml:11
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/summaryq.qml:16
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/usersq.qml:16
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/welcomeq.qml:17
 msgid "__biglinux_language_marker__"
 msgstr "__biglinux_language_marker__"
+
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-sidebar.qml:187
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-sidebar.qml:181
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/calamares-sidebar.qml:55
+#, qt-format
 msgid "%1 logo"
-msgstr "%1 logotyp"
+msgstr "Logotyp för %1"
+
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-sidebar.qml:224
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-sidebar.qml:218
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/calamares-sidebar.qml:100
 msgid "Current installation step"
 msgstr "Aktuellt installationssteg"
+
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-sidebar.qml:227
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-sidebar.qml:221
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/calamares-sidebar.qml:103
 msgid "Completed installation step"
 msgstr "Slutfört installationssteg"
+
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-sidebar.qml:229
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-sidebar.qml:223
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/calamares-sidebar.qml:105
 msgid "Pending installation step"
 msgstr "Väntande installationssteg"
+
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:12
 msgid "Pong game"
 msgstr "Pong-spel"
-msgid "Move the left paddle with the mouse or the up and down arrow keys. Press Space to pause or resume."
+
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:14
+msgid ""
+"Move the left paddle with the mouse or the up and down arrow keys. Press "
+"Space to pause or resume."
 msgstr ""
-"Flytta den vänstra paddeln med musen eller med piltangenterna upp och ner. Tryck på "
-"mellanslagstangenten för att pausa eller återuppta."
+"Flytta den vänstra paddeln med musen eller med piltangenterna upp och ner. "
+"Tryck på mellanslagstangenten för att pausa eller återuppta."
+
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:254
 msgid "Paused"
 msgstr "Pausad"
+
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:269
 msgid "Resume"
 msgstr "Återuppta"
+
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:274
 msgid "Pause or resume the Pong game"
 msgstr "Pausa eller återuppta Pong-spelet"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
-# line: 36
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
-# line: 120
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:88
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:92
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:209
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:213
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:95
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:99
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:217
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:221
 msgid "BigLinux Setup"
 msgstr "Konfigurera BigLinux"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
-# line: 80
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
-# line: 223
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:99
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:94
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:215
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:91
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:101
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:223
 msgid "press Super+Alt+S to start the screen reader"
 msgstr "tryck på Super+Alt+S för att starta skärmläsaren"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
-# line: 160
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
-# line: 180
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:204
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:212
 msgid "BigLinux Logo"
 msgstr "BigLinux-logotyp"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
-# line: 187
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:238
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:265
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:378
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:247
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:368
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:483
 msgid "Language"
 msgstr "Språk"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
-# line: 227
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:240
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:266
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:444
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:249
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:369
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:568
 msgid "Keyboard"
 msgstr "Tangentbord"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
-# line: 243
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:242
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:267
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:465
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:49
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:251
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:370
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:593
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:51
 msgid "Desktop Layout"
 msgstr "Skrivbordslayout"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
-# line: 262
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:244
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:246
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:268
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:490
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:516
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:253
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:255
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:371
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:627
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:663
 msgid "Theme"
 msgstr "Tema"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py,
-# line: 584
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:573
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:727
 msgid "Accessibility enabled. Use arrow keys to navigate."
 msgstr "Tillgänglighet aktiverad. Använd piltangenterna för att navigera."
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 60
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:92
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:124
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:118
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:150
 msgid "Settings"
 msgstr "Inställningar"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 107
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:128
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:144
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:175
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:302
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:323
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:154
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:170
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:201
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:214
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:328
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:349
 msgid "JamesDSP Audio"
 msgstr "JamesDSP-ljud"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 109
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:130
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:145
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:178
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:156
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:171
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:204
 msgid "Enable audio improvements"
 msgstr "Aktivera ljudförbättringar"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 144
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:134
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:204
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:235
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:304
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:328
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:160
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:230
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:261
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:274
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:330
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:354
 msgid "Image quality"
 msgstr "Bildkvalitet"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 146
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:136
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:205
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:238
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:162
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:231
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:264
 msgid "Enable enhanced contrast"
 msgstr "Aktivera förbättrad kontrast"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 143
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 203
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:147
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:207
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:173
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:233
 msgid "press Enter or Space to toggle"
-msgstr "tryck på Enter eller Mellanslag för att växla"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 269
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 282
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:265
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:275
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:321
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:326
+msgstr "tryck på Enter eller mellanslagstangenten för att växla"
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:291
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:301
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:347
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:352
 msgid "enabled"
 msgstr "aktiverad"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 269
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 282
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:265
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:275
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:321
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:326
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:291
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:301
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:347
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:352
 msgid "disabled"
 msgstr "inaktiverad"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 228
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:335
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:361
 msgid "Choose a Theme Style"
 msgstr "Välj en temastil"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 166
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:336
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:362
 msgid "Choose a System Theme"
 msgstr "Välj ett systemtema"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 259
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:361
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:389
 msgid "Dark Theme"
 msgstr "Mörkt tema"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py,
-# line: 262
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:361
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:389
 msgid "Light Theme"
 msgstr "Ljust tema"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py,
-# line: 65
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:171
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:175
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:203
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:212
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:214
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:206
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:210
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:238
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:247
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:249
 msgid "Search for a language..."
 msgstr "Sök efter ett språk..."
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py,
-# line: 114
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:242
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:278
 msgid "Could not load language data."
 msgstr "Kunde inte läsa in språkdata."
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py,
-# line: 167
-#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:484
+
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:579
 #, python-format
 msgid "%d results"
 msgstr "%d resultat"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py,
-# line: 35
+
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:41
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:90
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:112
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:246
 msgid "Choose Your Keyboard Layout"
 msgstr "Välj tangentbordslayout"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py,
-# line: 93
+
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:68
 msgid "Keyboard layout preview"
 msgstr "Förhandsvisning av tangentbordslayout"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py,
-# line: 135
+
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:145
 #, python-format
 msgid "Keyboard layout: %s"
 msgstr "Tangentbordslayout: %s"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py,
-# line: 30
+
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:35
 msgid "Choose a Desktop Layout"
 msgstr "Välj en skrivbordslayout"
-# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 46
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 156
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 162
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 99
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:111
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:106
 msgid "BigLinux Calamares Config"
 msgstr "Konfiguration av Calamares för BigLinux"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 116
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:128
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:123
 msgid "Forum"
 msgstr "Forum"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 117
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:130
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:125
 msgid "Documentation"
 msgstr "Dokumentation"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 151
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:447
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:154
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:677
 msgid "OK"
 msgstr "OK"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 147
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 149
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 167
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:169
-msgid "Cancel"
-msgstr "Avbryt"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/app.py, line: 168
-#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:170
-msgid "Confirm"
-msgstr "Bekräfta"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 61
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 208
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 213
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:84
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:212
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:267
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:272
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:76
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:204
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:256
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:261
 #, python-brace-format
 msgid "{distro} Installation"
 msgstr "{distro}-installation"
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:146
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:160
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:138
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:152
 msgid "Back"
 msgstr "Tillbaka"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 96
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:149
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:162
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:141
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:154
 msgid "Keep All"
 msgstr "Behåll alla"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 99
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:152
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:164
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:144
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:156
 msgid "Remove All"
 msgstr "Ta bort alla"
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:213
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:233
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:218
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:155
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:166
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:294
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:309
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:443
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:230
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:222
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:147
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:158
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:283
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:298
 msgid "Continue"
 msgstr "Fortsätt"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py,
-# line: 133
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:161
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:153
 msgid "Return to the previous page"
 msgstr "Gå tillbaka till föregående sida"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py,
-# line: 135
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:163
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:155
 msgid "Keep all packages selected"
 msgstr "Behåll alla paket markerade"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py,
-# line: 137
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:165
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:157
 msgid "Mark all packages for removal"
 msgstr "Markera alla paket för borttagning"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/window.py,
-# line: 139
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:167
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:159
 msgid "Proceed to the next step"
 msgstr "Fortsätt till nästa steg"
-# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 157
-# File:
-# calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
-# line: 76
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:213
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:268
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:205
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:257
 msgid "System Maintenance"
 msgstr "Systemunderhåll"
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:214
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:269
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:206
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:258
 msgid "Uncheck the programs you want to remove"
 msgstr "Avmarkera programmen du vill ta bort"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/window.py, line: 159
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:215
-#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:270
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:207
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:259
 msgid "Installation Tips"
 msgstr "Installationstips"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/services/system_service.py, line: 167
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/services/system_service.py:167
 #, python-brace-format
-msgid "The system is in {boot_mode}, Linux {kernel} and graphical mode {session}."
-msgstr "Systemet är i {boot_mode}, Linux {kernel} och grafiskt läge {session}."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/services/system_service.py, line: 171
+msgid ""
+"The system is in {boot_mode}, Linux {kernel} and graphical mode {session}."
+msgstr ""
+"Systemet använder startläget {boot_mode}, Linux {kernel} och den grafiska "
+"sessionen {session}."
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/services/system_service.py:171
 #, python-brace-format
 msgid "The system is in {boot_mode}, Linux {kernel}."
-msgstr "Systemet är i {boot_mode}, Linux {kernel}."
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+msgstr "Systemet använder startläget {boot_mode} och Linux {kernel}."
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:154
 msgid "Snapshot and backups"
 msgstr "Ögonblicksbild och säkerhetskopior"
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:155
 msgid "Restore restore points of the installed system."
 msgstr "Återställ återställningspunkter för det installerade systemet."
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:156
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:168
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:181
 msgid "Start"
-msgstr "Börja"
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+msgstr "Starta"
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:164
 msgid "Restore system settings"
 msgstr "Återställ systeminställningar"
-# File:
-# calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
-# line: 78
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:166
 msgid ""
-"Utility that facilitates the restoration of the installed system, especially the restoration of the "
-"system boot (Grub).\n"
+"Utility that facilitates the restoration of the installed system, especially the restoration of the system boot (Grub).\n"
 "\n"
 "It can also be used to access the package manager and terminal of the installed system."
 msgstr ""
-"Verktyg som underlättar återställningen av det installerade systemet, särskilt återställningen av "
-"systemstarten (Grub).\n"
+"Verktyg som underlättar återställning av det installerade systemet, särskilt återställning av systemstarten (GRUB).\n"
 "\n"
-"Det kan också användas för att få åtkomst till paketförvaltaren och terminalen för det installerade "
-"systemet."
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+"Det kan också användas för att öppna pakethanteraren och terminalen i det installerade systemet."
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:177
 msgid "EFI Entry Manager"
 msgstr "Hanterare för EFI-startposter"
-# File:
-# calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
-# line: 90
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:179
-msgid "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
-msgstr "Avancerat verktyg för att lägga till, ta bort eller ändra startposter i UEFI-firmware."
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
-# line: 171
+msgid ""
+"Advanced tool to add, remove, or change boot entries in the UEFI firmware."
+msgstr ""
+"Avancerat verktyg för att lägga till, ta bort eller ändra startposter i "
+"UEFI-firmware."
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:202
 msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
-msgstr "Systemunderhåll: välj ögonblicksbild, återställning eller EFI-hanterare"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 59
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:68
-msgid "Loading packages"
-msgstr "Laddar paket"
-# File:
-# calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 123
+msgstr ""
+"Systemunderhåll: välj ögonblicksbild, återställning eller EFI-hanterare"
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:70
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:74
+msgid "Loading packages"
+msgstr "Läser in paket"
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:72
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:76
 msgid "Loading packages..."
-msgstr "Laddar paket..."
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 71
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:85
+msgstr "Läser in paket..."
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:87
 msgid "Package list"
 msgstr "Paketlista"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 73
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:87
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:89
 msgid "Toggle switches to keep or remove packages"
-msgstr "Reglage för att behålla eller ta bort paket"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 110
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:127
+msgstr "Använd reglagen för att behålla eller ta bort paket"
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:129
 #, python-brace-format
 msgid "{count} packages loaded"
 msgstr "Inlästa paket: {count}"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 135
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:152
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:154
 #, python-brace-format
 msgid "Keep {name}"
 msgstr "Behåll {name}"
-# File:
-# calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 242
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:178
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:180
 #, python-brace-format
 msgid "Failed to load packages: {}"
-msgstr "Misslyckades med att ladda paket: {}"
-# #-#-#-#-#  calamares-biglinux.pot (calamares-biglinux)  #-#-#-#-#
-# File:
-# calamares-biglinux/usr/share/biglinux/calamares/src/widgets/system_info.py,
-# line: 169
-# File:
-# calamares-biglinux/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 320
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py,
-# line: 226
-# File:
-# calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
-# line: 234
-# File:
-# calamares-biglinux/usr/share/biglinux/calamares/src/pages/maintenance_page.py,
-# line: 259
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:262
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:214
+msgstr "Kunde inte läsa in paket: {}"
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:252
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:218
 msgid "Starting..."
 msgstr "Startar..."
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py,
-# line: 220
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:240
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:244
 msgid "Minimal installation: select packages to keep or remove"
 msgstr "Minimal installation: välj paket som ska behållas eller tas bort"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py,
-# line: 159
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:168
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:165
 msgid "This is a collaborative system, if you need help consult our forum."
-msgstr "Det här systemet utvecklas gemensamt. Besök vårt forum om du behöver hjälp."
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:206
+msgstr ""
+"Det här systemet utvecklas gemensamt. Besök vårt forum om du behöver hjälp."
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:203
 msgid "Maintenance"
 msgstr "Underhåll"
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:208
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:205
 msgid "Tools that facilitate the maintenance of the installed system."
 msgstr "Verktyg som underlättar underhållet av det installerade systemet."
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:210
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:207
 msgid "Restore"
 msgstr "Återställ"
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:218
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:215
 msgid "Installation"
 msgstr "Installation"
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:219
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:216
 msgid "The system is in live mode, which has limitations."
 msgstr "Systemet körs i live-läge, vilket har vissa begränsningar."
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:220
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:217
 msgid "Install it for a complete experience."
 msgstr "Installera det för att få tillgång till alla funktioner."
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:221
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:269
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:297
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:301
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:317
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:218
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:259
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:270
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:274
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:290
 msgid "Install"
 msgstr "Installera"
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:229
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:226
 msgid "Minimal"
 msgstr "Minimal"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py,
-# line: 99
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:231
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:228
 msgid "Remove pre-selected software to create a lean, personalized system."
-msgstr "Ta bort förvald programvara för att skapa ett lätt och personligt system."
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/main_page.py,
-# line: 218
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:289
+msgstr ""
+"Ta bort förvald programvara för att skapa ett lätt och personligt system."
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:262
 msgid "Configuring..."
 msgstr "Konfigurerar..."
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py,
-# line: 294
-#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:318
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:291
 msgid "Main page: choose Maintenance, Installation, or Minimal"
 msgstr "Huvudsida: välj Underhåll, Installation eller Minimal"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 39
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:40
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:42
 msgid "Important Tips"
 msgstr "Viktiga tips"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 48
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:50
 msgid "Manual Partitioning Recommendations"
 msgstr "Rekommendationer för manuell partitionering"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 49
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:52
-msgid "If you opt for automatic partitioning, these tips will be applied by default."
-msgstr "Om du väljer automatisk partitionering tillämpas dessa rekommendationer som standard."
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 54
+msgid ""
+"If you opt for automatic partitioning, these tips will be applied by "
+"default."
+msgstr ""
+"Om du väljer automatisk partitionering tillämpas dessa rekommendationer som "
+"standard."
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:59
 msgid "Use BTRFS"
 msgstr "Använd BTRFS"
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:61
 msgid "This file system allows for automatic compression and restore points."
-msgstr "Det här filsystemet möjliggör automatisk komprimering och återställningspunkter."
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 55
+msgstr ""
+"Det här filsystemet möjliggör automatisk komprimering och "
+"återställningspunkter."
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:65
 msgid "Keep /boot within the / partition"
 msgstr "Behåll /boot i /-partitionen"
-# #-#-#-#-#  calamares-biglinux-bash.pot (calamares-biglinux)  #-#-#-#-#
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:67
 msgid "Placing it in a separate partition hampers BTRFS snapshots."
-msgstr "Om /boot placeras på en separat partition försvåras BTRFS-ögonblicksbilder."
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 56
+msgstr ""
+"Om /boot placeras på en separat partition försvåras BTRFS-ögonblicksbilder."
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:71
 msgid "Do not create a SWAP partition"
 msgstr "Skapa inte en SWAP-partition"
-# File: calamares-biglinux/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 56
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:73
 msgid ""
-"We have implemented dynamic virtual memory management with Zram and SWAP files. SWAP partitions "
-"will not be used."
+"We have implemented dynamic virtual memory management with Zram and SWAP "
+"files. SWAP partitions will not be used."
 msgstr ""
-"Vi har implementerat dynamisk hantering av virtuellt minne med Zram och SWAP-filer. "
-"SWAP-partitioner kommer inte att användas."
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py,
-# line: 83
+"Vi har implementerat dynamisk hantering av virtuellt minne med Zram och "
+"SWAP-filer. SWAP-partitioner kommer inte att användas."
+
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:103
 msgid "Installation tips: read the recommendations before proceeding"
 msgstr "Installationstips: läs rekommendationerna innan du fortsätter"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 223
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 254
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:41
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:263
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:295
 msgid "Please wait..."
 msgstr "Vänta..."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 42
-#: biglinux-livecd/usr/bin/calamares-biglinux:74
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:42
 msgid "Checking the integrity of the download and storage device..."
 msgstr "Kontrollerar integriteten för nedladdningen och lagringsenheten..."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 43
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:115
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:43
 msgid "Checking system integrity"
 msgstr "Kontrollerar systemets integritet"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 44
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:158
-msgid "Checking for download or USB drive errors, this may take a few minutes..."
-msgstr "Kontrollerar om det finns fel i nedladdningen eller på USB-enheten. Det kan ta några minuter..."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 45
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:180
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:44
+msgid ""
+"Checking for download or USB drive errors, this may take a few minutes..."
+msgstr ""
+"Kontrollerar om det finns fel i nedladdningen eller på USB-enheten. Det kan "
+"ta några minuter..."
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:45
 msgid "Verification progress"
 msgstr "Verifieringsförlopp"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 46
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:264
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:46
 #, python-brace-format
 msgid "Checking the file: {filename}"
 msgstr "Kontrollerar filen: {filename}"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 47
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:292
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:47
 msgid "Verification failed"
 msgstr "Verifieringen misslyckades"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 49
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:294
-msgid "The live media could not be verified. Download the system again or use another USB drive."
-msgstr "Live-mediet kunde inte verifieras. Hämta systemet igen eller använd en annan USB-enhet."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 52
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:302
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:49
+msgid ""
+"The live media could not be verified. Download the system again or use "
+"another USB drive."
+msgstr ""
+"Live-mediet kunde inte verifieras. Hämta systemet igen eller använd en annan"
+" USB-enhet."
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:52
 msgid "Verification complete"
 msgstr "Verifieringen är slutförd"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 53
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:303
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:53
 msgid "The files are intact."
 msgstr "Filerna är intakta."
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 54
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:310
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:54
 msgid "Verification canceled"
 msgstr "Verifiering avbruten"
-# 
-# File: biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py, line: 55
-#: biglinux-livecd/usr/bin/biglinux-verify-md5sum:311
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:55
 msgid "The integrity check was not completed."
 msgstr "Integritetskontrollen slutfördes inte."
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 85
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 107
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:89
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:114
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:110
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:135
 msgid "Progress"
 msgstr "Förlopp"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 168
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 225
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:177
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:240
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:407
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:470
 msgid "Question"
 msgstr "Fråga"
-# #-#-#-#-#  biglinux-livecd.pot (biglinux-livecd)  #-#-#-#-#
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 192
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 256
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 259
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 297
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 300
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 401
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:212
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:283
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:285
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:333
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:335
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:443
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:442
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:513
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:515
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:563
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:565
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:673
 msgid "Close"
 msgstr "Stäng"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 236
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 266
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:252
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:290
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:482
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:520
 msgid "Error"
 msgstr "Fel"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 277
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 307
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:302
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:341
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:532
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:571
 msgid "Information"
 msgstr "Information"
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 318
-# File:
-# biglinux-livecd/biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py,
-# line: 424
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:364
-#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:465
+
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:594
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:695
 msgid "Select"
 msgstr "Välj"
 
 # Installer launcher, usr/bin/calamares-biglinux
+#: biglinux-livecd/usr/bin/calamares-biglinux:362
 msgid "Installation failed"
 msgstr "Installationen misslyckades"
 
 # Installer launcher, usr/bin/calamares-biglinux
-msgid "The installation failed. The local error log was saved in your home folder."
-msgstr "Installationen misslyckades. Den lokala felloggen sparades i din hemmapp."
+#: biglinux-livecd/usr/bin/calamares-biglinux:363
+msgid ""
+"The installation failed. The local error log was saved in your home folder."
+msgstr ""
+"Installationen misslyckades. Den lokala felloggen sparades i din hemmapp."
 
 # Installer launcher, usr/bin/calamares-biglinux
+#: biglinux-livecd/usr/bin/calamares-biglinux:111
 msgid "Outdated Version"
 msgstr "Föråldrad version"
 
 # Installer launcher, usr/bin/calamares-biglinux
+#: biglinux-livecd/usr/bin/calamares-biglinux:244
+#: biglinux-livecd/usr/bin/calamares-biglinux:252
 msgid "Install the system"
 msgstr "Installera systemet"
 
 # Installer launcher, usr/bin/calamares-biglinux
+#: biglinux-livecd/usr/bin/calamares-biglinux:340
 msgid "Installation log unavailable"
 msgstr "Installationsloggen är inte tillgänglig"
 
 # Installer launcher, usr/bin/calamares-biglinux
+#: biglinux-livecd/usr/bin/calamares-biglinux:236
 msgid "Could not inspect EFI partitions"
 msgstr "Det gick inte att granska EFI-partitionerna"
 
 # Installer launcher, usr/bin/calamares-biglinux
-msgid "Calamares did not create a valid installation log. Close the installer and try again."
-msgstr "Calamares skapade ingen giltig installationslogg. Stäng installationsprogrammet och försök igen."
+#: biglinux-livecd/usr/bin/calamares-biglinux:341
+msgid ""
+"Calamares did not create a valid installation log. Close the installer and "
+"try again."
+msgstr ""
+"Calamares skapade ingen giltig installationslogg. Stäng "
+"installationsprogrammet och försök igen."
 
 # Installer launcher, usr/bin/calamares-biglinux
-msgid "The installer could not safely inspect the disk layout. Close the installer, reconnect the storage device, and try again."
-msgstr "Installationsprogrammet kunde inte granska diskens layout på ett säkert sätt. Stäng installationsprogrammet, anslut lagringsenheten igen och försök igen."
+#: biglinux-livecd/usr/bin/calamares-biglinux:237
+msgid ""
+"The installer could not safely inspect the disk layout. Close the installer,"
+" reconnect the storage device, and try again."
+msgstr ""
+"Installationsprogrammet kunde inte granska diskens layout på ett säkert "
+"sätt. Stäng installationsprogrammet, anslut lagringsenheten igen och försök "
+"igen."
 
 # Installer launcher, usr/bin/calamares-biglinux
-msgid "Do you want to proceed with the installation in EFI mode? The current boot is using EFI mode, but I did not find an EFI partition on this computer."
-msgstr "Vill du fortsätta installationen i EFI-läge? Den aktuella starten använder EFI-läge, men jag hittade ingen EFI-partition på den här datorn."
+#: biglinux-livecd/usr/bin/calamares-biglinux:245
+msgid ""
+"Do you want to proceed with the installation in EFI mode? The current boot "
+"is using EFI mode, but I did not find an EFI partition on this computer."
+msgstr ""
+"Vill du fortsätta installationen i EFI-läge? Den aktuella starten använder "
+"EFI-läge, men jag hittade ingen EFI-partition på den här datorn."
 
 # Installer launcher, usr/bin/calamares-biglinux
-msgid "Do you want to proceed with the installation in Legacy/BIOS mode? I found an EFI partition on this computer."
-msgstr "Vill du fortsätta installationen i Legacy/BIOS-läge? Jag hittade en EFI-partition på den här datorn."
+#: biglinux-livecd/usr/bin/calamares-biglinux:253
+msgid ""
+"Do you want to proceed with the installation in Legacy/BIOS mode? I found an"
+" EFI partition on this computer."
+msgstr ""
+"Vill du fortsätta installationen i Legacy/BIOS-läge? Jag hittade en EFI-"
+"partition på den här datorn."
 
 # Installer launcher, usr/bin/calamares-biglinux
-msgid "Do you want to proceed with the installation of this old version anyway? BigLinux is a system with weekly updates and this version was released more than a month ago. We recommend downloading a more recent version."
-msgstr "Vill du ändå fortsätta installationen av den här gamla versionen? BigLinux uppdateras varje vecka och den här versionen släpptes för mer än en månad sedan. Vi rekommenderar att du hämtar en nyare version."
+#: biglinux-livecd/usr/bin/calamares-biglinux:112
+msgid ""
+"Do you want to proceed with the installation of this old version anyway? "
+"BigLinux is a system with weekly updates and this version was released more "
+"than a month ago. We recommend downloading a more recent version."
+msgstr ""
+"Vill du ändå fortsätta installationen av den här gamla versionen? BigLinux "
+"uppdateras varje vecka och den här versionen släpptes för mer än en månad "
+"sedan. Vi rekommenderar att du hämtar en nyare version."
+
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:269
+msgid "Pause"
+msgstr "Pausa"

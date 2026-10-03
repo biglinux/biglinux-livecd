@@ -1,48 +1,67 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2026 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the biglinux-livecd
-# package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
-#
-#, fuzzy
+# Translations for biglinux-livecd.
+# This file is distributed under the same license as the biglinux-livecd package.
+# Plural forms follow GTK 4 (gtk40.mo), locale be.
 msgid ""
 msgstr ""
-"Project-Id-Version:  biglinux-livecd\n"
+"Project-Id-Version: biglinux-livecd\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2026-10-03 09:25+0000\n"
+"PO-Revision-Date: 2026-10-03 09:23+0000\n"
+"Last-Translator: Codex (AI-assisted review)\n"
+"Language-Team: be\n"
 "Language: be\n"
-"Language-Team: be <LL@li.org>\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.18.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Codex\n"
 
-msgid ""
-"The system is in {boot_mode}, Linux {kernel} and graphical mode {session}."
-msgstr ""
-"Сістэма працуе ў рэжыме {boot_mode}, Linux {kernel} і графічным рэжыме "
-"{session}."
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-navigation.qml:40
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-sidebar.qml:23
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/finishedq.qml:14
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/summaryq.qml:16
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/usersq.qml:16
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/welcomeq.qml:17
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-navigation.qml:40
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-sidebar.qml:23
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/finishedq.qml:12
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/pong.qml:11
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/summaryq.qml:16
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/usersq.qml:16
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/welcomeq.qml:17
+msgid "__biglinux_language_marker__"
+msgstr "__biglinux_language_marker__"
 
-msgid "The system is in {boot_mode}, Linux {kernel}."
-msgstr "Сістэма працуе ў рэжыме {boot_mode}, Linux {kernel}."
-
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-sidebar.qml:187
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-sidebar.qml:181
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/calamares-sidebar.qml:55
+#, qt-format
 msgid "%1 logo"
 msgstr "Лагатып %1"
 
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-sidebar.qml:224
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-sidebar.qml:218
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/calamares-sidebar.qml:100
 msgid "Current installation step"
 msgstr "Бягучы крок усталявання"
 
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-sidebar.qml:227
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-sidebar.qml:221
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/calamares-sidebar.qml:103
 msgid "Completed installation step"
 msgstr "Завершаны крок усталявання"
 
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-sidebar.qml:229
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-sidebar.qml:223
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/calamares-sidebar.qml:105
 msgid "Pending installation step"
-msgstr "Крок усталявання ў чаканні"
+msgstr "Наступны крок усталявання"
 
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:12
 msgid "Pong game"
 msgstr "Гульня Pong"
 
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:14
 msgid ""
 "Move the left paddle with the mouse or the up and down arrow keys. Press "
 "Space to pause or resume."
@@ -50,297 +69,451 @@ msgstr ""
 "Кіруйце левай ракеткай мышшу або клавішамі стрэлак уверх і ўніз. Націсніце "
 "прабел, каб прыпыніць ці працягнуць."
 
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:254
 msgid "Paused"
 msgstr "Прыпынена"
 
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:269
 msgid "Resume"
 msgstr "Працягнуць"
 
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:274
 msgid "Pause or resume the Pong game"
 msgstr "Прыпыніць ці працягнуць гульню Pong"
 
-#
-msgid "__biglinux_language_marker__"
-msgstr ""
-
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:95
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:99
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:217
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:221
 msgid "BigLinux Setup"
 msgstr "Наладжванне BigLinux"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:91
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:101
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:223
 msgid "press Super+Alt+S to start the screen reader"
 msgstr "націсніце Super+Alt+S, каб запусціць праграму чытання з экрана"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:212
 msgid "BigLinux Logo"
 msgstr "Лагатып BigLinux"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:247
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:368
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:483
 msgid "Language"
 msgstr "Мова"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:249
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:369
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:568
 msgid "Keyboard"
 msgstr "Клавіятура"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:251
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:370
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:593
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:51
 msgid "Desktop Layout"
 msgstr "Макет працоўнага стала"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:253
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:255
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:371
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:627
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:663
 msgid "Theme"
 msgstr "Тэма"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:727
 msgid "Accessibility enabled. Use arrow keys to navigate."
 msgstr ""
 "Спецыяльныя магчымасці ўключаны. Для навігацыі выкарыстоўвайце клавішы са "
 "стрэлкамі."
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:118
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:150
 msgid "Settings"
 msgstr "Налады"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:154
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:170
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:201
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:214
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:328
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:349
 msgid "JamesDSP Audio"
 msgstr "Аўдыя JamesDSP"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:156
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:171
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:204
 msgid "Enable audio improvements"
 msgstr "Уключыць паляпшэнні гуку"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:160
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:230
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:261
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:274
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:330
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:354
 msgid "Image quality"
 msgstr "Якасць выявы"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:162
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:231
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:264
 msgid "Enable enhanced contrast"
 msgstr "Уключыць палепшаны кантраст"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:173
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:233
 msgid "press Enter or Space to toggle"
 msgstr "націсніце Enter або прабел, каб пераключыць"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:291
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:301
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:347
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:352
 msgid "enabled"
 msgstr "уключана"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:291
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:301
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:347
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:352
 msgid "disabled"
 msgstr "адключана"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:361
 msgid "Choose a Theme Style"
 msgstr "Выберыце стыль тэмы"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:362
 msgid "Choose a System Theme"
 msgstr "Выберыце сістэмную тэму"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:389
 msgid "Dark Theme"
 msgstr "Цёмная тэма"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:389
 msgid "Light Theme"
 msgstr "Светлая тэма"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:206
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:210
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:238
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:247
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:249
 msgid "Search for a language..."
 msgstr "Пошук мовы..."
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:278
 msgid "Could not load language data."
 msgstr "Не ўдалося загрузіць даныя мовы."
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:579
 #, python-format
 msgid "%d results"
 msgstr "%d вынікаў"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:41
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:90
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:112
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:246
 msgid "Choose Your Keyboard Layout"
 msgstr "Выберыце раскладку клавіятуры"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:68
 msgid "Keyboard layout preview"
 msgstr "Папярэдні прагляд раскладкі клавіятуры"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:145
 #, python-format
 msgid "Keyboard layout: %s"
 msgstr "Раскладка клавіятуры: %s"
 
+#: biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:35
 msgid "Choose a Desktop Layout"
 msgstr "Выберыце макет працоўнага стала"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:106
 msgid "BigLinux Calamares Config"
 msgstr "Налады Calamares для BigLinux"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:123
 msgid "Forum"
 msgstr "Форум"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:125
 msgid "Documentation"
 msgstr "Дакументацыя"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:677
 msgid "OK"
 msgstr "ОК"
 
-msgid "Cancel"
-msgstr "Скасаваць"
-
-msgid "Confirm"
-msgstr "Пацвердзіць"
-
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:76
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:204
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:256
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:261
 #, python-brace-format
 msgid "{distro} Installation"
 msgstr "Усталяванне {distro}"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:138
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:152
 msgid "Back"
 msgstr "Назад"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:141
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:154
 msgid "Keep All"
 msgstr "Пакінуць усё"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:144
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:156
 msgid "Remove All"
 msgstr "Выдаліць усё"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:443
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:230
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:222
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:147
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:158
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:283
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:298
 msgid "Continue"
 msgstr "Працягнуць"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:153
 msgid "Return to the previous page"
 msgstr "Вярнуцца на папярэднюю старонку"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:155
 msgid "Keep all packages selected"
 msgstr "Пакінуць усе пакеты выбранымі"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:157
 msgid "Mark all packages for removal"
 msgstr "Пазначыць усе пакеты для выдалення"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:159
 msgid "Proceed to the next step"
 msgstr "Перайсці да наступнага кроку"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:205
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:257
 msgid "System Maintenance"
 msgstr "Абслугоўванне сістэмы"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:206
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:258
 msgid "Uncheck the programs you want to remove"
 msgstr "Зніміце пазнакі з праграм, якія хочаце выдаліць"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:207
+#: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:259
 msgid "Installation Tips"
 msgstr "Парады па ўсталяванні"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/services/system_service.py:167
+#, python-brace-format
+msgid ""
+"The system is in {boot_mode}, Linux {kernel} and graphical mode {session}."
+msgstr ""
+"Сістэма працуе ў рэжыме {boot_mode}, Linux {kernel} і графічным рэжыме "
+"{session}."
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/services/system_service.py:171
+#, python-brace-format
+msgid "The system is in {boot_mode}, Linux {kernel}."
+msgstr "Сістэма працуе ў рэжыме {boot_mode}, Linux {kernel}."
+
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:154
 msgid "Snapshot and backups"
 msgstr "Здымкі і рэзервовыя копіі"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:155
 msgid "Restore restore points of the installed system."
 msgstr "Аднавіць пункты аднаўлення ўсталяванай сістэмы."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:156
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:168
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:181
 msgid "Start"
 msgstr "Пачаць"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:164
 msgid "Restore system settings"
 msgstr "Аднавіць налады сістэмы"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:166
 msgid ""
-"Utility that facilitates the restoration of the installed system, especially "
-"the restoration of the system boot (Grub).\n"
+"Utility that facilitates the restoration of the installed system, especially the restoration of the system boot (Grub).\n"
 "\n"
-"It can also be used to access the package manager and terminal of the "
-"installed system."
+"It can also be used to access the package manager and terminal of the installed system."
 msgstr ""
-"Утыліта, якая спрашчае аднаўленне ўсталяванай сістэмы, асабліва яе "
-"загрузчыка (GRUB).\n"
+"Утыліта, якая спрашчае аднаўленне ўсталяванай сістэмы, асабліва яе загрузчыка (GRUB).\n"
 "\n"
-"Яе таксама можна выкарыстоўваць для доступу да менеджара пакетаў і тэрмінала "
-"ўсталяванай сістэмы."
+"Яе таксама можна выкарыстоўваць для доступу да менеджара пакетаў і тэрмінала ўсталяванай сістэмы."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:177
 msgid "EFI Entry Manager"
 msgstr "Менеджар загрузачных запісаў EFI"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:179
 msgid ""
 "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
 msgstr ""
 "Пашыраны інструмент для дадання, выдалення або змянення загрузачных запісаў "
 "у прашыўцы UEFI."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:202
 msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
 msgstr "Абслугоўванне сістэмы: выберыце здымак, аднаўленне або менеджар EFI"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:70
 msgid "Loading packages"
 msgstr "Загрузка пакетаў"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:72
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:76
 msgid "Loading packages..."
 msgstr "Загрузка пакетаў..."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:87
 msgid "Package list"
 msgstr "Спіс пакетаў"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:89
 msgid "Toggle switches to keep or remove packages"
-msgstr "Пераключальнікі для захавання або выдалення пакетаў"
+msgstr "Выкарыстоўвайце пераключальнікі, каб пакінуць або выдаліць пакеты"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:129
 #, python-brace-format
 msgid "{count} packages loaded"
 msgstr "Загружана пакетаў: {count}"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:154
 #, python-brace-format
 msgid "Keep {name}"
-msgstr "Захаваць {name}"
+msgstr "Пакінуць {name}"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:180
+#, python-brace-format
 msgid "Failed to load packages: {}"
 msgstr "Не ўдалося загрузіць пакеты: {}"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:252
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:218
 msgid "Starting..."
 msgstr "Запуск..."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:244
 msgid "Minimal installation: select packages to keep or remove"
 msgstr ""
-"Мінімальная ўстаноўка: выберыце пакеты, якія трэба пакінуць або выдаліць"
+"Мінімальнае ўсталяванне: выберыце пакеты, якія трэба пакінуць або выдаліць"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:165
 msgid "This is a collaborative system, if you need help consult our forum."
 msgstr ""
 "Гэта сістэма, якая развіваецца супольнасцю. Калі вам патрэбна дапамога, "
 "звярніцеся на наш форум."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:203
 msgid "Maintenance"
 msgstr "Абслугоўванне"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:205
 msgid "Tools that facilitate the maintenance of the installed system."
 msgstr "Інструменты, якія спрашчаюць абслугоўванне ўсталяванай сістэмы."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:207
 msgid "Restore"
 msgstr "Аднавіць"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:215
 msgid "Installation"
 msgstr "Усталяванне"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:216
 msgid "The system is in live mode, which has limitations."
-msgstr "Сістэма працуе ў жывым рэжыме, які мае абмежаванні."
+msgstr "Сістэма працуе ў live-рэжыме, які мае абмежаванні."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:217
 msgid "Install it for a complete experience."
 msgstr "Усталюйце яе, каб атрымаць усе магчымасці."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:218
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:259
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:270
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:274
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:290
 msgid "Install"
 msgstr "Усталяваць"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:226
 msgid "Minimal"
 msgstr "Мінімальная"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:228
 msgid "Remove pre-selected software to create a lean, personalized system."
 msgstr ""
 "Выдаліце папярэдне выбраныя праграмы, каб стварыць лёгкую персаналізаваную "
 "сістэму."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:262
 msgid "Configuring..."
 msgstr "Наладжванне..."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:291
 msgid "Main page: choose Maintenance, Installation, or Minimal"
 msgstr ""
 "Галоўная старонка: выберыце «Абслугоўванне», «Усталяванне» або «Мінімальная»"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:40
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:42
 msgid "Important Tips"
 msgstr "Важныя парады"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:50
 msgid "Manual Partitioning Recommendations"
 msgstr "Рэкамендацыі па ручной разметцы дыска"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:52
 msgid ""
-"If you opt for automatic partitioning, these tips will be applied by default."
+"If you opt for automatic partitioning, these tips will be applied by "
+"default."
 msgstr ""
-"Калі вы выбераце аўтаматычнае разбіццё дыска, гэтыя рэкамендацыі будуць "
+"Калі вы выбераце аўтаматычную разметку дыска, гэтыя рэкамендацыі будуць "
 "ужытыя па змаўчанні."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:59
 msgid "Use BTRFS"
 msgstr "Выкарыстоўвайце BTRFS"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:61
 msgid "This file system allows for automatic compression and restore points."
 msgstr ""
-"Гэтая файлавая сістэма падтрымлівае аўтаматычнае сцісканне і кропкі "
+"Гэтая файлавая сістэма падтрымлівае аўтаматычнае сцісканне і пункты "
 "аднаўлення."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:65
 msgid "Keep /boot within the / partition"
 msgstr "Захоўвайце /boot у раздзеле /"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:67
 msgid "Placing it in a separate partition hampers BTRFS snapshots."
 msgstr ""
 "Размяшчэнне /boot у асобным раздзеле перашкаджае стварэнню здымкаў BTRFS."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:71
 msgid "Do not create a SWAP partition"
 msgstr "Не стварайце раздзел SWAP"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:73
 msgid ""
 "We have implemented dynamic virtual memory management with Zram and SWAP "
 "files. SWAP partitions will not be used."
@@ -348,34 +521,45 @@ msgstr ""
 "Мы рэалізавалі дынамічнае кіраванне віртуальнай памяццю з дапамогай Zram і "
 "файлаў SWAP. Раздзелы SWAP выкарыстоўвацца не будуць."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:103
 msgid "Installation tips: read the recommendations before proceeding"
 msgstr "Парады па ўсталяванні: прачытайце рэкамендацыі перад працягам"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:41
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:263
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:295
 msgid "Please wait..."
 msgstr "Калі ласка, пачакайце..."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:42
 msgid "Checking the integrity of the download and storage device..."
 msgstr "Правяраецца цэласнасць спампаваных даных і назапашвальніка..."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:43
 msgid "Checking system integrity"
 msgstr "Правяраецца цэласнасць сістэмы"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:44
 msgid ""
 "Checking for download or USB drive errors, this may take a few minutes..."
 msgstr ""
 "Правяраюцца памылкі спампоўвання або USB-назапашвальніка. Гэта можа заняць "
 "некалькі хвілін..."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:45
 msgid "Verification progress"
 msgstr "Ход праверкі"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:46
 #, python-brace-format
 msgid "Checking the file: {filename}"
 msgstr "Правяраецца файл: {filename}"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:47
 msgid "Verification failed"
 msgstr "Праверка не ўдалася"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:49
 msgid ""
 "The live media could not be verified. Download the system again or use "
 "another USB drive."
@@ -383,57 +567,85 @@ msgstr ""
 "Не ўдалося праверыць загрузны носьбіт. Спампуйце сістэму паўторна або "
 "скарыстайцеся іншым USB-назапашвальнікам."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:52
 msgid "Verification complete"
 msgstr "Праверка завершана"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:53
 msgid "The files are intact."
 msgstr "Файлы цэлыя."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:54
 msgid "Verification canceled"
 msgstr "Праверка скасавана"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:55
 msgid "The integrity check was not completed."
 msgstr "Праверка цэласнасці не была завершана."
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:110
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:135
 msgid "Progress"
 msgstr "Ход выканання"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:407
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:470
 msgid "Question"
 msgstr "Пытанне"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:442
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:513
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:515
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:563
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:565
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:673
 msgid "Close"
 msgstr "Закрыць"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:482
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:520
 msgid "Error"
 msgstr "Памылка"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:532
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:571
 msgid "Information"
 msgstr "Інфармацыя"
 
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:594
+#: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:695
 msgid "Select"
 msgstr "Выбраць"
 
+#: biglinux-livecd/usr/bin/calamares-biglinux:362
 msgid "Installation failed"
 msgstr "Усталяванне не ўдалося"
 
+#: biglinux-livecd/usr/bin/calamares-biglinux:363
 msgid ""
 "The installation failed. The local error log was saved in your home folder."
 msgstr ""
 "Усталяванне не ўдалося. Лакальны журнал памылак захаваны ў вашай хатняй "
 "папцы."
 
+#: biglinux-livecd/usr/bin/calamares-biglinux:111
 msgid "Outdated Version"
 msgstr "Састарэлая версія"
 
+#: biglinux-livecd/usr/bin/calamares-biglinux:244
+#: biglinux-livecd/usr/bin/calamares-biglinux:252
 msgid "Install the system"
 msgstr "Усталяваць сістэму"
 
+#: biglinux-livecd/usr/bin/calamares-biglinux:340
 msgid "Installation log unavailable"
 msgstr "Журнал усталявання недаступны"
 
+#: biglinux-livecd/usr/bin/calamares-biglinux:236
 msgid "Could not inspect EFI partitions"
 msgstr "Не ўдалося праверыць раздзелы EFI"
 
+#: biglinux-livecd/usr/bin/calamares-biglinux:341
 msgid ""
 "Calamares did not create a valid installation log. Close the installer and "
 "try again."
@@ -441,13 +653,15 @@ msgstr ""
 "Calamares не стварыў сапраўдны журнал усталявання. Закрыйце ўсталёўшчык і "
 "паспрабуйце зноў."
 
+#: biglinux-livecd/usr/bin/calamares-biglinux:237
 msgid ""
-"The installer could not safely inspect the disk layout. Close the installer, "
-"reconnect the storage device, and try again."
+"The installer could not safely inspect the disk layout. Close the installer,"
+" reconnect the storage device, and try again."
 msgstr ""
 "Усталёўшчыку не ўдалося бяспечна праверыць структуру дыска. Закрыйце "
 "ўсталёўшчык, перападключыце назапашвальнік і паспрабуйце зноў."
 
+#: biglinux-livecd/usr/bin/calamares-biglinux:245
 msgid ""
 "Do you want to proceed with the installation in EFI mode? The current boot "
 "is using EFI mode, but I did not find an EFI partition on this computer."
@@ -455,62 +669,24 @@ msgstr ""
 "Працягнуць усталяванне ў рэжыме EFI? Бягучая загрузка выкарыстоўвае рэжым "
 "EFI, але я не знайшоў раздзела EFI на гэтым камп'ютары."
 
+#: biglinux-livecd/usr/bin/calamares-biglinux:253
 msgid ""
-"Do you want to proceed with the installation in Legacy/BIOS mode? I found an "
-"EFI partition on this computer."
+"Do you want to proceed with the installation in Legacy/BIOS mode? I found an"
+" EFI partition on this computer."
 msgstr ""
 "Працягнуць усталяванне ў рэжыме Legacy/BIOS? Я знайшоў раздзел EFI на гэтым "
 "камп'ютары."
 
+#: biglinux-livecd/usr/bin/calamares-biglinux:112
 msgid ""
 "Do you want to proceed with the installation of this old version anyway? "
 "BigLinux is a system with weekly updates and this version was released more "
 "than a month ago. We recommend downloading a more recent version."
 msgstr ""
 "Усё роўна працягнуць усталяванне гэтай старой версіі? BigLinux абнаўляецца "
-"штотыдзень, а гэтая версія выйшла больш за месяц таму. Раім спампаваць больш "
-"новую версію."
+"штотыдзень, а гэтая версія выйшла больш за месяц таму. Раім спампаваць больш"
+" новую версію."
 
-#~ msgid "Checking connection..."
-#~ msgstr "Праверка злучэння..."
-
-#~ msgid "Desempenho"
-#~ msgstr "Прадукцыйнасць"
-
-#~ msgid "Escolha o desktop:"
-#~ msgstr "Выберыце працоўны стол:"
-
-#~ msgid "Escolha o modelo do teclado:"
-#~ msgstr "Выберыце мадэль клавіятуры:"
-
-#~ msgid "Escolha o tema dos aplicativos:"
-#~ msgstr "Выберыце тэму прыкладання:"
-
-#~ msgid ""
-#~ "Renderizar o desktop via software<br><small>(Pode ser útil em máquina "
-#~ "virtual)"
-#~ msgstr ""
-#~ "Рэндэрынг працоўнага стала праз праграмнае забеспячэнне<br> <small>(Можа "
-#~ "быць карысным у віртуальнай машыне)"
-
-#~ msgid "Tema"
-#~ msgstr "Тэма"
-
-#~ msgid ""
-#~ "Utilizando renderização por software, a qualidade das transparências será "
-#~ "reduzida."
-#~ msgstr ""
-#~ "З дапамогай праграмнага рэндэрынгу якасць празрыстасці будзе зніжана."
-
-#~ msgid "e"
-#~ msgstr "і"
-
-#~ msgid "têm melhor desempenho."
-#~ msgstr "мець лепшую прадукцыйнасць."
-
-#~ msgid ""
-#~ "Utilizar GPU nos navegadores<br><small>(Desative no caso de distorção no "
-#~ "vídeo)"
-#~ msgstr ""
-#~ "Выкарыстанне графічнага працэсара ў браўзэрах<br> <small>(Адключыць у "
-#~ "выпадку скажэння відэа)"
+#: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:269
+msgid "Pause"
+msgstr "Прыпыніць"

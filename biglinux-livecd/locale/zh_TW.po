@@ -1,6 +1,6 @@
 # Translations for biglinux-livecd.
 # This file is distributed under the same license as the biglinux-livecd package.
-# Plural forms follow GTK 4 (gtk40.mo), locale da.
+# Plural forms follow GTK 4 (gtk40.mo), locale zh_TW.
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-livecd\n"
@@ -8,12 +8,12 @@ msgstr ""
 "POT-Creation-Date: 2026-10-03 09:25+0000\n"
 "PO-Revision-Date: 2026-10-03 09:23+0000\n"
 "Last-Translator: Codex (AI-assisted review)\n"
-"Language-Team: da\n"
-"Language: da\n"
+"Language-Team: zh_TW\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Codex\n"
 
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-navigation.qml:40
@@ -37,85 +37,83 @@ msgstr "__biglinux_language_marker__"
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/calamares-sidebar.qml:55
 #, qt-format
 msgid "%1 logo"
-msgstr "%1-logo"
+msgstr "%1 標誌"
 
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-sidebar.qml:224
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-sidebar.qml:218
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/calamares-sidebar.qml:100
 msgid "Current installation step"
-msgstr "Nuværende installationstrin"
+msgstr "目前的安裝步驟"
 
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-sidebar.qml:227
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-sidebar.qml:221
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/calamares-sidebar.qml:103
 msgid "Completed installation step"
-msgstr "Fuldført installationstrin"
+msgstr "已完成的安裝步驟"
 
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity/branding/bigcommunity/calamares-sidebar.qml:229
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/biglinux/branding/biglinux/calamares-sidebar.qml:223
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/calamares-sidebar.qml:105
 msgid "Pending installation step"
-msgstr "Afventende installationstrin"
+msgstr "尚未完成的安裝步驟"
 
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:12
 msgid "Pong game"
-msgstr "Pong-spil"
+msgstr "Pong 遊戲"
 
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:14
 msgid ""
 "Move the left paddle with the mouse or the up and down arrow keys. Press "
 "Space to pause or resume."
-msgstr ""
-"Flyt venstre bat med musen eller pil op og pil ned. Tryk på mellemrumstasten"
-" for at sætte spillet på pause eller genoptage det."
+msgstr "使用滑鼠或上下方向鍵移動左側擋板。按空白鍵暫停或繼續。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:254
 msgid "Paused"
-msgstr "Sat på pause"
+msgstr "已暫停"
 
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:269
 msgid "Resume"
-msgstr "Genoptag"
+msgstr "繼續"
 
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:274
 msgid "Pause or resume the Pong game"
-msgstr "Sæt Pong-spillet på pause eller genoptag det"
+msgstr "暫停或繼續 Pong 遊戲"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:95
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:99
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:217
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:221
 msgid "BigLinux Setup"
-msgstr "Opsætning af BigLinux"
+msgstr "BigLinux 設定"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:91
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:101
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:223
 msgid "press Super+Alt+S to start the screen reader"
-msgstr "tryk på Super+Alt+S for at starte skærmlæseren"
+msgstr "按 Super+Alt+S 啟動螢幕閱讀器"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:212
 msgid "BigLinux Logo"
-msgstr "BigLinux-logo"
+msgstr "BigLinux 標誌"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:247
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:368
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:483
 msgid "Language"
-msgstr "Sprog"
+msgstr "語言"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:249
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:369
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:568
 msgid "Keyboard"
-msgstr "Tastatur"
+msgstr "鍵盤"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:251
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:370
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:593
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:51
 msgid "Desktop Layout"
-msgstr "Skrivebordslayout"
+msgstr "桌面配置"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:253
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:255
@@ -123,16 +121,16 @@ msgstr "Skrivebordslayout"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:627
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:663
 msgid "Theme"
-msgstr "Tema"
+msgstr "佈景主題"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/app_window.py:727
 msgid "Accessibility enabled. Use arrow keys to navigate."
-msgstr "Tilgængelighed aktiveret. Brug piletasterne til at navigere."
+msgstr "已啟用無障礙功能。使用方向鍵導覽。"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:118
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:150
 msgid "Settings"
-msgstr "Indstillinger"
+msgstr "設定"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:154
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:170
@@ -141,13 +139,13 @@ msgstr "Indstillinger"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:328
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:349
 msgid "JamesDSP Audio"
-msgstr "JamesDSP-lyd"
+msgstr "JamesDSP 音效"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:156
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:171
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:204
 msgid "Enable audio improvements"
-msgstr "Aktivér lydforbedringer"
+msgstr "啟用音效增強功能"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:160
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:230
@@ -156,48 +154,48 @@ msgstr "Aktivér lydforbedringer"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:330
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:354
 msgid "Image quality"
-msgstr "Billedkvalitet"
+msgstr "影像品質"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:162
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:231
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:264
 msgid "Enable enhanced contrast"
-msgstr "Aktivér forbedret kontrast"
+msgstr "啟用增強對比"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:173
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:233
 msgid "press Enter or Space to toggle"
-msgstr "tryk på Enter eller mellemrumstasten for at skifte"
+msgstr "按 Enter 或空白鍵切換"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:291
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:301
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:347
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:352
 msgid "enabled"
-msgstr "aktiveret"
+msgstr "已啟用"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:291
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:301
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:347
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:352
 msgid "disabled"
-msgstr "deaktiveret"
+msgstr "已停用"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:361
 msgid "Choose a Theme Style"
-msgstr "Vælg en temastil"
+msgstr "選擇佈景主題樣式"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:362
 msgid "Choose a System Theme"
-msgstr "Vælg et systemtema"
+msgstr "選擇系統佈景主題"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:389
 msgid "Dark Theme"
-msgstr "Mørkt tema"
+msgstr "深色佈景主題"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/theme_view.py:389
 msgid "Light Theme"
-msgstr "Lyst tema"
+msgstr "淺色佈景主題"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:206
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:210
@@ -205,52 +203,52 @@ msgstr "Lyst tema"
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:247
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:249
 msgid "Search for a language..."
-msgstr "Søg efter et sprog..."
+msgstr "搜尋語言..."
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:278
 msgid "Could not load language data."
-msgstr "Kunne ikke indlæse sprogdata."
+msgstr "無法載入語言資料。"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/language_view.py:579
 #, python-format
 msgid "%d results"
-msgstr "%d resultater"
+msgstr "%d 個結果"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:41
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:90
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:112
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:246
 msgid "Choose Your Keyboard Layout"
-msgstr "Vælg dit tastaturlayout"
+msgstr "選擇鍵盤配置"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:68
 msgid "Keyboard layout preview"
-msgstr "Forhåndsvisning af tastaturlayout"
+msgstr "鍵盤配置預覽"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/keyboard_view.py:145
 #, python-format
 msgid "Keyboard layout: %s"
-msgstr "Tastaturlayout: %s"
+msgstr "鍵盤配置：%s"
 
 #: biglinux-livecd/usr/share/biglinux/livecd/ui/desktop_view.py:35
 msgid "Choose a Desktop Layout"
-msgstr "Vælg et skrivebordslayout"
+msgstr "選擇桌面配置"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:106
 msgid "BigLinux Calamares Config"
-msgstr "BigLinux Calamares-konfiguration"
+msgstr "BigLinux Calamares 設定"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:123
 msgid "Forum"
-msgstr "Forum"
+msgstr "論壇"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/app.py:125
 msgid "Documentation"
-msgstr "Dokumentation"
+msgstr "說明文件"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:677
 msgid "OK"
-msgstr "OK"
+msgstr "確定"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:76
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:204
@@ -258,22 +256,22 @@ msgstr "OK"
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:261
 #, python-brace-format
 msgid "{distro} Installation"
-msgstr "Installation af {distro}"
+msgstr "{distro} 安裝"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:138
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:152
 msgid "Back"
-msgstr "Tilbage"
+msgstr "返回"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:141
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:154
 msgid "Keep All"
-msgstr "Behold alle"
+msgstr "全部保留"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:144
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:156
 msgid "Remove All"
-msgstr "Fjern alle"
+msgstr "全部移除"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:443
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:230
@@ -283,68 +281,67 @@ msgstr "Fjern alle"
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:283
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:298
 msgid "Continue"
-msgstr "Fortsæt"
+msgstr "繼續"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:153
 msgid "Return to the previous page"
-msgstr "Gå tilbage til den forrige side"
+msgstr "返回上一頁"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:155
 msgid "Keep all packages selected"
-msgstr "Behold alle pakker markeret"
+msgstr "保持所有套件的選取狀態"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:157
 msgid "Mark all packages for removal"
-msgstr "Marker alle pakker til fjernelse"
+msgstr "將所有套件標記為移除"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:159
 msgid "Proceed to the next step"
-msgstr "Gå videre til næste trin"
+msgstr "前往下一步"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:205
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:257
 msgid "System Maintenance"
-msgstr "Systemvedligeholdelse"
+msgstr "系統維護"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:206
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:258
 msgid "Uncheck the programs you want to remove"
-msgstr "Fjern markeringen ved de programmer, du vil fjerne"
+msgstr "取消勾選要移除的程式"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:207
 #: biglinux-livecd/usr/share/biglinux/calamares/src/window.py:259
 msgid "Installation Tips"
-msgstr "Installationstips"
+msgstr "安裝提示"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/services/system_service.py:167
 #, python-brace-format
 msgid ""
 "The system is in {boot_mode}, Linux {kernel} and graphical mode {session}."
-msgstr ""
-"Systemet er i {boot_mode}, Linux {kernel} og grafisk tilstand {session}."
+msgstr "系統使用 {boot_mode} 開機模式、Linux {kernel} 和 {session} 圖形工作階段。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/services/system_service.py:171
 #, python-brace-format
 msgid "The system is in {boot_mode}, Linux {kernel}."
-msgstr "Systemet er i {boot_mode}, Linux {kernel}."
+msgstr "系統使用 {boot_mode} 開機模式和 Linux {kernel}。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:154
 msgid "Snapshot and backups"
-msgstr "Øjebliksbillede og sikkerhedskopier"
+msgstr "快照與備份"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:155
 msgid "Restore restore points of the installed system."
-msgstr "Gendan gendannelsespunkter for det installerede system."
+msgstr "將已安裝的系統還原至還原點。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:156
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:168
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:181
 msgid "Start"
-msgstr "Start"
+msgstr "開始"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:164
 msgid "Restore system settings"
-msgstr "Gendan systemindstillinger"
+msgstr "還原系統設定"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:166
 msgid ""
@@ -352,97 +349,91 @@ msgid ""
 "\n"
 "It can also be used to access the package manager and terminal of the installed system."
 msgstr ""
-"Værktøj, der letter gendannelsen af det installerede system, især gendannelsen af systemstart (Grub).\n"
+"協助還原已安裝系統的工具，尤其適合修復系統開機（GRUB）。\n"
 "\n"
-"Det kan også bruges til at få adgang til pakkehåndtereren og terminalen i det installerede system."
+"也可以用它存取已安裝系統的套件管理員與終端機。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:177
 msgid "EFI Entry Manager"
-msgstr "Håndtering af EFI-startposter"
+msgstr "EFI 開機項目管理員"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:179
 msgid ""
 "Advanced tool to add, remove, or change boot entries in the UEFI firmware."
-msgstr ""
-"Avanceret værktøj til at tilføje, fjerne eller ændre startposter i UEFI-"
-"firmwaren."
+msgstr "用於新增、移除或變更 UEFI 韌體中開機項目的進階工具。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/maintenance_page.py:202
 msgid "System Maintenance: choose Snapshot, Restore, or EFI Manager"
-msgstr ""
-"Systemvedligeholdelse: vælg øjebliksbillede, gendannelse eller EFI-"
-"håndtering"
+msgstr "系統維護：選擇快照、還原或 EFI 管理員"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:70
 msgid "Loading packages"
-msgstr "Indlæser pakker"
+msgstr "載入套件"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:72
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:76
 msgid "Loading packages..."
-msgstr "Indlæser pakker..."
+msgstr "正在載入套件..."
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:87
 msgid "Package list"
-msgstr "Pakkeliste"
+msgstr "套件清單"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:89
 msgid "Toggle switches to keep or remove packages"
-msgstr "Brug kontakterne til at beholde eller fjerne pakker"
+msgstr "使用開關選擇要保留或移除的套件"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:129
 #, python-brace-format
 msgid "{count} packages loaded"
-msgstr "{count} pakker indlæst"
+msgstr "已載入 {count} 個套件"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:154
 #, python-brace-format
 msgid "Keep {name}"
-msgstr "Behold {name}"
+msgstr "保留 {name}"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:180
 #, python-brace-format
 msgid "Failed to load packages: {}"
-msgstr "Kunne ikke indlæse pakker: {}"
+msgstr "無法載入套件：{}"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:252
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:218
 msgid "Starting..."
-msgstr "Starter..."
+msgstr "正在啟動..."
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/minimal_page.py:244
 msgid "Minimal installation: select packages to keep or remove"
-msgstr "Minimal installation: vælg pakker, der skal beholdes eller fjernes"
+msgstr "最小安裝：選擇要保留或移除的套件"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:165
 msgid "This is a collaborative system, if you need help consult our forum."
-msgstr ""
-"Dette system udvikles i fællesskab. Hvis du har brug for hjælp, kan du "
-"besøge vores forum."
+msgstr "這個系統由社群協力開發。如需協助，請造訪我們的論壇。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:203
 msgid "Maintenance"
-msgstr "Vedligeholdelse"
+msgstr "維護"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:205
 msgid "Tools that facilitate the maintenance of the installed system."
-msgstr "Værktøjer, der letter vedligeholdelsen af det installerede system."
+msgstr "協助維護已安裝系統的工具。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:207
 msgid "Restore"
-msgstr "Gendan"
+msgstr "還原"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:215
 msgid "Installation"
-msgstr "Installation"
+msgstr "安裝"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:216
 msgid "The system is in live mode, which has limitations."
-msgstr "Systemet kører i live-tilstand, hvilket har begrænsninger."
+msgstr "系統目前以 Live 模式執行，有一些限制。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:217
 msgid "Install it for a complete experience."
-msgstr "Installer systemet for at få den fulde oplevelse."
+msgstr "安裝系統以使用完整功能。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:218
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:259
@@ -450,143 +441,132 @@ msgstr "Installer systemet for at få den fulde oplevelse."
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:274
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:290
 msgid "Install"
-msgstr "Installér"
+msgstr "安裝"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:226
 msgid "Minimal"
-msgstr "Minimal"
+msgstr "最小安裝"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:228
 msgid "Remove pre-selected software to create a lean, personalized system."
-msgstr "Fjern forudvalgt software for at skabe et slankt, personligt system."
+msgstr "移除預先選取的軟體，打造輕量且個人化的系統。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:262
 msgid "Configuring..."
-msgstr "Konfigurerer..."
+msgstr "正在設定..."
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/main_page.py:291
 msgid "Main page: choose Maintenance, Installation, or Minimal"
-msgstr "Hovedside: vælg Vedligeholdelse, Installation eller Minimal"
+msgstr "首頁：選擇「維護」、「安裝」或「最小安裝」"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:40
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:42
 msgid "Important Tips"
-msgstr "Vigtige tips"
+msgstr "重要提示"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:50
 msgid "Manual Partitioning Recommendations"
-msgstr "Anbefalinger til manuel partitionering"
+msgstr "手動分割磁碟的建議"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:52
 msgid ""
 "If you opt for automatic partitioning, these tips will be applied by "
 "default."
-msgstr ""
-"Hvis du vælger automatisk partitionering, anvendes disse anbefalinger som "
-"standard."
+msgstr "如果選擇自動分割磁碟，預設會套用這些建議。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:59
 msgid "Use BTRFS"
-msgstr "Brug BTRFS"
+msgstr "使用 BTRFS"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:61
 msgid "This file system allows for automatic compression and restore points."
-msgstr ""
-"Dette filsystem muliggør automatisk komprimering og gendannelsespunkter."
+msgstr "這個檔案系統支援自動壓縮與建立還原點。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:65
 msgid "Keep /boot within the / partition"
-msgstr "Behold /boot i /-partitionen"
+msgstr "將 /boot 保留在 / 分割區內"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:67
 msgid "Placing it in a separate partition hampers BTRFS snapshots."
-msgstr ""
-"Hvis /boot placeres på en separat partition, begrænses BTRFS-"
-"øjebliksbilleder."
+msgstr "將 /boot 放在獨立分割區會影響 BTRFS 快照的使用。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:71
 msgid "Do not create a SWAP partition"
-msgstr "Opret ikke en SWAP-partition"
+msgstr "不要建立 SWAP 分割區"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:73
 msgid ""
 "We have implemented dynamic virtual memory management with Zram and SWAP "
 "files. SWAP partitions will not be used."
-msgstr ""
-"Vi har implementeret dynamisk håndtering af virtuel hukommelse med Zram og "
-"SWAP-filer. SWAP-partitioner vil ikke blive brugt."
+msgstr "我們已透過 Zram 與 SWAP 檔案實作動態虛擬記憶體管理。系統不會使用 SWAP 分割區。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/src/pages/tips_page.py:103
 msgid "Installation tips: read the recommendations before proceeding"
-msgstr "Installationstips: læs anbefalingerne, før du fortsætter"
+msgstr "安裝提示：繼續之前請先閱讀建議"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:41
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:263
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:295
 msgid "Please wait..."
-msgstr "Vent venligst..."
+msgstr "請稍候..."
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:42
 msgid "Checking the integrity of the download and storage device..."
-msgstr "Kontrollerer integriteten af de hentede data og lagerenheden..."
+msgstr "正在檢查下載內容與儲存裝置的完整性..."
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:43
 msgid "Checking system integrity"
-msgstr "Kontrollerer systemets integritet"
+msgstr "正在檢查系統完整性"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:44
 msgid ""
 "Checking for download or USB drive errors, this may take a few minutes..."
-msgstr ""
-"Kontrollerer for fejl i hentningen eller på USB-drevet. Dette kan tage nogle"
-" minutter..."
+msgstr "正在檢查下載內容或 USB 隨身碟是否有錯誤，這可能需要幾分鐘..."
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:45
 msgid "Verification progress"
-msgstr "Kontrollens fremdrift"
+msgstr "驗證進度"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:46
 #, python-brace-format
 msgid "Checking the file: {filename}"
-msgstr "Kontrollerer filen: {filename}"
+msgstr "正在檢查檔案：{filename}"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:47
 msgid "Verification failed"
-msgstr "Kontrollen mislykkedes"
+msgstr "驗證失敗"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:49
 msgid ""
 "The live media could not be verified. Download the system again or use "
 "another USB drive."
-msgstr ""
-"Live-mediet kunne ikke kontrolleres. Hent systemet igen, eller brug et andet"
-" USB-drev."
+msgstr "無法驗證 Live 開機媒體。請重新下載系統或改用其他 USB 隨身碟。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:52
 msgid "Verification complete"
-msgstr "Kontrollen er fuldført"
+msgstr "驗證完成"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:53
 msgid "The files are intact."
-msgstr "Filerne er intakte."
+msgstr "檔案完好無損。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:54
 msgid "Verification canceled"
-msgstr "Kontrollen blev annulleret"
+msgstr "已取消驗證"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:55
 msgid "The integrity check was not completed."
-msgstr "Integritetskontrollen blev ikke fuldført."
+msgstr "完整性檢查未完成。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:110
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:135
 msgid "Progress"
-msgstr "Fremdrift"
+msgstr "進度"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:407
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:470
 msgid "Question"
-msgstr "Spørgsmål"
+msgstr "問題"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:442
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:513
@@ -595,91 +575,82 @@ msgstr "Spørgsmål"
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:565
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:673
 msgid "Close"
-msgstr "Luk"
+msgstr "關閉"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:482
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:520
 msgid "Error"
-msgstr "Fejl"
+msgstr "錯誤"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:532
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:571
 msgid "Information"
-msgstr "Information"
+msgstr "資訊"
 
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:594
 #: biglinux-livecd/usr/share/biglinux/calamares/gtk_dialog.py:695
 msgid "Select"
-msgstr "Vælg"
+msgstr "選取"
 
 # Installer launcher, usr/bin/calamares-biglinux
 #: biglinux-livecd/usr/bin/calamares-biglinux:362
 msgid "Installation failed"
-msgstr "Installationen mislykkedes"
+msgstr "安裝失敗"
 
 # Installer launcher, usr/bin/calamares-biglinux
 #: biglinux-livecd/usr/bin/calamares-biglinux:363
 msgid ""
 "The installation failed. The local error log was saved in your home folder."
-msgstr ""
-"Installationen mislykkedes. Den lokale fejllog blev gemt i din hjemmemappe."
+msgstr "安裝失敗。本機錯誤紀錄已儲存至您的家目錄。"
 
 # Installer launcher, usr/bin/calamares-biglinux
 #: biglinux-livecd/usr/bin/calamares-biglinux:111
 msgid "Outdated Version"
-msgstr "Forældet version"
+msgstr "版本過舊"
 
 # Installer launcher, usr/bin/calamares-biglinux
 #: biglinux-livecd/usr/bin/calamares-biglinux:244
 #: biglinux-livecd/usr/bin/calamares-biglinux:252
 msgid "Install the system"
-msgstr "Installer systemet"
+msgstr "安裝系統"
 
 # Installer launcher, usr/bin/calamares-biglinux
 #: biglinux-livecd/usr/bin/calamares-biglinux:340
 msgid "Installation log unavailable"
-msgstr "Installationsloggen er ikke tilgængelig"
+msgstr "無法取得安裝紀錄"
 
 # Installer launcher, usr/bin/calamares-biglinux
 #: biglinux-livecd/usr/bin/calamares-biglinux:236
 msgid "Could not inspect EFI partitions"
-msgstr "EFI-partitionerne kunne ikke undersøges"
+msgstr "無法檢查 EFI 分割區"
 
 # Installer launcher, usr/bin/calamares-biglinux
 #: biglinux-livecd/usr/bin/calamares-biglinux:341
 msgid ""
 "Calamares did not create a valid installation log. Close the installer and "
 "try again."
-msgstr ""
-"Calamares oprettede ikke en gyldig installationslog. Luk "
-"installationsprogrammet, og prøv igen."
+msgstr "Calamares 未建立有效的安裝紀錄。請關閉安裝程式後再試一次。"
 
 # Installer launcher, usr/bin/calamares-biglinux
 #: biglinux-livecd/usr/bin/calamares-biglinux:237
 msgid ""
 "The installer could not safely inspect the disk layout. Close the installer,"
 " reconnect the storage device, and try again."
-msgstr ""
-"Installationsprogrammet kunne ikke undersøge diskens opdeling sikkert. Luk "
-"installationsprogrammet, tilslut lagerenheden igen, og prøv igen."
+msgstr "安裝程式無法安全地檢查磁碟配置。請關閉安裝程式，重新連接儲存裝置後再試一次。"
 
 # Installer launcher, usr/bin/calamares-biglinux
 #: biglinux-livecd/usr/bin/calamares-biglinux:245
 msgid ""
 "Do you want to proceed with the installation in EFI mode? The current boot "
 "is using EFI mode, but I did not find an EFI partition on this computer."
-msgstr ""
-"Vil du fortsætte installationen i EFI-tilstand? Den aktuelle opstart bruger "
-"EFI-tilstand, men jeg fandt ingen EFI-partition på denne computer."
+msgstr "要以 EFI 模式繼續安裝嗎？目前使用 EFI 模式開機，但在這台電腦上找不到 EFI 分割區。"
 
 # Installer launcher, usr/bin/calamares-biglinux
 #: biglinux-livecd/usr/bin/calamares-biglinux:253
 msgid ""
 "Do you want to proceed with the installation in Legacy/BIOS mode? I found an"
 " EFI partition on this computer."
-msgstr ""
-"Vil du fortsætte installationen i Legacy/BIOS-tilstand? Jeg fandt en EFI-"
-"partition på denne computer."
+msgstr "要以 Legacy/BIOS 模式繼續安裝嗎？在這台電腦上找到 EFI 分割區。"
 
 # Installer launcher, usr/bin/calamares-biglinux
 #: biglinux-livecd/usr/bin/calamares-biglinux:112
@@ -687,11 +658,8 @@ msgid ""
 "Do you want to proceed with the installation of this old version anyway? "
 "BigLinux is a system with weekly updates and this version was released more "
 "than a month ago. We recommend downloading a more recent version."
-msgstr ""
-"Vil du alligevel fortsætte installationen af denne gamle version? BigLinux "
-"opdateres ugentligt, og denne version udkom for mere end en måned siden. Vi "
-"anbefaler at hente en nyere version."
+msgstr "仍要繼續安裝這個舊版本嗎？BigLinux 每週更新，而這個版本已發布超過一個月。建議下載較新的版本。"
 
 #: biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio/branding/xivastudio/pong.qml:269
 msgid "Pause"
-msgstr "Pause"
+msgstr "暫停"
