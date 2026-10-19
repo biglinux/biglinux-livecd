@@ -454,9 +454,10 @@ def test_launcher_preserves_mhwd_configuration_and_skips_free_driver_job() -> No
     assert "- mhwdcfg[[:space:]]*$" in launcher
 
 
-def test_bigcommunity_installs_drivers_with_big_driver_manager_cli() -> None:
+@pytest.mark.parametrize("profile_name", ["bigcommunity", "biglinux"])
+def test_profile_installs_drivers_with_big_driver_manager_cli(profile_name) -> None:
     profile = (
-        REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity"
+        REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles" / profile_name
     )
     settings = yaml.safe_load((profile / "settings.conf").read_text(encoding="utf-8"))
     steps = [step for phase in settings["sequence"] for s in phase.values() for step in s]
@@ -478,6 +479,16 @@ def test_bigcommunity_installs_drivers_with_big_driver_manager_cli() -> None:
     assert "--root ${ROOT}" in entry["command"]
     assert "--pmconfig /opt/mhwd/pacman-mhwd.conf" in entry["command"]
     assert entry["timeout"] >= 600
+
+
+def test_xivastudio_still_installs_drivers_with_mhwd() -> None:
+    profile = (
+        REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles/xivastudio"
+    )
+    settings = yaml.safe_load((profile / "settings.conf").read_text(encoding="utf-8"))
+    steps = [step for phase in settings["sequence"] for s in phase.values() for step in s]
+    assert "mhwdcfg" in steps
+    assert (profile / "modules/mhwdcfg.conf").is_file()
 
 
 def test_launcher_accepts_profiles_without_mhwdcfg() -> None:
