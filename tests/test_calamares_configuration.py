@@ -454,6 +454,40 @@ def test_launcher_preserves_mhwd_configuration_and_skips_free_driver_job() -> No
     assert "- mhwdcfg[[:space:]]*$" in launcher
 
 
+def test_bigcommunity_installs_drivers_with_big_driver_manager_cli() -> None:
+    profile = (
+        REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles/bigcommunity"
+    )
+    settings = yaml.safe_load((profile / "settings.conf").read_text(encoding="utf-8"))
+    steps = [step for phase in settings["sequence"] for s in phase.values() for step in s]
+
+    assert "mhwdcfg" not in steps
+    assert not (profile / "modules/mhwdcfg.conf").exists()
+    assert "shellprocess@drivers" in steps
+    # After the kernel and its initramfs exist, before the services are enabled
+    assert steps.index("initcpio") < steps.index("shellprocess@drivers")
+    assert steps.index("shellprocess@drivers") < steps.index("services")
+
+    drivers = yaml.safe_load(
+        (profile / "modules/shellprocess_drivers.conf").read_text(encoding="utf-8")
+    )
+    assert drivers["dontChroot"] is True
+    [entry] = drivers["script"]
+    assert entry["command"].startswith("-big-driver-manager-cli gpu install ")
+    assert "--from-cmdline" in entry["command"]
+    assert "--root ${ROOT}" in entry["command"]
+    assert "--pmconfig /opt/mhwd/pacman-mhwd.conf" in entry["command"]
+    assert entry["timeout"] >= 600
+
+
+def test_launcher_accepts_profiles_without_mhwdcfg() -> None:
+    launcher = (REPOSITORY / "biglinux-livecd/usr/bin/calamares-biglinux").read_text(
+        encoding="utf-8"
+    )
+
+    assert '[[ -e $temporary_directory/modules/mhwdcfg.conf ]] &&' in launcher
+
+
 def test_profiles_use_supported_password_requirement() -> None:
     profiles = REPOSITORY / "biglinux-livecd/usr/share/biglinux/calamares-profiles"
     configuration_files = sorted(profiles.glob("*/modules/users.conf"))
