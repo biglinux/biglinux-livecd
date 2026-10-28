@@ -164,8 +164,11 @@ prepare_calamares_runtime() {
 	fi
 
 	driver=$(kernel_driver)
-	if ! grep -q '^driver:' "$temporary_directory/modules/mhwdcfg.conf" ||
-		! sed -i "s/^driver:.*/driver: $driver/" "$temporary_directory/modules/mhwdcfg.conf"; then
+	# Profiles that install drivers with big-driver-manager-cli have no
+	# mhwdcfg: the command reads driver= from the kernel command line itself.
+	if [[ -e $temporary_directory/modules/mhwdcfg.conf ]] &&
+		{ ! grep -q '^driver:' "$temporary_directory/modules/mhwdcfg.conf" ||
+			! sed -i "s/^driver:.*/driver: $driver/" "$temporary_directory/modules/mhwdcfg.conf"; }; then
 		cleanup_profile_runtime
 		return 1
 	fi

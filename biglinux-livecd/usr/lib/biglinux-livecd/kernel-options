@@ -71,7 +71,11 @@ sanitize_kernel_arguments() {
 	IFS=' ' read -r -a arguments <<<"$input"
 	for argument in "${arguments[@]}"; do
 		case "$argument" in
-		BOOT_IMAGE=* | initrd=* | misobasedir=* | misolabel=* | driver=* | rdinit=* | biglinux.bootcmd=* | sshenable | wayland | rw | ro)
+		# The live GPU choices stay on the medium: the installed system blocks
+		# nouveau through modprobe.d when the NVIDIA driver is installed, and
+		# needs it loadable when it is not.
+		BOOT_IMAGE=* | initrd=* | misobasedir=* | misolabel=* | driver=* | rdinit=* | biglinux.bootcmd=* | sshenable | wayland | rw | ro | \
+			module_blacklist=* | modprobe.blacklist=* | bdm.gpu=* | bignvidia=*)
 			continue
 			;;
 		esac

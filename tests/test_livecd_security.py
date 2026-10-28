@@ -36,6 +36,27 @@ def make_stub(directory: Path, name: str, content: str) -> Path:
     return path
 
 
+def test_live_gpu_choices_do_not_reach_the_installed_system(tmp_path: Path) -> None:
+    cmdline = tmp_path / "cmdline"
+    cmdline.write_text(
+        "BOOT_IMAGE=/boot/vmlinuz rw quiet splash driver=nonfree "
+        "modprobe.blacklist=nouveau,nova_core,nova_drm module_blacklist=nouveau "
+        "nvidia_drm.modeset=1 bdm.gpu=nvidia bignvidia=11 i915.enable_psr=0\n",
+        encoding="utf-8",
+    )
+    result = run_bash(
+        """
+source "$KERNEL_OPTIONS"
+kernel_cmdline_path=$CMDLINE
+printf 'installed=%s\n' "$(installed_kernel_arguments)"
+""",
+        environment={"KERNEL_OPTIONS": str(KERNEL_OPTIONS), "CMDLINE": str(cmdline)},
+    )
+    assert result.returncode == 0, result.stderr
+    # Hardware fixes chosen in the menu are kept; the GPU choices are not.
+    assert "installed=nvidia_drm.modeset=1 i915.enable_psr=0" in result.stdout
+
+
 def test_kernel_arguments_are_exact_allowlisted_and_sanitized(tmp_path: Path) -> None:
     cmdline = tmp_path / "cmdline"
     cmdline.write_text(

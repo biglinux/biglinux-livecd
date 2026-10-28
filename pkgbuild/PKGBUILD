@@ -9,6 +9,8 @@ arch=('any')
 url="https://github.com/biglinux/biglinux-livecd"
 license=('GPL-3.0-only' 'CC0-1.0')
 depends=(
+    # The installer's driver step (calamares-profiles shellprocess_drivers.conf)
+    'big-driver-manager-cli'
     'binutils'
     'btrfs-progs'
     'calamares'
