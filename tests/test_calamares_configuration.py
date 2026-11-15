@@ -892,3 +892,19 @@ def test_offline_install_moves_a_clock_behind_the_keyrings(
         assert log.read_text(encoding="utf-8").split() == ["-u", "-s", "@1760000000"]
     else:
         assert not log.exists()
+
+
+def test_installation_log_is_kept_on_the_installed_system() -> None:
+    # finishedq tells the user the log is in /var/log/installation.log.
+    settings = yaml.safe_load((BIGWM_PROFILE / "settings.conf").read_text(encoding="utf-8"))
+    executed = [step for phase in settings["sequence"] for step in phase.get("exec", [])]
+    assert executed.index("preservefiles") + 1 == executed.index("umount")
+    config = yaml.safe_load(
+        (BIGWM_PROFILE / "modules/preservefiles.conf").read_text(encoding="utf-8")
+    )
+    assert config["files"] == [
+        {"from": "log", "dest": "/var/log/installation.log", "perm": "root:root:0600"}
+    ]
+    assert "/var/log/installation.log" in (
+        BIGWM_PROFILE / "branding/bigwindowmaker/finishedq.qml"
+    ).read_text(encoding="utf-8")
