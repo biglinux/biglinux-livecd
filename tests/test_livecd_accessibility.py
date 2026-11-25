@@ -163,14 +163,20 @@ def test_every_wizard_launch_carries_the_accessibility_environment() -> None:
     # hardest kind to notice.
     source = STARTBIGLIVE.read_text(encoding="utf-8")
     assert "dbus-run-session kwin_wayland" not in source
-    assert source.count("_run_on_wizard_bus ") >= 3
-    # And every one of them carries the wizard's own environment, which is
-    # where the accessibility bus address lives now that it is not exported.
-    assert source.count('_run_on_wizard_bus "${wizard_environment[@]}"') >= 3
-    # The environment has to be built before any launch runs.
-    assert source.index("_enable_accessibility\n\t_detect_multi_gpu") < source.index(
-        '_run_on_wizard_bus "${wizard_environment[@]}"'
-    )
+    # The three paths start kwin_wayland through the launcher they are given.
+    chain = source[
+        source.index("_run_in_kwin() {") : source.index("_start_kwin_wizard() {")
+    ]
+    launches = chain.count('kwin_wayland "${kwin_args[@]}"')
+    assert launches >= 3
+    assert chain.count('"${launcher[@]}"') == launches
+    # The wizard's launcher carries its own environment, which is where the
+    # accessibility bus address lives now that it is not exported, and that
+    # environment has to be built before the compositor starts.
+    wizard = source[source.index("_start_kwin_wizard() {") :]
+    wizard = wizard[: wizard.index("\n}\n")]
+    assert '_run_on_wizard_bus "${wizard_environment[@]}"' in wizard
+    assert wizard.index("_enable_accessibility") < wizard.index("_run_in_kwin")
 
 
 def test_a_stolen_accessibility_socket_is_restored_before_the_desktop(

@@ -371,26 +371,28 @@ _claim_setup_wizard() {
 }
 
 #-------------------------------------------------------------------------------
-# Start kwin_wayland compositor with health check and multi-stage fallback
+# Start kwin_wayland running a command, with health check and multi-stage fallback
 # Fallback chain:
 #   1. Default hardware rendering
 #   2. Multi-GPU: primary (integrated) GPU only, with Mesa EGL if NVIDIA present
 #   3. Software rendering via llvmpipe
-# Returns 0 if the wizard completed, 1 if kwin could not start at all
+# Arguments: the command, then the launcher that receives kwin_wayland's
+# environment and command line (env, or _run_on_wizard_bus).
+# Returns 0 once kwin stayed up and then exited, 1 if it could not start at all
 #-------------------------------------------------------------------------------
-_start_kwin_wizard() {
-	_claim_setup_wizard || return 0
-	local wizard_command="/usr/bin/python /usr/share/biglinux/livecd/main.py"
+_run_in_kwin() {
+	local session_command=$1
+	shift
+	local -a launcher=("$@")
 	local -a kwin_args=(--drm --no-lockscreen --xwayland)
 	local kwin_pid
 
-	_enable_accessibility
 	_detect_multi_gpu
 
 	# Attempt 1: hardware-accelerated rendering (default GPU selection)
 	_log "Starting kwin_wayland (hardware rendering)..."
-	_run_on_wizard_bus "${wizard_environment[@]}" \
-		kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
+	"${launcher[@]}" \
+		kwin_wayland "${kwin_args[@]}" --exit-with-session "$session_command" &
 	kwin_pid=$!
 
 	# Give kwin a few seconds to initialize; check it didn't crash immediately
@@ -414,8 +416,8 @@ _start_kwin_wizard() {
 			env_vars+=("__EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json")
 		fi
 
-		_run_on_wizard_bus "${wizard_environment[@]}" "${env_vars[@]}" \
-			kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
+		"${launcher[@]}" "${env_vars[@]}" \
+			kwin_wayland "${kwin_args[@]}" --exit-with-session "$session_command" &
 		kwin_pid=$!
 
 		sleep 3
@@ -433,9 +435,9 @@ _start_kwin_wizard() {
 	# Attempt 3: software rendering via llvmpipe
 	_log "Retrying with software rendering..."
 
-	_run_on_wizard_bus "${wizard_environment[@]}" \
+	"${launcher[@]}" \
 		LIBGL_ALWAYS_SOFTWARE=1 GALLIUM_DRIVER=llvmpipe \
-		kwin_wayland "${kwin_args[@]}" --exit-with-session "$wizard_command" &
+		kwin_wayland "${kwin_args[@]}" --exit-with-session "$session_command" &
 	kwin_pid=$!
 
 	sleep 3
@@ -447,6 +449,14 @@ _start_kwin_wizard() {
 
 	_log "ERROR - kwin_wayland failed with both hardware and software rendering"
 	return 1
+}
+
+# Returns 0 if the wizard completed or already ran, 1 if kwin could not start
+_start_kwin_wizard() {
+	_claim_setup_wizard || return 0
+	_enable_accessibility
+	_run_in_kwin "/usr/bin/python /usr/share/biglinux/livecd/main.py" \
+		_run_on_wizard_bus "${wizard_environment[@]}"
 }
 
 #-------------------------------------------------------------------------------
@@ -616,6 +626,14 @@ if [[ -e /livefs-pkgs.txt ]]; then
 	if ((boot_mode_status == 0)); then
 		if boot_command=$(live_boot_command_path "$boot_mode") && [[ -x $boot_command ]]; then
 			_log "Starting allowlisted live boot mode: $boot_mode"
+			# A Wayland session from SDDM has no compositor yet. boot-in-plasma
+			# starts Plasma's own; every other mode runs inside kwin_wayland.
+			if [[ $display_manager == sddm && $session_type == wayland && -z ${WAYLAND_DISPLAY:-} &&
+				$boot_mode != boot-in-plasma ]]; then
+				_wait_for_gpu
+				_run_in_kwin "$boot_command" env
+				exit
+			fi
 			exec "$boot_command"
 		fi
 		_log "ERROR - Refusing unsupported live boot mode: $boot_mode"
