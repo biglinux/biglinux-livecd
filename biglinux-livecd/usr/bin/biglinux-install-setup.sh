@@ -371,8 +371,7 @@ write_owned_text() {
 
 target_has_plasma_session() {
 	[[ -x $root_mount/usr/bin/startkde-biglinux ||
-		-e $root_mount/usr/share/wayland-sessions/plasmawayland.desktop ||
-		-e $root_mount/usr/share/xsessions/plasma.desktop ]]
+		-e $root_mount/usr/share/wayland-sessions/plasma.desktop ]]
 }
 
 write_plasma_keyboard_config() {
@@ -431,7 +430,7 @@ current_gnome_settings_source() {
 }
 
 main() {
-	local grub_file sddm_state config_directory session gnome_settings_source
+	local grub_file sddm_state config_directory gnome_settings_source
 	((EUID == 0)) || die 'this setup must run as root'
 	load_kernel_options || die 'cannot load kernel option parser'
 	root_mount=$(canonical_root_mount "${1:-}")
@@ -440,12 +439,8 @@ main() {
 	config_directory=$root_mount/etc/big-default-config
 
 	[[ ! -e $grub_file ]] || write_grub_configuration "$grub_file"
-	if kernel_has_argument wayland; then
-		session=/usr/share/wayland-sessions/plasmawayland.desktop
-	else
-		session=/usr/share/xsessions/plasma.desktop
-	fi
-	atomic_write_text "$sddm_state" 0644 $'[Last]\nSession='"$session"
+	[[ ! -x $root_mount/usr/bin/sddm ]] ||
+		atomic_write_text "$sddm_state" 0644 $'[Last]\nSession=/usr/share/wayland-sessions/plasma.desktop'
 	ensure_directory "$config_directory"
 	copy_live_config "$live_theme_file" "$config_directory/theme"
 	copy_live_config "$live_desktop_file" "$config_directory/desktop"

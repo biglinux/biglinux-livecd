@@ -70,7 +70,7 @@ source "$KERNEL_OPTIONS"
 kernel_cmdline_path=$CMDLINE
 kernel_has_argument sshenable; printf 'ssh=%s\n' "$?"
 printf 'installed=%s\n' "$(installed_kernel_arguments)"
-printf 'sanitized=%s\n' "$(sanitize_installed_kernel_arguments 'quiet splash rw sshenable keep=1 keep=1')"
+printf 'sanitized=%s\n' "$(sanitize_installed_kernel_arguments 'quiet splash rw sshenable keep=1 keep=1 systemd.unit=multi-user.target checksum=y copytoram=y nouveau.modeset=0')"
 printf 'allowed=%s\n' "$(live_boot_command_path only-calamares)"
 live_boot_command_path '$(touch /tmp/pwn)' >/dev/null; printf 'rejected=%s\n' "$?"
 """,
@@ -79,7 +79,7 @@ live_boot_command_path '$(touch /tmp/pwn)' >/dev/null; printf 'rejected=%s\n' "$
     assert result.returncode == 0, result.stderr
     assert "ssh=1" in result.stdout
     assert "installed=notsshenable safe=1" in result.stdout
-    assert "sanitized=quiet splash keep=1" in result.stdout
+    assert "sanitized=quiet splash keep=1\n" in result.stdout
     assert "allowed=/usr/bin/only-calamares" in result.stdout
     assert "rejected=1" in result.stdout
     assert not Path("/tmp/pwn").exists()

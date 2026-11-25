@@ -2,6 +2,5 @@
 Name=Live CD Xorg
 Type=Application
 Exec=/usr/bin/startbiglive
-TryExec=/usr/bin/startplasma-x11
 X-GDM-DesktopNames=livecd
 X-GDM-SessionRegisters=true

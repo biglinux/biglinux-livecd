@@ -28,7 +28,7 @@
 # handles the following tasks:
 #
 # 1. GRUB configuration (BigLinux theme, kernel parameters, cleanup)
-# 2. SDDM session configuration (Wayland/X11 based on boot mode)
+# 2. SDDM last session (Plasma on Wayland)
 # 3. Fstab optimization (btrfs compression levels)
 # 4. Live session config migration (theme, desktop, JamesDSP, display profile)
 #
@@ -47,7 +47,7 @@ def run() -> tuple[str, str] | None:
     Performs BigLinux-specific post-installation setup:
     1. Runs biglinux-install-setup.sh for:
        - GRUB configuration (theme, parameters)
-       - SDDM session setup (Wayland/X11)
+       - SDDM last session (Plasma on Wayland)
        - Fstab optimization (btrfs compression)
        - Live session config migration (theme, desktop, JamesDSP, display)
     """

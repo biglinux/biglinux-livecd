@@ -152,7 +152,7 @@ def test_install_setup_writes_plasma_keyboard_config_from_target_layout(
     xorg_config.parent.mkdir(parents=True)
     user_home.mkdir(parents=True)
     (root / "usr/share/wayland-sessions").mkdir(parents=True)
-    (root / "usr/share/wayland-sessions/plasmawayland.desktop").write_text(
+    (root / "usr/share/wayland-sessions/plasma.desktop").write_text(
         "[Desktop Entry]\nName=Plasma\n",
         encoding="utf-8",
     )
