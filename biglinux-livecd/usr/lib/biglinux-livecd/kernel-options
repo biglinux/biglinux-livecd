@@ -72,9 +72,11 @@ sanitize_kernel_arguments() {
 		case "$argument" in
 		# The live GPU choices stay on the medium: the installed system blocks
 		# nouveau through modprobe.d when the NVIDIA driver is installed, and
-		# needs it loadable when it is not.
+		# needs it loadable when it is not. Text mode, the medium check and the
+		# copy to memory belong to the live boot only.
 		BOOT_IMAGE=* | initrd=* | misobasedir=* | misolabel=* | driver=* | rdinit=* | biglinux.bootcmd=* | sshenable | wayland | rw | ro | \
-			module_blacklist=* | modprobe.blacklist=* | bdm.gpu=* | bignvidia=*)
+			module_blacklist=* | modprobe.blacklist=* | bdm.gpu=* | bignvidia=* | nouveau.modeset=* | \
+			systemd.unit=* | checksum=* | copytoram=*)
 			continue
 			;;
 		esac
