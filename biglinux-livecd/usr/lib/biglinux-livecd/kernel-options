@@ -57,7 +57,6 @@ live_boot_command_path() {
 	calamares_polkit) printf '%s\n' /usr/bin/calamares-biglinux_polkit ;;
 	konsole) printf '%s\n' /usr/bin/konsole ;;
 	urxvt) printf '%s\n' /usr/bin/urxvt ;;
-	startplasma-x11) printf '%s\n' /usr/bin/startplasma-x11 ;;
 	*) return 1 ;;
 	esac
 }

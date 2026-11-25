@@ -75,10 +75,10 @@ Recognised on the live media's boot line:
 
 | Argument | Effect |
 |---|---|
-| `biglinux.bootcmd=<command>` | Skips the normal flow. Accepts `only-calamares`, `boot-in-plasma`, `only-konsole`, `calamares_polkit`, `konsole`, `urxvt` and `startplasma-x11` |
+| `biglinux.bootcmd=<command>` | Skips the normal flow. Accepts `only-calamares`, `boot-in-plasma`, `only-konsole`, `calamares_polkit`, `konsole` and `urxvt` |
 | `driver=nonfree` | Installs the runtime mkinitcpio shim for proprietary drivers |
 | `driver=free` | Disables proprietary driver detection |
-| `wayland` | Starts the session under Wayland |
+| `wayland` | No effect; the boot entries still pass it |
 | `sshenable` | Enables the live SSH server for recovery |
 
 These arguments are dropped from the command line written to the installed

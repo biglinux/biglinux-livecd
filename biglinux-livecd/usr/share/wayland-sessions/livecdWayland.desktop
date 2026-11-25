@@ -2,6 +2,5 @@
 Name=Live CD Wayland
 Type=Application
 Exec=/usr/bin/startbiglive
-TryExec=/usr/bin/gnome-session
 X-GDM-DesktopNames=livecd
 X-GDM-SessionRegisters=true
